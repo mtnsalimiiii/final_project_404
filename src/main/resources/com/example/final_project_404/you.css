@@ -1,0 +1,22 @@
+.fancy-label {
+    -fx-font-size: 18px;
+    -fx-font-family: "Arial";
+    -fx-text-fill: #ffffff;
+    -fx-background-color: linear-gradient(to bottom, #3a7bd5, #00d2ff);
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0.5, 2, 2);
+    -fx-alignment: center;
+}
+
+.fancy/label {
+    -fx-font-size: 18px;
+    -fx-font-family: "Arial";
+    -fx-text-fill: #ffffff;
+    -fx-background-color: linear-gradient(to bottom, #3a7bd5, #00d2ff);
+    -fx-padding: 10px 20px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 8, 0.5, 2, 2);
+    -fx-alignment: center;
+}
+
