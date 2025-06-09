@@ -1,9 +1,10 @@
 package com.example.final_project_404;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class  Person {
+public abstract class  Person implements Serializable {
     private String first_name;
     private String last_name;
     private String dateOfBirth;
@@ -11,15 +12,18 @@ public abstract class  Person {
     private String phoneNumber;
     public static List<Teacher> allTeachers = new ArrayList<>();
     public static List<Employee> allEmployees = new ArrayList<>();
-    public static List<Student> allStudent = new ArrayList<>();
+    public static List<Student> allStudents = new ArrayList<>();
 
 
-    public Person(String first_name,String last_name,String dateOfBirth){
+    public Person(String first_name,String last_name,String dateOfBirth,String nationalId,String phoneNumber){
         this.first_name=first_name;
         this.last_name=last_name;
         this.dateOfBirth=dateOfBirth;
         this.nationalId=nationalId;
         this.phoneNumber=phoneNumber;
+    }
+    public Person() {
+        this("", "", "", "", "");
     }
     public void setFirst_name(String first_name){
         this.first_name=first_name;
