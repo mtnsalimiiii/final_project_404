@@ -1,77 +1,24 @@
 package com.example.final_project_404;
 
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 public class Main extends Application {
+
 
 
     public static void main(String[] args) {
         launch(args);
     }
-    public static boolean loginPanel(Stage primaryStage){
-        AnchorPane loginPane = new AnchorPane();// make an anchorpane for login page
-        loginPane.setId("loginPane"); // Assign ID for CSS
 
-        Label titleLabel = new Label("Login"); // make a label for login title
-        titleLabel.getStyleClass().add("login-title"); // set the css style
-
-        TextField usernameField = new TextField(); //make a textfield for username
-        usernameField.getStyleClass().add("login-field"); // set the css style
-        usernameField.setPromptText("Username");
-
-        PasswordField passwordField = new PasswordField(); // make a passwordfield for password
-        passwordField.getStyleClass().add("login-field"); // set the css style
-        passwordField.setPromptText("Password");
-
-        Button loginButton = new Button("Sign In"); //make a button for sign in button
-        loginButton.getStyleClass().add("login-button"); // set the css style
-
-        Label errorLabel = new Label();
-        errorLabel.getStyleClass().add("error-message"); // set the css style
-
-        // Layout (using AnchorPane constraints)
-        AnchorPane.setTopAnchor(titleLabel, 30.0);
-        AnchorPane.setLeftAnchor(titleLabel, 20.0);
-        // Layout usernameField
-        AnchorPane.setTopAnchor(usernameField, 100.0);
-        AnchorPane.setLeftAnchor(usernameField, 20.0);
-        AnchorPane.setRightAnchor(usernameField, 20.0);
-        // Layout passwordField
-        AnchorPane.setTopAnchor(passwordField, 150.0);
-        AnchorPane.setLeftAnchor(passwordField, 20.0);
-        AnchorPane.setRightAnchor(passwordField, 20.0);
-        // Layout loginButton
-        AnchorPane.setTopAnchor(loginButton, 220.0);
-        AnchorPane.setLeftAnchor(loginButton, 20.0);
-        // Layout errorLabel
-        AnchorPane.setTopAnchor(errorLabel, 260.0);
-        AnchorPane.setLeftAnchor(errorLabel, 20.0);
-        // add scene graph to the scene
-        loginPane.getChildren().addAll(titleLabel, usernameField, passwordField, loginButton, errorLabel);
-
-        // Scene setup
-        Scene scene = new Scene(loginPane, 350, 350);
-        scene.getStylesheets().add(Main.class.getResource("loginPanel.css").toExternalForm()); // Load CSS
-
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Login Panel"); // panel title
-        primaryStage.show();
-
-        return true;
-
-    }
-
-    public static void mainPageTeacher(Stage primaryStage){
+    /*public static void mainPageTeacher(Stage primaryStage){
         AnchorPane mainPane = new AnchorPane();
         mainPane.setId("mainPane"); // For CSS targeting
 
@@ -130,12 +77,20 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Teacher Panel");
         primaryStage.show();
-    }
+    }*/
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         Image ikiuIcon = new Image("ikiu.png");
         primaryStage.getIcons().add(ikiuIcon);
-        //boolean checkLogin = loginPanel(primaryStage);
-        mainPageTeacher(primaryStage);
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("LoginPanel.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 350, 480);
+
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Login Panel");
+        primaryStage.setResizable(false);
+
+        primaryStage.show();
     }
 }
