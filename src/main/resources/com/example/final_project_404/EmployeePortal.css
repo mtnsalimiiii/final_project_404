@@ -1,0 +1,94 @@
+/* General background and font */
+.root {
+    -fx-background-color: #f4f6f9;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 14px;
+}
+
+/* Header */
+.header {
+    -fx-background-color: #002147; /* University blue */
+    -fx-padding: 20 20 20 20;
+}
+
+.header-title {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+/* Navigation bar */
+.nav-bar {
+    -fx-background-color: #003366;
+    -fx-spacing: 10;
+    -fx-padding: 10;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 6 14;
+    -fx-border-color: white;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-cursor: hand;
+}
+
+.nav-button:hover {
+    -fx-background-color: #0055aa;
+}
+
+.nav-button.active {
+    -fx-background-color: #0055aa;
+    -fx-font-weight: bold;
+}
+
+/* Content area */
+.content-box {
+    -fx-background-color: white;
+    -fx-padding: 20;
+    -fx-border-color: #dddddd;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.1), 6, 0.2, 0, 2);
+}
+
+/* Labels */
+.label-title {
+    -fx-text-fill: #333333;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+/* ComboBox style */
+.combo-box {
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-padding: 6 10;
+}
+
+/* Buttons */
+.button {
+    -fx-background-color: #0078d7;
+    -fx-text-fill: white;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-padding: 6 16;
+    -fx-font-weight: bold;
+}
+
+.button:hover {
+    -fx-background-color: #005bb5;
+}
+
+/* Footer */
+.footer {
+    -fx-background-color: #e0e0e0;
+    -fx-padding: 10;
+    -fx-alignment: center;
+    -fx-text-fill: #333333;
+    -fx-font-size: 12px;
+}
