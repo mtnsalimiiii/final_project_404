@@ -27,7 +27,6 @@ public class LoginPanelController implements Initializable{
 
     @FXML
     private ComboBox<String> roleChooserLoginPanel;
-    @FXML
 
     private String role;  // نقشی که از صفحه قبلی گرفته میشه
 

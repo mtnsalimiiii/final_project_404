@@ -24,10 +24,12 @@
                </styleClass>
             </Button>
             <Button layoutX="20.0" layoutY="62.0" mnemonicParsing="false" onAction="#professorEmployeePortal" prefHeight="31.0" prefWidth="171.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Professors" />
+            <Button mnemonicParsing="false" onAction="#RegisterNewProfessorEmployeePortal" prefHeight="50.0" prefWidth="130.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Register New&#10;Professor" textAlignment="CENTER" />
             <Button layoutX="20.0" layoutY="107.0" mnemonicParsing="false" onAction="#studentsEmpoyeePortal" prefHeight="31.0" prefWidth="171.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Students" />
-            <Button layoutX="20.0" layoutY="150.0" mnemonicParsing="false" onAction="#profileEmployeePortal" prefHeight="31.0" prefWidth="171.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Profile" />
+            <Button mnemonicParsing="false" onAction="#RegisterNewStudentEmployeePortal" prefHeight="50.0" prefWidth="231.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Register New&#10;Student" textAlignment="CENTER" />
+            <Button layoutX="20.0" layoutY="150.0" mnemonicParsing="false" onAction="#profileEmployeePortal" prefHeight="23.0" prefWidth="130.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Profile" />
             <Button layoutX="20.0" layoutY="193.0" mnemonicParsing="false" onAction="#reportsEmployeePortal" prefHeight="31.0" prefWidth="171.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Reports" />
-            <Button layoutX="20.0" layoutY="193.0" mnemonicParsing="false" onAction="#settingsEmployeePortal" prefHeight="31.0" prefWidth="171.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Settings" />
+            <Button layoutX="20.0" layoutY="193.0" mnemonicParsing="false" onAction="#settingsEmployeePortal" prefHeight="31.0" prefWidth="171.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Sign out" />
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

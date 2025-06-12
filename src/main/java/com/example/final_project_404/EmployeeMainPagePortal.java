@@ -17,6 +17,16 @@ public class EmployeeMainPagePortal {
     private VBox navigationBarVBox;
 
     @FXML
+    void RegisterNewProfessorEmployeePortal(ActionEvent event) {
+
+    }
+
+    @FXML
+    void RegisterNewStudentEmployeePortal(ActionEvent event) {
+
+    }
+
+    @FXML
     void dashboardEmployeePortal(ActionEvent event) {
 
     }
@@ -45,6 +55,5 @@ public class EmployeeMainPagePortal {
     void studentsEmpoyeePortal(ActionEvent event) {
 
     }
-
 
 }

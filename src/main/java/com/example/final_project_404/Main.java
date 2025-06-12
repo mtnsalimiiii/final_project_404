@@ -18,7 +18,7 @@ public class Main extends Application {
         Image ikiuIcon = new Image("ikiu.png");
         primaryStage.getIcons().add(ikiuIcon);
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/example/final_project_404/EmployeeMainPagePortal.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/example/final_project_404/RegisterStudent.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         primaryStage.setScene(scene);

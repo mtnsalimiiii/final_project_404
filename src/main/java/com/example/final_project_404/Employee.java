@@ -8,7 +8,7 @@ import javafx.scene.layout.VBox;
 public class Employee extends Person{
     private int employeeId;
     private String dateOfHire;
-    public Employee(String first_name,String last_name,String dateOfBirth,int employeeId,String dateOfHire){
+    public Employee(String first_name, String last_name, String dateOfBirth, int employeeId, String dateOfHire){
         //super(first_name,last_name,dateOfBirth);
         this.employeeId=employeeId;
         this.dateOfHire=dateOfHire;
