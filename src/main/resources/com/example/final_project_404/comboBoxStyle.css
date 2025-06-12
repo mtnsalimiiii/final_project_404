@@ -1,0 +1,33 @@
+/* Base style for the combo box */
+.combo-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 4 8 4 8;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+/* Style for the button part of the combo box */
+.combo-box .arrow-button {
+    -fx-background-color: #0078d7;
+    -fx-background-radius: 0 8 8 0;
+}
+
+/* Arrow icon inside the button */
+.combo-box .arrow {
+    -fx-shape: "M 0 0 L 4 4 L 8 0 Z";
+    -fx-background-color: white;
+}
+
+/* When combo box is hovered */
+.combo-box:hover {
+    -fx-border-color: #0078d7;
+}
+
+/* When focused */
+.combo-box:focused {
+    -fx-border-color: #005bb5;
+    -fx-effect: dropshadow(gaussian, #0078d7, 4, 0.3, 0, 0);
+}

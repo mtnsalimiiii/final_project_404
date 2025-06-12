@@ -30,8 +30,8 @@ public class roleController {
             Parent root = loader.load();
 
             // گرفتن کنترلر و ارسال نقش
-            LoginPanel loginController = loader.getController();
-            loginController.setRole(role);
+            //LoginPanel loginController = loader.getController();
+            //loginController.setRole(role);
 
             // باز کردن صحنه جدید
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -62,4 +62,5 @@ public class roleController {
     private void handleEmployee(ActionEvent event) {
         goToLogin(event, "employee");
     }
+    // ino hazf kon
 }
