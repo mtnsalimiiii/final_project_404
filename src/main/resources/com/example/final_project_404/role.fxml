@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="396.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Button layoutX="158.0" layoutY="108.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="102.0" text="Admin" />
+        <Button layoutX="158.0" layoutY="164.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="102.0" text="Employee" />
+        <Button layoutX="158.0" layoutY="231.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="102.0" text="Teacher" />
+        <Button layoutX="158.0" layoutY="298.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="102.0" text="Student" />
+        <Label layoutX="87.0" layoutY="21.0" prefHeight="72.0" prefWidth="222.0" text="   Whats your role?" />
+    </children>
+</AnchorPane>
