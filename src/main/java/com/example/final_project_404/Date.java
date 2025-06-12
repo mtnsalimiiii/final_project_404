@@ -12,7 +12,7 @@ public class Date {
     public static String returnDate(int year, int month, int day){
         return String.format("%d/%d/%d",year ,month ,day);
     }
-    public String DateOfJoin(){
+    public static String DateOfJoin(){
         return LocalDate.now().toString();
     }
 }

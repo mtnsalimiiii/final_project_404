@@ -1,4 +1,5 @@
 package com.example.final_project_404;
+import java.io.Serializable;
 
 import javafx.application.Application;
 import javafx.fxml.FXML;
@@ -84,8 +85,9 @@ public class Main extends Application {
         Image ikiuIcon = new Image("ikiu.png");
         primaryStage.getIcons().add(ikiuIcon);
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("LoginPanel.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 350, 480);
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("role.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 400, 555);
+        scene.getStylesheets().add(getClass().getResource("roleStyle.css").toExternalForm());
 
         primaryStage.setScene(scene);
         primaryStage.setTitle("Login Panel");

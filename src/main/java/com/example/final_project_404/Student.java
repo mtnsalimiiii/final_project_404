@@ -5,39 +5,25 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Student extends Person implements Serializable {
-    private int id;
-    private String dateOfRegistration;
-    public Student(String first_name, String last_name, String dateOfBirth, String nationalId, String phoneNumber, int id, String dateOfRegistration){
+    private String id;
+    public Student(String first_name, String last_name, String dateOfBirth, String nationalId, String phoneNumber, String id){
         super(first_name,last_name,dateOfBirth,nationalId,phoneNumber);
         this.id=id;
-        this.dateOfRegistration=dateOfRegistration;
     }
     public Student() {
         super();
-        this.id = 0;
-        this.dateOfRegistration=dateOfRegistration;
+        this.id = "";
     }
-    public  int getId() {
+    public String getId() {
         return id;
     }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-    public String getDateOfRegistration() {
-        return dateOfRegistration;
-    }
-
-    public void setDateOfRegistration(String dateOfRegistration) {
-        this.dateOfRegistration = dateOfRegistration;
-    }
-    public static void loadStudents() throws Exception {
-        File file = new File("StudentsList.ser");
-        if (!file.exists()) {
+    public static void loadStudents() {
+        File file = new File("allStudents.ser");
+        if (!file.exists() || file.length() == 0) {
             return;
         }
-        ObjectInputStream input = new ObjectInputStream(new FileInputStream(file));
-        try {
+
+        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(file))) {
             while (true) {
                 try {
                     Student student = (Student) input.readObject();
@@ -47,16 +33,15 @@ public class Student extends Person implements Serializable {
                 }
             }
         } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error loading students: " + e.getMessage());
+            System.err.println("Error in reading students: " + e.getMessage());
         }
-        input.close();
     }
     public static void addStudent(){
-        allStudents.add(new Student("ali","ganji","Salam","25255","09211608894",1,"1"));
+        allStudents.add(new Student("ali","ganji","25255","09211608894","1","1"));
     }
     public static void saveStudent() throws IOException {
-        File file=new File("StudentsList.ser");
-        try(ObjectOutputStream output= new ObjectOutputStream(Files.newOutputStream(Paths.get("StudentsList.ser")))) {
+        File file=new File("allStudents.ser");
+        try(ObjectOutputStream output= new ObjectOutputStream(Files.newOutputStream(Paths.get("allStudents.ser")))) {
             for (Student student : allStudents) {
                 output.writeObject(student);
             }

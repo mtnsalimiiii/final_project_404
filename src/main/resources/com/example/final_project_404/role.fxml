@@ -4,12 +4,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="400.0" prefWidth="396.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane prefHeight="400.0" prefWidth="396.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.roleController">
     <children>
-        <Button layoutX="158.0" layoutY="108.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="102.0" text="Admin" />
-        <Button layoutX="158.0" layoutY="164.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="102.0" text="Employee" />
-        <Button layoutX="158.0" layoutY="231.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="102.0" text="Teacher" />
-        <Button layoutX="158.0" layoutY="298.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="102.0" text="Student" />
+        <Button fx:id="adminButton" layoutX="158.0" layoutY="108.0" mnemonicParsing="false" onAction="#handleAdmin" prefHeight="36.0" prefWidth="102.0" text="Admin" />
+        <Button fx:id="employeeButton" layoutX="158.0" layoutY="164.0" mnemonicParsing="false" onAction="#handleEmployee" prefHeight="36.0" prefWidth="102.0" text="Employee" />
+        <Button fx:id="teacherButton" layoutX="158.0" layoutY="231.0" mnemonicParsing="false" onAction="#handleTeacher" prefHeight="36.0" prefWidth="102.0" text="Teacher" />
+        <Button fx:id="studentButton" layoutX="158.0" layoutY="298.0" mnemonicParsing="false" onAction="#handleStudent" prefHeight="36.0" prefWidth="102.0" text="Student" />
         <Label layoutX="87.0" layoutY="21.0" prefHeight="72.0" prefWidth="222.0" text="   Whats your role?" />
     </children>
 </AnchorPane>

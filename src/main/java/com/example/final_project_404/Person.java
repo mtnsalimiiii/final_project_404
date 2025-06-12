@@ -10,6 +10,7 @@ public abstract class  Person implements Serializable {
     private String dateOfBirth;
     private String nationalId;
     private String phoneNumber;
+    private String dateOfregistration;
     public static List<Teacher> allTeachers = new ArrayList<>();
     public static List<Employee> allEmployees = new ArrayList<>();
     public static List<Student> allStudents = new ArrayList<>();
@@ -21,9 +22,11 @@ public abstract class  Person implements Serializable {
         this.dateOfBirth=dateOfBirth;
         this.nationalId=nationalId;
         this.phoneNumber=phoneNumber;
+        dateOfregistration= Date.DateOfJoin();
     }
     public Person() {
         this("", "", "", "", "");
+        dateOfregistration="";
     }
     public void setFirst_name(String first_name){
         this.first_name=first_name;
@@ -58,5 +61,12 @@ public abstract class  Person implements Serializable {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+    public String getDateOfregistration() {
+        return dateOfregistration;
+    }
+
+    public void setDateOfregistration(String dateOfregistration) {
+        this.dateOfregistration = dateOfregistration;
     }
 }
