@@ -1,7 +1,7 @@
 package com.example.final_project_404;
 
 public class Employee extends Person{
-    private int employeeId;
+    /*private int employeeId;
     private String dateOfHire;
     public Employee(String first_name,String last_name,String dateOfBirth,int employeeId,String dateOfHire){
         super(first_name,last_name,dateOfBirth);
@@ -23,5 +23,5 @@ public class Employee extends Person{
     }
     public void addTeacher(){
 
-    }
+    }*/
 }
