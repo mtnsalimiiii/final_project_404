@@ -11,9 +11,6 @@ public abstract class  Person implements Serializable {
     private String nationalId;
     private String phoneNumber;
     private String dateOfregistration;
-    public static List<Teacher> allTeachers = new ArrayList<>();
-    public static List<Employee> allEmployees = new ArrayList<>();
-    public static List<Student> allStudents = new ArrayList<>();
 
 
     public Person(String first_name,String last_name,String dateOfBirth,String nationalId,String phoneNumber){
@@ -40,7 +37,7 @@ public abstract class  Person implements Serializable {
     public void setNationalId(String nationalId) {
         this.nationalId = nationalId;
     }
-    public String getFirst_name(){
+    public  String getFirst_name(){
         return first_name;
     }
     public String getLast_name(){

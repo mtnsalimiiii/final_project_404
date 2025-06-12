@@ -27,7 +27,7 @@ public class Student extends Person implements Serializable {
             while (true) {
                 try {
                     Student student = (Student) input.readObject();
-                    allStudents.add(student);
+                    University.allStudents.add(student);
                 } catch (EOFException e) {
                     break;
                 }
@@ -37,12 +37,12 @@ public class Student extends Person implements Serializable {
         }
     }
     public static void addStudent(){
-        allStudents.add(new Student("ali","ganji","25255","09211608894","1","1"));
+        University.allStudents.add(new Student("ali","ganji","25255","09211608894","1","1"));
     }
     public static void saveStudent() throws IOException {
         File file=new File("allStudents.ser");
         try(ObjectOutputStream output= new ObjectOutputStream(Files.newOutputStream(Paths.get("allStudents.ser")))) {
-            for (Student student : allStudents) {
+            for (Student student : University.allStudents) {
                 output.writeObject(student);
             }
             output.close();
