@@ -9,6 +9,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -97,7 +98,36 @@ public class RegisterStudentController implements Initializable {
         String formattedDate = dateOfBirth.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         this.dateOfBirth = formattedDate;
     }
-    public void addNewStudent(ActionEvent event){
+    public void addNewStudent(ActionEvent event) throws IOException {
+        getDateOfBirth(event);
+
+        String firstName = firstnameRegisterStudentEmployee.getText().trim();
+        String lastName = lastnameRegisterStudentEmployee.getText().trim();
+        String nationalId = nationalidRegisterStudentEmployee.getText().trim();
+        String faculty = facultyChooserRegisterStudentEmployee.getValue();
+        String department = departmentChooserRegisterStudentEmployee.getValue();
+        String major = majorChooserRegisterStudentEmployee.getValue();
+
+        String phoneNumber = "N/A";
+        String studentId = generateStudentId();
+        Student student = new Student(firstName, lastName, dateOfBirth, nationalId, phoneNumber, studentId);
+        Student.loadAllStudents();
+        University.allStudents.add(student);
+        Student.saveStudent();
+        Major.addStudentToMajor(department,major,student);
+        try {
+            Student.saveStudent();
+            System.out.println("Student saved successfully!");
+        } catch (IOException e) {
+            System.out.println("Failed to save student: " + e.getMessage());
+        }
+    }
+    public String generateStudentId() {
+        return "STD" + (University.allStudents.size() + 1);
+    }
+
+
+    /*public void addNewStudent(ActionEvent event){
         this.fullName = firstnameRegisterStudentEmployee.getText().trim()+' '+lastnameRegisterStudentEmployee.getText().trim();
         this.nationalId = nationalidRegisterStudentEmployee.getText().trim();
         this.facultyOfStudent = facultyChooserRegisterStudentEmployee.getValue();
@@ -110,19 +140,19 @@ public class RegisterStudentController implements Initializable {
         System.out.println(facultyOfStudent);
         System.out.println(departmentOfStudent);
         System.out.println(majorOfStudent);
-    }
+    }*/
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        departmentChooserRegisterStudentEmployee.getItems().addAll("Computer Engineering", "Electrical Engineering", "Civil Engineering", "Mechanical Engineering", "Mining engineering");
+        departmentChooserRegisterStudentEmployee.getItems().addAll("Computer", "Electrical Engineering", "Civil Engineering", "Mechanical Engineering", "Mining engineering");
         departmentChooserRegisterStudentEmployee.setVisibleRowCount(5);
 
-        facultyChooserRegisterStudentEmployee.getItems().addAll("Faculty of Technology and Engineering", "Faculty of Basic Sciences", "Faculty of Social Sciences", "Faculty of Literature and Humanities", "Faculty of Architecture and Urban Planning", "Faculty of Agriculture", "Faculty of Islamic Sciences and Research");
+        facultyChooserRegisterStudentEmployee.getItems().addAll("Fani","Faculty of Technology and Engineering", "Faculty of Basic Sciences", "Faculty of Social Sciences", "Faculty of Literature and Humanities", "Faculty of Architecture and Urban Planning", "Faculty of Agriculture", "Faculty of Islamic Sciences and Research");
         facultyChooserRegisterStudentEmployee.setVisibleRowCount(5);
 
-        majorChooserRegisterStudentEmployee.getItems().addAll("Faculty of Technology and Engineering", "Faculty of Basic Sciences", "Faculty of Social Sciences", "Faculty of Literature and Humanities", "Faculty of Architecture and Urban Planning", "Faculty of Agriculture", "Faculty of Islamic Sciences and Research");
+        majorChooserRegisterStudentEmployee.getItems().addAll("Software","Faculty of Technology and Engineering", "Faculty of Basic Sciences", "Faculty of Social Sciences", "Faculty of Literature and Humanities", "Faculty of Architecture and Urban Planning", "Faculty of Agriculture", "Faculty of Islamic Sciences and Research");
         majorChooserRegisterStudentEmployee.setVisibleRowCount(5);
 
 

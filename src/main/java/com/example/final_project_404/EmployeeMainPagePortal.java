@@ -31,7 +31,7 @@ public class EmployeeMainPagePortal {
     @FXML
     void RegisterNewStudentEmployeePortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("RegisterStudent.fxml"));
-        Scene scene = new Scene(root, 400, 555);
+        Scene scene = new Scene(root, 800, 800);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Employee Portal");
         stage.setScene(scene);

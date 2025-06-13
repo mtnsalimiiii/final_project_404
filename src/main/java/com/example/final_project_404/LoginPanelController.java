@@ -57,7 +57,7 @@ public class LoginPanelController implements Initializable{
 
         switch (role.toLowerCase()) {
             case "student":
-                         Student.loadStudents();
+                         Student.loadAllStudents();
 
                 boolean found = false;
                 for (Student student : University.allStudents) {

@@ -17,7 +17,7 @@ public class Student extends Person implements Serializable {
     public String getId() {
         return id;
     }
-    public static void loadStudents() {
+    public static void loadAllStudents() {
         File file = new File("allStudents.ser");
         if (!file.exists() || file.length() == 0) {
             return;
@@ -36,8 +36,11 @@ public class Student extends Person implements Serializable {
             System.err.println("Error in reading students: " + e.getMessage());
         }
     }
-    public static void addStudent(){
-        University.allStudents.add(new Student("ali","ganji","25255","09211608894","1","1"));
+
+
+    public static void addStudent(Student student,String majorName){
+        University.allStudents.add(student);
+
     }
     public static void saveStudent() throws IOException {
         File file=new File("allStudents.ser");
