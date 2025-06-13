@@ -91,8 +91,13 @@ public class LoginPanelController implements Initializable{
                 break;
             case "admin":
                 if ("admin".equals(username) && "admin404".equals(password)){
-                    System.out.println("Successfull login for admin ");
-                    //admin panel.
+                    Parent root = FXMLLoader.load(getClass().getResource("AdminPortal.fxml"));
+                    Scene scene = new Scene(root, 800, 500);
+                    Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                    stage.setTitle("Admin Portal");
+                    stage.setScene(scene);
+                    stage.setResizable(false);
+                    stage.show();
                     break;
                 }
                 else{
