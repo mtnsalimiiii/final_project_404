@@ -9,20 +9,22 @@ public abstract class  Person implements Serializable {
     private String last_name;
     private String dateOfBirth;
     private String nationalId;
+    private Gender gender;
     private String phoneNumber;
     private String dateOfregistration;
 
 
-    public Person(String first_name,String last_name,String dateOfBirth,String nationalId,String phoneNumber){
+    public Person(String first_name,String last_name,String dateOfBirth,String nationalId,Gender gender, String phoneNumber){
         this.first_name=first_name;
         this.last_name=last_name;
         this.dateOfBirth=dateOfBirth;
         this.nationalId=nationalId;
+        this.gender = gender;
         this.phoneNumber=phoneNumber;
         dateOfregistration= Date.DateOfJoin();
     }
     public Person() {
-        this("", "", "", "", "");
+        this("", "", "", "", Gender.Male, "");
         dateOfregistration="";
     }
     public void setFirst_name(String first_name){

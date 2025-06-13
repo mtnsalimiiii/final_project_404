@@ -1,6 +1,7 @@
 package com.example.final_project_404;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -23,7 +24,7 @@ public class Main extends Application {
         Image ikiuIcon = new Image("ikiu.png");
         primaryStage.getIcons().add(ikiuIcon);
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/example/final_project_404/LoginPanel.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/example/final_project_404/EmployeeMainPagePortal.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         primaryStage.setScene(scene);

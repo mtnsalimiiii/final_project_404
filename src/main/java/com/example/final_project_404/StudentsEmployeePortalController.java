@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class EmployeeMainPagePortal {
+public class StudentsEmployeePortalController {
 
     @FXML
     private VBox containerBarVBox;
@@ -43,11 +43,21 @@ public class EmployeeMainPagePortal {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
-
     }
 
     @FXML
-    void professorEmployeePortal(ActionEvent event) throws IOException {
+    void dashboardEmployeePortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("EmployeeMainPagePortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Employee Portal");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+    void professorsEmployeePortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ProfessorsEmployeePortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -85,17 +95,6 @@ public class EmployeeMainPagePortal {
         Scene scene = new Scene(root, 350, 480);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Login Panel");
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-    }
-
-    @FXML
-    void studentsEmpoyeePortal(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("StudentsEmployeePortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Students");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();

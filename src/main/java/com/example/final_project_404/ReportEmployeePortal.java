@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class EmployeeMainPagePortal {
+public class ReportEmployeePortal {
 
     @FXML
     private VBox containerBarVBox;
@@ -43,7 +43,17 @@ public class EmployeeMainPagePortal {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
 
+    @FXML
+    void dashboardEmployeePortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("EmployeeMainPagePortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Employee Portal");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML
@@ -63,17 +73,6 @@ public class EmployeeMainPagePortal {
         Scene scene = new Scene(root, 800, 500);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Profile");
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-    }
-
-    @FXML
-    void reportsEmployeePortal(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("ReportEmployeePortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Report");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();

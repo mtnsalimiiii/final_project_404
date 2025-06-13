@@ -6,8 +6,8 @@ import java.nio.file.Paths;
 
 public class Student extends Person implements Serializable {
     private String id;
-    public Student(String first_name, String last_name, String dateOfBirth, String nationalId, String phoneNumber, String id){
-        super(first_name,last_name,dateOfBirth,nationalId,phoneNumber);
+    public Student(String first_name, String last_name, String dateOfBirth, String nationalId,Gender gender, String phoneNumber, String id){
+        super(first_name,last_name,dateOfBirth,nationalId,gender,phoneNumber);
         this.id=id;
     }
     public Student() {

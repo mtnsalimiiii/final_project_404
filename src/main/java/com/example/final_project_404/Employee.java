@@ -6,8 +6,8 @@ import java.nio.file.Paths;
 
 public class Employee extends Person{
     private String id;
-    public Employee(String first_name, String last_name, String dateOfBirth, String nationalId, String phoneNumber, String id){
-        super(first_name,last_name,dateOfBirth,nationalId,phoneNumber);
+    public Employee(String first_name, String last_name, String dateOfBirth, String nationalId,Gender gender, String phoneNumber, String id){
+        super(first_name,last_name,dateOfBirth,nationalId,gender,phoneNumber);
         this.id=id;
     }
 
@@ -38,7 +38,7 @@ public class Employee extends Person{
         }
     }
     public static void addEmployee(){
-        University.allEmployees.add(new Employee("ali","ganji","25255","09211608894","1","1"));
+        University.allEmployees.add(new Employee("ali","ganji","25255","09211608894",Gender.Male,"1","1"));
     }
     public static void saveEmployee() throws IOException {
         File file=new File("allEmployees.ser");

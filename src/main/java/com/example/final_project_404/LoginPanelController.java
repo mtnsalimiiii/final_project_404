@@ -106,7 +106,7 @@ public class LoginPanelController implements Initializable{
                         System.out.println("Successfull login " + employee.getFirst_name());
                         found3 = true;
                         Parent root = FXMLLoader.load(getClass().getResource("EmployeeMainPagePortal.fxml"));
-                        Scene scene = new Scene(root, 400, 555);
+                        Scene scene = new Scene(root, 800, 500);
                         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                         stage.setTitle("Employee Portal");
                         stage.setScene(scene);
