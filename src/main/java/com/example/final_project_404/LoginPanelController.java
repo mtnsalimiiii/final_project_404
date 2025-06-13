@@ -74,7 +74,7 @@ public class LoginPanelController implements Initializable{
                 }
                 break;
             case "teacher":
-                         Teacher.loadTeacher();
+                Teacher.loadTeacher();
                 boolean found2 = false;
                 for (Teacher teacher : University.allTeachers) {
                     if (teacher.getId().equals(username) && teacher.getNationalId().equals(password)) {
@@ -93,13 +93,35 @@ public class LoginPanelController implements Initializable{
                 if ("admin".equals(username) && "admin404".equals(password)){
                     System.out.println("Successfull login for admin ");
                     //admin panel.
+                    break;
                 }
                 else{
                     System.out.println("The username or password is incorrect.");
                 }
             case "employee":
+                Employee.loadAllEmployee();
+                boolean found3 = false;
+                for (Employee employee : University.allEmployees) {
+                    if (employee.getId().equals(username) && employee.getNationalId().equals(password)) {
+                        System.out.println("Successfull login " + employee.getFirst_name());
+                        found3 = true;
+                        Parent root = FXMLLoader.load(getClass().getResource("EmployeeMainPagePortal.fxml"));
+                        Scene scene = new Scene(root, 400, 555);
+                        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                        stage.setTitle("Employee Portal");
+                        stage.setScene(scene);
+                        stage.setResizable(false);
+                        stage.show();
+
+                        break;
+                    }
+                }
+
+                if (!found3) {
+                    System.out.println("The username or password is incorrect.");
+                }
+                break;
 
         }
     }
-
 }

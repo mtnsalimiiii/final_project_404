@@ -8,6 +8,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class Main extends Application {
+    /*public static void main(String[] args) throws IOException {
+        Employee.loadAllEmployee();
+        Employee.addEmployee();
+        Employee.saveEmployee();
+    }*/
 
     public static void main(String[] args) {
         launch(args);
@@ -18,11 +23,11 @@ public class Main extends Application {
         Image ikiuIcon = new Image("ikiu.png");
         primaryStage.getIcons().add(ikiuIcon);
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/example/final_project_404/RegisterStudent.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("/com/example/final_project_404/LoginPanel.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         primaryStage.setScene(scene);
-        primaryStage.setTitle("Employee Panel");
+        primaryStage.setTitle("Login panel");
         primaryStage.setResizable(false);
 
         primaryStage.show();

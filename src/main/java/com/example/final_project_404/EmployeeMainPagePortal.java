@@ -2,8 +2,15 @@ package com.example.final_project_404;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class EmployeeMainPagePortal {
 
@@ -22,7 +29,14 @@ public class EmployeeMainPagePortal {
     }
 
     @FXML
-    void RegisterNewStudentEmployeePortal(ActionEvent event) {
+    void RegisterNewStudentEmployeePortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("RegisterStudent.fxml"));
+        Scene scene = new Scene(root, 400, 555);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Employee Portal");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
 
     }
 
