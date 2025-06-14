@@ -5,15 +5,18 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Student extends Person implements Serializable {
-    private String id;
-    public Student(String first_name, String last_name, String dateOfBirth, String nationalId,Gender gender, String phoneNumber, String id){
+    private final String id;
+    private String dateOfRegistratoin;
+    public Student(String first_name, String last_name, String dateOfBirth, String nationalId,Gender gender, String phoneNumber, String id, String dateOfRegistration){
         super(first_name,last_name,dateOfBirth,nationalId,gender,phoneNumber);
         this.id=id;
+        this.dateOfRegistratoin = dateOfRegistration;
     }
     public Student() {
         super();
         this.id = "";
     }
+
     public String getId() {
         return id;
     }

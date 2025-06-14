@@ -3,25 +3,38 @@ package com.example.final_project_404;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.ResourceBundle;
 
-public class AddDepartmentAdminPortalController {
+public class AddDepartmentAdminPortalController implements Initializable {
 
     @FXML
     private VBox containerBarVBox;
+
+    @FXML
+    private TextField departmentNameAddDepartmentAdmin;
+
+    @FXML
+    private ComboBox<String> facultyChooserAddDepartmentAdmin;
 
     @FXML
     private HBox headerHBox;
 
     @FXML
     private VBox navigationBarVBox;
+
 
     @FXML
     void addEmployeeAdminPortal(ActionEvent event) throws IOException {
@@ -100,4 +113,37 @@ public class AddDepartmentAdminPortalController {
         stage.show();
     }
 
+    public int getPublishYear(){
+        return LocalDate.now().getYear();
+    }
+    public int getDepartmentId(String faculty){
+        int id = 11;
+        for(Faculty faculties : University.allFaculties){
+            if(faculties.getFacultyName().toString()==faculty){
+                id = faculties.departments.size()+11;
+            }
+        }
+        return id;
+    }
+
+    public void addNewDepartment(ActionEvent event) {
+        String faculty = facultyChooserAddDepartmentAdmin.getValue().trim();
+        String departmentName = departmentNameAddDepartmentAdmin.getText().trim();
+        int publishYear = getPublishYear();
+        int departmentId = getDepartmentId(faculty);
+        System.out.println("faculty: " + faculty);
+        System.out.println("name: " + departmentName);
+        System.out.println("year: " + publishYear);
+        System.out.println("id: " + departmentId);
+
+
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        facultyChooserAddDepartmentAdmin.getItems().addAll("1","2","3");
+        facultyChooserAddDepartmentAdmin.setVisibleRowCount(4);
+
+
+    }
 }

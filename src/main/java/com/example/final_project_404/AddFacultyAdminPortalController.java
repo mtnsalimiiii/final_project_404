@@ -6,16 +6,21 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class AddFacultyAdminPortalController {
 
     @FXML
     private VBox containerBarVBox;
+
+    @FXML
+    private TextField facultyNameAddFacultyAdmin;
 
     @FXML
     private HBox headerHBox;
@@ -99,5 +104,20 @@ public class AddFacultyAdminPortalController {
         stage.setResizable(false);
         stage.show();
     }
+    public int getPublishYear(){
+        return LocalDate.now().getYear();
+    }
+    public int getFacultyId(){
+        return University.allFaculties.size()+11;
+    }
 
+    public void addNewFaculty(ActionEvent event) {
+        String facultyName = facultyNameAddFacultyAdmin.getText().trim();
+        int publishYear = getPublishYear();
+        int id = getFacultyId();
+
+        System.out.println("name: " + facultyName);
+        System.out.println("Year: " + publishYear);
+        System.out.println("ID: " + id);
+    }
 }

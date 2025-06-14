@@ -33,7 +33,7 @@ public class LoginPanelController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
-        roleChooserLoginPanel.getItems().addAll("admin", "professor", "student", "employee");
+        roleChooserLoginPanel.getItems().addAll("ADMIN", "PROFESSOR", "STUDENT", "EMPLOYEE");
         roleChooserLoginPanel.setVisibleRowCount(5);
 
         roleChooserLoginPanel.setOnAction(event -> {

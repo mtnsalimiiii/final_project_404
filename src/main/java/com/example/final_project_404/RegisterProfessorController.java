@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
@@ -133,6 +134,9 @@ public class RegisterProfessorController implements Initializable {
         stage.setResizable(false);
         stage.show();
     }
+    public String getDateOfHire(){
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+    }
 
     public void addNewProfessor(ActionEvent event) {
         String dateOfBirth = getDateOfBirth(event);
@@ -144,6 +148,7 @@ public class RegisterProfessorController implements Initializable {
         String faculty = facultyChooserRegisterProfessorEmployee.getValue();
         String department = departmentChooserRegisterProfessorEmployee.getValue();
         String major = majorChooserRegisterProfessorEmployee.getValue();
+        String dateOfHire = getDateOfHire();
     }
 
     public String getDateOfBirth(ActionEvent event) {

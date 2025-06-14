@@ -5,10 +5,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class Teacher extends Person implements Serializable {
-    private String id;
-    public Teacher(String first_name, String last_name, String dateOfBirth, String nationalId,Gender gender, String phoneNumber, String id){
+    private final String id;
+    private String dateOfHire;
+    public Teacher(String first_name, String last_name, String dateOfBirth, String nationalId,Gender gender, String phoneNumber, String id, String dateOfHire){
         super(first_name,last_name,dateOfBirth,nationalId,gender,phoneNumber);
         this.id=id;
+        this.dateOfHire = dateOfHire;
     }
     public String getId() {
         return id;
@@ -34,7 +36,7 @@ public class Teacher extends Person implements Serializable {
         input.close();
     }
     public static void addteacher(String firstname,String lastname,String date,String nationalId,Gender gender,String number,String id){
-        University.allTeachers.add(new Teacher("ali","ganji","30-11-2005","25255",Gender.Male,"09211608894", "1234"));
+        University.allTeachers.add(new Teacher("ali","ganji","30-11-2005","25255",Gender.Male,"09211608894", "1234", "12-06-2025"));
     }
     public static void saveTeacher() throws IOException {
         File file=new File("TeachersList.ser");

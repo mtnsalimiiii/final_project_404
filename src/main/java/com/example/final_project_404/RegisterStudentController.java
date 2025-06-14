@@ -138,6 +138,9 @@ public class RegisterStudentController implements Initializable {
     public String getDateOfBirth(ActionEvent event){
         return dateOfBirthRegisterStudentEmployee.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")).toString();
     }
+    public String getDateOfRegistration(){
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+    }
     public void addNewStudent(ActionEvent event) throws IOException {
         String dateOfBirth = getDateOfBirth(event);
         String firstName = firstnameRegisterStudentEmployee.getText().trim();
@@ -148,9 +151,10 @@ public class RegisterStudentController implements Initializable {
         String faculty = facultyChooserRegisterStudentEmployee.getValue();
         String department = departmentChooserRegisterStudentEmployee.getValue();
         String major = majorChooserRegisterStudentEmployee.getValue();
+        String dateOfRegistration = getDateOfRegistration();
 
         String studentId = generateStudentId();
-        Student student = new Student(firstName, lastName, dateOfBirth, nationalId, gender, phoneNumber, studentId);
+        Student student = new Student(firstName, lastName, dateOfBirth, nationalId, gender, phoneNumber, studentId, dateOfRegistration);
         Student.loadAllStudents();
         University.allStudents.add(student);
         Student.saveStudent();

@@ -71,7 +71,7 @@ public class Faculty implements Serializable {
         }
     }
     public static void loadDepartment(String departmentName,String majorName) {
-        File file = new File("Depaetmnet_"+departmentName+".ser");
+        File file = new File("Department_"+departmentName+".ser");
         if (!file.exists() || file.length() == 0) {
             return;
         }

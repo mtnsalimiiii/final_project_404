@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
@@ -138,6 +139,9 @@ public class AddEmployeeAdminPortalController implements Initializable {
     public String getDateOfBirth(ActionEvent event) {
         return dateOfBirthRegisterEmployeeAdmin.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
+    public String getDateOfHire(){
+        return LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+    }
 
     public void addNewEmployee(ActionEvent event) {
         String dateOfBirth = getDateOfBirth(event);
@@ -149,6 +153,7 @@ public class AddEmployeeAdminPortalController implements Initializable {
         String faculty = facultyChooserRegisterEmployeeAdmin.getValue();
         String department = departmentChooserRegisterEmployeeAdmin.getValue();
         String major = majorChooserRegisterEmployeeAdmin.getValue();
+        String dateOfHire = getDateOfHire();
 
     }
 
