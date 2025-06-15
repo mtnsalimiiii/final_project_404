@@ -8,6 +8,49 @@ import java.util.List;
 public class Faculty implements Serializable {
     private String facultyName;
     private int id;
+    public List<Department> departments = new ArrayList<>();
+
+    public Faculty(String facultyName, int id) {
+        this.facultyName = facultyName;
+        this.id = id;
+    }
+
+    public String getFacultyName() { return facultyName; }
+    public int getId() { return id; }
+    public List<Department> getDepartments() { return departments; }
+
+    public void addDepartment(Department department) {
+        if (department != null) {
+            departments.add(department);
+        }
+    }
+
+    public void saveToFile() {
+        String fileName = "Faculty_" + facultyName + ".ser";
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            output.writeObject(this);
+        } catch (IOException e) {
+            System.err.println("Error saving faculty: " + e.getMessage());
+        }
+    }
+
+    public static Faculty loadFromFile(String facultyName) throws FileNotFoundException {
+        String fileName = "Faculty_" + facultyName + ".ser";
+        File file = new File(fileName);
+        if (!file.exists()) {
+            throw new FileNotFoundException("Faculty file not found for: " + facultyName);
+        }
+
+        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(file))) {
+            return (Faculty) input.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Error loading faculty: " + e.getMessage());
+            return null;
+        }
+
+    }
+    /*private String facultyName;
+    private int id;
     //private int numberOfDepartment;
     public static List<Department> departments = new ArrayList<>();
     public Faculty(String facultyNAme,int id) {
@@ -88,5 +131,5 @@ public class Faculty implements Serializable {
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error in reading students: " + e.getMessage());
         }
-    }
+    }*/
 }

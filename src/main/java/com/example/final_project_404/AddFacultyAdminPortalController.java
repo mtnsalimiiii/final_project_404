@@ -108,13 +108,16 @@ public class AddFacultyAdminPortalController {
         return LocalDate.now().getYear();
     }
     public int getFacultyId(){
-        return University.allFaculties.size()+11;
+        return University.allFaculties.size()+1;
     }
 
     public void addNewFaculty(ActionEvent event) {
         String facultyName = facultyNameAddFacultyAdmin.getText().trim();
         int publishYear = getPublishYear();
         int id = getFacultyId();
+        University.loadFaculties();
+        University.addFaculty(new Faculty(facultyName,id));
+        University.saveFaculties();
 
         System.out.println("name: " + facultyName);
         System.out.println("Year: " + publishYear);
