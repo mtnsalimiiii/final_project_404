@@ -108,7 +108,8 @@ public class AddFacultyAdminPortalController {
         return LocalDate.now().getYear();
     }
     public int getFacultyId(){
-        return University.allFaculties.size()+1;
+        University.loadFaculties();
+        return University.faculties.size()+1;
     }
 
     public void addNewFaculty(ActionEvent event) {

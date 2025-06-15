@@ -22,6 +22,7 @@ public class Faculty implements Serializable {
     public void addDepartment(Department department) {
         if (department != null) {
             departments.add(department);
+            department.saveToFile();
         }
     }
 

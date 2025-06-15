@@ -9,14 +9,15 @@ public class University {
     public static List<Teacher> allTeachers = new ArrayList<>();
     public static List<Employee> allEmployees = new ArrayList<>();
     public static List<Student> allStudents = new ArrayList<>();
-    public static List<Faculty> allFaculties = new ArrayList<>();
     private String name;
     private String address;
     private int establishmetYear;
     public static List<Faculty> faculties=new ArrayList<>();
     public static void loadFaculties() {
         File file = new File("Faculties.ser");
-        if (!file.exists()) return;
+        if (!file.exists()){
+            return;
+        }
 
         try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(file))) {
             faculties = (List<Faculty>) input.readObject();
@@ -44,7 +45,6 @@ public class University {
 
     public static void addFaculty(Faculty faculty) {
         faculties.add(faculty);
-        saveFaculties();
         faculty.saveToFile();
     }
     /*public static void loadFaculty() {

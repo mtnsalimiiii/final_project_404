@@ -117,7 +117,7 @@ public class AddMajorAdminPortalController implements Initializable {
     }
     public int getMajorId(String faculty, String department){
         int id = 11;
-        for(Faculty faculty1 : University.allFaculties){
+        for(Faculty faculty1 : University.faculties){
             if(faculty1.getFacultyName()==faculty){
                 for(Department department1 : faculty1.departments){
                     if(department1.getName()==department){

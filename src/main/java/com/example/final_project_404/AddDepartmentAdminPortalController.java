@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -116,21 +117,20 @@ public class AddDepartmentAdminPortalController implements Initializable {
     public int getPublishYear(){
         return LocalDate.now().getYear();
     }
-    public int getDepartmentId(String faculty){
-        int id = 11;
-        for(Faculty faculties : University.allFaculties){
-            if(faculties.getFacultyName().toString()==faculty){
-                id = faculties.departments.size()+11;
-            }
-        }
+    public int getDepartmentId(String faculty) throws FileNotFoundException {
+        Faculty f=Faculty.loadFromFile(faculty);
+        int id=f.departments.size()+1;
         return id;
     }
 
-    public void addNewDepartment(ActionEvent event) {
+    public void addNewDepartment(ActionEvent event) throws FileNotFoundException {
         String faculty = facultyChooserAddDepartmentAdmin.getValue().trim();
         String departmentName = departmentNameAddDepartmentAdmin.getText().trim();
         int publishYear = getPublishYear();
         int departmentId = getDepartmentId(faculty);
+        Faculty f=Faculty.loadFromFile(faculty);
+        f.addDepartment(new Department(departmentName,departmentId));
+        f.saveToFile();
         System.out.println("faculty: " + faculty);
         System.out.println("name: " + departmentName);
         System.out.println("year: " + publishYear);
@@ -141,7 +141,11 @@ public class AddDepartmentAdminPortalController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        facultyChooserAddDepartmentAdmin.getItems().addAll("1","2","3");
+        University.loadFaculties();
+        for (Faculty f : University.faculties) {
+            facultyChooserAddDepartmentAdmin.getItems().add(f.getFacultyName());
+        }
+
         facultyChooserAddDepartmentAdmin.setVisibleRowCount(4);
 
 
