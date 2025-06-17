@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -115,28 +116,56 @@ public class AddMajorAdminPortalController implements Initializable {
         stage.setResizable(false);
         stage.show();
     }
-    public int getMajorId(String faculty, String department){
-        int id = 11;
-        for(Faculty faculty1 : University.faculties){
-            if(faculty1.getFacultyName()==faculty){
-                for(Department department1 : faculty1.departments){
-                    if(department1.getName()==department){
-                        id = department1.majors.size()+11;
-                    }
-                }
-            }
+    public int getMajorId(String facultyName, String departmentName) throws FileNotFoundException {
+        Faculty faculty = Faculty.loadFromFile(facultyName);
+        if (faculty == null) {
+            System.err.println("Faculty not found: " + facultyName);
+            return -1;
         }
-        return id;
+
+        if (!faculty.getDepartmentNames().contains(departmentName)) {
+            System.err.println("Department not found in faculty: " + departmentName);
+            return -1;
+        }
+
+        Department department = Department.loadFromFile(departmentName);
+        if (department == null) {
+            System.err.println("Department file not found: " + departmentName);
+            return -1;
+        }
+
+        return department.getMajors().size() + 1;
     }
+
     public int getPublishYear(){
         return LocalDate.now().getYear();
     }
-    public void addNewMajor(ActionEvent event) {
+    public void addNewMajor(ActionEvent event) throws FileNotFoundException {
         String faculty = facultyChooserAddMajorAdmin.getValue().trim();
         String department = departmentChooserAddMajorAdmin.getValue().trim();
         String nameMajor = majorNameAddMajorAdmin.getText();
         int publishYear = getPublishYear();
         int majorId = getMajorId(faculty, department);
+        if (faculty == null || department == null || nameMajor.isEmpty()) {
+            System.out.println("Please enter all fields.");
+            return;
+        }
+        Faculty fac = Faculty.loadFromFile(faculty);
+        if (faculty == null) {
+            System.out.println("دانشکده یافت نشد: " + faculty);
+            return;
+        }
+
+        Department dep = Department.loadFromFile(department);
+        if (dep == null) {
+            System.out.println("دپارتمان یافت نشد: " + department);
+            return;
+        }
+
+        Major newMajor = new Major(nameMajor, majorId, publishYear);
+        dep.majors.add(newMajor);
+        dep.saveToFile();
+        fac.saveToFile();
         System.out.println("faculty: " + faculty);
         System.out.println("department: " + department);
         System.out.println("majorName: " + nameMajor);
@@ -146,10 +175,24 @@ public class AddMajorAdminPortalController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        departmentChooserAddMajorAdmin.getItems().addAll("1", "2", "3", "4");
-        departmentChooserAddMajorAdmin.setVisibleRowCount(4);
-
-        facultyChooserAddMajorAdmin.getItems().addAll("1", "2", "3", "4");
+        University.loadFaculties();
+        for (Faculty f : University.faculties) {
+            facultyChooserAddMajorAdmin.getItems().add(f.getFacultyName());
+        }
         facultyChooserAddMajorAdmin.setVisibleRowCount(4);
+        facultyChooserAddMajorAdmin.setOnAction(e -> {
+            String selectedFaculty = facultyChooserAddMajorAdmin.getValue();
+            departmentChooserAddMajorAdmin.getItems().clear(); // پاک کردن آیتم‌های قبلی
+            Faculty faculty = null;
+            try {
+                faculty = Faculty.loadFromFile(selectedFaculty);
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+            if (faculty != null) {
+                departmentChooserAddMajorAdmin.getItems().addAll(faculty.getDepartmentNames());
+                departmentChooserAddMajorAdmin.setVisibleRowCount(4);
+            }
+        });
     }
 }

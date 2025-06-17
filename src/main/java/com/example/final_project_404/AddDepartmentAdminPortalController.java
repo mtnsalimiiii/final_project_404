@@ -119,7 +119,7 @@ public class AddDepartmentAdminPortalController implements Initializable {
     }
     public int getDepartmentId(String faculty) throws FileNotFoundException {
         Faculty f=Faculty.loadFromFile(faculty);
-        int id=f.departments.size()+1;
+        int id=f.departmentNames.size()+1;
         return id;
     }
 

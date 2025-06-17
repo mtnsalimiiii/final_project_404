@@ -5,12 +5,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.LongSummaryStatistics;
 
-public class Major {
+public class Major implements Serializable{
+
+
     private String name;
     private int id;
-    public List<Major> majors=new ArrayList<>();
+    private int publishYear;
     private List<Student> students = new ArrayList<>();
-
+    public Major(String name, int id, int publishYear) {
+        this.name = name;
+        this.id = id;
+        this.publishYear = publishYear;
+    }
     public List<Student> getStudents() {
         return students;
     }
@@ -54,6 +60,13 @@ public class Major {
             System.err.println("Error in reading major: " + e.getMessage());
         }
 */
+    public int getPublishYear() {
+        return publishYear;
+    }
+
+    public void setPublishYear(int publishYear) {
+        this.publishYear = publishYear;
+    }
     public static void addStudentToMajor(String departmentName, String majorName, Student student) {
         Department department = null;
         String fileName = "Department_" + departmentName + ".ser";

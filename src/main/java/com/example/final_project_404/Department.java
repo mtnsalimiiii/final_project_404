@@ -4,6 +4,7 @@ import java.io.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class Department implements Serializable {
@@ -28,16 +29,45 @@ public class Department implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
+    public List<Major> getMajors() {
+        return majors;
+    }
+
     @Override
     public String toString() {
         return "Department{name=" + name + "," + "Id=" + id + "}";
     }
-    public void saveToFile() {
-        String fileName = "Department_" + name + ".ser";
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(fileName))) {
-            output.writeObject(this);
-        } catch (IOException e) {
-            System.err.println("Error saving Department: " + e.getMessage());
+    public void addMajor(Major major) {
+        if (major != null) {
+            majors.add(major);
+            saveToFile();
         }
     }
+    public void saveToFile() {
+        String filename = "Department_" + this.name + ".ser";
+        try {
+            new File(filename).delete();
+            try (ObjectOutputStream oos = new ObjectOutputStream(
+                    new FileOutputStream(filename))) {
+                oos.writeObject(this);
+                oos.flush();
+            }
+        } catch (IOException e) {
+            System.err.println("Error saving department: " + e.getMessage());
+        }
+    }
+    public static Department loadFromFile(String departmentName) {
+        String fileName = "Department_" + departmentName + ".ser";
+        File file = new File(fileName);
+        if (!file.exists()) return null;
+
+        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(file))) {
+            return (Department) input.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Error loading department: " + e.getMessage());
+            return null;
+        }
+    }
+
+
 }

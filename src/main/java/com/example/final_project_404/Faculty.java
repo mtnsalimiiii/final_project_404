@@ -8,7 +8,7 @@ import java.util.List;
 public class Faculty implements Serializable {
     private String facultyName;
     private int id;
-    public List<Department> departments = new ArrayList<>();
+    public List<String> departmentNames = new ArrayList<>();
 
     public Faculty(String facultyName, int id) {
         this.facultyName = facultyName;
@@ -17,12 +17,32 @@ public class Faculty implements Serializable {
 
     public String getFacultyName() { return facultyName; }
     public int getId() { return id; }
-    public List<Department> getDepartments() { return departments; }
+    public List<String> getDepartmentNames() {
+        return departmentNames;
+    }
+    public Department getDepartment(String departmentName) {
+        if (!departmentNames.contains(departmentName)) return null;
+
+        String fileName = "Department_" + departmentName + ".ser";
+        File file = new File(fileName);
+        if (!file.exists()) return null;
+
+        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(file))) {
+            return (Department) input.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Error loading department: " + e.getMessage());
+            return null;
+        }
+    }
+
 
     public void addDepartment(Department department) {
         if (department != null) {
-            departments.add(department);
-            department.saveToFile();
+            if (!departmentNames.contains(department.getName())) {
+                departmentNames.add(department.getName());
+                saveToFile();
+                department.saveToFile();
+            }
         }
     }
 
