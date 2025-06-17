@@ -8,23 +8,23 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.ProfessorPortalController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.ReportsProfessorPortalController">
     <children>
         <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0" styleClass="header" stylesheets="@EmployeePortal.css">
             <children>
                 <Label styleClass="header-title" stylesheets="@EmployeePortal.css" text="Professor Portal" />
+            <Label styleClass="header-title" text=" --&gt; Reports" />
             </children>
         </HBox>
         <VBox fx:id="navigationBarVBox" layoutY="80.0" prefHeight="420.0" prefWidth="150.0" styleClass="nav-bar" stylesheets="@EmployeePortal.css">
             <children>
-                <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="150.0" stylesheets="@EmployeePortal.css" text="Dashboard">
-                    <styleClass>
-                        <String fx:value="nav-button" />
-                        <String fx:value="active" />
-                    </styleClass>
-                </Button>
+                <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#dashboardProfessorPortal" prefHeight="31.0" prefWidth="150.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Dashboard" />
                 <Button layoutX="20.0" layoutY="150.0" mnemonicParsing="false" onAction="#profileProfessorPortal" prefHeight="23.0" prefWidth="130.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Profile" />
-                <Button layoutX="20.0" layoutY="193.0" mnemonicParsing="false" onAction="#reportsProfessorPortal" prefHeight="31.0" prefWidth="171.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Reports" />
+                <Button layoutX="20.0" layoutY="193.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="171.0" stylesheets="@EmployeePortal.css" text="Reports">
+               <styleClass>
+                  <String fx:value="nav-button" />
+                  <String fx:value="active" />
+               </styleClass></Button>
                 <Button layoutX="20.0" layoutY="193.0" mnemonicParsing="false" onAction="#signOutProfessorPortal" prefHeight="31.0" prefWidth="171.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Sign out" />
             </children>
             <padding>
@@ -35,9 +35,6 @@
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
-            <children>
-                <Label prefHeight="30.0" prefWidth="170.0" styleClass="label-title" stylesheets="@EmployeePortal.css" text="welcome, Professor!" />
-            </children>
         </VBox>
     </children>
 </AnchorPane>

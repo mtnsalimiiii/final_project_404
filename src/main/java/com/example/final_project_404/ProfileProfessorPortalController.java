@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ProfessorPortalController {
+public class ProfileProfessorPortalController {
 
     @FXML
     private VBox containerBarVBox;
@@ -24,11 +24,11 @@ public class ProfessorPortalController {
     private VBox navigationBarVBox;
 
     @FXML
-    void profileProfessorPortal(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("ProfileProfessorPortal.fxml"));
+    void dashboardProfessorPortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("ProfessorPortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Profile");
+        stage.setTitle("Professor Portal");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();

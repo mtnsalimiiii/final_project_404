@@ -6,21 +6,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
-public class AddFacultyAdminPortalController {
+public class UpdateDepartmentAdminPortalController {
 
     @FXML
     private VBox containerBarVBox;
-
-    @FXML
-    private TextField facultyNameAddFacultyAdmin;
 
     @FXML
     private HBox headerHBox;
@@ -45,6 +40,17 @@ public class AddFacultyAdminPortalController {
         Scene scene = new Scene(root, 800, 500);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Add New Employee");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+    void addFacultyAdminPortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("AddFacultyAdminPortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Add New Faculty");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
@@ -106,17 +112,6 @@ public class AddFacultyAdminPortalController {
     }
 
     @FXML
-    void updateDepartmentAdminPortal(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("UpdateDepartmentAdminPortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Update New Department");
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-    }
-
-    @FXML
     void updateEmployeeAdminPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("UpdateEmployeeAdminPortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
@@ -148,24 +143,5 @@ public class AddFacultyAdminPortalController {
         stage.setResizable(false);
         stage.show();
     }
-    public int getPublishYear(){
-        return LocalDate.now().getYear();
-    }
-    public int getFacultyId(){
-        University.loadFaculties();
-        return University.faculties.size()+1;
-    }
 
-    public void addNewFaculty(ActionEvent event) {
-        String facultyName = facultyNameAddFacultyAdmin.getText().trim();
-        int publishYear = getPublishYear();
-        int id = getFacultyId();
-        University.loadFaculties();
-        University.addFaculty(new Faculty(facultyName,id));
-        University.saveFaculties();
-
-        System.out.println("name: " + facultyName);
-        System.out.println("Year: " + publishYear);
-        System.out.println("ID: " + id);
-    }
 }

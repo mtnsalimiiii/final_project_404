@@ -6,21 +6,16 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
-public class AddFacultyAdminPortalController {
+public class UpdateFacultyAdminPortalController {
 
     @FXML
     private VBox containerBarVBox;
-
-    @FXML
-    private TextField facultyNameAddFacultyAdmin;
 
     @FXML
     private HBox headerHBox;
@@ -29,7 +24,7 @@ public class AddFacultyAdminPortalController {
     private VBox navigationBarVBox;
 
     @FXML
-    void addDepartmentAdminPortal(ActionEvent event) throws IOException {
+    void addDepartmentAdminPortal(ActionEvent event) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("AddDepartmentAdminPortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -40,7 +35,7 @@ public class AddFacultyAdminPortalController {
     }
 
     @FXML
-    void addEmployeeAdminPortal(ActionEvent event) throws IOException {
+    void addEmployeeAdminPortal(ActionEvent event) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("AddEmployeeAdminPortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -51,7 +46,18 @@ public class AddFacultyAdminPortalController {
     }
 
     @FXML
-    void addMajorAdminPortal(ActionEvent event) throws IOException {
+    void addFacultyAdminPortal(ActionEvent event) throws IOException{
+        Parent root = FXMLLoader.load(getClass().getResource("AddFacultyAdminPortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Add New Faculty");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+    void addMajorAdminPortal(ActionEvent event) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("AddMajorAdminPortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -62,7 +68,7 @@ public class AddFacultyAdminPortalController {
     }
 
     @FXML
-    void dashboardAdminPortal(ActionEvent event) throws IOException {
+    void dashboardAdminPortal(ActionEvent event) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("AdminPortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -73,7 +79,7 @@ public class AddFacultyAdminPortalController {
     }
 
     @FXML
-    void profileAdminPortal(ActionEvent event) throws IOException {
+    void profileAdminPortal(ActionEvent event) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("ProfileAdminPortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -84,7 +90,7 @@ public class AddFacultyAdminPortalController {
     }
 
     @FXML
-    void reportsAdminPortal(ActionEvent event) throws IOException {
+    void reportsAdminPortal(ActionEvent event) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("ReportsAdminPortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -95,7 +101,7 @@ public class AddFacultyAdminPortalController {
     }
 
     @FXML
-    void signOutAdminPortal(ActionEvent event) throws IOException {
+    void signOutAdminPortal(ActionEvent event) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("LoginPanel.fxml"));
         Scene scene = new Scene(root, 350, 480);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -106,7 +112,7 @@ public class AddFacultyAdminPortalController {
     }
 
     @FXML
-    void updateDepartmentAdminPortal(ActionEvent event) throws IOException {
+    void updateDepartmentAdminPortal(ActionEvent event) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("UpdateDepartmentAdminPortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -128,17 +134,6 @@ public class AddFacultyAdminPortalController {
     }
 
     @FXML
-    void updateFacultyAdminPortal(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("UpdateFacultyAdminPortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Update New Faculty");
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-    }
-
-    @FXML
     void updateMajorAdminPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("UpdateMajorAdminPortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
@@ -148,24 +143,5 @@ public class AddFacultyAdminPortalController {
         stage.setResizable(false);
         stage.show();
     }
-    public int getPublishYear(){
-        return LocalDate.now().getYear();
-    }
-    public int getFacultyId(){
-        University.loadFaculties();
-        return University.faculties.size()+1;
-    }
 
-    public void addNewFaculty(ActionEvent event) {
-        String facultyName = facultyNameAddFacultyAdmin.getText().trim();
-        int publishYear = getPublishYear();
-        int id = getFacultyId();
-        University.loadFaculties();
-        University.addFaculty(new Faculty(facultyName,id));
-        University.saveFaculties();
-
-        System.out.println("name: " + facultyName);
-        System.out.println("Year: " + publishYear);
-        System.out.println("ID: " + id);
-    }
 }

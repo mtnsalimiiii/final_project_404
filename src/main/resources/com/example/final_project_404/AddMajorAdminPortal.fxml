@@ -16,7 +16,7 @@
         <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0" styleClass="header" stylesheets="@EmployeePortal.css">
             <children>
                 <Label styleClass="header-title" stylesheets="@EmployeePortal.css" text="Admin Portal" />
-            <Label styleClass="header-title" text=" --&gt; Add Major" />
+                <Label styleClass="header-title" text=" --&gt; Add Major" />
             </children>
         </HBox>
         <ScrollPane layoutY="80.0" prefHeight="420.0" prefWidth="170.0">
@@ -25,13 +25,17 @@
                     <children>
                         <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#dashboardAdminPortal" prefHeight="31.0" prefWidth="150.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Dashboard" />
                         <Button layoutX="20.0" layoutY="62.0" mnemonicParsing="false" onAction="#addFacultyAdminPortal" prefHeight="31.0" prefWidth="130.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Add Faculty" />
+                        <Button layoutX="20.0" layoutY="65.0" maxHeight="55.0" minHeight="55.0" mnemonicParsing="false" onAction="#updateFacultyAdminPortal" prefHeight="55.0" prefWidth="130.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Update&#10;Faculty" />
                         <Button minHeight="55.0" mnemonicParsing="false" onAction="#addDepartmentAdminPortal" prefHeight="50.0" prefWidth="130.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Add &#10;Department" textAlignment="CENTER" />
+                        <Button layoutX="20.0" layoutY="176.0" minHeight="55.0" mnemonicParsing="false" onAction="#updateDepartmentAdminPortal" prefHeight="50.0" prefWidth="130.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Update&#10;Department" textAlignment="CENTER" />
                         <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" stylesheets="@EmployeePortal.css" text="Add Major" textAlignment="CENTER">
-                     <styleClass>
-                        <String fx:value="nav-button" />
-                        <String fx:value="active" />
-                     </styleClass></Button>
+                            <styleClass>
+                                <String fx:value="nav-button" />
+                                <String fx:value="active" />
+                            </styleClass></Button>
+                        <Button layoutX="20.0" layoutY="307.0" mnemonicParsing="false" onAction="#updateMajorAdminPortal" prefHeight="30.0" prefWidth="130.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Update Major" textAlignment="CENTER" />
                         <Button mnemonicParsing="false" onAction="#addEmployeeAdminPortal" prefHeight="30.0" prefWidth="231.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Add Employee" textAlignment="CENTER" />
+                        <Button layoutX="20.0" layoutY="396.0" minHeight="55.0" mnemonicParsing="false" onAction="#updateEmployeeAdminPortal" prefWidth="231.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Update&#10;Employee" textAlignment="CENTER" />
                         <Button layoutX="20.0" layoutY="150.0" mnemonicParsing="false" onAction="#profileAdminPortal" prefHeight="23.0" prefWidth="130.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Profile" />
                         <Button layoutX="20.0" layoutY="193.0" mnemonicParsing="false" onAction="#reportsAdminPortal" prefHeight="31.0" prefWidth="171.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Reports" />
                         <Button layoutX="20.0" layoutY="193.0" mnemonicParsing="false" onAction="#signOutAdminPortal" prefHeight="31.0" prefWidth="171.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Sign out" />
@@ -51,11 +55,11 @@
                     <Insets bottom="10.0" />
                 </VBox.margin>
             </ComboBox>
-         <ComboBox fx:id="departmentChooserAddMajorAdmin" layoutX="31.0" layoutY="31.0" maxWidth="300.0" prefWidth="150.0" promptText="Department" stylesheets="@EmployeePortal.css">
-            <VBox.margin>
-               <Insets bottom="10.0" />
-            </VBox.margin>
-         </ComboBox>
+            <ComboBox fx:id="departmentChooserAddMajorAdmin" layoutX="31.0" layoutY="31.0" maxWidth="300.0" prefWidth="150.0" promptText="Department" stylesheets="@EmployeePortal.css">
+                <VBox.margin>
+                    <Insets bottom="10.0" />
+                </VBox.margin>
+            </ComboBox>
             <TextField fx:id="majorNameAddMajorAdmin" maxHeight="0.0" maxWidth="300.0" prefHeight="26.0" prefWidth="200.0" promptText="Name Of Major" stylesheets="@EmployeePortal.css">
                 <VBox.margin>
                     <Insets bottom="10.0" />

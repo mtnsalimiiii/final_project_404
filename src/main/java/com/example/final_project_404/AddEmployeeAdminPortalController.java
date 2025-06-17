@@ -14,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -136,6 +137,50 @@ public class AddEmployeeAdminPortalController implements Initializable {
         stage.show();
     }
 
+    @FXML
+    void updateDepartmentAdminPortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("UpdateDepartmentAdminPortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Update New Department");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+    void updateEmployeeAdminPortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("UpdateEmployeeAdminPortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Update New Employee");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+    void updateFacultyAdminPortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("UpdateFacultyAdminPortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Update New Faculty");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+    void updateMajorAdminPortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("UpdateMajorAdminPortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Update New Major");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
     public String getDateOfBirth(ActionEvent event) {
         return dateOfBirthRegisterEmployeeAdmin.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
@@ -159,11 +204,26 @@ public class AddEmployeeAdminPortalController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        departmentChooserRegisterEmployeeAdmin.getItems().addAll("Computer Engineering", "Electrical Engineering", "Civil Engineering", "Mechanical Engineering", "Mining engineering");
-        departmentChooserRegisterEmployeeAdmin.setVisibleRowCount(5);
+        University.loadFaculties();
+        for(Faculty f : University.faculties){
+            facultyChooserRegisterEmployeeAdmin.getItems().add(f.getFacultyName());
+        }
+        facultyChooserRegisterEmployeeAdmin.setVisibleRowCount(4);
 
-        facultyChooserRegisterEmployeeAdmin.getItems().addAll("Faculty of Technology and Engineering", "Faculty of Basic Sciences", "Faculty of Social Sciences", "Faculty of Literature and Humanities", "Faculty of Architecture and Urban Planning", "Faculty of Agriculture", "Faculty of Islamic Sciences and Research");
-        facultyChooserRegisterEmployeeAdmin.setVisibleRowCount(5);
+        facultyChooserRegisterEmployeeAdmin.setOnAction(e -> {
+            String selectedFaculty = facultyChooserRegisterEmployeeAdmin.getValue();
+            departmentChooserRegisterEmployeeAdmin.getItems().clear(); // پاک کردن آیتم‌های قبلی
+            Faculty faculty = null;
+            try {
+                faculty = Faculty.loadFromFile(selectedFaculty);
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+            if (faculty != null) {
+                departmentChooserRegisterEmployeeAdmin.getItems().addAll(faculty.getDepartmentNames());
+                departmentChooserRegisterEmployeeAdmin.setVisibleRowCount(4);
+            }
+        });
 
         majorChooserRegisterEmployeeAdmin.getItems().addAll("Software","Faculty of Technology and Engineering", "Faculty of Basic Sciences", "Faculty of Social Sciences", "Faculty of Literature and Humanities", "Faculty of Architecture and Urban Planning", "Faculty of Agriculture", "Faculty of Islamic Sciences and Research");
         majorChooserRegisterEmployeeAdmin.setVisibleRowCount(5);

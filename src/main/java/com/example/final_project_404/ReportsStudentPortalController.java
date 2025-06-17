@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ProfessorPortalController {
+public class ReportsStudentPortalController {
 
     @FXML
     private VBox containerBarVBox;
@@ -24,8 +24,19 @@ public class ProfessorPortalController {
     private VBox navigationBarVBox;
 
     @FXML
-    void profileProfessorPortal(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("ProfileProfessorPortal.fxml"));
+    void dashboardStudentPortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("StudentPortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Student Portal");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+    void profileStudentPortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("ProfileStudentPortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Profile");
@@ -35,18 +46,7 @@ public class ProfessorPortalController {
     }
 
     @FXML
-    void reportsProfessorPortal(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("ReportsProfessorPortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Reports");
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-    }
-
-    @FXML
-    void signOutProfessorPortal(ActionEvent event) throws IOException {
+    void signOutStudentPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("LoginPanel.fxml"));
         Scene scene = new Scene(root, 350, 480);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

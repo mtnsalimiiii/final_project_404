@@ -114,6 +114,50 @@ public class AddDepartmentAdminPortalController implements Initializable {
         stage.show();
     }
 
+    @FXML
+    void updateDepartmentAdminPortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("UpdateDepartmentAdminPortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Update New Department");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+    void updateEmployeeAdminPortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("UpdateEmployeeAdminPortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Update New Employee");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+    void updateFacultyAdminPortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("UpdateFacultyAdminPortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Update New Faculty");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+    void updateMajorAdminPortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("UpdateMajorAdminPortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Update New Major");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
     public int getPublishYear(){
         return LocalDate.now().getYear();
     }
