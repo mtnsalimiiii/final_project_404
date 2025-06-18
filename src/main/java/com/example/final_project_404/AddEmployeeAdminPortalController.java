@@ -13,12 +13,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import jdk.nio.mapmode.ExtendedMapMode;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AddEmployeeAdminPortalController implements Initializable {
@@ -188,7 +190,10 @@ public class AddEmployeeAdminPortalController implements Initializable {
         return LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
 
-    public void addNewEmployee(ActionEvent event) {
+    public String getId(List<Employee> employees){
+        return "EMP"+(employees.size()+1);
+    }
+    public void addNewEmployee(ActionEvent event) throws IOException {
         String dateOfBirth = getDateOfBirth(event);
         String firstName = firstnameRegisterEmployeeAdmin.getText().trim();
         String lastName = lastnameRegisterEmployeeAdmin.getText().trim();
@@ -199,7 +204,20 @@ public class AddEmployeeAdminPortalController implements Initializable {
         String department = departmentChooserRegisterEmployeeAdmin.getValue();
         String major = majorChooserRegisterEmployeeAdmin.getValue();
         String dateOfHire = getDateOfHire();
+        Employee.loadAllEmployee();
+        String id=getId(University.allEmployees);
+        Employee emp=new Employee(firstName,lastName,dateOfBirth,nationalId,gender,phoneNumber,id);
+        University.allEmployees.add(emp);
+        Employee.saveEmployee();
+        Department dep = Department.loadFromFile(department);
+        if (dep == null) {
+            System.out.println("Department not found: " + department);
+            return;
+        }
 
+        dep.employees.add(emp);
+        dep.saveToFile();
+        System.out.println("Successful...id:"+id);
     }
 
     @Override
@@ -212,7 +230,7 @@ public class AddEmployeeAdminPortalController implements Initializable {
 
         facultyChooserRegisterEmployeeAdmin.setOnAction(e -> {
             String selectedFaculty = facultyChooserRegisterEmployeeAdmin.getValue();
-            departmentChooserRegisterEmployeeAdmin.getItems().clear(); // پاک کردن آیتم‌های قبلی
+            departmentChooserRegisterEmployeeAdmin.getItems().clear();
             Faculty faculty = null;
             try {
                 faculty = Faculty.loadFromFile(selectedFaculty);

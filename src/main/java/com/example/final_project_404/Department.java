@@ -11,6 +11,7 @@ public class Department implements Serializable {
     private String name;
     private int id;
     public List<Major> majors=new ArrayList<>();
+    public List<Employee> employees=new ArrayList<>();
     public Department(String name,int id) {
         this.name = name;
         this.id=id;

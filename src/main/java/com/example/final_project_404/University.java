@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class University {
+public class University implements Serializable{
     public static List<Teacher> allTeachers = new ArrayList<>();
     public static List<Employee> allEmployees = new ArrayList<>();
     public static List<Student> allStudents = new ArrayList<>();

@@ -39,8 +39,6 @@ public class Student extends Person implements Serializable {
             System.err.println("Error in reading students: " + e.getMessage());
         }
     }
-
-
     public static void addStudent(Student student,String majorName){
         University.allStudents.add(student);
 
