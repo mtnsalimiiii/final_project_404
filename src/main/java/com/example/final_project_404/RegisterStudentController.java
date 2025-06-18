@@ -14,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -157,14 +158,8 @@ public class RegisterStudentController implements Initializable {
         Student student = new Student(firstName, lastName, dateOfBirth, nationalId, gender, phoneNumber, studentId, dateOfRegistration);
         Student.loadAllStudents();
         University.allStudents.add(student);
-        Student.saveStudent();
+        Student.saveAllStudent();
         Major.addStudentToMajor(department,major,student);
-        try {
-            Student.saveStudent();
-            System.out.println("Student saved successfully!");
-        } catch (IOException e) {
-            System.out.println("Failed to save student: " + e.getMessage());
-        }
     }
     public String generateStudentId() {
         return "STD" + (University.allStudents.size() + 1);
@@ -173,14 +168,44 @@ public class RegisterStudentController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        University.loadFaculties();
+        for(Faculty f : University.faculties){
+            facultyChooserRegisterStudentEmployee.getItems().add(f.getFacultyName());
+        }
+        facultyChooserRegisterStudentEmployee.setVisibleRowCount(4);
 
-        departmentChooserRegisterStudentEmployee.getItems().addAll("Computer Engineering", "Electrical Engineering", "Civil Engineering", "Mechanical Engineering", "Mining engineering");
-        departmentChooserRegisterStudentEmployee.setVisibleRowCount(5);
+        facultyChooserRegisterStudentEmployee.setOnAction(e -> {
+            String selectedFaculty = facultyChooserRegisterStudentEmployee.getValue();
+            departmentChooserRegisterStudentEmployee.getItems().clear();
+            Faculty faculty = null;
+            try {
+                faculty = Faculty.loadFromFile(selectedFaculty);
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+            if (faculty != null) {
+                departmentChooserRegisterStudentEmployee.getItems().addAll(faculty.getDepartmentNames());
+                departmentChooserRegisterStudentEmployee.setVisibleRowCount(4);
+            }
+        });
+        departmentChooserRegisterStudentEmployee.setOnAction(actionEvent ->
+        {
+            String departmentNAme=departmentChooserRegisterStudentEmployee.getValue();
+            majorChooserRegisterStudentEmployee.getItems().clear();
+            Department department=null;
+            try {
+                department=Department.loadFromFile(departmentNAme);
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+            if (department != null) {
+                for (Major major:department.majors){
+                    majorChooserRegisterStudentEmployee.getItems().addAll(major.getName());
 
-        facultyChooserRegisterStudentEmployee.getItems().addAll("Faculty of Technology and Engineering", "Faculty of Basic Sciences", "Faculty of Social Sciences", "Faculty of Literature and Humanities", "Faculty of Architecture and Urban Planning", "Faculty of Agriculture", "Faculty of Islamic Sciences and Research");
-        facultyChooserRegisterStudentEmployee.setVisibleRowCount(5);
-
-        majorChooserRegisterStudentEmployee.getItems().addAll("Software","Faculty of Technology and Engineering", "Faculty of Basic Sciences", "Faculty of Social Sciences", "Faculty of Literature and Humanities", "Faculty of Architecture and Urban Planning", "Faculty of Agriculture", "Faculty of Islamic Sciences and Research");
+                }
+            }
+        });
+        //majorChooserRegisterStudentEmployee.getItems().addAll("Software","Faculty of Technology and Engineering", "Faculty of Basic Sciences", "Faculty of Social Sciences", "Faculty of Literature and Humanities", "Faculty of Architecture and Urban Planning", "Faculty of Agriculture", "Faculty of Islamic Sciences and Research");
         majorChooserRegisterStudentEmployee.setVisibleRowCount(5);
 
         genderChooserRegisterStudentEmployee.getItems().addAll(Gender.Male, Gender.Female);

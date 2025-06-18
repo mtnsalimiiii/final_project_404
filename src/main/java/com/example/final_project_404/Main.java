@@ -29,7 +29,7 @@ public class Main extends Application {
         Image ikiuIcon = new Image("ikiu.png");
         primaryStage.getIcons().add(ikiuIcon);
 
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AdminPortal.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("loginPanel.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
 

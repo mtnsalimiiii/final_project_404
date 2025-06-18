@@ -3,6 +3,7 @@ package com.example.final_project_404;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 public class Student extends Person implements Serializable {
     private final String id;
@@ -29,8 +30,7 @@ public class Student extends Person implements Serializable {
         try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(file))) {
             while (true) {
                 try {
-                    Student student = (Student) input.readObject();
-                    University.allStudents.add(student);
+                    University.allStudents=(List<Student>) input.readObject();
                 } catch (EOFException e) {
                     break;
                 }
@@ -39,19 +39,11 @@ public class Student extends Person implements Serializable {
             System.err.println("Error in reading students: " + e.getMessage());
         }
     }
-    public static void addStudent(Student student,String majorName){
-        University.allStudents.add(student);
-
-    }
-    public static void saveStudent() throws IOException {
-        File file=new File("allStudents.ser");
-        try(ObjectOutputStream output= new ObjectOutputStream(Files.newOutputStream(Paths.get("allStudents.ser")))) {
-            for (Student student : University.allStudents) {
-                output.writeObject(student);
-            }
-            output.close();
-        }catch (Exception ex){
-            System.out.println("Error Saving Students");
+    public static void saveAllStudent() throws IOException {
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("allStudents.ser"))) {
+            output.writeObject(University.allStudents);
+        } catch (IOException e) {
+            System.err.println("Error saving Students list: " + e.getMessage());
         }
     }
 }

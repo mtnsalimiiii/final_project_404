@@ -42,25 +42,7 @@ public class Major implements Serializable{
     public void setName(String name) {
         this.name = name;
     }
-    /*public void loadMajor(String name){
-        File file = new File("Department_"+name+".ser");
-        if (!file.exists() || file.length() == 0) {
-            return;
-        }
 
-        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(file))) {
-            while (true) {
-                try {
-                    Major major = (Major) input.readObject();
-                    majors.add(major);
-                } catch (EOFException e) {
-                    break;
-                }
-            }
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error in reading major: " + e.getMessage());
-        }
-*/
     public int getPublishYear() {
         return publishYear;
     }
