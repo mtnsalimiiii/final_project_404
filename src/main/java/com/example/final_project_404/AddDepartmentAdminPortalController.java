@@ -36,6 +36,9 @@ public class AddDepartmentAdminPortalController implements Initializable {
     @FXML
     private VBox navigationBarVBox;
 
+    @FXML
+    private TextField establishmentYearAddDepartmentAdmin;
+
 
     @FXML
     void addEmployeeAdminPortal(ActionEvent event) throws IOException {
@@ -128,7 +131,7 @@ public class AddDepartmentAdminPortalController implements Initializable {
     @FXML
     void updateEmployeeAdminPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("UpdateEmployeeAdminPortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root, 800, 530);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Update New Employee");
         stage.setScene(scene);
@@ -162,36 +165,32 @@ public class AddDepartmentAdminPortalController implements Initializable {
         return LocalDate.now().getYear();
     }
     public int getDepartmentId(String faculty) throws FileNotFoundException {
-        Faculty f=Faculty.loadFromFile(faculty);
-        int id=f.departmentNames.size()+1;
-        return id;
+        Faculty faculty1 = Faculty.loadFromFile(faculty);
+        return faculty1.departmentNames.size()+1;
     }
 
     public void addNewDepartment(ActionEvent event) throws FileNotFoundException {
         String faculty = facultyChooserAddDepartmentAdmin.getValue().trim();
         String departmentName = departmentNameAddDepartmentAdmin.getText().trim();
-        int publishYear = getPublishYear();
+        //int publishYear = getPublishYear();
+        int publishYear = Integer.parseInt(establishmentYearAddDepartmentAdmin.getText());
         int departmentId = getDepartmentId(faculty);
-        Faculty f=Faculty.loadFromFile(faculty);
-        f.addDepartment(new Department(departmentName,departmentId));
-        f.saveToFile();
+        Faculty faculty1 = Faculty.loadFromFile(faculty);
+        faculty1.addDepartment(new Department(departmentName,departmentId));
+        faculty1.saveToFile();
         System.out.println("faculty: " + faculty);
         System.out.println("name: " + departmentName);
         System.out.println("year: " + publishYear);
         System.out.println("id: " + departmentId);
-
-
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         University.loadFaculties();
-        for (Faculty f : University.faculties) {
-            facultyChooserAddDepartmentAdmin.getItems().add(f.getFacultyName());
+        for (Faculty faculty : University.faculties) {
+            facultyChooserAddDepartmentAdmin.getItems().add(faculty.getFacultyName());
         }
 
         facultyChooserAddDepartmentAdmin.setVisibleRowCount(4);
-
-
     }
 }

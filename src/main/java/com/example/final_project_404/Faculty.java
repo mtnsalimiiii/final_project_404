@@ -56,8 +56,7 @@ public class Faculty implements Serializable {
     }
 
     public static Faculty loadFromFile(String facultyName) throws FileNotFoundException {
-        String fileName = "Faculty_" + facultyName + ".ser";
-        File file = new File(fileName);
+        File file = new File("Faculty_" + facultyName + ".ser");
         if (!file.exists()) {
             throw new FileNotFoundException("Faculty file not found for: " + facultyName);
         }

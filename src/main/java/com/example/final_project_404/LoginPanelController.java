@@ -28,13 +28,13 @@ public class LoginPanelController implements Initializable{
     @FXML
     private ComboBox<String> roleChooserLoginPanel;
 
-    private String role;  // نقشی که از صفحه قبلی گرفته میشه
+    private String role;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
         roleChooserLoginPanel.getItems().addAll("ADMIN", "PROFESSOR", "STUDENT", "EMPLOYEE");
-        roleChooserLoginPanel.setVisibleRowCount(5);
+        roleChooserLoginPanel.setVisibleRowCount(4);
 
         roleChooserLoginPanel.setOnAction(event -> {
             this.role = roleChooserLoginPanel.getSelectionModel().getSelectedItem().toString();
@@ -57,14 +57,20 @@ public class LoginPanelController implements Initializable{
 
         switch (role.toLowerCase()) {
             case "student":
-                         Student.loadAllStudents();
-
+                Student.loadAllStudents();
                 boolean found = false;
                 for (Student student : University.allStudents) {
                     if (student.getId().equals(username) && student.getNationalId().equals(password)) {
                         System.out.println("Successfull login"  + student.getFirst_name());
                         found = true;
-                        //student panel
+                        Parent root = FXMLLoader.load(getClass().getResource("StudentPortal.fxml"));
+                        Scene scene = new Scene(root, 800, 500);
+                        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                        stage.setTitle("Student Portal");
+                        stage.setScene(scene);
+                        stage.setResizable(false);
+                        stage.show();
+
                         break;
                     }
                 }
@@ -73,14 +79,21 @@ public class LoginPanelController implements Initializable{
                     System.out.println("The username or password is incorrect.");
                 }
                 break;
-            case "teacher":
-                Teacher.loadTeacher();
+            case "professor":
+                Professor.loadProfessor();
                 boolean found2 = false;
-                for (Teacher teacher : University.allTeachers) {
-                    if (teacher.getId().equals(username) && teacher.getNationalId().equals(password)) {
-                        System.out.println("Successfull login " + teacher.getFirst_name());
+                for (Professor professor : University.allProfessors) {
+                    if (professor.getId().equals(username) && professor.getNationalId().equals(password)) {
+                        System.out.println("Successfull login " + professor.getFirst_name());
                         found2 = true;
-                        //Teacherpanel
+                        Parent root = FXMLLoader.load(getClass().getResource("ProfessorPortal.fxml"));
+                        Scene scene = new Scene(root, 800, 500);
+                        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                        stage.setTitle("Professor Portal");
+                        stage.setScene(scene);
+                        stage.setResizable(false);
+                        stage.show();
+
                         break;
                     }
                 }
@@ -110,7 +123,7 @@ public class LoginPanelController implements Initializable{
                     if (employee.getId().equals(username) && employee.getNationalId().equals(password)) {
                         System.out.println("Successfull login " + employee.getFirst_name());
                         found3 = true;
-                        Parent root = FXMLLoader.load(getClass().getResource("EmployeeMainPagePortal.fxml"));
+                        Parent root = FXMLLoader.load(getClass().getResource("EmployeePortal.fxml"));
                         Scene scene = new Scene(root, 800, 500);
                         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                         stage.setTitle("Employee Portal");

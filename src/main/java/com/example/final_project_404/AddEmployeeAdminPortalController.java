@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import jdk.nio.mapmode.ExtendedMapMode;
+
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -50,10 +50,7 @@ public class AddEmployeeAdminPortalController implements Initializable {
     private TextField lastnameRegisterEmployeeAdmin;
 
     @FXML
-    private ComboBox<String> majorChooserRegisterEmployeeAdmin;
-
-    @FXML
-    private TextField nationalidRegisterEmployeeAdmin;
+    private TextField nationalIdRegisterEmployeeAdmin;
 
     @FXML
     private VBox navigationBarVBox;
@@ -153,7 +150,7 @@ public class AddEmployeeAdminPortalController implements Initializable {
     @FXML
     void updateEmployeeAdminPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("UpdateEmployeeAdminPortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root, 800, 530);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Update New Employee");
         stage.setScene(scene);
@@ -198,15 +195,14 @@ public class AddEmployeeAdminPortalController implements Initializable {
         String firstName = firstnameRegisterEmployeeAdmin.getText().trim();
         String lastName = lastnameRegisterEmployeeAdmin.getText().trim();
         String phoneNumber = phoneNumberRegisterEmployeeAdmin.getText().trim();
-        String nationalId = nationalidRegisterEmployeeAdmin.getText().trim();
+        String nationalId = nationalIdRegisterEmployeeAdmin.getText().trim();
         Gender gender = genderChooserRegisterEmployeeAdmin.getValue();
         String faculty = facultyChooserRegisterEmployeeAdmin.getValue();
         String department = departmentChooserRegisterEmployeeAdmin.getValue();
-        String major = majorChooserRegisterEmployeeAdmin.getValue();
         String dateOfHire = getDateOfHire();
         Employee.loadAllEmployee();
-        String id=getId(University.allEmployees);
-        Employee emp=new Employee(firstName,lastName,dateOfBirth,nationalId,gender,phoneNumber,id);
+        String id = getId(University.allEmployees);
+        Employee emp = new Employee(firstName,lastName,dateOfBirth,nationalId,gender,phoneNumber,id);
         University.allEmployees.add(emp);
         Employee.saveEmployee();
         Department dep = Department.loadFromFile(department);
@@ -217,34 +213,32 @@ public class AddEmployeeAdminPortalController implements Initializable {
 
         dep.employees.add(emp);
         dep.saveToFile();
-        System.out.println("Successful...id:"+id);
+        System.out.println("Successful\nid : "+id);
+        System.out.println("Password : National ID");
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         University.loadFaculties();
-        for(Faculty f : University.faculties){
-            facultyChooserRegisterEmployeeAdmin.getItems().add(f.getFacultyName());
+        for(Faculty faculty : University.faculties){
+            facultyChooserRegisterEmployeeAdmin.getItems().add(faculty.getFacultyName());
         }
         facultyChooserRegisterEmployeeAdmin.setVisibleRowCount(4);
 
         facultyChooserRegisterEmployeeAdmin.setOnAction(e -> {
             String selectedFaculty = facultyChooserRegisterEmployeeAdmin.getValue();
             departmentChooserRegisterEmployeeAdmin.getItems().clear();
-            Faculty faculty = null;
+            Faculty faculty1 = null;
             try {
-                faculty = Faculty.loadFromFile(selectedFaculty);
+                faculty1 = Faculty.loadFromFile(selectedFaculty);
             } catch (FileNotFoundException ex) {
                 throw new RuntimeException(ex);
             }
-            if (faculty != null) {
-                departmentChooserRegisterEmployeeAdmin.getItems().addAll(faculty.getDepartmentNames());
+            if (faculty1 != null) {
+                departmentChooserRegisterEmployeeAdmin.getItems().addAll(faculty1.getDepartmentNames());
                 departmentChooserRegisterEmployeeAdmin.setVisibleRowCount(4);
             }
         });
-
-        majorChooserRegisterEmployeeAdmin.getItems().addAll("Software","Faculty of Technology and Engineering", "Faculty of Basic Sciences", "Faculty of Social Sciences", "Faculty of Literature and Humanities", "Faculty of Architecture and Urban Planning", "Faculty of Agriculture", "Faculty of Islamic Sciences and Research");
-        majorChooserRegisterEmployeeAdmin.setVisibleRowCount(5);
 
         genderChooserRegisterEmployeeAdmin.getItems().addAll(Gender.Male, Gender.Female);
         genderChooserRegisterEmployeeAdmin.setVisibleRowCount(2);

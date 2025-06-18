@@ -125,7 +125,7 @@ public class UpdateMajorAdminPortalController {
     @FXML
     void updateEmployeeAdminPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("UpdateEmployeeAdminPortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root, 800, 530);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Update New Employee");
         stage.setScene(scene);

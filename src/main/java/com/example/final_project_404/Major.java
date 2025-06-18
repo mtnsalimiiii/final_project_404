@@ -12,7 +12,7 @@ public class Major implements Serializable{
     private int id;
     private int publishYear;
     public List<Student> students = new ArrayList<>();
-    public List<Teacher> teachers=new ArrayList<>();
+    public List<Professor> professors = new ArrayList<>();
     public Major(String name, int id, int publishYear) {
         this.name = name;
         this.id = id;

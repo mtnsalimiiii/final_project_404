@@ -3,25 +3,74 @@ package com.example.final_project_404;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class UpdateEmployeeAdminPortalController {
+public class UpdateEmployeeAdminPortalController implements Initializable {
 
     @FXML
-    private VBox containerBarVBox;
+    private VBox containerBarDeactiveVBox;
+
+    @FXML
+    private VBox containerBarEditVBox;
+
+    @FXML
+    private DatePicker dateOfBirthUpdateEmployee;
+
+    @FXML
+    private ComboBox<String> departmentChooserDeactiveUpdateEmployee;
+
+    @FXML
+    private ComboBox<String> departmentChooserEditUpdateEmployee;
+
+    @FXML
+    private ComboBox<String> employeeChooserDeactiveUpdateEmployee;
+
+    @FXML
+    private ComboBox<String> employeeChooserEditUpdateEmployee;
+
+    @FXML
+    private ComboBox<String> facultyChooserDeactiveUpdateEmployee;
+
+    @FXML
+    private ComboBox<String> facultyChooserEditUpdateEmployee;
+
+    @FXML
+    private TextField firstNameUpdateEmployee;
+
+    @FXML
+    private ComboBox<Gender> genderChooserUpdateEmployee;
 
     @FXML
     private HBox headerHBox;
 
     @FXML
+    private TextField lastNameUpdateEmployee;
+
+    @FXML
+    private TextField nationalIdUpdateEmployee;
+
+    @FXML
     private VBox navigationBarVBox;
+
+    @FXML
+    private ComboBox<String> operationChooserUpdateEmployeeAdmin;
+
+    @FXML
+    private TextField phoneNumberUpdateEmployee;
 
     @FXML
     void addDepartmentAdminPortal(ActionEvent event) throws IOException{
@@ -76,6 +125,46 @@ public class UpdateEmployeeAdminPortalController {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+
+    @FXML
+    void deactiveEmployee(ActionEvent event) {
+
+    }
+
+    @FXML
+    void editEmployee(ActionEvent event) {
+
+    }
+
+    @FXML
+    void setEmployeeChooserEditUpdateEmployee(ActionEvent event) {
+        /*if(employeeChooserEditUpdateEmployee.getValue()!=null){
+            lastNameUpdateEmployee.setDisable(false);
+            lastNameUpdateEmployee.setDisable(false);
+            genderChooserUpdateEmployee.setDisable(false);
+            dateOfBirthUpdateEmployee.setDisable(false);
+            phoneNumberUpdateEmployee.setDisable(false);
+            nationalIdUpdateEmployee.setDisable(false);
+        } else {
+            lastNameUpdateEmployee.setDisable(true);
+            lastNameUpdateEmployee.setDisable(true);
+            genderChooserUpdateEmployee.setDisable(true);
+            dateOfBirthUpdateEmployee.setDisable(true);
+            phoneNumberUpdateEmployee.setDisable(true);
+            nationalIdUpdateEmployee.setDisable(true);
+        }*/
+    }
+
+    @FXML
+    void setOperationChooserUpdateEmployeeAdmin(ActionEvent event) {
+        if(operationChooserUpdateEmployeeAdmin.getValue().toString() == "EDIT"){
+            containerBarEditVBox.setDisable(false);
+            containerBarDeactiveVBox.setDisable(true);
+        } else if (operationChooserUpdateEmployeeAdmin.getValue().toString() == "DEACTIVE") {
+            containerBarDeactiveVBox.setDisable(false);
+            containerBarEditVBox.setDisable(true);
+        }
     }
 
     @FXML
@@ -143,5 +232,70 @@ public class UpdateEmployeeAdminPortalController {
         stage.setResizable(false);
         stage.show();
     }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {;
+        operationChooserUpdateEmployeeAdmin.getItems().addAll(  "DEACTIVE", "EDIT");
+        operationChooserUpdateEmployeeAdmin.setVisibleRowCount(2);
+
+        University.loadFaculties();
+        for(Faculty faculty : University.faculties){
+            facultyChooserDeactiveUpdateEmployee.getItems().addAll(faculty.getFacultyName());
+            facultyChooserEditUpdateEmployee.getItems().addAll(faculty.getFacultyName());
+        }
+        facultyChooserDeactiveUpdateEmployee.setVisibleRowCount(4);
+        facultyChooserEditUpdateEmployee.setVisibleRowCount(4);
+
+        facultyChooserEditUpdateEmployee.setOnAction(e -> {
+            String selectedFaculty = facultyChooserEditUpdateEmployee.getValue();
+            departmentChooserEditUpdateEmployee.getItems().clear(); // پاک کردن آیتم‌های قبلی
+            Faculty faculty = null;
+            try {
+                faculty = Faculty.loadFromFile(selectedFaculty);
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+            if (faculty != null) {
+                departmentChooserEditUpdateEmployee.getItems().addAll(faculty.getDepartmentNames());
+                departmentChooserEditUpdateEmployee.setVisibleRowCount(4);
+            }
+        });
+
+        facultyChooserDeactiveUpdateEmployee.setOnAction(e -> {
+            String selectedFaculty = facultyChooserDeactiveUpdateEmployee.getValue();
+            facultyChooserDeactiveUpdateEmployee.getItems().clear(); // پاک کردن آیتم‌های قبلی
+            Faculty faculty = null;
+            try {
+                faculty = Faculty.loadFromFile(selectedFaculty);
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+            if (faculty != null) {
+                facultyChooserDeactiveUpdateEmployee.getItems().addAll(faculty.getDepartmentNames());
+                facultyChooserDeactiveUpdateEmployee.setVisibleRowCount(4);
+            }
+        });
+
+        departmentChooserEditUpdateEmployee.setOnAction(e -> {
+            String selectedDepartment = departmentChooserEditUpdateEmployee.getValue();
+            departmentChooserEditUpdateEmployee.getItems().clear(); // پاک کردن آیتم‌های قبلی
+            Department department = null;
+            try {
+                department = Department.loadFromFile(selectedDepartment);
+            } catch (FileNotFoundException ex) {
+                throw new RuntimeException(ex);
+            }
+            if (department != null) {
+                for(Employee employee : department.employees){
+                    departmentChooserEditUpdateEmployee.getItems().add(employee.getFirst_name() + ' ' + employee.getLast_name());
+                }// inja be nazaret az id estefade konim ya hamoon esm
+                departmentChooserEditUpdateEmployee.setVisibleRowCount(4);
+            }
+        });
+
+        genderChooserUpdateEmployee.getItems().addAll(Gender.Male, Gender.Female);
+        genderChooserUpdateEmployee.setVisibleRowCount(2);
+    }
+
 
 }

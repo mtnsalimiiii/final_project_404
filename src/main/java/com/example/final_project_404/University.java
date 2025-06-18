@@ -6,13 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class University implements Serializable{
-    public static List<Teacher> allTeachers = new ArrayList<>();
+    public static List<Professor> allProfessors = new ArrayList<>();
     public static List<Employee> allEmployees = new ArrayList<>();
     public static List<Student> allStudents = new ArrayList<>();
-    private String name;
-    private String address;
-    private int establishmetYear;
-    public static List<Faculty> faculties=new ArrayList<>();
+    public static List<Faculty> faculties = new ArrayList<>();
+
     public static void loadFaculties() {
         File file = new File("Faculties.ser");
         if (!file.exists()){
@@ -47,45 +45,17 @@ public class University implements Serializable{
         faculties.add(faculty);
         faculty.saveToFile();
     }
-    /*public static void loadFaculty() {
-        File file = new File("Faculties.ser");
-        if (!file.exists() || file.length() == 0) {
-            return;
-        }
-        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(file))) {
-            while (true) {
-                try {
-                    Faculty faculty = (Faculty) input.readObject();
-                    faculties.add(faculty);
-                } catch (EOFException e) {
-                    break;
-                }
-            }
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error in reading faculties: " + e.getMessage());
-        }
-    }
-    public static void addFaculty(Faculty faculty) {
-        if (faculty != null) {
-            faculties.add(faculty);
-            String fileName = "Faculty_" + faculty.getFacultyName() + ".ser";
-            fileName = fileName.replaceAll("[^a-zA-Z0-9.-]", "_");
 
-            try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(fileName))) {
-                output.writeObject(faculty);
-                System.out.println("Faculty file created: " + fileName);
-            } catch (IOException e) {
-                System.err.println("Error creating faculty file: " + e.getMessage());
-            }
-        }
+    public int getEstablishmetYear() {
+        return  1991;
     }
-    public static void saveFaculty() {
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("Faculties.ser"))) {
-            for (Faculty faculty : faculties) {
-                output.writeObject(faculty);
-            }
-        } catch (IOException ex) {
-            System.err.println("Error Saving faculties: " + ex.getMessage());
-        }
-    }*/
+
+    public String getUniName() {
+        return "imam khomeini international university";
+    }
+
+    public String getUniCity() {
+        return "qazvin";
+    }
+
 }
