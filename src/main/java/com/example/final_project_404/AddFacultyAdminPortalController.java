@@ -23,6 +23,9 @@ public class AddFacultyAdminPortalController {
     private TextField facultyNameAddFacultyAdmin;
 
     @FXML
+    private TextField establishmentYearAddFacultyAdmin;
+
+    @FXML
     private HBox headerHBox;
 
     @FXML
@@ -148,24 +151,28 @@ public class AddFacultyAdminPortalController {
         stage.setResizable(false);
         stage.show();
     }
-    public int getPublishYear(){
+    public int getEstablishmentYear(){
         return LocalDate.now().getYear();
     }
     public int getFacultyId(){
         University.loadFaculties();
-        return University.faculties.size()+1;
+        return University.allFaculties.size()+1;
     }
 
     public void addNewFaculty(ActionEvent event) {
         String facultyName = facultyNameAddFacultyAdmin.getText().trim();
-        int publishYear = getPublishYear();
+        int establishmentYear = Integer.parseInt(establishmentYearAddFacultyAdmin.getText());
+        //int establishmentYear = getEstablishmentYear();
         int id = getFacultyId();
+        Faculty faculty = new Faculty(facultyName, id, establishmentYear);
         University.loadFaculties();
-        University.addFaculty (new Faculty(facultyName,id));
+        University.addFaculty (faculty);
         University.saveFaculties();
-
+        faculty.saveToFile();
+        facultyNameAddFacultyAdmin.clear();
+        establishmentYearAddFacultyAdmin.clear();
         System.out.println("name: " + facultyName);
-        System.out.println("Year: " + publishYear);
+        System.out.println("Year: " + establishmentYear);
         System.out.println("ID: " + id);
     }
 }

@@ -187,7 +187,7 @@ public class AddDepartmentAdminPortalController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         University.loadFaculties();
-        for (Faculty faculty : University.faculties) {
+        for (Faculty faculty : University.allFaculties) {
             facultyChooserAddDepartmentAdmin.getItems().add(faculty.getFacultyName());
         }
 

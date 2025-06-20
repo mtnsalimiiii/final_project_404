@@ -58,9 +58,10 @@ public class Department implements Serializable {
         }
     }
     public static Department loadFromFile(String departmentName) {
-        String fileName = "Department_" + departmentName + ".ser";
-        File file = new File(fileName);
-        if (!file.exists()) return null;
+        File file = new File("Department_" + departmentName + ".ser");
+        if (!file.exists()){
+            return null;
+        }
 
         try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(file))) {
             return (Department) input.readObject();

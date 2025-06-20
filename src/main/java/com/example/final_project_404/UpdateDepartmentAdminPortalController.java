@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -24,6 +25,12 @@ public class UpdateDepartmentAdminPortalController implements Initializable {
 
     @FXML
     private VBox containerBarEditVBox;
+
+    @FXML
+    private Button editButton;
+
+    @FXML
+    private Button deactiveButton;
 
     @FXML
     private ComboBox<String> departmentChooserDeactiveUpdateDepartment;
@@ -130,6 +137,36 @@ public class UpdateDepartmentAdminPortalController implements Initializable {
     }
 
     @FXML
+    void setDepartmentChooserDeactiveUpdateDepartment(ActionEvent event) {
+
+    }
+
+    @FXML
+    void setDepartmentChooserEditUpdateDepartment(ActionEvent event) {
+        if(!departmentChooserEditUpdateDepartment.getValue().isEmpty() && !facultyChooserEditUpdateDepartment.getValue().isEmpty()){
+            departmentNameUpdateDepartment.setDisable(false);
+            establishmentYearUpdateDepartment.setDisable(false);
+            editButton.setDisable(false);
+        }
+    }
+
+    @FXML
+    void setFacultyChooserDeactiveUpdateDepartment(ActionEvent event) {
+        if (!departmentChooserDeactiveUpdateDepartment.getValue().isEmpty() && !facultyChooserDeactiveUpdateDepartment.getValue().isEmpty()) {
+            deactiveButton.setDisable(false);
+        }
+    }
+
+    @FXML
+    void setFacultyChooserEditUpdateDepartment(ActionEvent event) {
+        if(!departmentChooserEditUpdateDepartment.getValue().isEmpty() && !facultyChooserEditUpdateDepartment.getValue().isEmpty()){
+            departmentNameUpdateDepartment.setDisable(false);
+            establishmentYearUpdateDepartment.setDisable(false);
+            editButton.setDisable(false);
+        }
+    }
+
+    @FXML
     void signOutAdminPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("LoginPanel.fxml"));
         Scene scene = new Scene(root, 350, 480);
@@ -188,14 +225,30 @@ public class UpdateDepartmentAdminPortalController implements Initializable {
         if(operationChooserUpdateDepartmentAdmin.getValue().toString()=="EDIT"){
             containerBarEditVBox.setDisable(false);
             containerBarDeactiveVBox.setDisable(true);
+            departmentNameUpdateDepartment.setDisable(true);
+            establishmentYearUpdateDepartment.setDisable(true);
+            editButton.setDisable(true);
         } else if (operationChooserUpdateDepartmentAdmin.getValue().toString() == "DEACTIVE") {
             containerBarDeactiveVBox.setDisable(false);
             containerBarEditVBox.setDisable(true);
+            deactiveButton.setDisable(true);
         }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         operationChooserUpdateDepartmentAdmin.getItems().addAll("EDIT", "DEACTIVE");
+
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties){
+            facultyChooserEditUpdateDepartment.getItems().add(faculty.getFacultyName());
+            facultyChooserDeactiveUpdateDepartment.getItems().add(faculty.getFacultyName());
+        }
+        facultyChooserEditUpdateDepartment.setVisibleRowCount(4);
+        facultyChooserDeactiveUpdateDepartment.setVisibleRowCount(4);
+
+
+        departmentChooserEditUpdateDepartment.getItems().addAll("hello", "how are your");
+        departmentChooserEditUpdateDepartment.setVisibleRowCount(4);
     }
 }

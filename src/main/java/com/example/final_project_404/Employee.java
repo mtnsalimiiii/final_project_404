@@ -28,7 +28,7 @@ public class Employee extends Person implements Serializable{
         try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(file))) {
             while (true) {
                 try {
-                   University.allEmployees=(List<Employee>) input.readObject();
+                   University.allEmployees = (List<Employee>) input.readObject();
                 } catch (EOFException e) {
                     break;
                 }

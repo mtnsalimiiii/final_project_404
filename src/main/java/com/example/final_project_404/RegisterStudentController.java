@@ -169,7 +169,7 @@ public class RegisterStudentController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         University.loadFaculties();
-        for(Faculty f : University.faculties){
+        for(Faculty f : University.allFaculties){
             facultyChooserRegisterStudentEmployee.getItems().add(f.getFacultyName());
         }
         facultyChooserRegisterStudentEmployee.setVisibleRowCount(4);

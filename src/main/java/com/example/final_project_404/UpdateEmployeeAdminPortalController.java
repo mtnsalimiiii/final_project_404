@@ -239,7 +239,7 @@ public class UpdateEmployeeAdminPortalController implements Initializable {
         operationChooserUpdateEmployeeAdmin.setVisibleRowCount(2);
 
         University.loadFaculties();
-        for(Faculty faculty : University.faculties){
+        for(Faculty faculty : University.allFaculties){
             facultyChooserDeactiveUpdateEmployee.getItems().addAll(faculty.getFacultyName());
             facultyChooserEditUpdateEmployee.getItems().addAll(faculty.getFacultyName());
         }
@@ -263,7 +263,7 @@ public class UpdateEmployeeAdminPortalController implements Initializable {
 
         facultyChooserDeactiveUpdateEmployee.setOnAction(e -> {
             String selectedFaculty = facultyChooserDeactiveUpdateEmployee.getValue();
-            facultyChooserDeactiveUpdateEmployee.getItems().clear(); // پاک کردن آیتم‌های قبلی
+            departmentChooserDeactiveUpdateEmployee.getItems().clear(); // پاک کردن آیتم‌های قبلی
             Faculty faculty = null;
             try {
                 faculty = Faculty.loadFromFile(selectedFaculty);
@@ -271,31 +271,29 @@ public class UpdateEmployeeAdminPortalController implements Initializable {
                 throw new RuntimeException(ex);
             }
             if (faculty != null) {
-                facultyChooserDeactiveUpdateEmployee.getItems().addAll(faculty.getDepartmentNames());
-                facultyChooserDeactiveUpdateEmployee.setVisibleRowCount(4);
+                departmentChooserDeactiveUpdateEmployee.getItems().addAll(faculty.getDepartmentNames());
+                departmentChooserDeactiveUpdateEmployee.setVisibleRowCount(4);
             }
         });
 
         departmentChooserEditUpdateEmployee.setOnAction(e -> {
             String selectedDepartment = departmentChooserEditUpdateEmployee.getValue();
-            departmentChooserEditUpdateEmployee.getItems().clear(); // پاک کردن آیتم‌های قبلی
+            employeeChooserEditUpdateEmployee.getItems().clear();
             Department department = null;
-            try {
-                department = Department.loadFromFile(selectedDepartment);
-            } catch (FileNotFoundException ex) {
-                throw new RuntimeException(ex);
-            }
+
+            department = Department.loadFromFile(selectedDepartment);
+
             if (department != null) {
-                for(Employee employee : department.employees){
-                    departmentChooserEditUpdateEmployee.getItems().add(employee.getFirst_name() + ' ' + employee.getLast_name());
-                }// inja be nazaret az id estefade konim ya hamoon esm
-                departmentChooserEditUpdateEmployee.setVisibleRowCount(4);
+                for (Employee employee : department.employees) {
+                    employeeChooserEditUpdateEmployee.getItems().add(employee.getFirst_name() + " " + employee.getLast_name() + "(ID : " + employee.getId() + ")");
+                }
+                employeeChooserEditUpdateEmployee.setVisibleRowCount(4);
             }
         });
 
         genderChooserUpdateEmployee.getItems().addAll(Gender.Male, Gender.Female);
         genderChooserUpdateEmployee.setVisibleRowCount(2);
-    }
 
+    }
 
 }

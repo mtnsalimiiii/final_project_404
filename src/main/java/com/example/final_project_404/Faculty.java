@@ -8,18 +8,33 @@ import java.util.List;
 public class Faculty implements Serializable {
     private String facultyName;
     private int id;
+    private int establishmentYear;
     public List<String> departmentNames = new ArrayList<>();
 
-    public Faculty(String facultyName, int id) {
+    public Faculty(String facultyName, int id, int establishmentYear) {
         this.facultyName = facultyName;
         this.id = id;
+        this.establishmentYear = establishmentYear;
     }
 
     public String getFacultyName() { return facultyName; }
+    public void setFacultyName(String name){
+        this.facultyName = name;
+    }
     public int getId() { return id; }
+    public void setId(int id1){
+        this.id = id1;
+    }
+    public int getEstablishmentYear() { return establishmentYear;}
+    public void setEstablishmentYear(int establishmentYear1){
+        this.establishmentYear = establishmentYear1;
+    }
+
+
     public List<String> getDepartmentNames() {
         return departmentNames;
     }
+
     public Department getDepartment(String departmentName) {
         if (!departmentNames.contains(departmentName)) return null;
 

@@ -50,17 +50,17 @@
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
-            <ComboBox fx:id="facultyChooserAddDepartmentAdmin" maxWidth="300.0" prefWidth="150.0" promptText="Faculty" styleClass="combo-box" stylesheets="@EmployeePortal.css">
+            <ComboBox fx:id="facultyChooserAddDepartmentAdmin" maxWidth="300.0" prefWidth="150.0" promptText="Faculty" styleClass="combo-box" stylesheets="@comboBoxStyle.css">
                 <VBox.margin>
                     <Insets bottom="15.0" />
                 </VBox.margin>
             </ComboBox>
-            <TextField fx:id="departmentNameAddDepartmentAdmin" maxHeight="0.0" maxWidth="300.0" prefHeight="26.0" prefWidth="200.0" promptText="Name Of Department" stylesheets="@EmployeePortal.css">
+            <TextField fx:id="departmentNameAddDepartmentAdmin" maxHeight="0.0" maxWidth="300.0" prefHeight="26.0" prefWidth="200.0" promptText="Department Name" stylesheets="@EmployeePortal.css">
                 <VBox.margin>
                     <Insets bottom="15.0" />
                 </VBox.margin>
             </TextField>
-         <TextField fx:id="establishmentYearAddDepartmentAdmin" layoutX="31.0" layoutY="86.0" maxHeight="0.0" maxWidth="300.0" prefHeight="26.0" prefWidth="200.0" promptText="Year Of Establishment" stylesheets="@EmployeePortal.css">
+         <TextField fx:id="establishmentYearAddDepartmentAdmin" layoutX="31.0" layoutY="86.0" maxHeight="0.0" maxWidth="300.0" prefHeight="26.0" prefWidth="200.0" promptText="Establishment Year" stylesheets="@EmployeePortal.css">
             <VBox.margin>
                <Insets bottom="15.0" />
             </VBox.margin>

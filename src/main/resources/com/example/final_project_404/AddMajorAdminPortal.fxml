@@ -50,12 +50,12 @@
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
-            <ComboBox fx:id="facultyChooserAddMajorAdmin" maxWidth="300.0" prefWidth="150.0" promptText="Faculty" stylesheets="@EmployeePortal.css">
+            <ComboBox fx:id="facultyChooserAddMajorAdmin" maxWidth="300.0" prefWidth="150.0" promptText="Faculty" stylesheets="@comboBoxStyle.css">
                 <VBox.margin>
                     <Insets bottom="10.0" />
                 </VBox.margin>
             </ComboBox>
-            <ComboBox fx:id="departmentChooserAddMajorAdmin" layoutX="31.0" layoutY="31.0" maxWidth="300.0" prefWidth="150.0" promptText="Department" stylesheets="@EmployeePortal.css">
+            <ComboBox fx:id="departmentChooserAddMajorAdmin" layoutX="31.0" layoutY="31.0" maxWidth="300.0" prefWidth="150.0" promptText="Department" stylesheets="@comboBoxStyle.css">
                 <VBox.margin>
                     <Insets bottom="10.0" />
                 </VBox.margin>

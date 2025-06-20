@@ -220,7 +220,7 @@ public class AddEmployeeAdminPortalController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         University.loadFaculties();
-        for(Faculty faculty : University.faculties){
+        for(Faculty faculty : University.allFaculties){
             facultyChooserRegisterEmployeeAdmin.getItems().add(faculty.getFacultyName());
         }
         facultyChooserRegisterEmployeeAdmin.setVisibleRowCount(4);

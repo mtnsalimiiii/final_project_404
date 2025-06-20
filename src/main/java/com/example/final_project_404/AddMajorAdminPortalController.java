@@ -222,8 +222,8 @@ public class AddMajorAdminPortalController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         University.loadFaculties();
-        for (Faculty f : University.faculties) {
-            facultyChooserAddMajorAdmin.getItems().add(f.getFacultyName());
+        for (Faculty faculty : University.allFaculties) {
+            facultyChooserAddMajorAdmin.getItems().add(faculty.getFacultyName());
         }
         facultyChooserAddMajorAdmin.setVisibleRowCount(4);
         facultyChooserAddMajorAdmin.setOnAction(e -> {

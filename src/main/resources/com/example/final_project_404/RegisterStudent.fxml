@@ -58,9 +58,9 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </TextField>
-            <ComboBox fx:id="genderChooserRegisterStudentEmployee" layoutX="31.0" layoutY="186.0" maxWidth="300.0" prefWidth="150.0" promptText="Gender" stylesheets="@EmployeePortal.css">
+            <ComboBox fx:id="genderChooserRegisterStudentEmployee" layoutX="31.0" layoutY="186.0" maxWidth="300.0" prefWidth="150.0" promptText="Gender" stylesheets="@comboBoxStyle.css">
                <VBox.margin>
-                  <Insets bottom="5.0" />
+                  <Insets bottom="7.0" />
                </VBox.margin>
             </ComboBox>
             <TextField fx:id="phoneNumberRegisterStudentEmployee" layoutX="31.0" layoutY="103.0" maxWidth="300.0" prefHeight="25.0" prefWidth="609.0" promptText="Phone Number" stylesheets="@EmployeePortal.css">
@@ -73,19 +73,19 @@
                   <Insets bottom="5.0" />
                </VBox.margin>
             </DatePicker>
-            <ComboBox fx:id="facultyChooserRegisterStudentEmployee" maxWidth="300.0" prefWidth="150.0" promptText="Faculty" stylesheets="@EmployeePortal.css">
+            <ComboBox fx:id="facultyChooserRegisterStudentEmployee" maxWidth="300.0" prefWidth="150.0" promptText="Faculty" stylesheets="@comboBoxStyle.css">
                <VBox.margin>
-                  <Insets bottom="5.0" />
+                  <Insets bottom="7.0" />
                </VBox.margin>
             </ComboBox>
-            <ComboBox fx:id="departmentChooserRegisterStudentEmployee" layoutX="31.0" layoutY="133.0" maxWidth="300.0" prefWidth="150.0" promptText="Department" stylesheets="@EmployeePortal.css">
+            <ComboBox fx:id="departmentChooserRegisterStudentEmployee" layoutX="31.0" layoutY="133.0" maxWidth="300.0" prefWidth="150.0" promptText="Department" stylesheets="@comboBoxStyle.css">
                <VBox.margin>
-                  <Insets bottom="5.0" />
+                  <Insets bottom="7.0" />
                </VBox.margin>
             </ComboBox>
-            <ComboBox fx:id="majorChooserRegisterStudentEmployee" layoutX="31.0" layoutY="173.0" maxWidth="300.0" prefWidth="150.0" promptText="Major" stylesheets="@EmployeePortal.css">
+            <ComboBox fx:id="majorChooserRegisterStudentEmployee" layoutX="31.0" layoutY="173.0" maxWidth="300.0" prefWidth="150.0" promptText="Major" stylesheets="@comboBoxStyle.css">
                <VBox.margin>
-                  <Insets bottom="5.0" />
+                  <Insets bottom="7.0" />
                </VBox.margin>
             </ComboBox>
             <Button mnemonicParsing="false" onAction="#addNewStudent" stylesheets="@EmployeePortal.css" text="Register">
