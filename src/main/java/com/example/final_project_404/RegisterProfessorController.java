@@ -14,6 +14,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -92,6 +93,28 @@ public class RegisterProfessorController implements Initializable {
     }
 
     @FXML
+    void UpdateProfessorEmployeePortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("UpdateProfessorEmployeePortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Update Professor");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+    void UpdateStudentEmployeePortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("UpdateStudentEmployeePortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Update Student");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
     void profileEmployeePortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ProfileEmployeePortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
@@ -157,14 +180,39 @@ public class RegisterProfessorController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        departmentChooserRegisterProfessorEmployee.getItems().addAll("Computer Engineering", "Electrical Engineering", "Civil Engineering", "Mechanical Engineering", "Mining engineering");
-        departmentChooserRegisterProfessorEmployee.setVisibleRowCount(5);
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties){
+            facultyChooserRegisterProfessorEmployee.getItems().add(faculty.getFacultyName());
+        }
+        facultyChooserRegisterProfessorEmployee.setVisibleRowCount(4);
 
-        facultyChooserRegisterProfessorEmployee.getItems().addAll("Faculty of Technology and Engineering", "Faculty of Basic Sciences", "Faculty of Social Sciences", "Faculty of Literature and Humanities", "Faculty of Architecture and Urban Planning", "Faculty of Agriculture", "Faculty of Islamic Sciences and Research");
-        facultyChooserRegisterProfessorEmployee.setVisibleRowCount(5);
+        facultyChooserRegisterProfessorEmployee.setOnAction(event -> {
+            String selectedFaculty = facultyChooserRegisterProfessorEmployee.getValue();
+            departmentChooserRegisterProfessorEmployee.getItems().clear();
+            Faculty faculty = null;
+            try {
+                faculty = Faculty.loadFromFile(selectedFaculty);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            if (faculty != null) {
+                departmentChooserRegisterProfessorEmployee.getItems().addAll(faculty.getDepartmentNames());
+                departmentChooserRegisterProfessorEmployee.setVisibleRowCount(4);
+            }
+        });
 
-        majorChooserRegisterProfessorEmployee.getItems().addAll("Software","Faculty of Technology and Engineering", "Faculty of Basic Sciences", "Faculty of Social Sciences", "Faculty of Literature and Humanities", "Faculty of Architecture and Urban Planning", "Faculty of Agriculture", "Faculty of Islamic Sciences and Research");
-        majorChooserRegisterProfessorEmployee.setVisibleRowCount(5);
+        departmentChooserRegisterProfessorEmployee.setOnAction(event -> {
+            String selectedDepartment = departmentChooserRegisterProfessorEmployee.getValue();
+            majorChooserRegisterProfessorEmployee.getItems().clear();
+            Department department = null;
+            department = Department.loadFromFile(selectedDepartment);
+            if(department != null){
+                for (Major major : department.majors){
+                    majorChooserRegisterProfessorEmployee.getItems().add(major.getName());
+                }
+                majorChooserRegisterProfessorEmployee.setVisibleRowCount(4);
+            }
+        });
 
         genderChooserRegisterProfessorEmployee.getItems().addAll(Gender.Male, Gender.Female);
         genderChooserRegisterProfessorEmployee.setVisibleRowCount(2);

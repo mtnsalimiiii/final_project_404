@@ -14,8 +14,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class UpdateDepartmentAdminPortalController implements Initializable {
@@ -138,7 +140,9 @@ public class UpdateDepartmentAdminPortalController implements Initializable {
 
     @FXML
     void setDepartmentChooserDeactiveUpdateDepartment(ActionEvent event) {
-
+        if (!departmentChooserDeactiveUpdateDepartment.getValue().isEmpty() && !facultyChooserDeactiveUpdateDepartment.getValue().isEmpty()) {
+            deactiveButton.setDisable(false);
+        }
     }
 
     @FXML
@@ -222,16 +226,20 @@ public class UpdateDepartmentAdminPortalController implements Initializable {
 
     @FXML
     void operationChooserUpdateDepartmentAdmin(ActionEvent event) {
-        if(operationChooserUpdateDepartmentAdmin.getValue().toString()=="EDIT"){
+        if(operationChooserUpdateDepartmentAdmin.getValue().equals("EDIT")){
             containerBarEditVBox.setDisable(false);
             containerBarDeactiveVBox.setDisable(true);
-            departmentNameUpdateDepartment.setDisable(true);
-            establishmentYearUpdateDepartment.setDisable(true);
-            editButton.setDisable(true);
+            /*if(facultyChooserEditUpdateDepartment.isVisible() && departmentChooserEditUpdateDepartment.getValue().equals("")){
+                departmentNameUpdateDepartment.setDisable(true);
+                establishmentYearUpdateDepartment.setDisable(true);
+                editButton.setDisable(true);
+            }*/
         } else if (operationChooserUpdateDepartmentAdmin.getValue().toString() == "DEACTIVE") {
             containerBarDeactiveVBox.setDisable(false);
             containerBarEditVBox.setDisable(true);
-            deactiveButton.setDisable(true);
+            /*if (facultyChooserDeactiveUpdateDepartment.getValue().equals("") && departmentChooserDeactiveUpdateDepartment.getValue().equals("")) {
+                deactiveButton.setDisable(true);
+            }*/
         }
     }
 
@@ -248,7 +256,35 @@ public class UpdateDepartmentAdminPortalController implements Initializable {
         facultyChooserDeactiveUpdateDepartment.setVisibleRowCount(4);
 
 
-        departmentChooserEditUpdateDepartment.getItems().addAll("hello", "how are your");
-        departmentChooserEditUpdateDepartment.setVisibleRowCount(4);
+
+        facultyChooserDeactiveUpdateDepartment.setOnAction(event -> {
+            String selectedFaculty = facultyChooserDeactiveUpdateDepartment.getValue();
+            departmentChooserDeactiveUpdateDepartment.getItems().clear();
+            Faculty faculty = null;
+            try {
+                faculty = Faculty.loadFromFile(selectedFaculty);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            if(faculty != null){
+                departmentChooserDeactiveUpdateDepartment.getItems().addAll(faculty.getDepartmentNames());
+                departmentChooserDeactiveUpdateDepartment.setVisibleRowCount(4);
+            }
+
+        });
+        facultyChooserEditUpdateDepartment.setOnAction(event -> {
+            String selectedFaculty = facultyChooserEditUpdateDepartment.getValue();
+            departmentChooserEditUpdateDepartment.getItems().clear();
+            Faculty faculty = null;
+            try {
+                faculty = Faculty.loadFromFile(selectedFaculty);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            if(faculty != null){
+                departmentChooserEditUpdateDepartment.getItems().addAll(faculty.getDepartmentNames());
+                departmentChooserEditUpdateDepartment.setVisibleRowCount(4);
+            }
+        });
     }
 }

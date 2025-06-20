@@ -213,13 +213,13 @@ public class UpdateFacultyAdminPortalController implements Initializable {
         if(operationChooserUpdateFacultyAdmin.getValue() == "EDIT"){
             containerBarDeactiveVBox.setDisable(true);
             containerBarEditVBox.setDisable(false);
-            newFacultyNameUpdateFaculty.setDisable(true);
+            /*newFacultyNameUpdateFaculty.setDisable(true);
             newEstablishmentYearUpdateFaculty.setDisable(true);
-            editButton.setDisable(true);
+            editButton.setDisable(true);*/
         } else if (operationChooserUpdateFacultyAdmin.getValue() == "DEACTIVE") {
             containerBarEditVBox.setDisable(true);
             containerBarDeactiveVBox.setDisable(false);
-            deactiveButton.setDisable(true);
+            //deactiveButton.setDisable(true);
         }
     }
 

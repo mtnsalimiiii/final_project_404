@@ -189,13 +189,13 @@ public class UpdateMajorAdminPortalController implements Initializable {
         if(operationChooserUpdateMajorAdmin.getValue().equals("EDIT")){
             containerBarEditVBox.setDisable(false);
             containerBarDeactiveVBox.setDisable(true);
-            newMajorNameEditMajor.setDisable(true);
-            newEstablishmentYearEditMajor.setDisable(true);
-            editButton.setDisable(true);
+            //newMajorNameEditMajor.setDisable(true);
+            //newEstablishmentYearEditMajor.setDisable(true);
+            //editButton.setDisable(true);
         } else if (operationChooserUpdateMajorAdmin.getValue().equals("DEACTIVE")) {
             containerBarDeactiveVBox.setDisable(false);
             containerBarEditVBox.setDisable(true);
-            deactiveButton.setDisable(true);
+            //deactiveButton.setDisable(true);
         }
     }
 

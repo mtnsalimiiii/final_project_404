@@ -93,6 +93,28 @@ public class RegisterStudentController implements Initializable {
     }
 
     @FXML
+    void UpdateProfessorEmployeePortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("UpdateProfessorEmployeePortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Update Professor");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+    void UpdateStudentEmployeePortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("UpdateStudentEmployeePortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Update Student");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
     void profileEmployeePortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ProfileEmployeePortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
@@ -168,6 +190,7 @@ public class RegisterStudentController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         University.loadFaculties();
         for(Faculty f : University.allFaculties){
             facultyChooserRegisterStudentEmployee.getItems().add(f.getFacultyName());
@@ -188,29 +211,27 @@ public class RegisterStudentController implements Initializable {
                 departmentChooserRegisterStudentEmployee.setVisibleRowCount(4);
             }
         });
-        departmentChooserRegisterStudentEmployee.setOnAction(actionEvent ->
-        {
-            String departmentNAme=departmentChooserRegisterStudentEmployee.getValue();
+
+
+        departmentChooserRegisterStudentEmployee.setOnAction(actionEvent -> {
+            String departmentNAme = departmentChooserRegisterStudentEmployee.getValue();
             majorChooserRegisterStudentEmployee.getItems().clear();
-            Department department=null;
+            Department department = null;
             try {
-                department=Department.loadFromFile(departmentNAme);
+                department = Department.loadFromFile(departmentNAme);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
             if (department != null) {
                 for (Major major:department.majors){
                     majorChooserRegisterStudentEmployee.getItems().addAll(major.getName());
-
                 }
+                majorChooserRegisterStudentEmployee.setVisibleRowCount(4);
             }
         });
-        //majorChooserRegisterStudentEmployee.getItems().addAll("Software","Faculty of Technology and Engineering", "Faculty of Basic Sciences", "Faculty of Social Sciences", "Faculty of Literature and Humanities", "Faculty of Architecture and Urban Planning", "Faculty of Agriculture", "Faculty of Islamic Sciences and Research");
-        majorChooserRegisterStudentEmployee.setVisibleRowCount(5);
 
         genderChooserRegisterStudentEmployee.getItems().addAll(Gender.Male, Gender.Female);
         genderChooserRegisterStudentEmployee.setVisibleRowCount(2);
-
     }
 }
 

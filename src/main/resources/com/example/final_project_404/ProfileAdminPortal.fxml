@@ -19,24 +19,24 @@
         </HBox>
         <ScrollPane layoutY="80.0" prefHeight="420.0" prefWidth="170.0">
             <content>
-                <VBox fx:id="navigationBarVBox" prefHeight="420.0" prefWidth="150.0" styleClass="nav-bar" stylesheets="@EmployeePortal.css">
+                <VBox fx:id="navigationBarVBox" alignment="TOP_CENTER" prefHeight="420.0" prefWidth="150.0" styleClass="nav-bar" stylesheets="@EmployeePortal.css">
                     <children>
-                        <Button layoutX="20.0" layoutY="20.0" mnemonicParsing="false" onAction="#dashboardAdminPortal" prefHeight="31.0" prefWidth="150.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Dashboard" />
-                        <Button layoutX="20.0" layoutY="62.0" mnemonicParsing="false" onAction="#addFacultyAdminPortal" prefHeight="31.0" prefWidth="130.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Add Faculty" />
-                        <Button layoutX="20.0" layoutY="65.0" maxHeight="55.0" minHeight="55.0" mnemonicParsing="false" onAction="#updateFacultyAdminPortal" prefHeight="55.0" prefWidth="130.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Update&#10;Faculty" />
-                        <Button minHeight="55.0" mnemonicParsing="false" onAction="#addDepartmentAdminPortal" prefHeight="50.0" prefWidth="130.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Add &#10;Department" textAlignment="CENTER" />
-                        <Button layoutX="20.0" layoutY="176.0" minHeight="55.0" mnemonicParsing="false" onAction="#updateDepartmentAdminPortal" prefHeight="50.0" prefWidth="130.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Update&#10;Department" textAlignment="CENTER" />
-                        <Button mnemonicParsing="false" onAction="#addMajorAdminPortal" prefHeight="30.0" prefWidth="130.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Add Major" textAlignment="CENTER" />
-                        <Button layoutX="20.0" layoutY="307.0" mnemonicParsing="false" onAction="#updateMajorAdminPortal" prefHeight="30.0" prefWidth="130.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Update Major" textAlignment="CENTER" />
-                        <Button mnemonicParsing="false" onAction="#addEmployeeAdminPortal" prefHeight="30.0" prefWidth="231.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Add Employee" textAlignment="CENTER" />
-                        <Button layoutX="20.0" layoutY="396.0" minHeight="55.0" mnemonicParsing="false" onAction="#updateEmployeeAdminPortal" prefWidth="231.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Update&#10;Employee" textAlignment="CENTER" />
-                        <Button layoutX="20.0" layoutY="150.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="130.0" stylesheets="@EmployeePortal.css" text="Profile">
+                        <Button layoutX="20.0" layoutY="20.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#dashboardAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Dashboard" />
+                        <Button layoutX="20.0" layoutY="62.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addFacultyAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Add Faculty" />
+                        <Button layoutX="20.0" layoutY="65.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateFacultyAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Update&#10;Faculty" />
+                        <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addDepartmentAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Add &#10;Department" textAlignment="CENTER" />
+                        <Button layoutX="20.0" layoutY="176.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateDepartmentAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Update&#10;Department" textAlignment="CENTER" />
+                        <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addMajorAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Add Major" textAlignment="CENTER" />
+                        <Button layoutX="20.0" layoutY="307.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateMajorAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Update Major" textAlignment="CENTER" />
+                        <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addEmployeeAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Add Employee" textAlignment="CENTER" />
+                        <Button layoutX="20.0" layoutY="396.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateEmployeeAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Update&#10;Employee" textAlignment="CENTER" />
+                        <Button layoutX="20.0" layoutY="150.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" stylesheets="@EmployeePortal.css" text="Profile">
                          <styleClass>
                             <String fx:value="nav-button" />
                             <String fx:value="active" />
                          </styleClass></Button>
-                        <Button layoutX="20.0" layoutY="193.0" mnemonicParsing="false" onAction="#reportsAdminPortal" prefHeight="31.0" prefWidth="171.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Reports" />
-                        <Button layoutX="20.0" layoutY="193.0" mnemonicParsing="false" onAction="#signOutAdminPortal" prefHeight="31.0" prefWidth="171.0" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Sign out" />
+                        <Button layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#reportsAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Reports" />
+                        <Button layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#signOutAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Sign out" />
                     </children>
                     <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
