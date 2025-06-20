@@ -3,25 +3,69 @@ package com.example.final_project_404;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.StringReader;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class UpdateMajorAdminPortalController {
+public class UpdateMajorAdminPortalController implements Initializable {
 
     @FXML
-    private VBox containerBarVBox;
+    private VBox containerBarDeactiveVBox;
+
+    @FXML
+    private VBox containerBarEditVBox;
+
+    @FXML
+    private Button deactiveButton;
+
+    @FXML
+    private ComboBox<String> departmentChooserDeactive;
+
+    @FXML
+    private ComboBox<String> departmentChooserEdit;
+
+    @FXML
+    private Button editButton;
+
+    @FXML
+    private ComboBox<String> facultyChooserDeactive;
+
+    @FXML
+    private ComboBox<String> facultyChooserEdit;
 
     @FXML
     private HBox headerHBox;
 
     @FXML
+    private ComboBox<String> majorChooserDeactive;
+
+    @FXML
+    private ComboBox<String> majorChooserEdit;
+
+    @FXML
     private VBox navigationBarVBox;
+
+    @FXML
+    private TextField newEstablishmentYearEditMajor;
+
+    @FXML
+    private TextField newMajorNameEditMajor;
+
+    @FXML
+    private ComboBox<String> operationChooserUpdateMajorAdmin;
 
     @FXML
     void addDepartmentAdminPortal(ActionEvent event) throws IOException {
@@ -79,6 +123,16 @@ public class UpdateMajorAdminPortalController {
     }
 
     @FXML
+    void deactiveMajor(ActionEvent event) {
+
+    }
+
+    @FXML
+    void editMajor(ActionEvent event) {
+
+    }
+
+    @FXML
     void profileAdminPortal(ActionEvent event) throws IOException{
         Parent root = FXMLLoader.load(getClass().getResource("ProfileAdminPortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
@@ -98,6 +152,51 @@ public class UpdateMajorAdminPortalController {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+
+    @FXML
+    void setDepartmentDeactive(ActionEvent event) {
+
+    }
+
+    @FXML
+    void setDepartmentEdit(ActionEvent event) {
+
+    }
+
+    @FXML
+    void setFacultyDeactive(ActionEvent event) {
+
+    }
+
+    @FXML
+    void setFacultyEdit(ActionEvent event) {
+
+    }
+
+    @FXML
+    void setMajorDeactive(ActionEvent event) {
+
+    }
+
+    @FXML
+    void setMajorEdit(ActionEvent event) {
+
+    }
+
+    @FXML
+    void setOperationChooserUpdateMajor(ActionEvent event) {
+        if(operationChooserUpdateMajorAdmin.getValue().equals("EDIT")){
+            containerBarEditVBox.setDisable(false);
+            containerBarDeactiveVBox.setDisable(true);
+            newMajorNameEditMajor.setDisable(true);
+            newEstablishmentYearEditMajor.setDisable(true);
+            editButton.setDisable(true);
+        } else if (operationChooserUpdateMajorAdmin.getValue().equals("DEACTIVE")) {
+            containerBarDeactiveVBox.setDisable(false);
+            containerBarEditVBox.setDisable(true);
+            deactiveButton.setDisable(true);
+        }
     }
 
     @FXML
@@ -142,6 +241,80 @@ public class UpdateMajorAdminPortalController {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        operationChooserUpdateMajorAdmin.getItems().addAll("EDIT","DEACTIVE");
+        operationChooserUpdateMajorAdmin.setVisibleRowCount(2);
+
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties){
+            facultyChooserDeactive.getItems().add(faculty.getFacultyName());
+            facultyChooserEdit.getItems().add(faculty.getFacultyName());
+        }
+        facultyChooserEdit.setVisibleRowCount(4);
+        facultyChooserDeactive.setVisibleRowCount(4);
+
+        facultyChooserEdit.setOnAction(event -> {
+            String selectedFaculty = facultyChooserEdit.getValue();
+            departmentChooserEdit.getItems().clear();
+            Faculty faculty = null;
+            try {
+                faculty = Faculty.loadFromFile(selectedFaculty);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+            if(faculty != null){
+                departmentChooserEdit.getItems().addAll(faculty.getDepartmentNames());
+                departmentChooserEdit.setVisibleRowCount(4);
+            }
+        });
+
+        facultyChooserDeactive.setOnAction(event -> {
+            String selectedFaculty = facultyChooserDeactive.getValue();
+            departmentChooserDeactive.getItems().clear();
+            Faculty faculty = null;
+            try{
+                faculty = Faculty.loadFromFile(selectedFaculty);
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+            if(faculty != null){
+                departmentChooserDeactive.getItems().addAll(faculty.getDepartmentNames());
+                departmentChooserDeactive.setVisibleRowCount(4);
+            }
+        });
+
+        departmentChooserEdit.setOnAction(event -> {
+            String selectedDepartment = departmentChooserEdit.getValue();
+            majorChooserEdit.getItems().clear();
+            Department department = null;
+            department = Department.loadFromFile(selectedDepartment);
+
+            if (department != null){
+                for (Major major : department.majors){
+                    majorChooserEdit.getItems().add(major.getName());
+                }
+                majorChooserEdit.setVisibleRowCount(4);
+            }
+
+        });
+
+        departmentChooserDeactive.setOnAction(event -> {
+            String selectedDepartment = departmentChooserDeactive.getValue();
+            majorChooserDeactive.getItems().clear();
+            Department department = null;
+            department = Department.loadFromFile(selectedDepartment);
+
+            if (department != null){
+                for(Major major : department.majors){
+                    majorChooserDeactive.getItems().add(major.getName());
+                }
+                majorChooserDeactive.setVisibleRowCount(4);
+            }
+        });
     }
 
 }

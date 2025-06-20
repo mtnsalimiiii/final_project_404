@@ -161,7 +161,7 @@ public class AddDepartmentAdminPortalController implements Initializable {
         stage.show();
     }
 
-    public int getPublishYear(){
+    public int getEstablishmentYear(){
         return LocalDate.now().getYear();
     }
     public int getDepartmentId(String faculty) throws FileNotFoundException {
@@ -172,15 +172,15 @@ public class AddDepartmentAdminPortalController implements Initializable {
     public void addNewDepartment(ActionEvent event) throws FileNotFoundException {
         String faculty = facultyChooserAddDepartmentAdmin.getValue().trim();
         String departmentName = departmentNameAddDepartmentAdmin.getText().trim();
-        //int publishYear = getPublishYear();
-        int publishYear = Integer.parseInt(establishmentYearAddDepartmentAdmin.getText());
+        //int establishmentYear = getEstablishmentYear();
+        int establishmentYear = Integer.parseInt(establishmentYearAddDepartmentAdmin.getText());
         int departmentId = getDepartmentId(faculty);
         Faculty faculty1 = Faculty.loadFromFile(faculty);
-        faculty1.addDepartment(new Department(departmentName,departmentId));
+        faculty1.addDepartment(new Department(departmentName, establishmentYear, departmentId));
         faculty1.saveToFile();
         System.out.println("faculty: " + faculty);
         System.out.println("name: " + departmentName);
-        System.out.println("year: " + publishYear);
+        System.out.println("year: " + establishmentYear);
         System.out.println("id: " + departmentId);
     }
 

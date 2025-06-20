@@ -9,41 +9,54 @@ import java.util.List;
 
 public class Department implements Serializable {
     private String name;
+    private int establishmentYear;
     private int id;
-    public List<Major> majors=new ArrayList<>();
-    public List<Employee> employees=new ArrayList<>();
-    public Department(String name,int id) {
+
+    public List<Major> majors = new ArrayList<>();
+    public List<Employee> employees = new ArrayList<>();
+
+    public Department(String name, int establishmentYear, int id) {
         this.name = name;
+        this.establishmentYear = establishmentYear;
         this.id=id;
     }
+
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
+    public int getEstablishmentYear(){
+        return establishmentYear;
+    }
+    public void setEstablishmentYear(int establishmentYear) {
+        this.establishmentYear = establishmentYear;
+    }
+
+    /*
     public List<Major> getMajors() {
         return majors;
     }
 
-    @Override
-    public String toString() {
-        return "Department{name=" + name + "," + "Id=" + id + "}";
-    }
     public void addMajor(Major major) {
         if (major != null) {
             majors.add(major);
             saveToFile();
         }
+    }*/
+
+    @Override
+    public String toString() {
+        return "Department{name=" + name + "," + "Id=" + id + "}";
     }
+
     public void saveToFile() {
         String filename = "Department_" + this.name + ".ser";
         try {
@@ -57,6 +70,7 @@ public class Department implements Serializable {
             System.err.println("Error saving department: " + e.getMessage());
         }
     }
+
     public static Department loadFromFile(String departmentName) {
         File file = new File("Department_" + departmentName + ".ser");
         if (!file.exists()){

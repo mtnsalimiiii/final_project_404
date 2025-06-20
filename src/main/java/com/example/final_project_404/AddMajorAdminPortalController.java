@@ -180,7 +180,7 @@ public class AddMajorAdminPortalController implements Initializable {
             return -1;
         }
 
-        return department.getMajors().size() + 1;
+        return department.majors.size() + 1;
     }
 
     public int getPublishYear(){

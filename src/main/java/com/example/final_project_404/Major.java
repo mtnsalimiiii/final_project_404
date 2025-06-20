@@ -3,21 +3,25 @@ package com.example.final_project_404;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.LongSummaryStatistics;
 
 public class Major implements Serializable{
 
 
     private String name;
     private int id;
-    private int publishYear;
+    private int establishmentYear;
+
     public List<Student> students = new ArrayList<>();
     public List<Professor> professors = new ArrayList<>();
-    public Major(String name, int id, int publishYear) {
+
+    public 
+
+    public Major(String name, int id, int establishmentYear) {
         this.name = name;
         this.id = id;
-        this.publishYear = publishYear;
+        this.establishmentYear = establishmentYear;
     }
+
     public List<Student> getStudents() {
         return students;
     }
@@ -29,27 +33,22 @@ public class Major implements Serializable{
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
-
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
-    public int getPublishYear() {
-        return publishYear;
+    public int getEstablishmentYear() {
+        return establishmentYear;
+    }
+    public void setEstablishmentYear(int establishmentYear) {
+        this.establishmentYear = establishmentYear;
     }
 
-    public void setPublishYear(int publishYear) {
-        this.publishYear = publishYear;
-    }
     public static void addStudentToMajor(String departmentName, String majorName, Student student) {
         Department department = null;
         String fileName = "Department_" + departmentName + ".ser";

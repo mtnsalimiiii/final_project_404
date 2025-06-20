@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.UpdateMajorAdminPortalController">
+<AnchorPane maxHeight="500.0" minHeight="500.0" prefHeight="500.0" prefWidth="800.0" style="-fx-background-color: #7b7b7b;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.UpdateMajorAdminPortalController">
     <children>
         <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0" styleClass="header" stylesheets="@EmployeePortal.css">
             <children>
@@ -44,10 +47,76 @@
                 </VBox>
             </content>
         </ScrollPane>
-        <VBox fx:id="containerBarVBox" layoutX="170.0" layoutY="80.0" prefHeight="420.0" prefWidth="630.0" styleClass="content-box" stylesheets="@EmployeePortal.css">
+        <VBox fx:id="containerBarEditVBox" disable="true" layoutX="170.0" layoutY="126.0" prefHeight="350.0" prefWidth="310.0" styleClass="content-box" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="315.0" AnchorPane.topAnchor="130.0">
+            <padding>
+                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+            </padding>
+            <ComboBox fx:id="facultyChooserEdit" maxHeight="157.0" maxWidth="300.0" minHeight="37.0" onAction="#setFacultyEdit" prefHeight="37.0" prefWidth="268.0" promptText="Faculty" stylesheets="@EmployeePortal.css">
+                <VBox.margin>
+                    <Insets bottom="10.0" />
+                </VBox.margin>
+            </ComboBox>
+            <ComboBox fx:id="departmentChooserEdit" layoutX="31.0" layoutY="31.0" maxWidth="300.0" minHeight="37.0" onAction="#setDepartmentEdit" prefWidth="150.0" promptText="Department" stylesheets="@EmployeePortal.css">
+                <VBox.margin>
+                    <Insets bottom="10.0" />
+                </VBox.margin>
+            </ComboBox>
+            <ComboBox fx:id="majorChooserEdit" layoutX="31.0" layoutY="86.0" maxWidth="300.0" minHeight="37.0" onAction="#setMajorEdit" prefWidth="150.0" promptText="Major" stylesheets="@EmployeePortal.css">
+                <VBox.margin>
+                    <Insets bottom="10.0" />
+                </VBox.margin>
+            </ComboBox>
+            <TextField fx:id="newMajorNameEditMajor" promptText="Major Name">
+                <VBox.margin>
+                    <Insets bottom="10.0" />
+                </VBox.margin>
+            </TextField>
+            <TextField fx:id="newEstablishmentYearEditMajor" layoutX="31.0" layoutY="146.0" promptText="Establishment Year">
+                <VBox.margin>
+                    <Insets bottom="10.0" />
+                </VBox.margin>
+            </TextField>
+            <Button fx:id="editButton" mnemonicParsing="false" onAction="#editMajor" stylesheets="@EmployeePortal.css" text="EDIT">
+                <VBox.margin>
+                    <Insets top="20.0" />
+                </VBox.margin>
+            </Button>
+            <stylesheets>
+                <URL value="@EmployeePortal.css" />
+                <URL value="@comboBoxStyle.css" />
+            </stylesheets>
+        </VBox>
+        <ComboBox fx:id="operationChooserUpdateMajorAdmin" layoutX="372.0" layoutY="82.0" maxWidth="315.0" minHeight="40.0" onAction="#setOperationChooserUpdateMajor" promptText="Choose Your Operation" stylesheets="@comboBoxStyle.css" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="85.0" />
+        <VBox fx:id="containerBarDeactiveVBox" disable="true" layoutX="492.0" layoutY="126.0" prefHeight="365.0" prefWidth="315.0" styleClass="content-box" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="490.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="130.0">
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
+            <children>
+            <ComboBox fx:id="facultyChooserDeactive" maxHeight="157.0" maxWidth="300.0" minHeight="37.0" onAction="#setFacultyDeactive" prefHeight="37.0" prefWidth="268.0" promptText="Faculty" stylesheets="@EmployeePortal.css">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </ComboBox>
+            <ComboBox fx:id="departmentChooserDeactive" maxWidth="300.0" minHeight="37.0" onAction="#setDepartmentDeactive" prefWidth="150.0" promptText="Department" stylesheets="@EmployeePortal.css">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </ComboBox>
+            <ComboBox fx:id="majorChooserDeactive" maxWidth="300.0" minHeight="37.0" onAction="#setMajorDeactive" prefWidth="150.0" promptText="Major" stylesheets="@EmployeePortal.css">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </ComboBox>
+                <Button fx:id="deactiveButton" mnemonicParsing="false" onAction="#deactiveMajor" stylesheets="@EmployeePortal.css" text="DEACTIVE">
+                    <VBox.margin>
+                        <Insets top="20.0" />
+                    </VBox.margin>
+                </Button>
+            </children>
+            <stylesheets>
+                <URL value="@EmployeePortal.css" />
+                <URL value="@comboBoxStyle.css" />
+            </stylesheets>
         </VBox>
     </children>
 </AnchorPane>
