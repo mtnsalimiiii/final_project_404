@@ -140,34 +140,22 @@ public class UpdateDepartmentAdminPortalController implements Initializable {
 
     @FXML
     void setDepartmentChooserDeactiveUpdateDepartment(ActionEvent event) {
-        if (!departmentChooserDeactiveUpdateDepartment.getValue().isEmpty() && !facultyChooserDeactiveUpdateDepartment.getValue().isEmpty()) {
-            deactiveButton.setDisable(false);
-        }
+
     }
 
     @FXML
     void setDepartmentChooserEditUpdateDepartment(ActionEvent event) {
-        if(!departmentChooserEditUpdateDepartment.getValue().isEmpty() && !facultyChooserEditUpdateDepartment.getValue().isEmpty()){
-            departmentNameUpdateDepartment.setDisable(false);
-            establishmentYearUpdateDepartment.setDisable(false);
-            editButton.setDisable(false);
-        }
+
     }
 
     @FXML
     void setFacultyChooserDeactiveUpdateDepartment(ActionEvent event) {
-        if (!departmentChooserDeactiveUpdateDepartment.getValue().isEmpty() && !facultyChooserDeactiveUpdateDepartment.getValue().isEmpty()) {
-            deactiveButton.setDisable(false);
-        }
+
     }
 
     @FXML
     void setFacultyChooserEditUpdateDepartment(ActionEvent event) {
-        if(!departmentChooserEditUpdateDepartment.getValue().isEmpty() && !facultyChooserEditUpdateDepartment.getValue().isEmpty()){
-            departmentNameUpdateDepartment.setDisable(false);
-            establishmentYearUpdateDepartment.setDisable(false);
-            editButton.setDisable(false);
-        }
+
     }
 
     @FXML
@@ -260,6 +248,7 @@ public class UpdateDepartmentAdminPortalController implements Initializable {
         facultyChooserDeactiveUpdateDepartment.setOnAction(event -> {
             String selectedFaculty = facultyChooserDeactiveUpdateDepartment.getValue();
             departmentChooserDeactiveUpdateDepartment.getItems().clear();
+            departmentChooserDeactiveUpdateDepartment.setPromptText("Department");
             Faculty faculty = null;
             try {
                 faculty = Faculty.loadFromFile(selectedFaculty);
@@ -275,6 +264,7 @@ public class UpdateDepartmentAdminPortalController implements Initializable {
         facultyChooserEditUpdateDepartment.setOnAction(event -> {
             String selectedFaculty = facultyChooserEditUpdateDepartment.getValue();
             departmentChooserEditUpdateDepartment.getItems().clear();
+            departmentChooserEditUpdateDepartment.setPromptText("Department");
             Faculty faculty = null;
             try {
                 faculty = Faculty.loadFromFile(selectedFaculty);

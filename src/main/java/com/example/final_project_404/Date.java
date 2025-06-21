@@ -9,9 +9,6 @@ public class Date {
     private int month;
     private int day;
 
-    public static String returnDate(int year, int month, int day){
-        return String.format("%d/%d/%d",year ,month ,day);
-    }
     public static String DateOfJoin(){
         return LocalDate.now().toString();
     }

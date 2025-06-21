@@ -137,29 +137,40 @@ public class UpdateFacultyAdminPortalController implements Initializable {
 
     @FXML
     void editFaculty(ActionEvent event) throws IOException {
+
         University.loadFaculties();
         for(Faculty faculty : University.allFaculties){
-            if(Objects.equals(faculty.getFacultyName(), facultyChooserEditUpdateFaculty.getValue())){
-                if(!newFacultyNameUpdateFaculty.getText().isEmpty()){
-                    faculty.setFacultyName(newFacultyNameUpdateFaculty.getText());
-                }
-                if(!newEstablishmentYearUpdateFaculty.getText().isEmpty()){
-                    faculty.setEstablishmentYear(Integer.parseInt(newEstablishmentYearUpdateFaculty.getText()));
+            System.out.println(faculty.getFacultyName());
+            for(Department department : faculty.departments){
+                System.out.println(department.getName());
+                for(Major major : department.majors){
+                    System.out.println(major.getName());
                 }
             }
         }
-        University.saveFaculties();
+//        for(Faculty faculty : University.allFaculties){
+//            if(Objects.equals(faculty.getFacultyName(), facultyChooserEditUpdateFaculty.getValue())){
+//                if(!newFacultyNameUpdateFaculty.getText().isEmpty()){
+//                    faculty.setFacultyName(newFacultyNameUpdateFaculty.getText());
+//                }
+//                if(!newEstablishmentYearUpdateFaculty.getText().isEmpty()){
+//                    faculty.setEstablishmentYear(Integer.parseInt(newEstablishmentYearUpdateFaculty.getText()));
+//                }
+//            }
+//        }
+//        University.saveFaculties();
+//
+//        Faculty faculty = Faculty.loadFromFile(facultyChooserDeactiveUpdateFaculty.getValue());
+//        System.out.println(faculty.getFacultyName()+faculty.getId()+ faculty.getEstablishmentYear());
 
-        Faculty faculty = Faculty.loadFromFile(facultyChooserDeactiveUpdateFaculty.getValue());
-        System.out.println(faculty.getFacultyName()+faculty.getId()+ faculty.getEstablishmentYear());
-        /*if(!newFacultyNameUpdateFaculty.getText().isEmpty()){
-            faculty.setFacultyName(newFacultyNameUpdateFaculty.getText());
-        }
-        if(!newEstablishmentYearUpdateFaculty.getText().isEmpty()){
-            faculty.setEstablishmentYear(Integer.parseInt(newEstablishmentYearUpdateFaculty.getText()));
-        }
-        faculty.saveToFile();
-*/
+//        if(!newFacultyNameUpdateFaculty.getText().isEmpty()){
+//            faculty.setFacultyName(newFacultyNameUpdateFaculty.getText());
+//        }
+//        if(!newEstablishmentYearUpdateFaculty.getText().isEmpty()){
+//            faculty.setEstablishmentYear(Integer.parseInt(newEstablishmentYearUpdateFaculty.getText()));
+//        }
+//        faculty.saveToFile();
+
         Parent root = FXMLLoader.load(getClass().getResource("UpdateFacultyAdminPortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -172,18 +183,18 @@ public class UpdateFacultyAdminPortalController implements Initializable {
 
     @FXML
     void setFacultyChooserDeactiveUpdateFaculty(ActionEvent event) {
-        if(!facultyChooserDeactiveUpdateFaculty.getValue().isBlank()){
-            deactiveButton.setDisable(false);
-        }
+//        if(!facultyChooserDeactiveUpdateFaculty.getValue().isBlank()){
+//            deactiveButton.setDisable(false);
+//        }
     }
 
     @FXML
     void setFacultyChooserEditUpdateFaculty(ActionEvent event) {
-        if (!facultyChooserEditUpdateFaculty.getValue().isBlank()){
-            newFacultyNameUpdateFaculty.setDisable(false);
-            newEstablishmentYearUpdateFaculty.setDisable(false);
-            editButton.setDisable(false);
-        }
+//        if (!facultyChooserEditUpdateFaculty.getValue().isBlank()){
+//            newFacultyNameUpdateFaculty.setDisable(false);
+//            newEstablishmentYearUpdateFaculty.setDisable(false);
+//            editButton.setDisable(false);
+//        }
     }
 
     @FXML

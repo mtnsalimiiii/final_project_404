@@ -10,6 +10,7 @@ public class Faculty implements Serializable {
     private int id;
     private int establishmentYear;
     public List<String> departmentNames = new ArrayList<>();
+    public List<Department> departments = new ArrayList<>();
 
     public Faculty(String facultyName, int id, int establishmentYear) {
         this.facultyName = facultyName;
@@ -35,55 +36,61 @@ public class Faculty implements Serializable {
         return departmentNames;
     }
 
-    public Department getDepartment(String departmentName) {
-        if (!departmentNames.contains(departmentName)) return null;
-
-        String fileName = "Department_" + departmentName + ".ser";
-        File file = new File(fileName);
-        if (!file.exists()) return null;
-
-        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(file))) {
-            return (Department) input.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error loading department: " + e.getMessage());
-            return null;
-        }
-    }
+//    public Department getDepartment(String departmentName) {
+//        if (!departmentNames.contains(departmentName)) return null;
+//
+//        String fileName = "Department_" + departmentName + ".ser";
+//        File file = new File(fileName);
+//        if (!file.exists()) return null;
+//
+//        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(file))) {
+//            return (Department) input.readObject();
+//        } catch (IOException | ClassNotFoundException e) {
+//            System.err.println("Error loading department: " + e.getMessage());
+//            return null;
+//        }
+//    }
 
 
     public void addDepartment(Department department) {
-        if (department != null) {
-            if (!departmentNames.contains(department.getName())) {
-                departmentNames.add(department.getName());
-                saveToFile();
-                department.saveToFile();
+//        if (department != null) {
+//            if (!departmentNames.contains(department.getName())) {
+//                departmentNames.add(department.getName());
+//                saveToFile();
+//                department.saveToFile();
+//            }
+//        }// amir
+        if(department != null){
+            if(!departments.contains(department)){
+                departments.add(department);
             }
-        }
+        }// matin
+        // delete the departmentsNames List
     }
 
-    public void saveToFile() {
-        String fileName = "Faculty_" + facultyName + ".ser";
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(fileName))) {
-            output.writeObject(this);
-        } catch (IOException e) {
-            System.err.println("Error saving faculty: " + e.getMessage());
-        }
-    }
+//    public void saveToFile() {
+//        String fileName = "Faculty_" + facultyName + ".ser";
+//        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(fileName))) {
+//            output.writeObject(this);
+//        } catch (IOException e) {
+//            System.err.println("Error saving faculty: " + e.getMessage());
+//        }
+//    }
 
-    public static Faculty loadFromFile(String facultyName) throws FileNotFoundException {
-        File file = new File("Faculty_" + facultyName + ".ser");
-        if (!file.exists()) {
-            throw new FileNotFoundException("Faculty file not found for: " + facultyName);
-        }
-
-        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(file))) {
-            return (Faculty) input.readObject();
-        } catch (IOException | ClassNotFoundException e) {
-            System.err.println("Error loading faculty: " + e.getMessage());
-            return null;
-        }
-
-    }
+//    public static Faculty loadFromFile(String facultyName) throws FileNotFoundException {
+//        File file = new File("Faculty_" + facultyName + ".ser");
+//        if (!file.exists()) {
+//            throw new FileNotFoundException("Faculty file not found for: " + facultyName);
+//        }
+//
+//        try (ObjectInputStream input = new ObjectInputStream(new FileInputStream(file))) {
+//            return (Faculty) input.readObject();
+//        } catch (IOException | ClassNotFoundException e) {
+//            System.err.println("Error loading faculty: " + e.getMessage());
+//            return null;
+//        }
+//
+//    }
     /*private String facultyName;
     private int id;
     //private int numberOfDepartment;

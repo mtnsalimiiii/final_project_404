@@ -11,61 +11,59 @@ public abstract class  Person implements Serializable {
     private String nationalId;
     private Gender gender;
     private String phoneNumber;
-    private String dateOfregistration;
+    private String dateOfJoin;
 
 
-    public Person(String first_name,String last_name,String dateOfBirth,String nationalId,Gender gender, String phoneNumber){
+    Person(String first_name, String last_name, String dateOfBirth, String nationalId, Gender gender, String phoneNumber, String dateOfJoin){
         this.first_name=first_name;
         this.last_name=last_name;
         this.dateOfBirth=dateOfBirth;
         this.nationalId=nationalId;
         this.gender = gender;
         this.phoneNumber=phoneNumber;
-        dateOfregistration= Date.DateOfJoin();
+        this.dateOfJoin = dateOfJoin;
     }
-    public Person() {
-        this("", "", "", "", Gender.Male, "");
-        dateOfregistration="";
+
+
+    public  String getFirst_name(){
+        return first_name;
     }
     public void setFirst_name(String first_name){
         this.first_name=first_name;
     }
-    public void setLast_name(String last_name){
-        this.last_name=last_name;
-    }
-    public void setDateOfBirthate(String dateOfBirth){
-        this.dateOfBirth=dateOfBirth;
-    }
-    public void setNationalId(String nationalId) {
-        this.nationalId = nationalId;
-    }
-    public  String getFirst_name(){
-        return first_name;
-    }
+
     public String getLast_name(){
         return last_name;
     }
+    public void setLast_name(String last_name){
+        this.last_name=last_name;
+    }
+
     public String getDateOfBirth(){
         return dateOfBirth;
+    }
+    public void setDateOfBirthate(String dateOfBirth){
+        this.dateOfBirth=dateOfBirth;
     }
 
     public String getNationalId() {
         return nationalId;
     }
-
+    public void setNationalId(String nationalId) {
+        this.nationalId = nationalId;
+    }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
-
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
-    public String getDateOfregistration() {
-        return dateOfregistration;
-    }
 
-    public void setDateOfregistration(String dateOfregistration) {
-        this.dateOfregistration = dateOfregistration;
+    public String getDateOfJoin() {
+        return dateOfJoin;
+    }
+    public void setDateOfJoin(String dateOfJoin) {
+        this.dateOfJoin = dateOfJoin;
     }
 }

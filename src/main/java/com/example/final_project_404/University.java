@@ -43,7 +43,7 @@ public class University implements Serializable{
 
     public static void addFaculty(Faculty faculty) {
         allFaculties.add(faculty);
-        faculty.saveToFile();
+//        faculty.saveToFile();
     }
 
 

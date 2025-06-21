@@ -168,7 +168,7 @@ public class AddFacultyAdminPortalController {
         University.loadFaculties();
         University.addFaculty (faculty);
         University.saveFaculties();
-        faculty.saveToFile();
+//        faculty.saveToFile();
         facultyNameAddFacultyAdmin.clear();
         establishmentYearAddFacultyAdmin.clear();
         System.out.println("name: " + facultyName);

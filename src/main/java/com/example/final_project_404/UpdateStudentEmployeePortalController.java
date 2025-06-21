@@ -3,6 +3,7 @@ package com.example.final_project_404;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,8 +15,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class UpdateStudentEmployeePortalController {
+public class UpdateStudentEmployeePortalController implements Initializable {
 
     @FXML
     private VBox containerBarDeactiveVBox;
@@ -174,7 +177,13 @@ public class UpdateStudentEmployeePortalController {
 
     @FXML
     void setOperationChooserUpdateStudentEmployee(ActionEvent event) {
-
+        if(operationChooserUpdateStudentEmployee.getValue().equals("EDIT")){
+            containerBarDeactiveVBox.setDisable(true);
+            containerBarEditVBox.setDisable(false);
+        } else if(operationChooserUpdateStudentEmployee.getValue().equals("DEACTIVE")){
+            containerBarEditVBox.setDisable(true);
+            containerBarDeactiveVBox.setDisable(false);
+        }
     }
 
     @FXML
@@ -188,4 +197,11 @@ public class UpdateStudentEmployeePortalController {
         stage.show();
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        operationChooserUpdateStudentEmployee.getItems().addAll("EDIT", "DEACTIVE");
+        operationChooserUpdateStudentEmployee.setVisibleRowCount(2);
+
+
+    }
 }

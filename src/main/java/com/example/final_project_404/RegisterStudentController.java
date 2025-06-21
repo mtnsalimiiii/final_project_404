@@ -181,7 +181,7 @@ public class RegisterStudentController implements Initializable {
         Student.loadAllStudents();
         University.allStudents.add(student);
         Student.saveAllStudent();
-        Major.addStudentToMajor(department,major,student);
+//        Major.addStudentToMajor(department,major,student);
     }
     public String generateStudentId() {
         return "STD" + (University.allStudents.size() + 1);
@@ -201,11 +201,11 @@ public class RegisterStudentController implements Initializable {
             String selectedFaculty = facultyChooserRegisterStudentEmployee.getValue();
             departmentChooserRegisterStudentEmployee.getItems().clear();
             Faculty faculty = null;
-            try {
-                faculty = Faculty.loadFromFile(selectedFaculty);
-            } catch (FileNotFoundException ex) {
-                throw new RuntimeException(ex);
-            }
+//            try {
+//                faculty = Faculty.loadFromFile(selectedFaculty);
+//            } catch (FileNotFoundException ex) {
+//                throw new RuntimeException(ex);
+//            }
             if (faculty != null) {
                 departmentChooserRegisterStudentEmployee.getItems().addAll(faculty.getDepartmentNames());
                 departmentChooserRegisterStudentEmployee.setVisibleRowCount(4);
@@ -218,7 +218,7 @@ public class RegisterStudentController implements Initializable {
             majorChooserRegisterStudentEmployee.getItems().clear();
             Department department = null;
             try {
-                department = Department.loadFromFile(departmentNAme);
+//                department = Department.loadFromFile(departmentNAme);
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }

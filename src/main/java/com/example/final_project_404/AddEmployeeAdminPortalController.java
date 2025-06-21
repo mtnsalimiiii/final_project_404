@@ -202,10 +202,11 @@ public class AddEmployeeAdminPortalController implements Initializable {
         String dateOfHire = getDateOfHire();
         Employee.loadAllEmployee();
         String id = getId(University.allEmployees);
-        Employee emp = new Employee(firstName,lastName,dateOfBirth,nationalId,gender,phoneNumber,id);
+        Employee emp = new Employee(firstName,lastName,dateOfBirth,nationalId,gender,phoneNumber,id,department,faculty,dateOfHire);
         University.allEmployees.add(emp);
         Employee.saveEmployee();
-        Department dep = Department.loadFromFile(department);
+        Department dep = null;
+        dep = Department.loadFromFile(department);
         if (dep == null) {
             System.out.println("Department not found: " + department);
             return;

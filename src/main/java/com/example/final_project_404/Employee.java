@@ -7,18 +7,35 @@ import java.util.List;
 
 public class Employee extends Person implements Serializable{
     private String id;
-    public Employee(String first_name, String last_name, String dateOfBirth, String nationalId,Gender gender, String phoneNumber, String id){
-        super(first_name,last_name,dateOfBirth,nationalId,gender,phoneNumber);
+    private String facultyEmployee;
+    private String departmentEmployee;
+
+    public Employee(String first_name, String last_name, String dateOfBirth, String nationalId,Gender gender, String phoneNumber, String id, String department, String faculty, String dateOfHire){
+        super(first_name,last_name,dateOfBirth,nationalId,gender,phoneNumber,dateOfHire);
         this.id=id;
+        this.departmentEmployee = department;
+        this.facultyEmployee = faculty;
     }
 
     public String getId() {
         return id;
     }
-
     public void setId(String employeeId) {
         this.id = employeeId;
     }
+    public String getFacultyEmployee(){
+        return facultyEmployee;
+    }
+    public void setFacultyEmployee(String facultyEmployee){
+        this.facultyEmployee = facultyEmployee;
+    }
+    public String getDepartmentEmployee(){
+        return departmentEmployee;
+    }
+    public void setDepartmentEmployee(String departmentEmployee){
+        this.departmentEmployee = departmentEmployee;
+    }
+
     public static void loadAllEmployee() {
         File file = new File("allEmployees.ser");
         if (!file.exists() || file.length() == 0) {
@@ -37,6 +54,7 @@ public class Employee extends Person implements Serializable{
             System.err.println("Error in reading students: " + e.getMessage());
         }
     }
+
     public static void saveEmployee() throws IOException {
         try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("allEmployees.ser"))) {
             output.writeObject(University.allEmployees);

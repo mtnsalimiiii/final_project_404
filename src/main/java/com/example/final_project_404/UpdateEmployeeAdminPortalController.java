@@ -249,6 +249,7 @@ public class UpdateEmployeeAdminPortalController implements Initializable {
         facultyChooserEditUpdateEmployee.setOnAction(e -> {
             String selectedFaculty = facultyChooserEditUpdateEmployee.getValue();
             departmentChooserEditUpdateEmployee.getItems().clear(); // پاک کردن آیتم‌های قبلی
+            departmentChooserEditUpdateEmployee.setPromptText("Department");
             Faculty faculty = null;
             try {
                 faculty = Faculty.loadFromFile(selectedFaculty);
@@ -264,6 +265,7 @@ public class UpdateEmployeeAdminPortalController implements Initializable {
         facultyChooserDeactiveUpdateEmployee.setOnAction(e -> {
             String selectedFaculty = facultyChooserDeactiveUpdateEmployee.getValue();
             departmentChooserDeactiveUpdateEmployee.getItems().clear(); // پاک کردن آیتم‌های قبلی
+            departmentChooserDeactiveUpdateEmployee.setPromptText("Department");
             Faculty faculty = null;
             try {
                 faculty = Faculty.loadFromFile(selectedFaculty);
@@ -279,6 +281,7 @@ public class UpdateEmployeeAdminPortalController implements Initializable {
         departmentChooserEditUpdateEmployee.setOnAction(e -> {
             String selectedDepartment = departmentChooserEditUpdateEmployee.getValue();
             employeeChooserEditUpdateEmployee.getItems().clear();
+            employeeChooserEditUpdateEmployee.setPromptText("Employee");
             Department department = null;
 
             department = Department.loadFromFile(selectedDepartment);
@@ -288,6 +291,21 @@ public class UpdateEmployeeAdminPortalController implements Initializable {
                     employeeChooserEditUpdateEmployee.getItems().add(employee.getFirst_name() + " " + employee.getLast_name() + "(ID : " + employee.getId() + ")");
                 }
                 employeeChooserEditUpdateEmployee.setVisibleRowCount(4);
+            }
+        });
+
+        departmentChooserDeactiveUpdateEmployee.setOnAction(event -> {
+            String selectedDepartment = departmentChooserDeactiveUpdateEmployee.getValue();
+            employeeChooserDeactiveUpdateEmployee.getItems().clear();
+            employeeChooserDeactiveUpdateEmployee.setPromptText("Employee");
+
+            Department department = null;
+
+            if(department != null){
+                for (Employee employee : department.employees){
+                    employeeChooserDeactiveUpdateEmployee.getItems().add(employee.getFirst_name() + " " + employee.getLast_name() + "(ID : " + employee.getId() + ")");
+                }
+                employeeChooserDeactiveUpdateEmployee.setVisibleRowCount(4);
             }
         });
 
