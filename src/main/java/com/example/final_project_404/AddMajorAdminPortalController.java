@@ -35,6 +35,9 @@ public class AddMajorAdminPortalController implements Initializable {
     private HBox headerHBox;
 
     @FXML
+    private TextField establishmentYearAddMajorAdmin;
+
+    @FXML
     private TextField majorNameAddMajorAdmin;
 
     @FXML
@@ -163,59 +166,99 @@ public class AddMajorAdminPortalController implements Initializable {
 
 
     public int getMajorId(String facultyName, String departmentName) throws FileNotFoundException {
-        Faculty faculty = Faculty.loadFromFile(facultyName);
-        if (faculty == null) {
-            System.err.println("Faculty not found: " + facultyName);
-            return -1;
-        }
 
-        if (!faculty.getDepartmentNames().contains(departmentName)) {
-            System.err.println("Department not found in faculty: " + departmentName);
-            return -1;
+        int id = 0;
+        for (Faculty faculty : University.allFaculties){
+            if(faculty.getFacultyName().equals(facultyName)){
+                for (Department department : faculty.departments){
+                    if (department.getName().equals(departmentName)){
+                        id = department.majors.size()+1;
+                    }
+                }
+                break;
+            }
         }
+        return id;
 
-        Department department = Department.loadFromFile(departmentName);
-        if (department == null) {
-            System.err.println("Department file not found: " + departmentName);
-            return -1;
-        }
 
-        return department.majors.size() + 1;
+//        Faculty faculty = Faculty.loadFromFile(facultyName);
+//        if (faculty == null) {
+//            System.err.println("Faculty not found: " + facultyName);
+//            return -1;
+//        }
+//
+//        if (!faculty.getDepartmentNames().contains(departmentName)) {
+//            System.err.println("Department not found in faculty: " + departmentName);
+//            return -1;
+//        }
+//
+//        Department department = Department.loadFromFile(departmentName);
+//        if (department == null) {
+//            System.err.println("Department file not found: " + departmentName);
+//            return -1;
+//        }
+//
+//        return department.majors.size() + 1;
+
     }
 
-    public int getPublishYear(){
-        return LocalDate.now().getYear();
-    }
+//    public int getPublishYear(){
+//        return LocalDate.now().getYear();
+//    }
+
     public void addNewMajor(ActionEvent event) throws FileNotFoundException {
-        String faculty = facultyChooserAddMajorAdmin.getValue().trim();
-        String department = departmentChooserAddMajorAdmin.getValue().trim();
+        University.loadFaculties();
+
+        String facultyName = facultyChooserAddMajorAdmin.getValue().trim();
+        String departmentName = departmentChooserAddMajorAdmin.getValue().trim();
         String nameMajor = majorNameAddMajorAdmin.getText();
-        int publishYear = getPublishYear();
-        int majorId = getMajorId(faculty, department);
-        if (faculty == null || department == null || nameMajor.isEmpty()) {
+        int establishmentYear = Integer.parseInt(establishmentYearAddMajorAdmin.getText());
+        int majorId = getMajorId(facultyName, departmentName);
+
+        if (facultyName == null || departmentName == null || nameMajor.isEmpty()) {
             System.out.println("Please enter all fields.");
             return;
         }
-        Faculty fac = Faculty.loadFromFile(faculty);
-        if (faculty == null) {
-            System.out.println("دانشکده یافت نشد: " + faculty);
-            return;
+
+        Major newMajor = new Major(nameMajor, majorId, establishmentYear);
+
+
+        if (newMajor != null){
+            for (Faculty faculty1 : University.allFaculties){
+                if (faculty1.getFacultyName().equals(facultyName)){
+                    for (Department department1 : faculty1.departments){
+                        if (department1.getName().equals(departmentName)){
+                            if (!department1.majors.contains(newMajor)){
+                                department1.majors.add(newMajor);
+                            }
+                        }
+                    }
+                }
+            }
+            University.saveFaculties();
         }
 
-        Department dep = Department.loadFromFile(department);
-        if (dep == null) {
-            System.out.println("دپارتمان یافت نشد: " + department);
-            return;
-        }
 
-        Major newMajor = new Major(nameMajor, majorId, publishYear);
-        dep.majors.add(newMajor);
-        dep.saveToFile();
-        fac.saveToFile();
-        System.out.println("faculty: " + faculty);
-        System.out.println("department: " + department);
+//        Faculty fac = Faculty.loadFromFile(facultyName);
+//        if (fac == null) {
+//            System.out.println("دانشکده یافت نشد: " + facultyName);
+//            return;
+//        }
+//
+//        Department dep = Department.loadFromFile(departmentName);
+//        if (dep == null) {
+//            System.out.println("دپارتمان یافت نشد: " + departmentName);
+//            return;
+//        }
+//
+//        Major newMajor = new Major(nameMajor, majorId, establishmentYear);
+//        dep.majors.add(newMajor);
+//        dep.saveToFile();
+//        fac.saveToFile();
+        System.out.println("faculty: " + facultyName);
+        System.out.println("department: " + departmentName);
         System.out.println("majorName: " + nameMajor);
-        System.out.println("publish year: " + publishYear);
+        System.out.println("publish year: " + establishmentYear);
         System.out.println("major id: " + majorId);
     }
 
@@ -226,19 +269,28 @@ public class AddMajorAdminPortalController implements Initializable {
             facultyChooserAddMajorAdmin.getItems().add(faculty.getFacultyName());
         }
         facultyChooserAddMajorAdmin.setVisibleRowCount(4);
+
         facultyChooserAddMajorAdmin.setOnAction(e -> {
             String selectedFaculty = facultyChooserAddMajorAdmin.getValue();
             departmentChooserAddMajorAdmin.getItems().clear(); // پاک کردن آیتم‌های قبلی
-            Faculty faculty = null;
-            try {
-                faculty = Faculty.loadFromFile(selectedFaculty);
-            } catch (FileNotFoundException ex) {
-                throw new RuntimeException(ex);
+            departmentChooserAddMajorAdmin.setPromptText("Department");
+
+//            Faculty faculty = null;
+//            try {
+//                faculty = Faculty.loadFromFile(selectedFaculty);
+//            } catch (FileNotFoundException ex) {
+//                throw new RuntimeException(ex);
+//            }
+
+            for (Faculty faculty : University.allFaculties){
+                if (faculty.getFacultyName().equals(selectedFaculty)){
+                    for (Department department : faculty.departments){
+                        departmentChooserAddMajorAdmin.getItems().add(department.getName());
+                    }
+                    departmentChooserAddMajorAdmin.setVisibleRowCount(4);
+                }
             }
-            if (faculty != null) {
-                departmentChooserAddMajorAdmin.getItems().addAll(faculty.getDepartmentNames());
-                departmentChooserAddMajorAdmin.setVisibleRowCount(4);
-            }
+
         });
     }
 }

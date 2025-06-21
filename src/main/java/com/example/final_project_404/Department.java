@@ -40,17 +40,17 @@ public class Department implements Serializable {
         this.establishmentYear = establishmentYear;
     }
 
-    /*
-    public List<Major> getMajors() {
-        return majors;
-    }
 
-    public void addMajor(Major major) {
-        if (major != null) {
-            majors.add(major);
-            saveToFile();
-        }
-    }*/
+//    public List<Major> getMajors() {
+//        return majors;
+//    }
+//
+//    public void addMajor(Major major) {
+//        if (major != null) {
+//            majors.add(major);
+//            saveToFile();
+//        }
+//    }
 
     public void addMajor(Major major){
         if(major != null){

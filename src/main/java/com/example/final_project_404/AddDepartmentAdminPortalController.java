@@ -161,24 +161,51 @@ public class AddDepartmentAdminPortalController implements Initializable {
         stage.show();
     }
 
-    public int getEstablishmentYear(){
-        return LocalDate.now().getYear();
-    }
-    public int getDepartmentId(String faculty) throws FileNotFoundException {
-        Faculty faculty1 = Faculty.loadFromFile(faculty);
-        return faculty1.departmentNames.size()+1;
+//    public int getEstablishmentYear(){
+//        return LocalDate.now().getYear();
+//    }
+    public int getDepartmentId(String facultyName) throws FileNotFoundException {
+//        Faculty faculty1 = Faculty.loadFromFile(faculty);
+//        return faculty1.departmentNames.size()+1;
+
+        int id = 0;
+
+        for (Faculty faculty1 : University.allFaculties){
+            if(faculty1.getFacultyName().equals(facultyName)){
+                id = faculty1.departments.size()+1;
+                break;
+            }
+        }
+        return id;
     }
 
     public void addNewDepartment(ActionEvent event) throws FileNotFoundException {
-        String faculty = facultyChooserAddDepartmentAdmin.getValue().trim();
+        University.loadFaculties();
+
+        String facultyName = facultyChooserAddDepartmentAdmin.getValue().trim();
         String departmentName = departmentNameAddDepartmentAdmin.getText().trim();
         //int establishmentYear = getEstablishmentYear();
         int establishmentYear = Integer.parseInt(establishmentYearAddDepartmentAdmin.getText());
-        int departmentId = getDepartmentId(faculty);
-        Faculty faculty1 = Faculty.loadFromFile(faculty);
-        faculty1.addDepartment(new Department(departmentName, establishmentYear, departmentId));
-        faculty1.saveToFile();
-        System.out.println("faculty: " + faculty);
+        int departmentId = getDepartmentId(facultyName);
+
+        Department department = new Department(departmentName, establishmentYear, departmentId);
+
+        for (Faculty faculty : University.allFaculties){
+            if (faculty.getFacultyName().equals(facultyName)){
+                if(department != null){
+                    if(!faculty.departments.contains(department)){
+                        faculty.departments.add(department);
+                    }
+                }
+                break;
+            }
+            University.saveFaculties();
+        }
+//        Faculty faculty1 = Faculty.loadFromFile(facultyName);
+//        faculty1.addDepartment(new Department(departmentName, establishmentYear, departmentId));
+//        faculty1.saveToFile();
+
+        System.out.println("faculty: " + facultyName);
         System.out.println("name: " + departmentName);
         System.out.println("year: " + establishmentYear);
         System.out.println("id: " + departmentId);
@@ -190,7 +217,6 @@ public class AddDepartmentAdminPortalController implements Initializable {
         for (Faculty faculty : University.allFaculties) {
             facultyChooserAddDepartmentAdmin.getItems().add(faculty.getFacultyName());
         }
-
         facultyChooserAddDepartmentAdmin.setVisibleRowCount(4);
     }
 }

@@ -41,10 +41,10 @@ public class University implements Serializable{
         return null;
     }
 
-    public static void addFaculty(Faculty faculty) {
-        allFaculties.add(faculty);
+//    public static void addFaculty(Faculty faculty) {
+//        allFaculties.add(faculty);
 //        faculty.saveToFile();
-    }
+//    }
 
 
     public int getEstablishmetYear() {

@@ -65,6 +65,11 @@
                     <Insets bottom="10.0" />
                 </VBox.margin>
             </TextField>
+         <TextField fx:id="establishmentYearAddMajorAdmin" layoutX="31.0" layoutY="127.0" maxHeight="0.0" maxWidth="300.0" prefHeight="26.0" prefWidth="200.0" promptText="Establishment Year" stylesheets="@EmployeePortal.css">
+            <VBox.margin>
+               <Insets bottom="10.0" />
+            </VBox.margin>
+         </TextField>
             <Button mnemonicParsing="false" onAction="#addNewMajor" stylesheets="@EmployeePortal.css" text="Add">
                 <VBox.margin>
                     <Insets top="15.0" />

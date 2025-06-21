@@ -161,7 +161,18 @@ public class RegisterProfessorController implements Initializable {
         return LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
 
-    public void addNewProfessor(ActionEvent event) {
+    public String getDateOfBirth(ActionEvent event) {
+        return dateOfBirthRegisterProfessorEmployee.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")).toString();
+    }
+
+    public String generateProfessorId(){
+        return "PRO" + (University.allProfessors.size()+1);
+    }
+
+    public void addNewProfessor(ActionEvent event) throws Exception {
+        University.loadFaculties();
+        Professor.loadProfessor();
+
         String dateOfBirth = getDateOfBirth(event);
         String firstName = firstnameRegisterProfessorEmployee.getText().trim();
         String lastName = lastnameRegisterProfessorEmployee.getText().trim();
@@ -172,10 +183,28 @@ public class RegisterProfessorController implements Initializable {
         String department = departmentChooserRegisterProfessorEmployee.getValue();
         String major = majorChooserRegisterProfessorEmployee.getValue();
         String dateOfHire = getDateOfHire();
-    }
+        String professorId = generateProfessorId();
+        Professor professor = new Professor(firstName,lastName, dateOfBirth, nationalId,gender,phoneNumber,professorId,dateOfHire,faculty,department,major);
 
-    public String getDateOfBirth(ActionEvent event) {
-        return dateOfBirthRegisterProfessorEmployee.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")).toString();
+        if (professor != null){
+            for (Faculty faculty1 : University.allFaculties){
+                if (faculty1.getFacultyName().equals(faculty)){
+                    for (Department department1 : faculty1.departments){
+                        if (department1.getName().equals(department)){
+                            for (Major major1 : department1.majors){
+                                if (!major1.professors.contains(professor)){
+                                    major1.professors.add(professor);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            University.saveFaculties();
+
+            University.allProfessors.add(professor);
+            Professor.saveProfessor();
+        }
     }
 
     @Override
@@ -189,28 +218,51 @@ public class RegisterProfessorController implements Initializable {
         facultyChooserRegisterProfessorEmployee.setOnAction(event -> {
             String selectedFaculty = facultyChooserRegisterProfessorEmployee.getValue();
             departmentChooserRegisterProfessorEmployee.getItems().clear();
-            Faculty faculty = null;
-            try {
-                faculty = Faculty.loadFromFile(selectedFaculty);
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-            if (faculty != null) {
-                departmentChooserRegisterProfessorEmployee.getItems().addAll(faculty.getDepartmentNames());
-                departmentChooserRegisterProfessorEmployee.setVisibleRowCount(4);
+            departmentChooserRegisterProfessorEmployee.setPromptText("Department");
+//            Faculty faculty = null;
+//            try {
+//                faculty = Faculty.loadFromFile(selectedFaculty);
+//            } catch (FileNotFoundException e) {
+//                throw new RuntimeException(e);
+//            }
+//            if (faculty != null) {
+//                departmentChooserRegisterProfessorEmployee.getItems().addAll(faculty.getDepartmentNames());
+//                departmentChooserRegisterProfessorEmployee.setVisibleRowCount(4);
+//            }
+
+            for (Faculty faculty : University.allFaculties){
+                if (faculty.getFacultyName().equals(selectedFaculty)){
+                    for (Department department : faculty.departments){
+                        departmentChooserRegisterProfessorEmployee.getItems().add(department.getName());
+                    }
+                    departmentChooserRegisterProfessorEmployee.setVisibleRowCount(4);
+                }
             }
         });
 
         departmentChooserRegisterProfessorEmployee.setOnAction(event -> {
             String selectedDepartment = departmentChooserRegisterProfessorEmployee.getValue();
             majorChooserRegisterProfessorEmployee.getItems().clear();
-            Department department = null;
-            department = Department.loadFromFile(selectedDepartment);
-            if(department != null){
-                for (Major major : department.majors){
-                    majorChooserRegisterProfessorEmployee.getItems().add(major.getName());
+            majorChooserRegisterProfessorEmployee.setPromptText("Major");
+//            Department department = null;
+//            department = Department.loadFromFile(selectedDepartment);
+//            if(department != null){
+//                for (Major major : department.majors){
+//                    majorChooserRegisterProfessorEmployee.getItems().add(major.getName());
+//                }
+//                majorChooserRegisterProfessorEmployee.setVisibleRowCount(4);
+//            }
+            for (Faculty faculty : University.allFaculties){
+                if (faculty.getFacultyName().equals(facultyChooserRegisterProfessorEmployee.getValue())){
+                    for (Department department : faculty.departments){
+                        if (department.getName().equals(selectedDepartment)){
+                            for (Major major : department.majors){
+                                majorChooserRegisterProfessorEmployee.getItems().add(major.getName());
+                            }
+                            majorChooserRegisterProfessorEmployee.setVisibleRowCount(4);
+                        }
+                    }
                 }
-                majorChooserRegisterProfessorEmployee.setVisibleRowCount(4);
             }
         });
 

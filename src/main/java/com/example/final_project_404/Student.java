@@ -7,15 +7,42 @@ import java.util.List;
 
 public class Student extends Person implements Serializable {
     private final String id;
+    private String faculty;
+    private String department;
+    private String major;
 
-    public Student(String first_name, String last_name, String dateOfBirth, String nationalId,Gender gender, String phoneNumber, String id, String dateOfRegistration){
+    public Student(String first_name, String last_name, String dateOfBirth, String nationalId,Gender gender, String phoneNumber, String id, String dateOfRegistration, String faculty, String department, String major){
         super(first_name,last_name,dateOfBirth,nationalId,gender,phoneNumber, dateOfRegistration);
         this.id=id;
+        this.faculty = faculty;
+        this.department = department;
+        this.major = major;
     }
 
 
     public String getId() {
         return id;
+    }
+
+    public String getFaculty() {
+        return faculty;
+    }
+    public void setFaculty(String faculty) {
+        this.faculty = faculty;
+    }
+
+    public String getDepartment() {
+        return department;
+    }
+    public void setDepartment(String department) {
+        this.department = department;
+    }
+
+    public String getMajor() {
+        return major;
+    }
+    public void setMajor(String major) {
+        this.major = major;
     }
 
     public static void loadAllStudents() {

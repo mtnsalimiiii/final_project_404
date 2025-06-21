@@ -151,22 +151,27 @@ public class AddFacultyAdminPortalController {
         stage.setResizable(false);
         stage.show();
     }
-    public int getEstablishmentYear(){
-        return LocalDate.now().getYear();
-    }
+
+//    public int getEstablishmentYear(){
+//        return LocalDate.now().getYear();
+//    }
+
     public int getFacultyId(){
-        University.loadFaculties();
         return University.allFaculties.size()+1;
     }
 
     public void addNewFaculty(ActionEvent event) {
+        University.loadFaculties();
+
         String facultyName = facultyNameAddFacultyAdmin.getText().trim();
         int establishmentYear = Integer.parseInt(establishmentYearAddFacultyAdmin.getText());
-        //int establishmentYear = getEstablishmentYear();
+//        int establishmentYear = getEstablishmentYear();
         int id = getFacultyId();
+
         Faculty faculty = new Faculty(facultyName, id, establishmentYear);
-        University.loadFaculties();
-        University.addFaculty (faculty);
+
+        University.allFaculties.add(faculty);
+
         University.saveFaculties();
 //        faculty.saveToFile();
         facultyNameAddFacultyAdmin.clear();

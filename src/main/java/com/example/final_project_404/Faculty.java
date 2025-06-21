@@ -9,7 +9,7 @@ public class Faculty implements Serializable {
     private String facultyName;
     private int id;
     private int establishmentYear;
-    public List<String> departmentNames = new ArrayList<>();
+//    public List<String> departmentNames = new ArrayList<>();
     public List<Department> departments = new ArrayList<>();
 
     public Faculty(String facultyName, int id, int establishmentYear) {
@@ -32,9 +32,9 @@ public class Faculty implements Serializable {
     }
 
 
-    public List<String> getDepartmentNames() {
-        return departmentNames;
-    }
+//    public List<String> getDepartmentNames() {
+//        return departmentNames;
+//    }
 
 //    public Department getDepartment(String departmentName) {
 //        if (!departmentNames.contains(departmentName)) return null;
@@ -65,7 +65,6 @@ public class Faculty implements Serializable {
                 departments.add(department);
             }
         }// matin
-        // delete the departmentsNames List
     }
 
 //    public void saveToFile() {

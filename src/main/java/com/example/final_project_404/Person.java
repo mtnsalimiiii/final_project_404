@@ -42,7 +42,7 @@ public abstract class  Person implements Serializable {
     public String getDateOfBirth(){
         return dateOfBirth;
     }
-    public void setDateOfBirthate(String dateOfBirth){
+    public void setDateOfBirth(String dateOfBirth){
         this.dateOfBirth=dateOfBirth;
     }
 
@@ -65,5 +65,12 @@ public abstract class  Person implements Serializable {
     }
     public void setDateOfJoin(String dateOfJoin) {
         this.dateOfJoin = dateOfJoin;
+    }
+
+    public Gender getGender() {
+        return gender;
+    }
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 }

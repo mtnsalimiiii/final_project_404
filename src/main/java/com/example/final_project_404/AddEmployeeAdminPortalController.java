@@ -183,14 +183,19 @@ public class AddEmployeeAdminPortalController implements Initializable {
     public String getDateOfBirth(ActionEvent event) {
         return dateOfBirthRegisterEmployeeAdmin.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
+
     public String getDateOfHire(){
         return LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
 
-    public String getId(List<Employee> employees){
-        return "EMP"+(employees.size()+1);
+    public String getEmployeeId(){
+        return "EMP"+(University.allEmployees.size()+1);
     }
+
     public void addNewEmployee(ActionEvent event) throws IOException {
+        Employee.loadAllEmployee();
+        University.loadFaculties();
+
         String dateOfBirth = getDateOfBirth(event);
         String firstName = firstnameRegisterEmployeeAdmin.getText().trim();
         String lastName = lastnameRegisterEmployeeAdmin.getText().trim();
@@ -200,21 +205,39 @@ public class AddEmployeeAdminPortalController implements Initializable {
         String faculty = facultyChooserRegisterEmployeeAdmin.getValue();
         String department = departmentChooserRegisterEmployeeAdmin.getValue();
         String dateOfHire = getDateOfHire();
-        Employee.loadAllEmployee();
-        String id = getId(University.allEmployees);
-        Employee emp = new Employee(firstName,lastName,dateOfBirth,nationalId,gender,phoneNumber,id,department,faculty,dateOfHire);
-        University.allEmployees.add(emp);
-        Employee.saveEmployee();
-        Department dep = null;
-        dep = Department.loadFromFile(department);
-        if (dep == null) {
-            System.out.println("Department not found: " + department);
-            return;
+        String id = getEmployeeId();
+
+        Employee employee = new Employee(firstName,lastName,dateOfBirth,nationalId,gender,phoneNumber,id,department,faculty,dateOfHire);
+
+        if (employee != null) {
+            for (Faculty faculty1 : University.allFaculties) {
+                if (faculty1.getFacultyName().equals(faculty)) {
+                    for (Department department1 : faculty1.departments) {
+                        if (department1.getName().equals(department)) {
+                            if (!department1.employees.contains(employee)) {
+                                department1.employees.add(employee);
+                            }
+                        }
+                    }
+                }
+            }
+            University.saveFaculties();
+
+            University.allEmployees.add(employee);
+            Employee.saveEmployee();
         }
 
-        dep.employees.add(emp);
-        dep.saveToFile();
-        System.out.println("Successful\nid : "+id);
+//        Department dep = null;
+//        dep = Department.loadFromFile(department);
+//        if (dep == null) {
+//            System.out.println("Department not found: " + department);
+//            return;
+//        }
+//
+//        dep.employees.add(emp);
+//        dep.saveToFile();
+
+        System.out.println("Successful\nid : " + id);
         System.out.println("Password : National ID");
     }
 
@@ -229,15 +252,26 @@ public class AddEmployeeAdminPortalController implements Initializable {
         facultyChooserRegisterEmployeeAdmin.setOnAction(e -> {
             String selectedFaculty = facultyChooserRegisterEmployeeAdmin.getValue();
             departmentChooserRegisterEmployeeAdmin.getItems().clear();
-            Faculty faculty1 = null;
-            try {
-                faculty1 = Faculty.loadFromFile(selectedFaculty);
-            } catch (FileNotFoundException ex) {
-                throw new RuntimeException(ex);
-            }
-            if (faculty1 != null) {
-                departmentChooserRegisterEmployeeAdmin.getItems().addAll(faculty1.getDepartmentNames());
-                departmentChooserRegisterEmployeeAdmin.setVisibleRowCount(4);
+            departmentChooserRegisterEmployeeAdmin.setPromptText("Department");
+
+//            Faculty faculty1 = null;
+//            try {
+//                faculty1 = Faculty.loadFromFile(selectedFaculty);
+//            } catch (FileNotFoundException ex) {
+//                throw new RuntimeException(ex);
+//            }
+//            if (faculty1 != null) {
+//                departmentChooserRegisterEmployeeAdmin.getItems().addAll(faculty1.getDepartmentNames());
+//                departmentChooserRegisterEmployeeAdmin.setVisibleRowCount(4);
+//            }
+
+            for (Faculty faculty1 : University.allFaculties){
+                if (faculty1.getFacultyName().equals(selectedFaculty)){
+                    for (Department department : faculty1.departments){
+                        departmentChooserRegisterEmployeeAdmin.getItems().add(department.getName());
+                    }
+                    departmentChooserRegisterEmployeeAdmin.setVisibleRowCount(4);
+                }
             }
         });
 
