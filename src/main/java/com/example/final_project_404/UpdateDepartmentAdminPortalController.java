@@ -203,13 +203,60 @@ public class UpdateDepartmentAdminPortalController implements Initializable {
     }
 
     @FXML
-    void deactiveDepartment(ActionEvent event) {
+    void deactiveDepartment(ActionEvent event) throws IOException {
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties){
+            if (faculty.getFacultyName().equals(facultyChooserDeactiveUpdateDepartment.getValue())){
+                faculty.departments.removeIf( department -> department.getName().equals(departmentChooserDeactiveUpdateDepartment.getValue()));
+                break;
+            }
+        }
+        University.saveFaculties();
+        System.out.println("successful");
 
+        Parent root = FXMLLoader.load(getClass().getResource("UpdateDepartmentAdminPortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Update New Department");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML
-    void editDepartment(ActionEvent event) {
+    void editDepartment(ActionEvent event) throws IOException {
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties){
+            if (faculty.getFacultyName().equals(facultyChooserEditUpdateDepartment.getValue())){
+                for (Department department : faculty.departments){
+                    if (department.getName().equals(departmentChooserEditUpdateDepartment.getValue())){
+                        if (!departmentNameUpdateDepartment.getText().isBlank()){
+                            department.setName(departmentNameUpdateDepartment.getText());
+                        }
+                        if (!establishmentYearUpdateDepartment.getText().isBlank()){
+                            department.setEstablishmentYear(Integer.parseInt(establishmentYearUpdateDepartment.getText()));
+                        }
+                        System.out.println("Successful");
+                        System.out.println(department.getName());
+                        System.out.println(department.getEstablishmentYear());
+                        System.out.println(department.getId());
 
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        University.saveFaculties();
+        System.out.println("successful");
+
+        Parent root = FXMLLoader.load(getClass().getResource("UpdateDepartmentAdminPortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Update New Department");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML
@@ -244,37 +291,36 @@ public class UpdateDepartmentAdminPortalController implements Initializable {
         facultyChooserDeactiveUpdateDepartment.setVisibleRowCount(4);
 
 
-
         facultyChooserDeactiveUpdateDepartment.setOnAction(event -> {
             String selectedFaculty = facultyChooserDeactiveUpdateDepartment.getValue();
             departmentChooserDeactiveUpdateDepartment.getItems().clear();
             departmentChooserDeactiveUpdateDepartment.setPromptText("Department");
-            Faculty faculty = null;
-            try {
-                faculty = Faculty.loadFromFile(selectedFaculty);
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-            if(faculty != null){
-                departmentChooserDeactiveUpdateDepartment.getItems().addAll(faculty.getDepartmentNames());
-                departmentChooserDeactiveUpdateDepartment.setVisibleRowCount(4);
+
+            for (Faculty faculty : University.allFaculties){
+                if (faculty.getFacultyName().equals(selectedFaculty)){
+                    for (Department department : faculty.departments){
+                        departmentChooserDeactiveUpdateDepartment.getItems().add(department.getName());
+                    }
+                    departmentChooserDeactiveUpdateDepartment.setVisibleRowCount(4);
+                    break;
+                }
             }
 
         });
         facultyChooserEditUpdateDepartment.setOnAction(event -> {
-            String selectedFaculty = facultyChooserEditUpdateDepartment.getValue();
             departmentChooserEditUpdateDepartment.getItems().clear();
             departmentChooserEditUpdateDepartment.setPromptText("Department");
-            Faculty faculty = null;
-            try {
-                faculty = Faculty.loadFromFile(selectedFaculty);
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-            if(faculty != null){
-                departmentChooserEditUpdateDepartment.getItems().addAll(faculty.getDepartmentNames());
-                departmentChooserEditUpdateDepartment.setVisibleRowCount(4);
+
+            for (Faculty faculty : University.allFaculties){
+                if (faculty.getFacultyName().equals(departmentChooserEditUpdateDepartment.getValue())){
+                    for (Department department : faculty.departments){
+                        departmentChooserEditUpdateDepartment.getItems().add(department.getName());
+                    }
+                    departmentChooserDeactiveUpdateDepartment.setVisibleRowCount(4);
+                    break;
+                }
             }
         });
+
     }
 }

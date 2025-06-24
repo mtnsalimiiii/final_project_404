@@ -3,6 +3,7 @@ module com.example.final_project_404 {
     requires javafx.fxml;
     requires java.desktop;
     requires jdk.nio.mapmode;
+    requires java.rmi;
 
 
     opens com.example.final_project_404 to javafx.fxml;

@@ -171,7 +171,7 @@ public class RegisterProfessorController implements Initializable {
 
     public void addNewProfessor(ActionEvent event) throws Exception {
         University.loadFaculties();
-        Professor.loadProfessor();
+        Professor.loadAllProfessor();
 
         String dateOfBirth = getDateOfBirth(event);
         String firstName = firstnameRegisterProfessorEmployee.getText().trim();
@@ -184,17 +184,21 @@ public class RegisterProfessorController implements Initializable {
         String major = majorChooserRegisterProfessorEmployee.getValue();
         String dateOfHire = getDateOfHire();
         String professorId = generateProfessorId();
-        Professor professor = new Professor(firstName,lastName, dateOfBirth, nationalId,gender,phoneNumber,professorId,dateOfHire,faculty,department,major);
 
-        if (professor != null){
-            for (Faculty faculty1 : University.allFaculties){
-                if (faculty1.getFacultyName().equals(faculty)){
-                    for (Department department1 : faculty1.departments){
-                        if (department1.getName().equals(department)){
-                            for (Major major1 : department1.majors){
-                                if (!major1.professors.contains(professor)){
+        if (!firstName.isBlank() && !lastName.isBlank() && !phoneNumber.isBlank() && !nationalId.isBlank() && gender!=null && faculty!=null && department!=null && major!=null){
+            Professor professor = new Professor(firstName,lastName, dateOfBirth, nationalId,gender,phoneNumber,professorId,dateOfHire,faculty,department,major);
+
+            for (Faculty faculty1 : University.allFaculties) {
+                if (faculty1.getFacultyName().equals(faculty)) {
+                    for (Department department1 : faculty1.departments) {
+                        if (department1.getName().equals(department)) {
+                            for (Major major1 : department1.majors) {
+                                if (!major1.professors.contains(professor)) {
                                     major1.professors.add(professor);
+                                } else {
+                                    System.out.println("The Professor Has Registered Earlier.");
                                 }
+                                break;
                             }
                         }
                     }
@@ -203,8 +207,31 @@ public class RegisterProfessorController implements Initializable {
             University.saveFaculties();
 
             University.allProfessors.add(professor);
-            Professor.saveProfessor();
+            Professor.saveAllProfessor();
+            System.out.println("successful\nID: "+ professorId);
+            System.out.println("password: "+nationalId);
+            System.out.println();
+            System.out.println(firstName+" "+lastName);
+            System.out.println(dateOfBirth);
+            System.out.println(phoneNumber);
+            System.out.println(nationalId);
+            System.out.println(gender);
+            System.out.println(faculty);
+            System.out.println(department);
+            System.out.println(major);
+            System.out.println(dateOfHire);
+
+            Parent root = FXMLLoader.load(getClass().getResource("RegisterProfessor.fxml"));
+            Scene scene = new Scene(root, 800, 500);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle("Register New Professor");
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } else {
+            System.out.println("Please Fill All Fields!");
         }
+
     }
 
     @Override
@@ -216,50 +243,33 @@ public class RegisterProfessorController implements Initializable {
         facultyChooserRegisterProfessorEmployee.setVisibleRowCount(4);
 
         facultyChooserRegisterProfessorEmployee.setOnAction(event -> {
-            String selectedFaculty = facultyChooserRegisterProfessorEmployee.getValue();
             departmentChooserRegisterProfessorEmployee.getItems().clear();
             departmentChooserRegisterProfessorEmployee.setPromptText("Department");
-//            Faculty faculty = null;
-//            try {
-//                faculty = Faculty.loadFromFile(selectedFaculty);
-//            } catch (FileNotFoundException e) {
-//                throw new RuntimeException(e);
-//            }
-//            if (faculty != null) {
-//                departmentChooserRegisterProfessorEmployee.getItems().addAll(faculty.getDepartmentNames());
-//                departmentChooserRegisterProfessorEmployee.setVisibleRowCount(4);
-//            }
 
             for (Faculty faculty : University.allFaculties){
-                if (faculty.getFacultyName().equals(selectedFaculty)){
+                if (faculty.getFacultyName().equals(facultyChooserRegisterProfessorEmployee.getValue())){
                     for (Department department : faculty.departments){
                         departmentChooserRegisterProfessorEmployee.getItems().add(department.getName());
                     }
                     departmentChooserRegisterProfessorEmployee.setVisibleRowCount(4);
+                    break;
                 }
             }
         });
 
         departmentChooserRegisterProfessorEmployee.setOnAction(event -> {
-            String selectedDepartment = departmentChooserRegisterProfessorEmployee.getValue();
             majorChooserRegisterProfessorEmployee.getItems().clear();
             majorChooserRegisterProfessorEmployee.setPromptText("Major");
-//            Department department = null;
-//            department = Department.loadFromFile(selectedDepartment);
-//            if(department != null){
-//                for (Major major : department.majors){
-//                    majorChooserRegisterProfessorEmployee.getItems().add(major.getName());
-//                }
-//                majorChooserRegisterProfessorEmployee.setVisibleRowCount(4);
-//            }
+
             for (Faculty faculty : University.allFaculties){
                 if (faculty.getFacultyName().equals(facultyChooserRegisterProfessorEmployee.getValue())){
                     for (Department department : faculty.departments){
-                        if (department.getName().equals(selectedDepartment)){
+                        if (department.getName().equals(departmentChooserRegisterProfessorEmployee.getValue())){
                             for (Major major : department.majors){
                                 majorChooserRegisterProfessorEmployee.getItems().add(major.getName());
                             }
                             majorChooserRegisterProfessorEmployee.setVisibleRowCount(4);
+                            break;
                         }
                     }
                 }

@@ -14,7 +14,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -128,13 +127,116 @@ public class UpdateEmployeeAdminPortalController implements Initializable {
     }
 
     @FXML
-    void deactiveEmployee(ActionEvent event) {
+    void deactiveEmployee(ActionEvent event) throws IOException {
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName().equals(facultyChooserEditUpdateEmployee.getValue())) {
+                for (Department department : faculty.departments) {
+                    if (department.getName().equals(departmentChooserEditUpdateEmployee.getValue())) {
+                        department.employees.removeIf(employee -> employee.getId().equals(employeeChooserDeactiveUpdateEmployee.getValue()));
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        University.saveFaculties();
 
+        Employee.loadAllEmployee();
+        University.allEmployees.removeIf(employee -> employee.getId().equals(employeeChooserDeactiveUpdateEmployee.getValue()));
+        Employee.saveAllEmployee();
+        System.out.println("successful");
+
+        Parent root = FXMLLoader.load(getClass().getResource("UpdateEmployeeAdminPortal.fxml"));
+        Scene scene = new Scene(root, 800, 530);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Update New Employee");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML
-    void editEmployee(ActionEvent event) {
+    void editEmployee(ActionEvent event) throws IOException {
 
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties){
+            if (faculty.getFacultyName().equals(facultyChooserEditUpdateEmployee.getValue())){
+                for (Department department : faculty.departments){
+                    if (department.getName().equals(departmentChooserEditUpdateEmployee.getValue())){
+                        for (Employee employee : department.employees){
+                            if (employee.getId().equals(employeeChooserEditUpdateEmployee.getValue())){
+                                if (!firstNameUpdateEmployee.getText().isBlank()){
+                                    employee.setFirst_name(firstNameUpdateEmployee.getText());
+                                }
+                                if (!lastNameUpdateEmployee.getText().isBlank()){
+                                    employee.setLast_name(lastNameUpdateEmployee.getText());
+                                }
+                                if (genderChooserUpdateEmployee.getValue() != null){
+                                    employee.setGender(genderChooserUpdateEmployee.getValue());
+                                }
+                                if (dateOfBirthUpdateEmployee.getValue() != null){
+                                    employee.setDateOfBirth(String.valueOf(dateOfBirthUpdateEmployee.getValue()));
+                                }
+                                if (!nationalIdUpdateEmployee.getText().isBlank()){
+                                    employee.setNationalId(nationalIdUpdateEmployee.getText());
+                                }
+                                if (!phoneNumberUpdateEmployee.getText().isBlank()){
+                                    employee.setPhoneNumber(phoneNumberUpdateEmployee.getText());
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        University.saveFaculties();
+
+        Employee.loadAllEmployee();
+        for (Employee employee : University.allEmployees){
+            if (employee.getId().equals(employeeChooserEditUpdateEmployee.getValue())){
+                if (!firstNameUpdateEmployee.getText().isBlank()){
+                    employee.setFirst_name(firstNameUpdateEmployee.getText());
+                }
+                if (!lastNameUpdateEmployee.getText().isBlank()){
+                    employee.setLast_name(lastNameUpdateEmployee.getText());
+                }
+                if (genderChooserUpdateEmployee.getValue() != null){
+                    employee.setGender(genderChooserUpdateEmployee.getValue());
+                }
+                if (dateOfBirthUpdateEmployee.getValue() != null){
+                    employee.setDateOfBirth(String.valueOf(dateOfBirthUpdateEmployee.getValue()));
+                }
+                if (!nationalIdUpdateEmployee.getText().isBlank()){
+                    employee.setNationalId(nationalIdUpdateEmployee.getText());
+                }
+                if (!phoneNumberUpdateEmployee.getText().isBlank()){
+                    employee.setPhoneNumber(phoneNumberUpdateEmployee.getText());
+                }
+                System.out.println("successful");
+                System.out.println(employee.getFirst_name()+" "+employee.getLast_name());
+                System.out.println(employee.getDateOfBirth());
+                System.out.println(employee.getPhoneNumber());
+                System.out.println(employee.getNationalId());
+                System.out.println(employee.getGender());
+                System.out.println(employee.getFacultyEmployee());
+                System.out.println(employee.getDepartmentEmployee());
+
+                break;
+            }
+        }
+        Employee.saveAllEmployee();
+
+        Parent root = FXMLLoader.load(getClass().getResource("UpdateEmployeeAdminPortal.fxml"));
+        Scene scene = new Scene(root, 800, 530);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Update New Employee");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML
@@ -239,6 +341,7 @@ public class UpdateEmployeeAdminPortalController implements Initializable {
         operationChooserUpdateEmployeeAdmin.setVisibleRowCount(2);
 
         University.loadFaculties();
+
         for(Faculty faculty : University.allFaculties){
             facultyChooserDeactiveUpdateEmployee.getItems().addAll(faculty.getFacultyName());
             facultyChooserEditUpdateEmployee.getItems().addAll(faculty.getFacultyName());
@@ -247,71 +350,76 @@ public class UpdateEmployeeAdminPortalController implements Initializable {
         facultyChooserEditUpdateEmployee.setVisibleRowCount(4);
 
         facultyChooserEditUpdateEmployee.setOnAction(e -> {
-            String selectedFaculty = facultyChooserEditUpdateEmployee.getValue();
-            departmentChooserEditUpdateEmployee.getItems().clear(); // پاک کردن آیتم‌های قبلی
+            departmentChooserEditUpdateEmployee.getItems().clear();
             departmentChooserEditUpdateEmployee.setPromptText("Department");
-            Faculty faculty = null;
-            try {
-                faculty = Faculty.loadFromFile(selectedFaculty);
-            } catch (FileNotFoundException ex) {
-                throw new RuntimeException(ex);
-            }
-            if (faculty != null) {
-                departmentChooserEditUpdateEmployee.getItems().addAll(faculty.getDepartmentNames());
-                departmentChooserEditUpdateEmployee.setVisibleRowCount(4);
+
+            for (Faculty faculty : University.allFaculties){
+                if (faculty.getFacultyName().equals(facultyChooserEditUpdateEmployee.getValue())){
+                    for (Department department : faculty.departments){
+                        departmentChooserEditUpdateEmployee.getItems().add(department.getName());
+                    }
+                    departmentChooserEditUpdateEmployee.setVisibleRowCount(4);
+                    break;
+                }
             }
         });
 
         facultyChooserDeactiveUpdateEmployee.setOnAction(e -> {
-            String selectedFaculty = facultyChooserDeactiveUpdateEmployee.getValue();
-            departmentChooserDeactiveUpdateEmployee.getItems().clear(); // پاک کردن آیتم‌های قبلی
+            departmentChooserDeactiveUpdateEmployee.getItems().clear();
             departmentChooserDeactiveUpdateEmployee.setPromptText("Department");
-            Faculty faculty = null;
-            try {
-                faculty = Faculty.loadFromFile(selectedFaculty);
-            } catch (FileNotFoundException ex) {
-                throw new RuntimeException(ex);
-            }
-            if (faculty != null) {
-                departmentChooserDeactiveUpdateEmployee.getItems().addAll(faculty.getDepartmentNames());
-                departmentChooserDeactiveUpdateEmployee.setVisibleRowCount(4);
+
+            for (Faculty faculty : University.allFaculties){
+                if (faculty.getFacultyName().equals(facultyChooserDeactiveUpdateEmployee.getValue())){
+                    for (Department department : faculty.departments){
+                        departmentChooserDeactiveUpdateEmployee.getItems().add(department.getName());
+                    }
+                    departmentChooserDeactiveUpdateEmployee.setVisibleRowCount(4);
+                    break;
+                }
             }
         });
 
         departmentChooserEditUpdateEmployee.setOnAction(e -> {
-            String selectedDepartment = departmentChooserEditUpdateEmployee.getValue();
             employeeChooserEditUpdateEmployee.getItems().clear();
             employeeChooserEditUpdateEmployee.setPromptText("Employee");
-            Department department = null;
 
-            department = Department.loadFromFile(selectedDepartment);
-
-            if (department != null) {
-                for (Employee employee : department.employees) {
-                    employeeChooserEditUpdateEmployee.getItems().add(employee.getFirst_name() + " " + employee.getLast_name() + "(ID : " + employee.getId() + ")");
+            for (Faculty faculty : University.allFaculties){
+                if (faculty.getFacultyName().equals(facultyChooserEditUpdateEmployee.getValue())){
+                    for (Department department : faculty.departments){
+                        if (department.getName().equals(departmentChooserEditUpdateEmployee.getValue())){
+                            for (Employee employee : department.employees){
+                                employeeChooserEditUpdateEmployee.getItems().add(employee.getId());
+                            }
+                            employeeChooserEditUpdateEmployee.setVisibleRowCount(4);
+                            break;
+                        }
+                    }
+                    break;
                 }
-                employeeChooserEditUpdateEmployee.setVisibleRowCount(4);
             }
         });
 
         departmentChooserDeactiveUpdateEmployee.setOnAction(event -> {
-            String selectedDepartment = departmentChooserDeactiveUpdateEmployee.getValue();
             employeeChooserDeactiveUpdateEmployee.getItems().clear();
             employeeChooserDeactiveUpdateEmployee.setPromptText("Employee");
 
-            Department department = null;
-
-            if(department != null){
-                for (Employee employee : department.employees){
-                    employeeChooserDeactiveUpdateEmployee.getItems().add(employee.getFirst_name() + " " + employee.getLast_name() + "(ID : " + employee.getId() + ")");
+            for (Faculty faculty : University.allFaculties){
+                if (faculty.getFacultyName().equals(facultyChooserDeactiveUpdateEmployee.getValue())){
+                    for (Department department : faculty.departments){
+                        if (department.getName().equals(departmentChooserDeactiveUpdateEmployee.getValue())){
+                            for (Employee employee : department.employees){
+                                employeeChooserDeactiveUpdateEmployee.getItems().add(employee.getId());
+                            }
+                            employeeChooserDeactiveUpdateEmployee.setVisibleRowCount(4);
+                            break;
+                        }
+                    }
+                    break;
                 }
-                employeeChooserDeactiveUpdateEmployee.setVisibleRowCount(4);
             }
         });
 
         genderChooserUpdateEmployee.getItems().addAll(Gender.Male, Gender.Female);
         genderChooserUpdateEmployee.setVisibleRowCount(2);
-
     }
-
 }

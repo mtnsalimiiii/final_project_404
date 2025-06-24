@@ -168,16 +168,23 @@ public class AddFacultyAdminPortalController {
 //        int establishmentYear = getEstablishmentYear();
         int id = getFacultyId();
 
-        Faculty faculty = new Faculty(facultyName, id, establishmentYear);
+        if (!facultyName.isBlank() && !establishmentYearAddFacultyAdmin.getText().isBlank()){
+            Faculty faculty = new Faculty(facultyName, id, establishmentYear);
+            if (!University.allFaculties.contains(faculty)){
+                University.allFaculties.add(faculty);
+            } else {
+                System.out.println("This Faculty has Registered earlier!!");
+            }
+            University.saveFaculties();
 
-        University.allFaculties.add(faculty);
+            facultyNameAddFacultyAdmin.clear();
+            establishmentYearAddFacultyAdmin.clear();
 
-        University.saveFaculties();
-//        faculty.saveToFile();
-        facultyNameAddFacultyAdmin.clear();
-        establishmentYearAddFacultyAdmin.clear();
-        System.out.println("name: " + facultyName);
-        System.out.println("Year: " + establishmentYear);
-        System.out.println("ID: " + id);
+            System.out.println("name: " + facultyName);
+            System.out.println("Year: " + establishmentYear);
+            System.out.println("ID: " + id);
+        } else {
+            System.out.println("Please Fill All Field!!");
+        }
     }
 }

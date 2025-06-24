@@ -17,7 +17,9 @@ import javafx.stage.Stage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
+import java.net.InterfaceAddress;
 import java.net.URL;
+import java.util.IllegalFormatCodePointException;
 import java.util.ResourceBundle;
 
 public class UpdateMajorAdminPortalController implements Initializable {
@@ -123,13 +125,67 @@ public class UpdateMajorAdminPortalController implements Initializable {
     }
 
     @FXML
-    void deactiveMajor(ActionEvent event) {
+    void deactiveMajor(ActionEvent event) throws IOException {
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties){
+            if (faculty.getFacultyName().equals(facultyChooserDeactive.getValue())){
+                for (Department department : faculty.departments){
+                    if (department.getName().equals(departmentChooserDeactive.getValue())){
+                        department.majors.removeIf( major -> major.getName().equals(majorChooserDeactive.getValue()));
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        University.saveFaculties();
+        System.out.println("successful");
 
+        Parent root = FXMLLoader.load(getClass().getResource("UpdateEmployeeAdminPortal.fxml"));
+        Scene scene = new Scene(root, 800, 530);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Update New Employee");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML
-    void editMajor(ActionEvent event) {
+    void editMajor(ActionEvent event) throws IOException {
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties){
+            if (faculty.getFacultyName().equals(facultyChooserEdit.getValue())){
+                for (Department department : faculty.departments){
+                    if (department.getName().equals(departmentChooserEdit.getValue())){
+                        for (Major major : department.majors){
+                            if (major.getName().equals(majorChooserEdit.getValue())){
+                                if (!newMajorNameEditMajor.getText().isBlank()){
+                                    major.setName(newMajorNameEditMajor.getText());
+                                }
+                                if (!newEstablishmentYearEditMajor.getText().isBlank()){
+                                    major.setEstablishmentYear(Integer.parseInt(newEstablishmentYearEditMajor.getText()));
+                                }
+                                System.out.println("successful");
+                                System.out.println(major.getName());
+                                System.out.println(major.getEstablishmentYear());
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        University.saveFaculties();
 
+        Parent root = FXMLLoader.load(getClass().getResource("UpdateEmployeeAdminPortal.fxml"));
+        Scene scene = new Scene(root, 800, 530);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Update New Employee");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML
@@ -257,62 +313,72 @@ public class UpdateMajorAdminPortalController implements Initializable {
         facultyChooserDeactive.setVisibleRowCount(4);
 
         facultyChooserEdit.setOnAction(event -> {
-            String selectedFaculty = facultyChooserEdit.getValue();
             departmentChooserEdit.getItems().clear();
-            Faculty faculty = null;
-            try {
-                faculty = Faculty.loadFromFile(selectedFaculty);
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
+            departmentChooserEdit.setPromptText("Department");
 
-            if(faculty != null){
-                departmentChooserEdit.getItems().addAll(faculty.getDepartmentNames());
-                departmentChooserEdit.setVisibleRowCount(4);
+            for (Faculty faculty : University.allFaculties){
+                if (faculty.getFacultyName().equals(facultyChooserEdit.getValue())){
+                    for (Department department : faculty.departments){
+                        departmentChooserEdit.getItems().add(department.getName());
+                    }
+                    departmentChooserEdit.setVisibleRowCount(4);
+                    break;
+                }
             }
         });
 
         facultyChooserDeactive.setOnAction(event -> {
-            String selectedFaculty = facultyChooserDeactive.getValue();
             departmentChooserDeactive.getItems().clear();
-            Faculty faculty = null;
-            try{
-                faculty = Faculty.loadFromFile(selectedFaculty);
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-            if(faculty != null){
-                departmentChooserDeactive.getItems().addAll(faculty.getDepartmentNames());
-                departmentChooserDeactive.setVisibleRowCount(4);
+            departmentChooserDeactive.setPromptText("Department");
+
+            for (Faculty faculty : University.allFaculties){
+                if (faculty.getFacultyName().equals(facultyChooserDeactive.getValue())){
+                    for (Department department : faculty.departments){
+                        departmentChooserDeactive.getItems().add(department.getName());
+                    }
+                    break;
+                }
             }
         });
 
         departmentChooserEdit.setOnAction(event -> {
-            String selectedDepartment = departmentChooserEdit.getValue();
             majorChooserEdit.getItems().clear();
-            Department department = null;
-            department = Department.loadFromFile(selectedDepartment);
+            majorChooserEdit.setPromptText("Major");
 
-            if (department != null){
-                for (Major major : department.majors){
-                    majorChooserEdit.getItems().add(major.getName());
+
+            for (Faculty faculty : University.allFaculties){
+                if (faculty.getFacultyName().equals(facultyChooserEdit.getValue())){
+                    for (Department department : faculty.departments){
+                        if (department.getName().equals(departmentChooserEdit.getValue())){
+                            for (Major major : department.majors){
+                                majorChooserEdit.getItems().add(major.getName());
+                            }
+                            majorChooserEdit.setVisibleRowCount(4);
+                            break;
+                        }
+                    }
+                    break;
                 }
-                majorChooserEdit.setVisibleRowCount(4);
             }
-
         });
 
         departmentChooserDeactive.setOnAction(event -> {
-            String selectedDepartment = departmentChooserDeactive.getValue();
             majorChooserDeactive.getItems().clear();
-            Department department = null;
-            department = Department.loadFromFile(selectedDepartment);
+            majorChooserDeactive.setPromptText("Major");
 
-            if (department != null){
-                for(Major major : department.majors){
-                    majorChooserDeactive.getItems().add(major.getName());
+            for (Faculty faculty : University.allFaculties){
+                if (faculty.getFacultyName().equals(facultyChooserDeactive.getValue())){
+                    for (Department department : faculty.departments){
+                        if (department.getName().equals(departmentChooserDeactive.getValue())){
+                            for (Major major : department.majors){
+                                majorChooserDeactive.getItems().add(major.getName());
+                            }
+                            majorChooserDeactive.setVisibleRowCount(4);
+                            break;
+                        }
+                    }
+                    break;
                 }
-                majorChooserDeactive.setVisibleRowCount(4);
             }
         });
     }

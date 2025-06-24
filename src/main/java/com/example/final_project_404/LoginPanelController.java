@@ -37,7 +37,7 @@ public class LoginPanelController implements Initializable{
         roleChooserLoginPanel.setVisibleRowCount(4);
 
         roleChooserLoginPanel.setOnAction(event -> {
-            this.role = roleChooserLoginPanel.getSelectionModel().getSelectedItem().toString();
+            this.role = roleChooserLoginPanel.getValue();
         });
 
     }
@@ -58,11 +58,9 @@ public class LoginPanelController implements Initializable{
         switch (role.toLowerCase()) {
             case "student":
                 Student.loadAllStudents();
-                boolean found = false;
                 for (Student student : University.allStudents) {
                     if (student.getId().equals(username) && student.getNationalId().equals(password)) {
                         System.out.println("Successfull login"  + student.getFirst_name());
-                        found = true;
                         Parent root = FXMLLoader.load(getClass().getResource("StudentPortal.fxml"));
                         Scene scene = new Scene(root, 800, 500);
                         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -70,22 +68,17 @@ public class LoginPanelController implements Initializable{
                         stage.setScene(scene);
                         stage.setResizable(false);
                         stage.show();
-
-                        break;
+                    } else {
+                        System.out.println("The username or password is incorrect!!");
                     }
                 }
-
-                if (!found) {
-                    System.out.println("The username or password is incorrect.");
-                }
+                System.out.println("The username not found!!");
                 break;
             case "professor":
-                Professor.loadProfessor();
-                boolean found2 = false;
+                Professor.loadAllProfessor();
                 for (Professor professor : University.allProfessors) {
                     if (professor.getId().equals(username) && professor.getNationalId().equals(password)) {
                         System.out.println("Successfull login " + professor.getFirst_name());
-                        found2 = true;
                         Parent root = FXMLLoader.load(getClass().getResource("ProfessorPortal.fxml"));
                         Scene scene = new Scene(root, 800, 500);
                         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -93,14 +86,12 @@ public class LoginPanelController implements Initializable{
                         stage.setScene(scene);
                         stage.setResizable(false);
                         stage.show();
-
-                        break;
+                    } else {
+                        System.out.println("The username or password is incorrect!!");
                     }
                 }
+                System.out.println("The username not found!!");
 
-                if (!found2) {
-                    System.out.println("The username or password is incorrect.");
-                }
                 break;
             case "admin":
                 if ("admin".equals(username) && "admin404".equals(password)){
@@ -111,18 +102,15 @@ public class LoginPanelController implements Initializable{
                     stage.setScene(scene);
                     stage.setResizable(false);
                     stage.show();
-                    break;
-                }
-                else{
+                } else{
                     System.out.println("The username or password is incorrect.");
                 }
+                break;
             case "employee":
                 Employee.loadAllEmployee();
-                boolean found3 = false;
                 for (Employee employee : University.allEmployees) {
                     if (employee.getId().equals(username) && employee.getNationalId().equals(password)) {
                         System.out.println("Successfull login " + employee.getFirst_name());
-                        found3 = true;
                         Parent root = FXMLLoader.load(getClass().getResource("EmployeePortal.fxml"));
                         Scene scene = new Scene(root, 800, 500);
                         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -131,15 +119,12 @@ public class LoginPanelController implements Initializable{
                         stage.setResizable(false);
                         stage.show();
 
-                        break;
+                    } else {
+                        System.out.println("The username or password is incorrect.");
                     }
                 }
-
-                if (!found3) {
-                    System.out.println("The username or password is incorrect.");
-                }
+                System.out.println("The username not found!!");
                 break;
-
         }
     }
 }

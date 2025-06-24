@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -27,49 +28,61 @@ public class UpdateProfessorEmployeePortalController implements Initializable {
     private VBox containerBarEditVBox;
 
     @FXML
-    private DatePicker dateOfBirthUpdateEmployee;
+    private DatePicker dateOfBirthEdit;
 
     @FXML
-    private ComboBox<String> departmentChooserDeactiveUpdateEmployee;
+    private Button deactiveButton;
 
     @FXML
-    private ComboBox<String> departmentChooserEditUpdateEmployee;
+    private ComboBox<String> departmentChooserDeactive;
 
     @FXML
-    private ComboBox<String> employeeChooserDeactiveUpdateEmployee;
+    private ComboBox<String> departmentChooserEdit;
 
     @FXML
-    private ComboBox<String> employeeChooserEditUpdateEmployee;
+    private Button editButton;
 
     @FXML
-    private ComboBox<String> facultyChooserDeactiveUpdateEmployee;
+    private ComboBox<String> facultyChooserDeactive;
 
     @FXML
-    private ComboBox<String> facultyChooserEditUpdateEmployee;
+    private ComboBox<String> facultyChooserEdit;
 
     @FXML
-    private TextField firstNameUpdateEmployee;
+    private TextField firstNameEdit;
 
     @FXML
-    private ComboBox<Gender> genderChooserUpdateEmployee;
+    private ComboBox<Gender> genderChooserEdit;
 
     @FXML
     private HBox headerHBox;
 
     @FXML
-    private TextField lastNameUpdateEmployee;
+    private TextField lastNameEdit;
 
     @FXML
-    private TextField nationalIdUpdateEmployee;
+    private ComboBox<String> majorChooserDeactive;
+
+    @FXML
+    private ComboBox<String> majorChooserEdit;
+
+    @FXML
+    private TextField nationalIdEdit;
 
     @FXML
     private VBox navigationBarVBox;
 
     @FXML
-    private ComboBox<String> operationChooserUpdateProfessorEmployee;
+    private ComboBox<String > operationChooserUpdateProfessorEmployee;
 
     @FXML
-    private TextField phoneNumberUpdateEmployee;
+    private TextField phoneNumberEdit;
+
+    @FXML
+    private ComboBox<String> professorChooserDeactive;
+
+    @FXML
+    private ComboBox<String> professorChooserEdit;
 
     @FXML
     void RegisterNewProfessorEmployeePortal(ActionEvent event) throws IOException {
@@ -128,13 +141,122 @@ public class UpdateProfessorEmployeePortalController implements Initializable {
     }
 
     @FXML
-    void deactiveEmployee(ActionEvent event) {
+    void deactiveProfessor(ActionEvent event) throws Exception {
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName().equals(facultyChooserEdit.getValue())) {
+                for (Department department : faculty.departments) {
+                    if (department.getName().equals(departmentChooserEdit.getValue())) {
+                        for (Major major : department.majors) {
+                            if (major.getName().equals(majorChooserEdit.getValue())) {
+                                major.professors.removeIf(professor -> professor.getId().equals(professorChooserDeactive.getValue()));
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        University.saveFaculties();
 
+        Professor.loadAllProfessor();
+        University.allProfessors.removeIf(professor -> professor.getId().equals(professorChooserDeactive.getValue()));
+        Professor.saveAllProfessor();
+        System.out.println("successful");
+
+        Parent root = FXMLLoader.load(getClass().getResource("UpdateProfessorEmployeePortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Update Professor");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML
-    void editEmployee(ActionEvent event) {
+    void editProfessor(ActionEvent event) throws Exception {
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties){
+            if (faculty.getFacultyName().equals(facultyChooserEdit.getValue())){
+                for (Department department : faculty.departments){
+                    if (department.getName().equals(departmentChooserEdit.getValue())){
+                        for (Major major : department.majors){
+                            if (major.getName().equals(majorChooserEdit.getValue())){
+                                for (Professor professor : major.professors){
+                                    if (professor.getId().equals(professorChooserEdit.getValue())){
+                                        if (!firstNameEdit.getText().isBlank()){
+                                            professor.setFirst_name(firstNameEdit.getText());
+                                        }
+                                        if (!lastNameEdit.getText().isBlank()){
+                                            professor.setLast_name(lastNameEdit.getText());
+                                        }
+                                        if (!nationalIdEdit.getText().isBlank()){
+                                            professor.setNationalId(nationalIdEdit.getText());
+                                        }
+                                        if (!phoneNumberEdit.getText().isBlank()){
+                                            professor.setPhoneNumber(phoneNumberEdit.getText());
+                                        }
+                                        if (dateOfBirthEdit.getValue() != null){
+                                            professor.setDateOfBirth(dateOfBirthEdit.getValue().toString());
+                                        }
+                                        if (genderChooserEdit.getValue()!= null){
+                                            professor.setGender(genderChooserEdit.getValue());
+                                        }
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        University.saveFaculties();
 
+        Professor.loadAllProfessor();
+        for (Professor professor : University.allProfessors){
+            if (professor.getId().equals(professorChooserEdit.getValue())){
+                if (!firstNameEdit.getText().isBlank()){
+                    professor.setFirst_name(firstNameEdit.getText());
+                }
+                if (!lastNameEdit.getText().isBlank()){
+                    professor.setLast_name(lastNameEdit.getText());
+                }
+                if (!nationalIdEdit.getText().isBlank()){
+                    professor.setNationalId(nationalIdEdit.getText());
+                }
+                if (!phoneNumberEdit.getText().isBlank()){
+                    professor.setPhoneNumber(phoneNumberEdit.getText());
+                }
+                if (dateOfBirthEdit.getValue() != null){
+                    professor.setDateOfBirth(dateOfBirthEdit.getValue().toString());
+                }
+                if (genderChooserEdit.getValue()!= null){
+                    professor.setGender(genderChooserEdit.getValue());
+                }
+                System.out.println("successful");
+                System.out.println(professor.getFirst_name()+" "+professor.getLast_name());
+                System.out.println(professor.getDateOfBirth());
+                System.out.println(professor.getPhoneNumber());
+                System.out.println(professor.getNationalId());
+                System.out.println(professor.getGender());
+                break;
+            }
+        }
+        Professor.saveAllProfessor();
+
+        Parent root = FXMLLoader.load(getClass().getResource("UpdateProfessorEmployeePortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Update Professor");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML
@@ -203,7 +325,142 @@ public class UpdateProfessorEmployeePortalController implements Initializable {
         operationChooserUpdateProfessorEmployee.getItems().addAll("EDIT", "DEACTIVE");
         operationChooserUpdateProfessorEmployee.setVisibleRowCount(2);
 
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties){
+            facultyChooserDeactive.getItems().add(faculty.getFacultyName());
+            facultyChooserEdit.getItems().add(faculty.getFacultyName());
+        }
+        facultyChooserDeactive.setVisibleRowCount(4);
+        facultyChooserEdit.setVisibleRowCount(4);
 
+        facultyChooserEdit.setOnAction(event -> {
+            departmentChooserEdit.getItems().clear();
+            departmentChooserEdit.setPromptText("Department");
+
+            for (Faculty faculty : University.allFaculties){
+                if (faculty.getFacultyName().equals(facultyChooserEdit.getValue())){
+                    for (Department department : faculty.departments){
+                        departmentChooserEdit.getItems().add(department.getName());
+                    }
+                    departmentChooserEdit.setVisibleRowCount(4);
+                    break;
+                }
+            }
+        });
+
+        facultyChooserDeactive.setOnAction(event -> {
+            departmentChooserDeactive.getItems().clear();
+            departmentChooserDeactive.setPromptText("Department");
+
+            for (Faculty faculty : University.allFaculties){
+                if (faculty.getFacultyName().equals(facultyChooserDeactive.getValue())){
+                    for (Department department : faculty.departments){
+                        departmentChooserDeactive.getItems().add(department.getName());
+                    }
+                    departmentChooserDeactive.setVisibleRowCount(4);
+                    break;
+                }
+            }
+        });
+
+        departmentChooserEdit.setOnAction(event -> {
+            majorChooserEdit.getItems().clear();
+            majorChooserEdit.setPromptText("Major");
+
+
+            for (Faculty faculty : University.allFaculties){
+                if (faculty.getFacultyName().equals(facultyChooserEdit.getValue())){
+                    for (Department department : faculty.departments){
+                        if (department.getName().equals(departmentChooserEdit.getValue())){
+                            for (Major major : department.majors){
+                                majorChooserEdit.getItems().add(major.getName());
+                            }
+                            majorChooserEdit.setVisibleRowCount(4);
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        });
+
+        departmentChooserDeactive.setOnAction(event -> {
+            majorChooserDeactive.getItems().clear();
+            majorChooserDeactive.setPromptText("Major");
+
+
+            for (Faculty faculty : University.allFaculties){
+                if (faculty.getFacultyName().equals(facultyChooserDeactive.getValue())){
+                    for (Department department : faculty.departments){
+                        if (department.getName().equals(departmentChooserDeactive.getValue())){
+                            for (Major major : department.majors){
+                                majorChooserDeactive.getItems().add(major.getName());
+                            }
+                            majorChooserDeactive.setVisibleRowCount(4);
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        });
+
+        majorChooserEdit.setOnAction(event -> {
+            professorChooserEdit.getItems().clear();
+            professorChooserEdit.setPromptText("Professor");
+
+            for (Faculty faculty : University.allFaculties){
+                if (faculty.getFacultyName().equals(facultyChooserEdit.getValue())){
+                    for (Department department : faculty.departments){
+                        if (department.getName().equals(departmentChooserEdit.getValue())){
+                            for (Major major : department.majors){
+                                if (major.getName().equals(majorChooserEdit.getValue())){
+                                    for (Professor professor : major.professors){
+                                        professorChooserEdit.getItems().add(professor.getId());
+                                    }
+                                    professorChooserEdit.setVisibleRowCount(4);
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        });
+
+        majorChooserDeactive.setOnAction(event -> {
+            professorChooserDeactive.getItems().clear();
+            professorChooserDeactive.setPromptText("Professor");
+
+
+            for (Faculty faculty : University.allFaculties){
+                if (faculty.getFacultyName().equals(facultyChooserDeactive.getValue())){
+                    for (Department department : faculty.departments){
+                        if (department.getName().equals(departmentChooserDeactive.getValue())){
+                            for (Major major : department.majors){
+                                if (major.getName().equals(majorChooserDeactive.getValue())){
+                                    for (Professor professor : major.professors){
+                                        professorChooserDeactive.getItems().add(professor.getId());
+                                    }
+                                    professorChooserDeactive.setVisibleRowCount(4);
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+        });
+    }
+
+    public void setProfessorChooserEditProfessorEmployee(ActionEvent event) {
+    }
+
+    public void setProfessorChooserDeactiveProfessorEmployee(ActionEvent event) {
 
     }
 }

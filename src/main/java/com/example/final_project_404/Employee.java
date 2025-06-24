@@ -55,7 +55,7 @@ public class Employee extends Person implements Serializable{
         }
     }
 
-    public static void saveEmployee() throws IOException {
+    public static void saveAllEmployee() throws IOException {
         try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("allEmployees.ser"))) {
             output.writeObject(University.allEmployees);
         } catch (IOException e) {

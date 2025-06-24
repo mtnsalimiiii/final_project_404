@@ -23,7 +23,6 @@ public class Main extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AdminPortal.fxml"));
         Parent root = fxmlLoader.load();
         Scene scene = new Scene(root);
-
         primaryStage.setScene(scene);
         primaryStage.setTitle("Login panel");
         primaryStage.setResizable(false);

@@ -13,14 +13,14 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="500.0" maxWidth="800.0" minHeight="500.0" minWidth="800.0" style="-fx-background-color: #7b7b7b;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.UpdateProfessorEmployeePortalController">
+<AnchorPane maxHeight="550.0" maxWidth="800.0" minHeight="550.0" minWidth="800.0" style="-fx-background-color: #7b7b7b;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.UpdateProfessorEmployeePortalController">
     <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0" styleClass="header" stylesheets="@EmployeePortal.css">
         <children>
             <Label styleClass="header-title" stylesheets="@EmployeePortal.css" text="Employee Portal" />
             <Label styleClass="header-title" stylesheets="@EmployeePortal.css" text=" --&gt; Update Professor" />
         </children>
     </HBox>
-    <ScrollPane layoutY="80.0" prefHeight="420.0" prefWidth="170.0">
+    <ScrollPane layoutY="80.0" prefHeight="470.0" prefWidth="170.0">
         <VBox fx:id="navigationBarVBox" alignment="TOP_CENTER" layoutY="80.0" prefHeight="420.0" prefWidth="150.0" styleClass="nav-bar" stylesheets="@EmployeePortal.css">
             <children>
                 <Button layoutX="20.0" layoutY="20.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#dashboardEmployeePortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Dashboard" />
@@ -43,59 +43,79 @@
             </padding>
         </VBox>
     </ScrollPane>
-    <VBox fx:id="containerBarEditVBox" layoutX="170.0" layoutY="126.0" prefHeight="365.0" prefWidth="315.0" styleClass="content-box" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="315.0" AnchorPane.topAnchor="130.0">
-        <padding>
-            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
-        </padding>
-        <ComboBox fx:id="facultyChooserEditUpdateEmployee" maxHeight="157.0" maxWidth="300.0" minHeight="37.0" prefHeight="37.0" prefWidth="268.0" promptText="Faculty" stylesheets="@EmployeePortal.css">
-            <VBox.margin>
-                <Insets />
-            </VBox.margin>
+    <VBox fx:id="containerBarEditVBox" alignment="CENTER" layoutX="170.0" layoutY="126.0" prefHeight="365.0" prefWidth="315.0" styleClass="content-box" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="315.0" AnchorPane.topAnchor="130.0">
+        <ComboBox fx:id="facultyChooserEdit" layoutX="10.0" layoutY="5.0" minWidth="275.0" promptText="Faculty" stylesheets="@EmployeePortal.css" VBox.vgrow="ALWAYS">
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin>
         </ComboBox>
-        <ComboBox fx:id="departmentChooserEditUpdateEmployee" layoutX="31.0" layoutY="31.0" maxWidth="300.0" minHeight="37.0" prefWidth="150.0" promptText="Department" stylesheets="@EmployeePortal.css">
-            <VBox.margin>
-                <Insets />
-            </VBox.margin>
-        </ComboBox>
-        <ComboBox fx:id="employeeChooserEditUpdateEmployee" layoutX="31.0" layoutY="86.0" maxWidth="300.0" minHeight="37.0" onAction="#setEmployeeChooserEditUpdateEmployee" prefWidth="150.0" promptText="Employee" stylesheets="@EmployeePortal.css">
-            <VBox.margin>
-                <Insets />
-            </VBox.margin>
-        </ComboBox>
-        <TextField fx:id="firstNameUpdateEmployee" promptText="First Name">
-            <VBox.margin>
-                <Insets />
-            </VBox.margin>
-        </TextField>
-        <TextField fx:id="lastNameUpdateEmployee" layoutX="31.0" layoutY="146.0" promptText="Last Name">
-            <VBox.margin>
-                <Insets />
-            </VBox.margin>
-        </TextField>
-        <ComboBox fx:id="genderChooserUpdateEmployee" layoutX="31.0" layoutY="132.0" maxWidth="300.0" minHeight="35.0" prefWidth="150.0" promptText="Gender" stylesheets="@EmployeePortal.css">
-            <VBox.margin>
-                <Insets />
-            </VBox.margin>
-        </ComboBox>
-        <DatePicker fx:id="dateOfBirthUpdateEmployee" maxWidth="300.0" prefHeight="26.0" prefWidth="300.0" promptText="Date Of Birth">
-            <VBox.margin>
-                <Insets />
-            </VBox.margin>
-        </DatePicker>
-        <TextField fx:id="phoneNumberUpdateEmployee" layoutX="31.0" layoutY="182.0" promptText="Phone Number">
-            <VBox.margin>
-                <Insets />
-            </VBox.margin>
-        </TextField>
-        <TextField fx:id="nationalIdUpdateEmployee" layoutX="31.0" layoutY="182.0" promptText="National ID">
-            <VBox.margin>
-                <Insets />
-            </VBox.margin>
-        </TextField>
-        <Button mnemonicParsing="false" onAction="#editEmployee" stylesheets="@EmployeePortal.css" text="EDIT">
+        <ComboBox fx:id="departmentChooserEdit" layoutX="31.0" layoutY="31.0" minWidth="275.0" promptText="Department" stylesheets="@EmployeePortal.css" VBox.vgrow="NEVER">
             <VBox.margin>
                 <Insets bottom="5.0" />
             </VBox.margin>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+        </ComboBox>
+      <ComboBox fx:id="majorChooserEdit" layoutX="31.0" layoutY="208.0" minWidth="275.0" promptText="Major" stylesheets="@EmployeePortal.css">
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+         <VBox.margin>
+            <Insets bottom="5.0" />
+         </VBox.margin>
+      </ComboBox>
+        <ComboBox fx:id="professorChooserEdit" layoutX="31.0" layoutY="86.0" minWidth="275.0" onAction="#setProfessorChooserEditProfessorEmployee" promptText="Professor" stylesheets="@EmployeePortal.css" visibleRowCount="12">
+            <VBox.margin>
+                <Insets bottom="5.0" />
+            </VBox.margin>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+        </ComboBox>
+        <TextField fx:id="firstNameEdit" minWidth="275.0" promptText="First Name">
+            <VBox.margin>
+                <Insets bottom="5.0" />
+            </VBox.margin>
+        </TextField>
+        <TextField fx:id="lastNameEdit" layoutX="31.0" layoutY="146.0" minWidth="275.0" promptText="Last Name">
+            <VBox.margin>
+                <Insets bottom="5.0" />
+            </VBox.margin>
+        </TextField>
+        <ComboBox fx:id="genderChooserEdit" layoutX="31.0" layoutY="132.0" minWidth="275.0" promptText="Gender" stylesheets="@EmployeePortal.css">
+            <VBox.margin>
+                <Insets bottom="5.0" />
+            </VBox.margin>
+         <padding>
+            <Insets bottom="5.0" />
+         </padding>
+        </ComboBox>
+        <DatePicker fx:id="dateOfBirthEdit" minWidth="275.0" promptText="Date Of Birth">
+            <VBox.margin>
+                <Insets bottom="5.0" />
+            </VBox.margin>
+        </DatePicker>
+        <TextField fx:id="phoneNumberEdit" layoutX="31.0" layoutY="182.0" minWidth="275.0" promptText="Phone Number">
+            <VBox.margin>
+                <Insets bottom="5.0" />
+            </VBox.margin>
+        </TextField>
+        <TextField fx:id="nationalIdEdit" layoutX="31.0" layoutY="182.0" minWidth="275.0" promptText="National ID">
+            <VBox.margin>
+                <Insets bottom="5.0" />
+            </VBox.margin>
+         <padding>
+            <Insets bottom="5.0" left="10.0" />
+         </padding>
+        </TextField>
+        <Button fx:id="editButton" mnemonicParsing="false" onAction="#editProfessor" stylesheets="@EmployeePortal.css" text="EDIT" VBox.vgrow="NEVER">
+         <padding>
+            <Insets top="5.0" />
+         </padding>
         </Button>
         <stylesheets>
             <URL value="@EmployeePortal.css" />
@@ -108,22 +128,27 @@
             <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
         </padding>
         <children>
-            <ComboBox fx:id="facultyChooserDeactiveUpdateEmployee" layoutX="31.0" layoutY="31.0" maxWidth="300.0" prefWidth="150.0" promptText="Faculty" stylesheets="@EmployeePortal.css">
+            <ComboBox fx:id="facultyChooserDeactive" layoutX="31.0" layoutY="31.0" minWidth="275.0" promptText="Faculty" stylesheets="@EmployeePortal.css">
                 <VBox.margin>
-                    <Insets bottom="10.0" />
+                    <Insets bottom="5.0" />
                 </VBox.margin>
             </ComboBox>
-            <ComboBox fx:id="departmentChooserDeactiveUpdateEmployee" maxWidth="300.0" prefWidth="150.0" promptText="Department" stylesheets="@EmployeePortal.css">
+            <ComboBox fx:id="departmentChooserDeactive" minWidth="275.0" promptText="Department" stylesheets="@EmployeePortal.css">
                 <VBox.margin>
-                    <Insets bottom="10.0" />
+                    <Insets bottom="5.0" />
                 </VBox.margin>
             </ComboBox>
-            <ComboBox fx:id="employeeChooserDeactiveUpdateEmployee" maxWidth="300.0" minHeight="37.0" prefWidth="150.0" promptText="Employee" stylesheets="@EmployeePortal.css">
+         <ComboBox fx:id="majorChooserDeactive" minWidth="275.0" promptText="Major" stylesheets="@EmployeePortal.css">
+            <VBox.margin>
+               <Insets bottom="5.0" />
+            </VBox.margin>
+         </ComboBox>
+            <ComboBox fx:id="professorChooserDeactive" minWidth="275.0" onAction="#setProfessorChooserDeactiveProfessorEmployee" promptText="Professor" stylesheets="@EmployeePortal.css">
                 <VBox.margin>
-                    <Insets bottom="10.0" />
+                    <Insets bottom="5.0" />
                 </VBox.margin>
             </ComboBox>
-            <Button mnemonicParsing="false" onAction="#deactiveEmployee" stylesheets="@EmployeePortal.css" text="DEACTIVE">
+            <Button fx:id="deactiveButton" mnemonicParsing="false" onAction="#deactiveProfessor" stylesheets="@EmployeePortal.css" text="DEACTIVE">
                 <VBox.margin>
                     <Insets top="20.0" />
                 </VBox.margin>

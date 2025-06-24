@@ -115,16 +115,9 @@ public class UpdateFacultyAdminPortalController implements Initializable {
     @FXML
     void deactiveFaculty(ActionEvent event) throws IOException {
         University.loadFaculties();
-        for(Faculty faculty : University.allFaculties){
-            if(faculty.getFacultyName() == facultyChooserDeactiveUpdateFaculty.getValue()){
-                University.allFaculties.remove(faculty);
-            }
-        }
+        University.allFaculties.removeIf(faculty -> faculty.getFacultyName().equals(facultyChooserDeactiveUpdateFaculty.getValue()));
         University.saveFaculties();
-        University.loadFaculties();
-        for(Faculty faculty : University.allFaculties){
-            System.out.println(faculty.getFacultyName() + faculty.getId() + faculty.getEstablishmentYear());
-        }
+        System.out.println("successful");
 
         Parent root = FXMLLoader.load(getClass().getResource("UpdateFacultyAdminPortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
@@ -140,36 +133,20 @@ public class UpdateFacultyAdminPortalController implements Initializable {
 
         University.loadFaculties();
         for(Faculty faculty : University.allFaculties){
-            System.out.println(faculty.getFacultyName());
-            for(Department department : faculty.departments){
-                System.out.println(department.getName());
-                for(Major major : department.majors){
-                    System.out.println(major.getName());
+            if (faculty.getFacultyName().equals(facultyChooserEditUpdateFaculty.getValue())){
+                if (!newFacultyNameUpdateFaculty.getText().isBlank()){
+                    faculty.setFacultyName(newFacultyNameUpdateFaculty.getText());
                 }
+                if (!newEstablishmentYearUpdateFaculty.getText().isBlank()){
+                    faculty.setEstablishmentYear(Integer.parseInt(newEstablishmentYearUpdateFaculty.getText()));
+                }
+                System.out.println("successful");
+                System.out.println(faculty.getFacultyName());
+                System.out.println(faculty.getEstablishmentYear());
+                break;
             }
         }
-//        for(Faculty faculty : University.allFaculties){
-//            if(Objects.equals(faculty.getFacultyName(), facultyChooserEditUpdateFaculty.getValue())){
-//                if(!newFacultyNameUpdateFaculty.getText().isEmpty()){
-//                    faculty.setFacultyName(newFacultyNameUpdateFaculty.getText());
-//                }
-//                if(!newEstablishmentYearUpdateFaculty.getText().isEmpty()){
-//                    faculty.setEstablishmentYear(Integer.parseInt(newEstablishmentYearUpdateFaculty.getText()));
-//                }
-//            }
-//        }
-//        University.saveFaculties();
-//
-//        Faculty faculty = Faculty.loadFromFile(facultyChooserDeactiveUpdateFaculty.getValue());
-//        System.out.println(faculty.getFacultyName()+faculty.getId()+ faculty.getEstablishmentYear());
-
-//        if(!newFacultyNameUpdateFaculty.getText().isEmpty()){
-//            faculty.setFacultyName(newFacultyNameUpdateFaculty.getText());
-//        }
-//        if(!newEstablishmentYearUpdateFaculty.getText().isEmpty()){
-//            faculty.setEstablishmentYear(Integer.parseInt(newEstablishmentYearUpdateFaculty.getText()));
-//        }
-//        faculty.saveToFile();
+        University.saveFaculties();
 
         Parent root = FXMLLoader.load(getClass().getResource("UpdateFacultyAdminPortal.fxml"));
         Scene scene = new Scene(root, 800, 500);

@@ -207,16 +207,19 @@ public class AddEmployeeAdminPortalController implements Initializable {
         String dateOfHire = getDateOfHire();
         String id = getEmployeeId();
 
-        Employee employee = new Employee(firstName,lastName,dateOfBirth,nationalId,gender,phoneNumber,id,department,faculty,dateOfHire);
-
-        if (employee != null) {
+        if (!firstName.isBlank() && !lastName.isBlank() && !phoneNumber.isBlank() && !nationalId.isBlank() && gender!=null && faculty!=null && department!=null) {
+            Employee employee = new Employee(firstName, lastName, dateOfBirth, nationalId, gender, phoneNumber, id, department, faculty, dateOfHire);
             for (Faculty faculty1 : University.allFaculties) {
                 if (faculty1.getFacultyName().equals(faculty)) {
                     for (Department department1 : faculty1.departments) {
                         if (department1.getName().equals(department)) {
                             if (!department1.employees.contains(employee)) {
                                 department1.employees.add(employee);
+
+                            } else {
+                                System.out.println("This Employee has Registered earlier!!");
                             }
+                            break;
                         }
                     }
                 }
@@ -224,21 +227,29 @@ public class AddEmployeeAdminPortalController implements Initializable {
             University.saveFaculties();
 
             University.allEmployees.add(employee);
-            Employee.saveEmployee();
+            Employee.saveAllEmployee();
+            System.out.println("Successful\nid : " + id);
+            System.out.println("Password : National ID");
+            System.out.println();
+            System.out.println(firstName+" "+lastName);
+            System.out.println(dateOfBirth);
+            System.out.println(phoneNumber);
+            System.out.println(nationalId);
+            System.out.println(gender);
+            System.out.println(faculty);
+            System.out.println(department);
+            System.out.println(dateOfHire);
+
+            Parent root = FXMLLoader.load(getClass().getResource("AddEmployeeAdminPortal.fxml"));
+            Scene scene = new Scene(root, 800, 500);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle("Add New Employee");
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } else {
+            System.out.println("Please Fill All Fields!");
         }
-
-//        Department dep = null;
-//        dep = Department.loadFromFile(department);
-//        if (dep == null) {
-//            System.out.println("Department not found: " + department);
-//            return;
-//        }
-//
-//        dep.employees.add(emp);
-//        dep.saveToFile();
-
-        System.out.println("Successful\nid : " + id);
-        System.out.println("Password : National ID");
     }
 
     @Override
@@ -250,23 +261,11 @@ public class AddEmployeeAdminPortalController implements Initializable {
         facultyChooserRegisterEmployeeAdmin.setVisibleRowCount(4);
 
         facultyChooserRegisterEmployeeAdmin.setOnAction(e -> {
-            String selectedFaculty = facultyChooserRegisterEmployeeAdmin.getValue();
             departmentChooserRegisterEmployeeAdmin.getItems().clear();
             departmentChooserRegisterEmployeeAdmin.setPromptText("Department");
 
-//            Faculty faculty1 = null;
-//            try {
-//                faculty1 = Faculty.loadFromFile(selectedFaculty);
-//            } catch (FileNotFoundException ex) {
-//                throw new RuntimeException(ex);
-//            }
-//            if (faculty1 != null) {
-//                departmentChooserRegisterEmployeeAdmin.getItems().addAll(faculty1.getDepartmentNames());
-//                departmentChooserRegisterEmployeeAdmin.setVisibleRowCount(4);
-//            }
-
             for (Faculty faculty1 : University.allFaculties){
-                if (faculty1.getFacultyName().equals(selectedFaculty)){
+                if (faculty1.getFacultyName().equals(facultyChooserRegisterEmployeeAdmin.getValue())){
                     for (Department department : faculty1.departments){
                         departmentChooserRegisterEmployeeAdmin.getItems().add(department.getName());
                     }

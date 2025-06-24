@@ -35,7 +35,7 @@ public class Professor extends Person implements Serializable {
         return department;
     }
 
-    public static void loadProfessor() throws Exception {
+    public static void loadAllProfessor() throws Exception {
         File file = new File("allProfessors.ser");
         if (!file.exists()) {
             return;
@@ -61,7 +61,7 @@ public class Professor extends Person implements Serializable {
 //
 //    }
 
-    public static void saveProfessor() throws IOException {
+    public static void saveAllProfessor() throws IOException {
         File file=new File("allProfessors.ser");
         try(ObjectOutputStream output= new ObjectOutputStream(Files.newOutputStream(Paths.get("allProfessors.ser")))) {
             for (Professor professor : University.allProfessors) {

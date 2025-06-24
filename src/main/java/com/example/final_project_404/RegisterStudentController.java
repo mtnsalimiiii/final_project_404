@@ -180,17 +180,19 @@ public class RegisterStudentController implements Initializable {
         String dateOfRegistration = getDateOfRegistration();
         String studentId = generateStudentId();
 
-        Student student = new Student(firstName, lastName, dateOfBirth, nationalId, gender, phoneNumber, studentId, dateOfRegistration, faculty, department,major);
-
-        if (student != null) {
-            for (Faculty faculty1 : University.allFaculties){
-                if (faculty1.getFacultyName().equals(faculty)){
-                    for (Department department1 : faculty1.departments){
-                        if (department1.getName().equals(department)){
-                            for (Major major1 : department1.majors){
-                                if (!major1.students.contains(student)){
+        if (!firstName.isBlank() && !lastName.isBlank() && !phoneNumber.isBlank() && !nationalId.isBlank() && gender!=null && faculty!=null && department!=null && major!=null){
+            Student student = new Student(firstName, lastName, dateOfBirth, nationalId, gender, phoneNumber, studentId, dateOfRegistration, faculty, department,major);
+            for (Faculty faculty1 : University.allFaculties) {
+                if (faculty1.getFacultyName().equals(faculty)) {
+                    for (Department department1 : faculty1.departments) {
+                        if (department1.getName().equals(department)) {
+                            for (Major major1 : department1.majors) {
+                                if (!major1.students.contains(student)) {
                                     major1.students.add(student);
+                                } else {
+                                    System.out.println("This Student Has Registered Earlier!");
                                 }
+                                break;
                             }
                         }
                     }
@@ -200,8 +202,30 @@ public class RegisterStudentController implements Initializable {
 
             University.allStudents.add(student);
             Student.saveAllStudent();
+
+            System.out.println("successful\nID: "+ studentId);
+            System.out.println("password: "+nationalId);
+            System.out.println();
+            System.out.println(firstName+" "+lastName);
+            System.out.println(dateOfBirth);
+            System.out.println(phoneNumber);
+            System.out.println(nationalId);
+            System.out.println(gender);
+            System.out.println(faculty);
+            System.out.println(department);
+            System.out.println(major);
+            System.out.println(dateOfRegistration);
+
+            Parent root = FXMLLoader.load(getClass().getResource("RegisterStudent.fxml"));
+            Scene scene = new Scene(root, 800, 500);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            stage.setTitle("Register New Student");
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        } else {
+            System.out.println("Please Fill All Field!");
         }
-//        Major.addStudentToMajor(department,major,student);
     }
     public String generateStudentId() {
         return "STU" + (University.allStudents.size() + 1);
@@ -218,55 +242,34 @@ public class RegisterStudentController implements Initializable {
         facultyChooserRegisterStudentEmployee.setVisibleRowCount(4);
 
         facultyChooserRegisterStudentEmployee.setOnAction(e -> {
-            String selectedFaculty = facultyChooserRegisterStudentEmployee.getValue();
             departmentChooserRegisterStudentEmployee.getItems().clear();
             departmentChooserRegisterStudentEmployee.setPromptText("Department");
-//            Faculty faculty = null;
-//            try {
-//                faculty = Faculty.loadFromFile(selectedFaculty);
-//            } catch (FileNotFoundException ex) {
-//                throw new RuntimeException(ex);
-//            }
-//            if (faculty != null) {
-//                departmentChooserRegisterStudentEmployee.getItems().addAll(faculty.de);
-//                departmentChooserRegisterStudentEmployee.setVisibleRowCount(4);
-//            }
 
             for (Faculty faculty : University.allFaculties){
-                if (faculty.getFacultyName().equals(selectedFaculty)){
+                if (faculty.getFacultyName().equals(facultyChooserRegisterStudentEmployee.getValue())){
                     for (Department department : faculty.departments){
                         departmentChooserRegisterStudentEmployee.getItems().add(department.getName());
                     }
                     departmentChooserRegisterStudentEmployee.setVisibleRowCount(4);
+                    break;
                 }
             }
         });
 
 
         departmentChooserRegisterStudentEmployee.setOnAction(actionEvent -> {
-            String selectedDepartment = departmentChooserRegisterStudentEmployee.getValue();
             majorChooserRegisterStudentEmployee.getItems().clear();
             majorChooserRegisterStudentEmployee.setPromptText("Major");
-//            Department department = null;
-//            try {
-//                department = Department.loadFromFile(departmentNAme);
-//            } catch (Exception ex) {
-//                throw new RuntimeException(ex);
-//            }
-//            if (department != null) {
-//                for (Major major:department.majors){
-//                    majorChooserRegisterStudentEmployee.getItems().addAll(major.getName());
-//                }
-//                majorChooserRegisterStudentEmployee.setVisibleRowCount(4);
-//            }
+
             for (Faculty faculty : University.allFaculties){
                 if (faculty.getFacultyName().equals(facultyChooserRegisterStudentEmployee.getValue())){
                     for (Department department : faculty.departments){
-                        if (department.getName().equals(selectedDepartment)){
+                        if (department.getName().equals(departmentChooserRegisterStudentEmployee.getValue())){
                             for (Major major : department.majors){
                                 majorChooserRegisterStudentEmployee.getItems().add(major.getName());
                             }
                             majorChooserRegisterStudentEmployee.setVisibleRowCount(4);
+                            break;
                         }
                     }
                 }
