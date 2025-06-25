@@ -11,12 +11,9 @@ public class Major implements Serializable{
     private int id;
     private int establishmentYear;
 
+    public List<Course>  courses=new ArrayList<>();
     public List<Student> students = new ArrayList<>();
     public List<Professor> professors = new ArrayList<>();
-
-    public List<Student> getStudents() {
-        return students;
-    }
 
     public Major(String name, int id, int establishmentYear) {
         this.name = name;

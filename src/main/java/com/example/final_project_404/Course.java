@@ -1,0 +1,41 @@
+package com.example.final_project_404;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Course implements Serializable {
+    public Course(String name,int credit,String id) {
+        this.name = name;
+        this.credit=credit;
+        this.id=id;
+    }
+
+    private String name;
+    private int credit;
+    private String id;
+    public List<CourseGroup> courseGroups=new ArrayList<>();
+    public Course(String name,int credit) {
+        this.name = name;
+        this.credit=credit;
+    }
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public int getCredit() {
+        return credit;
+    }
+    public void setCredit(int credit) {
+        this.credit = credit;
+    }
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+}

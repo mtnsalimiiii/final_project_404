@@ -222,6 +222,7 @@ public class AddEmployeeAdminPortalController implements Initializable {
                             break;
                         }
                     }
+                    break;
                 }
             }
             University.saveFaculties();
@@ -270,6 +271,7 @@ public class AddEmployeeAdminPortalController implements Initializable {
                         departmentChooserRegisterEmployeeAdmin.getItems().add(department.getName());
                     }
                     departmentChooserRegisterEmployeeAdmin.setVisibleRowCount(4);
+                    break;
                 }
             }
         });

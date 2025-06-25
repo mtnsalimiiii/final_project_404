@@ -166,9 +166,9 @@ public class AddDepartmentAdminPortalController implements Initializable {
 //    }
     public int getDepartmentId(String facultyName) throws FileNotFoundException {
         int id = 0;
-        for (Faculty faculty1 : University.allFaculties){
-            if(faculty1.getFacultyName().equals(facultyName)){
-                id = faculty1.departments.size()+1;
+        for (Faculty faculty : University.allFaculties){
+            if(faculty.getFacultyName().equals(facultyName)){
+                id = faculty.departments.size()+1;
                 break;
             }
         }
@@ -184,7 +184,7 @@ public class AddDepartmentAdminPortalController implements Initializable {
         int establishmentYear = Integer.parseInt(establishmentYearAddDepartmentAdmin.getText());
         int departmentId = getDepartmentId(facultyName);
 
-//        if (!departmentName.isBlank() && !establishmentYearAddDepartmentAdmin.getText().isBlank()) {
+        if (!departmentName.isBlank() && !establishmentYearAddDepartmentAdmin.getText().isBlank()) {
             Department department = new Department(departmentName, establishmentYear, departmentId);
             for (Faculty faculty : University.allFaculties) {
                 if (faculty.getFacultyName().equals(facultyName)) {
@@ -210,9 +210,9 @@ public class AddDepartmentAdminPortalController implements Initializable {
             stage.setScene(scene);
             stage.setResizable(false);
             stage.show();
-//        } else {
-//            System.out.println("please Fill All Fields!!");
-//        }
+        } else {
+            System.out.println("please Fill All Fields!!");
+        }
     }
 
     @Override

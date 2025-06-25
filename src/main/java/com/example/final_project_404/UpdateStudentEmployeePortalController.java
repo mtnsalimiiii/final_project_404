@@ -322,6 +322,11 @@ public class UpdateStudentEmployeePortalController implements Initializable {
         stage.show();
     }
 
+    @FXML
+    void addCourseEmployeePortal(ActionEvent event) {
+
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         operationChooserUpdateStudentEmployee.getItems().addAll("EDIT", "DEACTIVE");

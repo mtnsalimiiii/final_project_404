@@ -28,23 +28,22 @@ public class LoginPanelController implements Initializable{
     @FXML
     private ComboBox<String> roleChooserLoginPanel;
 
-    private String role;
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
         roleChooserLoginPanel.getItems().addAll("ADMIN", "PROFESSOR", "STUDENT", "EMPLOYEE");
         roleChooserLoginPanel.setVisibleRowCount(4);
-
-        roleChooserLoginPanel.setOnAction(event -> {
-            this.role = roleChooserLoginPanel.getValue();
-        });
-
     }
+
+    public static Employee employeePerson;
+    public static Professor professorPerson;
+    public static Student studentPerson;
+
     @FXML
     public void signInLoginPanel(ActionEvent actionEvent) throws Exception {
         String username = usernameLoginPanel.getText().trim();
         String password = passwordLoginPanel.getText().trim();
+        String role = roleChooserLoginPanel.getValue();
 
         System.out.println("role: " + role);
         System.out.println("username: " + username);
@@ -60,6 +59,7 @@ public class LoginPanelController implements Initializable{
                 Student.loadAllStudents();
                 for (Student student : University.allStudents) {
                     if (student.getId().equals(username) && student.getNationalId().equals(password)) {
+                        studentPerson = student;
                         System.out.println("Successfull login"  + student.getFirst_name());
                         Parent root = FXMLLoader.load(getClass().getResource("StudentPortal.fxml"));
                         Scene scene = new Scene(root, 800, 500);
@@ -78,6 +78,7 @@ public class LoginPanelController implements Initializable{
                 Professor.loadAllProfessor();
                 for (Professor professor : University.allProfessors) {
                     if (professor.getId().equals(username) && professor.getNationalId().equals(password)) {
+                        professorPerson = professor;
                         System.out.println("Successfull login " + professor.getFirst_name());
                         Parent root = FXMLLoader.load(getClass().getResource("ProfessorPortal.fxml"));
                         Scene scene = new Scene(root, 800, 500);
@@ -110,6 +111,7 @@ public class LoginPanelController implements Initializable{
                 Employee.loadAllEmployee();
                 for (Employee employee : University.allEmployees) {
                     if (employee.getId().equals(username) && employee.getNationalId().equals(password)) {
+                        employeePerson = employee;
                         System.out.println("Successfull login " + employee.getFirst_name());
                         Parent root = FXMLLoader.load(getClass().getResource("EmployeePortal.fxml"));
                         Scene scene = new Scene(root, 800, 500);

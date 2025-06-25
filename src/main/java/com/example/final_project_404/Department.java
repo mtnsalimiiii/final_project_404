@@ -65,10 +65,10 @@ public class Department implements Serializable {
         }
     }
 
-    @Override
-    public String toString() {
-        return "Department{name=" + name + "," + "Id=" + id + "}";
-    }
+//    @Override
+//    public String toString() {
+//        return "Department{name=" + name + "," + "Id=" + id + "}";
+//    }
 
 //    public void saveToFile() {
 //        String filename = "Department_" + this.name + ".ser";

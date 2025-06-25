@@ -122,4 +122,15 @@ public class ProfileEmployeePortalController {
         stage.show();
     }
 
+    @FXML
+    void addCourseEmployeePortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("AddCourseEmployee.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Add Course");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
 }

@@ -21,6 +21,7 @@
             <VBox fx:id="navigationBarVBox" alignment="TOP_CENTER" layoutY="80.0" prefHeight="420.0" prefWidth="150.0" styleClass="nav-bar" stylesheets="@EmployeePortal.css">
                 <children>
                     <Button layoutX="20.0" layoutY="20.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#dashboardEmployeePortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Dashboard" />
+                    <Button layoutX="20.0" layoutY="86.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addCourseEmployeePortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Add Course" />
                     <Button layoutX="20.0" layoutY="62.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#professorEmployeePortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Professors" />
                     <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#RegisterNewProfessorEmployeePortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Register New&#10;Professor" textAlignment="CENTER" />
                     <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#UpdateProfessorEmployeePortal" styleClass="nav-button" text="Update&#10;Professor" />
