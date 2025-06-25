@@ -165,13 +165,13 @@ public class AddMajorAdminPortalController implements Initializable {
     }
 
 
-    public int getMajorId(String facultyName, String departmentName) throws FileNotFoundException {
-        int id = 0;
+    public String getMajorId(String facultyName, String departmentName) throws FileNotFoundException {
+        String id = "";
         for (Faculty faculty : University.allFaculties){
             if(faculty.getFacultyName().equals(facultyName)){
                 for (Department department : faculty.departments){
                     if (department.getName().equals(departmentName)){
-                        id = department.majors.size()+1;
+                        id = department.getId()+department.majors.size()+1;
                     }
                 }
                 break;
@@ -191,7 +191,7 @@ public class AddMajorAdminPortalController implements Initializable {
         String departmentName = departmentChooserAddMajorAdmin.getValue().trim();
         String nameMajor = majorNameAddMajorAdmin.getText();
         int establishmentYear = Integer.parseInt(establishmentYearAddMajorAdmin.getText());
-        int majorId = getMajorId(facultyName, departmentName);
+        String majorId = getMajorId(facultyName, departmentName);
 
         if (!nameMajor.isBlank() && !establishmentYearAddMajorAdmin.getText().isBlank()){
             Major newMajor = new Major(nameMajor, majorId, establishmentYear);

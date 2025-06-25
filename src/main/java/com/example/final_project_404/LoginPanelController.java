@@ -1,5 +1,7 @@
 package com.example.final_project_404;
 
+import javafx.animation.RotateTransition;
+import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -8,19 +10,31 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoginPanelController implements Initializable{
+public class LoginPanelController{
 
 
     @FXML
     private TextField usernameLoginPanel;
+
+    @FXML
+    private ImageView userIcon;
+
+    @FXML
+    private ImageView passwordIcon;
+
+    @FXML
+    private Label titleLabel;
 
     @FXML
     private PasswordField passwordLoginPanel;
@@ -28,12 +42,68 @@ public class LoginPanelController implements Initializable{
     @FXML
     private ComboBox<String> roleChooserLoginPanel;
 
+    private RotateTransition rotateInTransition;
+    private RotateTransition rotateOutTransition;
+    private boolean isRotating = false;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources){
+    private ScaleTransition scaleUpTransition;
+    private ScaleTransition scaleDownTransition;
+
+    @FXML
+    public void initialize(/*URL location, ResourceBundle resources*/){
         roleChooserLoginPanel.getItems().addAll("ADMIN", "PROFESSOR", "STUDENT", "EMPLOYEE");
         roleChooserLoginPanel.setVisibleRowCount(4);
+        rotateInTransition = new RotateTransition(Duration.millis(500), null);
+        rotateInTransition.setByAngle(360);
+        rotateInTransition.setOnFinished(event -> isRotating = false);
+
+        rotateOutTransition = new RotateTransition(Duration.millis(500), null);
+        rotateOutTransition.setByAngle(-360);
+        rotateOutTransition.setOnFinished(event -> isRotating = false);
+
+        // ایجاد انیمیشن‌های بزرگ شدن و کوچک شدن
+        scaleUpTransition = new ScaleTransition(Duration.millis(200), titleLabel);
+        scaleUpTransition.setToX(1.2);
+        scaleUpTransition.setToY(1.2);
+
+        scaleDownTransition = new ScaleTransition(Duration.millis(200), titleLabel);
+        scaleDownTransition.setToX(1);
+        scaleDownTransition.setToY(1);
+
+        // اضافه کردن EventHandler برای رویداد‌های MouseEntered و MouseExited
+        userIcon.setOnMouseEntered(event -> handleMouseEntered(userIcon));
+        userIcon.setOnMouseExited(event -> handleMouseExited(userIcon));
+        passwordIcon.setOnMouseEntered(event -> handleMouseEntered(passwordIcon));
+        passwordIcon.setOnMouseExited(event -> handleMouseExited(passwordIcon));
+
     }
+
+    private void handleMouseEntered(ImageView icon) {
+        if (!isRotating) {
+            isRotating = true;
+            rotateInTransition.setNode(icon);
+            rotateInTransition.playFromStart();
+        }
+    }
+
+    private void handleMouseExited(ImageView icon) {
+        if (!isRotating) {
+            isRotating = true;
+            rotateOutTransition.setNode(icon);
+            rotateOutTransition.playFromStart();
+        }
+    }
+
+    @FXML
+    private void handleTitleEntered() {
+        scaleUpTransition.playFromStart();
+    }
+
+    @FXML
+    private void handleTitleExited() {
+        scaleDownTransition.playFromStart();
+    }
+
 
     public static Employee employeePerson;
     public static Professor professorPerson;

@@ -10,12 +10,12 @@ import java.util.List;
 public class Department implements Serializable {
     private String name;
     private int establishmentYear;
-    private int id;
+    private String id;
 
     public List<Major> majors = new ArrayList<>();
     public List<Employee> employees = new ArrayList<>();
 
-    public Department(String name, int establishmentYear, int id) {
+    public Department(String name, int establishmentYear, String id) {
         this.name = name;
         this.establishmentYear = establishmentYear;
         this.id=id;
@@ -27,7 +27,7 @@ public class Department implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
-    public int getId() {
+    public String getId() {
         return id;
     }
     public int getEstablishmentYear(){

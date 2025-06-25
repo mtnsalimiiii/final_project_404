@@ -164,11 +164,11 @@ public class AddDepartmentAdminPortalController implements Initializable {
 //    public int getEstablishmentYear(){
 //        return LocalDate.now().getYear();
 //    }
-    public int getDepartmentId(String facultyName) throws FileNotFoundException {
-        int id = 0;
+    public String getDepartmentId(String facultyName) throws FileNotFoundException {
+        String id = "";
         for (Faculty faculty : University.allFaculties){
             if(faculty.getFacultyName().equals(facultyName)){
-                id = faculty.departments.size()+1;
+                id = faculty.getId()+faculty.departments.size()+1;
                 break;
             }
         }
@@ -182,7 +182,7 @@ public class AddDepartmentAdminPortalController implements Initializable {
         String departmentName = departmentNameAddDepartmentAdmin.getText().trim();
         //int establishmentYear = getEstablishmentYear();
         int establishmentYear = Integer.parseInt(establishmentYearAddDepartmentAdmin.getText());
-        int departmentId = getDepartmentId(facultyName);
+        String departmentId = getDepartmentId(facultyName);
 
         if (!departmentName.isBlank() && !establishmentYearAddDepartmentAdmin.getText().isBlank()) {
             Department department = new Department(departmentName, establishmentYear, departmentId);

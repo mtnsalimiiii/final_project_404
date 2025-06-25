@@ -7,12 +7,12 @@ import java.util.List;
 
 public class Faculty implements Serializable {
     private String facultyName;
-    private int id;
+    private String id;
     private int establishmentYear;
 //    public List<String> departmentNames = new ArrayList<>();
     public List<Department> departments = new ArrayList<>();
 
-    public Faculty(String facultyName, int id, int establishmentYear) {
+    public Faculty(String facultyName, String id, int establishmentYear) {
         this.facultyName = facultyName;
         this.id = id;
         this.establishmentYear = establishmentYear;
@@ -22,8 +22,8 @@ public class Faculty implements Serializable {
     public void setFacultyName(String name){
         this.facultyName = name;
     }
-    public int getId() { return id; }
-    public void setId(int id1){
+    public String getId() { return id; }
+    public void setId(String id1){
         this.id = id1;
     }
     public int getEstablishmentYear() { return establishmentYear;}

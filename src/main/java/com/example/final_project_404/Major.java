@@ -8,14 +8,14 @@ public class Major implements Serializable{
 
 
     private String name;
-    private int id;
+    private String id;
     private int establishmentYear;
 
     public List<Course>  courses=new ArrayList<>();
     public List<Student> students = new ArrayList<>();
     public List<Professor> professors = new ArrayList<>();
 
-    public Major(String name, int id, int establishmentYear) {
+    public Major(String name, String id, int establishmentYear) {
         this.name = name;
         this.id = id;
         this.establishmentYear = establishmentYear;
@@ -25,10 +25,10 @@ public class Major implements Serializable{
 //        students.add(student);
 //    }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
     public String getName() {
