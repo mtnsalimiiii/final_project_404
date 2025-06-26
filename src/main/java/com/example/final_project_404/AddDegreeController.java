@@ -15,31 +15,22 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
-public class AddCourseController implements Initializable{
-
+public class AddDegreeController implements Initializable {
     @FXML
     private VBox containerBarVBox;
 
-    @FXML
-    private TextField courseCredit;
 
-    @FXML
-    private TextField courseName;
-
-    @FXML
-    private ComboBox<String> departmentChooser;
-
-    @FXML
-    private ComboBox<String> facultyChooser;
 
     @FXML
     private HBox headerHBox;
 
     @FXML
     private ComboBox<String> majorChooser;
+
+    @FXML
+    private ComboBox<String> degreeChooser;
 
     @FXML
     private VBox navigationBarVBox;
@@ -171,84 +162,34 @@ public class AddCourseController implements Initializable{
 //    }
 
     @FXML
-    /*void addCourse(ActionEvent event)throws IOException{
+    void addDegree(ActionEvent event)throws IOException{
 
-
-        String majorName = majorChooser.getValue();
-        int creditCourse = Integer.parseInt(courseCredit.getText().trim());
-        String nameCourse = courseName.getText().trim();
-        String id="01";
-
-        if (!facultyChooser.getValue().isBlank() && !departmentChooser.getValue().isBlank() && !majorChooser.getValue().isBlank() && !courseCredit.getText().isBlank() && !nameCourse.isBlank()){
-            University.loadFaculties();
-            Course newCourse = new Course(nameCourse, creditCourse, id);
-            for (Faculty faculty : University.allFaculties) {
-                if (faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFacultyEmployee())) {
-                    for (Department department : faculty.departments){
-                        if(department.getName().equals(LoginPanelController.employeePerson.getDepartmentEmployee())){
-                            for(Major major : department.majors){
-                                if (!major.courses.contains(newCourse)){
-                                    if (major.getName().equals(majorName)){
-                                        major.courses.add(newCourse);
-                                        break;
-                                    }
-                                } else {
-                                    System.out.println("This Course has Regitered earlier!!");
-                                }
-                            }
-                            break;
-                        }
-                    }
-                    break;
-                }
-            }
-            University.saveFaculties();
-
-        } else {
-            System.out.println("Please Fill All Fields!!");
-        }
-    }*/
+    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         University.loadFaculties();
-        for (Faculty faculty : University.allFaculties){
-            facultyChooser.getItems().add(faculty.getFacultyName());
-        }
-        facultyChooser.setVisibleRowCount(4);
+        if (LoginPanelController.employeePerson == null) return;
 
-        facultyChooser.setOnAction(event -> {
-            departmentChooser.getItems().clear();
-            departmentChooser.setPromptText("Department");
-            for (Faculty faculty : University.allFaculties){
-                if (faculty.getFacultyName().equals(facultyChooser.getValue())){
-                    for (Department department : faculty.departments){
-                        departmentChooser.getItems().add(department.getName());
-                    }
-                    departmentChooser.setVisibleRowCount(4);
-                    break;
-                }
-            }
-        });
+        for (Faculty fac : University.allFaculties) {
+            if (fac.getFacultyName() != null &&
+                    fac.getFacultyName().equals(LoginPanelController.employeePerson.getFacultyEmployee())) {
 
-        departmentChooser.setOnAction(event -> {
-            majorChooser.getItems().clear();
-            majorChooser.setPromptText("Major");
+                for (Department dep : fac.departments) {
+                    if (dep.getName() != null &&
+                            dep.getName().equals(LoginPanelController.employeePerson.getDepartmentEmployee())) {
 
-            for (Faculty faculty : University.allFaculties) {
-                if (faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFacultyEmployee())) {
-                    for (Department department : faculty.departments){
-                        if(department.getName().equals( LoginPanelController.employeePerson.getDepartmentEmployee())){
-                            for(Major major : department.majors){
+                        for (Major major : dep.majors) {
+                            if (major.getName() != null) {
                                 majorChooser.getItems().add(major.getName());
                             }
-                            majorChooser.setVisibleRowCount(4);
-                            break;
                         }
+                        majorChooser.setVisibleRowCount(4);
+                        break;
                     }
-                    break;
                 }
+                break;
             }
-        });
-
+        }
+        degreeChooser.getItems().addAll("Bachelor", "Master", "Phd");
     }
 }

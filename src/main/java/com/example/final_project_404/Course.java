@@ -5,12 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Course implements Serializable {
-    public Course(String name,int credit,String id) {
-        this.name = name;
-        this.credit=credit;
-        this.id=id;
-    }
-
     private String name;
     private int credit;
     private String id;
@@ -38,4 +32,10 @@ public class Course implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
+    public Course(String name,int credit,String id) {
+        this.name = name;
+        this.credit=credit;
+        this.id=id;
+    }
+
 }

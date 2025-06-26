@@ -10,8 +10,8 @@ public class Major implements Serializable{
     private String name;
     private String id;
     private int establishmentYear;
-
-    public List<Course>  courses=new ArrayList<>();
+    public List<Degree> degrees=new ArrayList<>();
+    //public List<Course>  courses=new ArrayList<>();
     public List<Student> students = new ArrayList<>();
     public List<Professor> professors = new ArrayList<>();
 

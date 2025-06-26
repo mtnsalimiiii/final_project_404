@@ -134,5 +134,16 @@ public class EmployeePortalController {
         stage.show();
     }
 
+    @FXML
+    void addDegreeEmployeePortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("AddDegreeEmployeePortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Add Degree");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
 
 }
