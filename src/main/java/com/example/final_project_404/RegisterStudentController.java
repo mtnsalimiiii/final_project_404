@@ -82,6 +82,28 @@ public class RegisterStudentController implements Initializable {
     }
 
     @FXML
+    public void addDegreeEmployeePortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("AddDegreeEmployeePortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Add New Degree");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
+    void addCourseEmployeePortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("AddCourseEmployeePortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Add New Course");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
     void professorEmployeePortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ProfessorsEmployeePortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
@@ -158,16 +180,6 @@ public class RegisterStudentController implements Initializable {
         stage.show();
     }
 
-    @FXML
-    void addCourseEmployeePortal(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("AddCourseEmployee.fxml"));
-        Scene scene = new Scene(root, 800, 500);
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Add Course");
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
-    }
 
     public String getDateOfBirth(ActionEvent event){
         return dateOfBirthRegisterStudentEmployee.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")).toString();

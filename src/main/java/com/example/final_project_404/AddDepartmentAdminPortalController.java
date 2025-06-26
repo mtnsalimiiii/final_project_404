@@ -122,7 +122,7 @@ public class AddDepartmentAdminPortalController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("UpdateDepartmentAdminPortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Update New Department");
+        stage.setTitle("Update Department");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
@@ -133,7 +133,7 @@ public class AddDepartmentAdminPortalController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("UpdateEmployeeAdminPortal.fxml"));
         Scene scene = new Scene(root, 800, 530);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Update New Employee");
+        stage.setTitle("Update Employee");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
@@ -144,7 +144,7 @@ public class AddDepartmentAdminPortalController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("UpdateFacultyAdminPortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Update New Faculty");
+        stage.setTitle("Update Faculty");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
@@ -155,7 +155,7 @@ public class AddDepartmentAdminPortalController implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("UpdateMajorAdminPortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Update New Major");
+        stage.setTitle("Update Major");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();

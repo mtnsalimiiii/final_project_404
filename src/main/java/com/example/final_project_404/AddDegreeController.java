@@ -58,6 +58,17 @@ public class AddDegreeController implements Initializable {
     }
 
     @FXML
+    public void addCourseEmployeePortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("AddCourseEmployeePortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Add New Course");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
     void professorEmployeePortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ProfessorsEmployeePortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
@@ -71,7 +82,7 @@ public class AddDegreeController implements Initializable {
     @FXML
     void UpdateProfessorEmployeePortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("UpdateProfessorEmployeePortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root, 800, 550);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Update Professor");
         stage.setScene(scene);
@@ -82,7 +93,7 @@ public class AddDegreeController implements Initializable {
     @FXML
     void UpdateStudentEmployeePortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("UpdateStudentEmployeePortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root, 800, 550);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Update Student");
         stage.setScene(scene);
@@ -146,9 +157,9 @@ public class AddDegreeController implements Initializable {
 
 //    public String idMakerCourse(String majorName){
 //        University.loadFaculties();
-//        for (Faculty fac:University.allFaculties) {
-//            if (fac.getFacultyName() == LoginPanelController.employeePerson.getFacultyEmployee()) {
-//                for (Department department:fac.departments){
+//        for (Faculty faculty:University.allFaculties) {
+//            if (faculty.getFacultyName() == LoginPanelController.employeePerson.getFacultyEmployee()) {
+//                for (Department department:faculty.departments){
 //                    if(department.getName()==LoginPanelController.employeePerson.getDepartmentEmployee()){
 //                        for(Major major:department.majors){
 //                            if (major.getName()==majorName){
@@ -170,15 +181,11 @@ public class AddDegreeController implements Initializable {
         University.loadFaculties();
         if (LoginPanelController.employeePerson == null) return;
 
-        for (Faculty fac : University.allFaculties) {
-            if (fac.getFacultyName() != null &&
-                    fac.getFacultyName().equals(LoginPanelController.employeePerson.getFacultyEmployee())) {
-
-                for (Department dep : fac.departments) {
-                    if (dep.getName() != null &&
-                            dep.getName().equals(LoginPanelController.employeePerson.getDepartmentEmployee())) {
-
-                        for (Major major : dep.majors) {
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName() != null && faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFacultyEmployee())) {
+                for (Department department : faculty.departments) {
+                    if (department.getName() != null && department.getName().equals(LoginPanelController.employeePerson.getDepartmentEmployee())) {
+                        for (Major major : department.majors) {
                             if (major.getName() != null) {
                                 majorChooser.getItems().add(major.getName());
                             }
@@ -191,5 +198,8 @@ public class AddDegreeController implements Initializable {
             }
         }
         degreeChooser.getItems().addAll("Bachelor", "Master", "Phd");
+        degreeChooser.setVisibleRowCount(3);
     }
+
+
 }

@@ -142,7 +142,7 @@ public class LoginPanelController{
                         System.out.println("The username or password is incorrect!!");
                     }
                 }
-                System.out.println("The username not found!!");
+//                System.out.println("The username not found!!");
                 break;
             case "professor":
                 Professor.loadAllProfessor();
@@ -161,8 +161,7 @@ public class LoginPanelController{
                         System.out.println("The username or password is incorrect!!");
                     }
                 }
-                System.out.println("The username not found!!");
-
+//                System.out.println("The username not found!!");
                 break;
             case "admin":
                 if ("admin".equals(username) && "admin404".equals(password)){
@@ -195,7 +194,7 @@ public class LoginPanelController{
                         System.out.println("The username or password is incorrect.");
                     }
                 }
-                System.out.println("The username not found!!");
+//                System.out.println("The username not found!!");
                 break;
         }
     }

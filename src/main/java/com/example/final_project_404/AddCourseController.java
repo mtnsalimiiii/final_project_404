@@ -67,6 +67,17 @@ public class AddCourseController implements Initializable{
     }
 
     @FXML
+    public void addDegreeEmployeePortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("AddDegreeEmployeePortal.fxml"));
+        Scene scene = new Scene(root, 800, 500);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Add New Degree");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+    @FXML
     void professorEmployeePortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ProfessorsEmployeePortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
@@ -80,7 +91,7 @@ public class AddCourseController implements Initializable{
     @FXML
     void UpdateProfessorEmployeePortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("UpdateProfessorEmployeePortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root, 800, 550);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Update Professor");
         stage.setScene(scene);
@@ -91,7 +102,7 @@ public class AddCourseController implements Initializable{
     @FXML
     void UpdateStudentEmployeePortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("UpdateStudentEmployeePortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root, 800, 550);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Update Student");
         stage.setScene(scene);
@@ -170,44 +181,44 @@ public class AddCourseController implements Initializable{
 //        }
 //    }
 
-    @FXML
-    /*void addCourse(ActionEvent event)throws IOException{
-
-
-        String majorName = majorChooser.getValue();
-        int creditCourse = Integer.parseInt(courseCredit.getText().trim());
-        String nameCourse = courseName.getText().trim();
-        String id="01";
-
-        if (!facultyChooser.getValue().isBlank() && !departmentChooser.getValue().isBlank() && !majorChooser.getValue().isBlank() && !courseCredit.getText().isBlank() && !nameCourse.isBlank()){
-            University.loadFaculties();
-            Course newCourse = new Course(nameCourse, creditCourse, id);
-            for (Faculty faculty : University.allFaculties) {
-                if (faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFacultyEmployee())) {
-                    for (Department department : faculty.departments){
-                        if(department.getName().equals(LoginPanelController.employeePerson.getDepartmentEmployee())){
-                            for(Major major : department.majors){
-                                if (!major.courses.contains(newCourse)){
-                                    if (major.getName().equals(majorName)){
-                                        major.courses.add(newCourse);
-                                        break;
-                                    }
-                                } else {
-                                    System.out.println("This Course has Regitered earlier!!");
-                                }
-                            }
-                            break;
-                        }
-                    }
-                    break;
-                }
-            }
-            University.saveFaculties();
-
-        } else {
-            System.out.println("Please Fill All Fields!!");
-        }
-    }*/
+//    @FXML
+//    void addCourse(ActionEvent event)throws IOException{
+//
+//
+//        String majorName = majorChooser.getValue();
+//        int creditCourse = Integer.parseInt(courseCredit.getText().trim());
+//        String nameCourse = courseName.getText().trim();
+//        String id="01";
+//
+//        if (!facultyChooser.getValue().isBlank() && !departmentChooser.getValue().isBlank() && !majorChooser.getValue().isBlank() && !courseCredit.getText().isBlank() && !nameCourse.isBlank()){
+//            University.loadFaculties();
+//            Course newCourse = new Course(nameCourse, creditCourse, id);
+//            for (Faculty faculty : University.allFaculties) {
+//                if (faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFacultyEmployee())) {
+//                    for (Department department : faculty.departments){
+//                        if(department.getName().equals(LoginPanelController.employeePerson.getDepartmentEmployee())){
+//                            for(Major major : department.majors){
+//                                if (!major.courses.contains(newCourse)){
+//                                    if (major.getName().equals(majorName)){
+//                                        major.courses.add(newCourse);
+//                                        break;
+//                                    }
+//                                } else {
+//                                    System.out.println("This Course has Regitered earlier!!");
+//                                }
+//                            }
+//                            break;
+//                        }
+//                    }
+//                    break;
+//                }
+//            }
+//            University.saveFaculties();
+//
+//        } else {
+//            System.out.println("Please Fill All Fields!!");
+//        }
+//    }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         University.loadFaculties();
@@ -249,6 +260,11 @@ public class AddCourseController implements Initializable{
                 }
             }
         });
+
+    }
+
+
+    public void addCourse(ActionEvent event) {
 
     }
 }
