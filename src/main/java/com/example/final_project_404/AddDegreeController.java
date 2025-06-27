@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -174,6 +175,35 @@ public class AddDegreeController implements Initializable {
 
     @FXML
     void addDegree(ActionEvent event)throws IOException{
+        Degree degree = null;
+        University.loadFaculties();
+        for (Faculty fac : University.allFaculties) {
+            if (fac.getFacultyName() != null &&
+                    fac.getFacultyName().equals(LoginPanelController.employeePerson.getFacultyEmployee())) {
+
+                for (Department dep : fac.departments) {
+                    if (dep.getName() != null &&
+                            dep.getName().equals(LoginPanelController.employeePerson.getDepartmentEmployee())) {
+
+                        for (Major major : dep.majors) {
+                            if (major.getName() != null && major.getName().equals(majorChooser.getValue())) {
+                                if(majorChooser.equals("Bachelor")){
+                                    degree=new Baheclor();
+                                }
+                                else if(majorChooser.equals("Master")){
+                                    degree=new Master();
+                                }
+                                else if(majorChooser.equals("Phd")){
+                                    degree=new Phd();
+                                }
+                                major.degrees.add(degree);
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
 
     }
     @Override
