@@ -433,7 +433,7 @@ public class UpdateStudentEmployeePortalController implements Initializable {
 
         majorChooserEdit.setOnAction(event -> {
             studentChooserEdit.getItems().clear();
-            studentChooserEdit.setPromptText("Professor");
+            studentChooserEdit.setPromptText("Student");
 
             for (Faculty faculty : University.allFaculties){
                 if (faculty.getFacultyName().equals(facultyChooserEdit.getValue())){
@@ -441,8 +441,8 @@ public class UpdateStudentEmployeePortalController implements Initializable {
                         if (department.getName().equals(departmentChooserEdit.getValue())){
                             for (Major major : department.majors){
                                 if (major.getName().equals(majorChooserEdit.getValue())){
-                                    for (Professor professor : major.professors){
-                                        studentChooserEdit.getItems().add(professor.getId());
+                                    for (Student student : major.students){
+                                        studentChooserEdit.getItems().add(student.getId());
                                     }
                                     studentChooserEdit.setVisibleRowCount(4);
                                     break;
@@ -458,7 +458,7 @@ public class UpdateStudentEmployeePortalController implements Initializable {
 
         majorChooserDeactive.setOnAction(event -> {
             studentChooserDeactive.getItems().clear();
-            studentChooserDeactive.setPromptText("Professor");
+            studentChooserDeactive.setPromptText("Student");
 
 
             for (Faculty faculty : University.allFaculties){
@@ -467,8 +467,8 @@ public class UpdateStudentEmployeePortalController implements Initializable {
                         if (department.getName().equals(departmentChooserDeactive.getValue())){
                             for (Major major : department.majors){
                                 if (major.getName().equals(majorChooserDeactive.getValue())){
-                                    for (Professor professor : major.professors){
-                                        studentChooserDeactive.getItems().add(professor.getId());
+                                    for (Student student : major.students){
+                                        studentChooserDeactive.getItems().add(student.getId());
                                     }
                                     studentChooserDeactive.setVisibleRowCount(4);
                                     break;

@@ -2,6 +2,7 @@ package com.example.final_project_404;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public abstract class  Person implements Serializable {
@@ -9,6 +10,7 @@ public abstract class  Person implements Serializable {
     private String last_name;
     private String dateOfBirth;
     private String nationalId;
+//    private Date dateofbirth;
     private Gender gender;
     private String phoneNumber;
     private String dateOfJoin;

@@ -22,7 +22,7 @@
                 <VBox fx:id="navigationBarVBox" alignment="TOP_CENTER" prefHeight="420.0" prefWidth="150.0" styleClass="nav-bar" stylesheets="@EmployeePortal.css">
                     <children>
                         <Button layoutX="20.0" layoutY="20.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#dashboardProfessorPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Dashboard" />
-                        <Button layoutX="20.0" layoutY="150.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Profile" />
+                        <Button layoutX="20.0" layoutY="150.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#profileProfessorPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Profile" />
                         <Button layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" stylesheets="@EmployeePortal.css" text="Reports">
                      <styleClass>
                         <String fx:value="nav-button" />

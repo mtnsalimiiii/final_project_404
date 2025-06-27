@@ -34,6 +34,12 @@ public class Professor extends Person implements Serializable {
     public String getDepartment(){
         return department;
     }
+    public String getMajor() {
+        return major;
+    }
+    public void setMajor(String major) {
+        this.major = major;
+    }
 
     public static void loadAllProfessor() throws Exception {
         File file = new File("allProfessors.ser");
@@ -55,10 +61,10 @@ public class Professor extends Person implements Serializable {
         }
         input.close();
     }
-
 //    public static void addProfessor(String firstname,String lastname,String dateOfBirth,String nationalId,Gender gender,String phoneNumber,String professorId,String dateOfHire,String faculty,String department){
 //        University.allProfessors.add(new Professor(firstname,lastname,dateOfBirth,nationalId,gender,phoneNumber, professorId, dateOfHire, faculty, department));
 //
+
 //    }
 
     public static void saveAllProfessor() throws IOException {

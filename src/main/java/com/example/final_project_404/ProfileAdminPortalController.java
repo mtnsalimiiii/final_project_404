@@ -3,16 +3,20 @@ package com.example.final_project_404;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class ProfileAdminPortalController {
+public class ProfileAdminPortalController implements Initializable {
 
     @FXML
     private VBox containerBarVBox;
@@ -22,6 +26,15 @@ public class ProfileAdminPortalController {
 
     @FXML
     private VBox navigationBarVBox;
+
+    @FXML
+    private TextField newPassword;
+
+    @FXML
+    private TextField newUsername;
+
+    @FXML
+    private TextField repeatPassword;
 
     @FXML
     void addDepartmentAdminPortal(ActionEvent event) throws IOException {
@@ -142,5 +155,15 @@ public class ProfileAdminPortalController {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+
+    @FXML
+    void changeProfile(ActionEvent event) {
+
+    }
+
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
     }
 }

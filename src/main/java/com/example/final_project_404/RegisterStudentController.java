@@ -117,7 +117,7 @@ public class RegisterStudentController implements Initializable {
     @FXML
     void UpdateProfessorEmployeePortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("UpdateProfessorEmployeePortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root, 800, 550);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Update Professor");
         stage.setScene(scene);
@@ -128,7 +128,7 @@ public class RegisterStudentController implements Initializable {
     @FXML
     void UpdateStudentEmployeePortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("UpdateStudentEmployeePortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root, 800, 550);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Update Student");
         stage.setScene(scene);
