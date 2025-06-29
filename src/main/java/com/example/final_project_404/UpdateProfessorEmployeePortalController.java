@@ -221,7 +221,11 @@ public class UpdateProfessorEmployeePortalController implements Initializable {
                                             professor.setPhoneNumber(phoneNumberEdit.getText());
                                         }
                                         if (dateOfBirthEdit.getValue() != null){
-                                            professor.setDateOfBirth(dateOfBirthEdit.getValue().toString());
+                                            Date date = new Date();
+                                            date.setYear(dateOfBirthEdit.getValue().getYear());
+                                            date.setMonth(dateOfBirthEdit.getValue().getMonthValue());
+                                            date.setDay(dateOfBirthEdit.getValue().getDayOfMonth());
+                                            professor.setDateOfBirth(date);
                                         }
                                         if (genderChooserEdit.getValue()!= null){
                                             professor.setGender(genderChooserEdit.getValue());
@@ -256,7 +260,11 @@ public class UpdateProfessorEmployeePortalController implements Initializable {
                     professor.setPhoneNumber(phoneNumberEdit.getText());
                 }
                 if (dateOfBirthEdit.getValue() != null){
-                    professor.setDateOfBirth(dateOfBirthEdit.getValue().toString());
+                    Date date = new Date();
+                    date.setYear(dateOfBirthEdit.getValue().getYear());
+                    date.setMonth(dateOfBirthEdit.getValue().getMonthValue());
+                    date.setDay(dateOfBirthEdit.getValue().getDayOfMonth());
+                    professor.setDateOfBirth(date);
                 }
                 if (genderChooserEdit.getValue()!= null){
                     professor.setGender(genderChooserEdit.getValue());

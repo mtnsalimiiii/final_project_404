@@ -180,12 +180,20 @@ public class RegisterProfessorController implements Initializable {
         stage.show();
     }
 
-    public String getDateOfHire(){
-        return LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+    public Date getDateOfHire(){
+        Date date = new Date();
+        date.setYear(LocalDate.now().getYear());
+        date.setMonth(LocalDate.now().getMonthValue());
+        date.setDay(LocalDate.now().getDayOfMonth());
+        return date;
     }
 
-    public String getDateOfBirth(ActionEvent event) {
-        return dateOfBirthRegisterProfessorEmployee.getValue().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")).toString();
+    public Date getDateOfBirth(ActionEvent event) {
+        Date dateOfBirth = new Date();
+        dateOfBirth.setYear(dateOfBirthRegisterProfessorEmployee.getValue().getYear());
+        dateOfBirth.setMonth(dateOfBirthRegisterProfessorEmployee.getValue().getMonthValue());
+        dateOfBirth.setDay(dateOfBirthRegisterProfessorEmployee.getValue().getDayOfMonth());
+        return dateOfBirth;
     }
 
     public String generateProfessorId(){
@@ -196,7 +204,7 @@ public class RegisterProfessorController implements Initializable {
         University.loadFaculties();
         Professor.loadAllProfessor();
 
-        String dateOfBirth = getDateOfBirth(event);
+        Date dateOfBirth = getDateOfBirth(event);
         String firstName = firstnameRegisterProfessorEmployee.getText().trim();
         String lastName = lastnameRegisterProfessorEmployee.getText().trim();
         String phoneNumber = phoneNumberRegisterProfessorEmployee.getText().trim();
@@ -205,7 +213,7 @@ public class RegisterProfessorController implements Initializable {
         String faculty = facultyChooserRegisterProfessorEmployee.getValue();
         String department = departmentChooserRegisterProfessorEmployee.getValue();
         String major = majorChooserRegisterProfessorEmployee.getValue();
-        String dateOfHire = getDateOfHire();
+        Date dateOfHire = getDateOfHire();
         String professorId = generateProfessorId();
 
         if (!firstName.isBlank() && !lastName.isBlank() && !phoneNumber.isBlank() && !nationalId.isBlank() && gender!=null && faculty!=null && department!=null && major!=null){

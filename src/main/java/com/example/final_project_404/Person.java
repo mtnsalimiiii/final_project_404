@@ -2,24 +2,24 @@ package com.example.final_project_404;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public abstract class  Person implements Serializable {
     private String first_name;
     private String last_name;
-    private String dateOfBirth;
+//    private String dateOfBirth;
     private String nationalId;
-//    private Date dateofbirth;
+    private com.example.final_project_404.Date dateOfBirth;
     private Gender gender;
     private String phoneNumber;
-    private String dateOfJoin;
+//    private String dateOfJoin;
+    private com.example.final_project_404.Date dateOfJoin;
 
 
-    Person(String first_name, String last_name, String dateOfBirth, String nationalId, Gender gender, String phoneNumber, String dateOfJoin){
+    Person(String first_name, String last_name, Date dateOfBirth, String nationalId, Gender gender, String phoneNumber, Date dateOfJoin){
         this.first_name=first_name;
         this.last_name=last_name;
-        this.dateOfBirth=dateOfBirth;
+        this.dateOfBirth = dateOfBirth;
         this.nationalId=nationalId;
         this.gender = gender;
         this.phoneNumber=phoneNumber;
@@ -41,10 +41,10 @@ public abstract class  Person implements Serializable {
         this.last_name=last_name;
     }
 
-    public String getDateOfBirth(){
+    public Date getDateOfBirth(){
         return dateOfBirth;
     }
-    public void setDateOfBirth(String dateOfBirth){
+    public void setDateOfBirth(Date dateOfBirth){
         this.dateOfBirth=dateOfBirth;
     }
 
@@ -62,10 +62,10 @@ public abstract class  Person implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public String getDateOfJoin() {
+    public Date getDateOfJoin() {
         return dateOfJoin;
     }
-    public void setDateOfJoin(String dateOfJoin) {
+    public void setDateOfJoin(Date dateOfJoin) {
         this.dateOfJoin = dateOfJoin;
     }
 

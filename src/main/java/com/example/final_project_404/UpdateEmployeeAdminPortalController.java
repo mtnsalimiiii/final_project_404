@@ -176,7 +176,11 @@ public class UpdateEmployeeAdminPortalController implements Initializable {
                                     employee.setGender(genderChooserUpdateEmployee.getValue());
                                 }
                                 if (dateOfBirthUpdateEmployee.getValue() != null){
-                                    employee.setDateOfBirth(String.valueOf(dateOfBirthUpdateEmployee.getValue()));
+                                    Date date = new Date();
+                                    date.setYear(dateOfBirthUpdateEmployee.getValue().getYear());
+                                    date.setMonth(dateOfBirthUpdateEmployee.getValue().getMonthValue());
+                                    date.setDay(dateOfBirthUpdateEmployee.getValue().getDayOfMonth());
+                                    employee.setDateOfBirth(date);
                                 }
                                 if (!nationalIdUpdateEmployee.getText().isBlank()){
                                     employee.setNationalId(nationalIdUpdateEmployee.getText());
@@ -208,7 +212,11 @@ public class UpdateEmployeeAdminPortalController implements Initializable {
                     employee.setGender(genderChooserUpdateEmployee.getValue());
                 }
                 if (dateOfBirthUpdateEmployee.getValue() != null){
-                    employee.setDateOfBirth(String.valueOf(dateOfBirthUpdateEmployee.getValue()));
+                    Date date = new Date();
+                    date.setYear(dateOfBirthUpdateEmployee.getValue().getYear());
+                    date.setMonth(dateOfBirthUpdateEmployee.getValue().getMonthValue());
+                    date.setDay(dateOfBirthUpdateEmployee.getValue().getDayOfMonth());
+                    employee.setDateOfBirth(date);
                 }
                 if (!nationalIdUpdateEmployee.getText().isBlank()){
                     employee.setNationalId(nationalIdUpdateEmployee.getText());

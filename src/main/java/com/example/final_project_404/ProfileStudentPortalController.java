@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
@@ -107,8 +108,13 @@ public class ProfileStudentPortalController implements Initializable {
                                             student.setGender(newGender.getValue());
                                         }
                                         if (newDateOfBirth.getValue() != null){
-                                            student.setDateOfBirth(newDateOfBirth.getValue().toString());
-                                        }
+                                            com.example.final_project_404.Date date = new Date();
+
+                                            date.setYear(newDateOfBirth.getValue().getYear());
+                                            date.setMonth(newDateOfBirth.getValue().getMonthValue());
+                                            date.setDay(newDateOfBirth.getValue().getDayOfMonth());
+
+                                            LoginPanelController.studentPerson.setDateOfBirth(date);                                         }
                                         break;
                                     }
                                 }
@@ -142,7 +148,13 @@ public class ProfileStudentPortalController implements Initializable {
                     student.setGender(newGender.getValue());
                 }
                 if (newDateOfBirth.getValue() != null){
-                    student.setDateOfBirth(newDateOfBirth.getValue().toString());
+                    com.example.final_project_404.Date date = new Date();
+
+                    date.setYear(newDateOfBirth.getValue().getYear());
+                    date.setMonth(newDateOfBirth.getValue().getMonthValue());
+                    date.setDay(newDateOfBirth.getValue().getDayOfMonth());
+
+                    LoginPanelController.studentPerson.setDateOfBirth(date);
                 }
                 break;
             }
@@ -165,7 +177,13 @@ public class ProfileStudentPortalController implements Initializable {
             LoginPanelController.studentPerson.setGender(newGender.getValue());
         }
         if (newDateOfBirth.getValue() != null){
-            LoginPanelController.studentPerson.setDateOfBirth(newDateOfBirth.getValue().toString());
+            com.example.final_project_404.Date date = new Date();
+
+            date.setYear(newDateOfBirth.getValue().getYear());
+            date.setMonth(newDateOfBirth.getValue().getMonthValue());
+            date.setDay(newDateOfBirth.getValue().getDayOfMonth());
+
+            LoginPanelController.studentPerson.setDateOfBirth(date);
         }
 
         System.out.println("Successful");
@@ -175,8 +193,8 @@ public class ProfileStudentPortalController implements Initializable {
         System.out.println(LoginPanelController.studentPerson.getGender());
         System.out.println(LoginPanelController.studentPerson.getPhoneNumber());
         System.out.println(LoginPanelController.studentPerson.getNationalId());
-        System.out.println(LoginPanelController.studentPerson.getDateOfBirth());
-        System.out.println(LoginPanelController.studentPerson.getDateOfJoin());
+        System.out.println(LoginPanelController.studentPerson.getDateOfBirth().getDay() + " " + Month.of(LoginPanelController.studentPerson.getDateOfBirth().getMonth()) + " " + LoginPanelController.studentPerson.getDateOfBirth().getYear()); // must work on dates of Date
+        System.out.println(LoginPanelController.studentPerson.getDateOfJoin().getDay() + " " + Month.of(LoginPanelController.studentPerson.getDateOfJoin().getMonth()) + " " + LoginPanelController.studentPerson.getDateOfJoin().getYear()); // must work on dates of Date
 
         Parent root = FXMLLoader.load(getClass().getResource("ProfileStudentPortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
@@ -195,7 +213,7 @@ public class ProfileStudentPortalController implements Initializable {
         newGender.setPromptText(student.getGender().toString());
         newNationalId.setPromptText(student.getNationalId());
         newPhoneNumber.setPromptText(student.getPhoneNumber());
-        newDateOfBirth.setPromptText(student.getDateOfBirth().formatted(DateTimeFormatter.ofPattern("dd-MMM-yyyy"))); // must work on dates of Date
+        newDateOfBirth.setPromptText(student.getDateOfBirth().getDay() + " " + Month.of(student.getDateOfBirth().getMonth()) + " " + student.getDateOfBirth().getYear()); // must work on dates of Date
 
         newGender.getItems().addAll(Gender.Male, Gender.Female);
     }

@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
@@ -108,8 +109,13 @@ public class ProfileProfessorPortalController implements Initializable {
                                             professor.setGender(newGender.getValue());
                                         }
                                         if (newDateOfBirth.getValue() != null){
-                                            professor.setDateOfBirth(newDateOfBirth.getValue().toString());
-                                        }
+                                            com.example.final_project_404.Date date = new Date();
+
+                                            date.setYear(newDateOfBirth.getValue().getYear());
+                                            date.setMonth(newDateOfBirth.getValue().getMonthValue());
+                                            date.setDay(newDateOfBirth.getValue().getDayOfMonth());
+
+                                            LoginPanelController.professorPerson.setDateOfBirth(date);                                        }
                                         break;
                                     }
                                 }
@@ -143,8 +149,13 @@ public class ProfileProfessorPortalController implements Initializable {
                     professor.setGender(newGender.getValue());
                 }
                 if (newDateOfBirth.getValue() != null){
-                    professor.setDateOfBirth(newDateOfBirth.getValue().toString());
-                }
+                    com.example.final_project_404.Date date = new Date();
+
+                    date.setYear(newDateOfBirth.getValue().getYear());
+                    date.setMonth(newDateOfBirth.getValue().getMonthValue());
+                    date.setDay(newDateOfBirth.getValue().getDayOfMonth());
+
+                    LoginPanelController.professorPerson.setDateOfBirth(date);                }
                 break;
             }
         }
@@ -166,7 +177,13 @@ public class ProfileProfessorPortalController implements Initializable {
             LoginPanelController.professorPerson.setGender(newGender.getValue());
         }
         if (newDateOfBirth.getValue() != null){
-            LoginPanelController.professorPerson.setDateOfBirth(newDateOfBirth.getValue().toString());
+            com.example.final_project_404.Date date = new Date();
+
+            date.setYear(newDateOfBirth.getValue().getYear());
+            date.setMonth(newDateOfBirth.getValue().getMonthValue());
+            date.setDay(newDateOfBirth.getValue().getDayOfMonth());
+
+            LoginPanelController.professorPerson.setDateOfBirth(date);
         }
 
         System.out.println("Successful");
@@ -176,8 +193,8 @@ public class ProfileProfessorPortalController implements Initializable {
         System.out.println(LoginPanelController.professorPerson.getGender());
         System.out.println(LoginPanelController.professorPerson.getPhoneNumber());
         System.out.println(LoginPanelController.professorPerson.getNationalId());
-        System.out.println(LoginPanelController.professorPerson.getDateOfBirth());
-        System.out.println(LoginPanelController.professorPerson.getDateOfJoin());
+        System.out.println(LoginPanelController.professorPerson.getDateOfBirth().getDay() + " " + Month.of(LoginPanelController.professorPerson.getDateOfBirth().getMonth()) + " " + LoginPanelController.professorPerson.getDateOfBirth().getYear()); // must work on dates of Date
+        System.out.println(LoginPanelController.professorPerson.getDateOfJoin().getDay() + " " + Month.of(LoginPanelController.professorPerson.getDateOfJoin().getMonth()) + " " + LoginPanelController.professorPerson.getDateOfJoin().getYear()); // must work on dates of Date
 
         Parent root = FXMLLoader.load(getClass().getResource("ProfileProfessorPortal.fxml"));
         Scene scene = new Scene(root, 800, 500);
@@ -196,7 +213,7 @@ public class ProfileProfessorPortalController implements Initializable {
         newGender.setPromptText(professor.getGender().toString());
         newNationalId.setPromptText(professor.getNationalId());
         newPhoneNumber.setPromptText(professor.getPhoneNumber());
-        newDateOfBirth.setPromptText(professor.getDateOfBirth().formatted(DateTimeFormatter.ofPattern("dd-MMM-yyyy"))); // must work on dates of Date
+        newDateOfBirth.setPromptText(professor.getDateOfBirth().getDay() + " " + Month.of(professor.getDateOfBirth().getMonth()) + " " + professor.getDateOfBirth().getYear()); // must work on dates of Date
 
         newGender.getItems().addAll(Gender.Male, Gender.Female);
     }
