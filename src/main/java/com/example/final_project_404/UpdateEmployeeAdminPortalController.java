@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -16,9 +17,16 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Month;
 import java.util.ResourceBundle;
 
 public class UpdateEmployeeAdminPortalController implements Initializable {
+
+    @FXML
+    private Button deactiveButton;
+
+    @FXML
+    private Button editButton;
 
     @FXML
     private VBox containerBarDeactiveVBox;
@@ -248,22 +256,33 @@ public class UpdateEmployeeAdminPortalController implements Initializable {
     }
 
     @FXML
-    void setEmployeeChooserEditUpdateEmployee(ActionEvent event) {
-        /*if(employeeChooserEditUpdateEmployee.getValue()!=null){
-            lastNameUpdateEmployee.setDisable(false);
-            lastNameUpdateEmployee.setDisable(false);
-            genderChooserUpdateEmployee.setDisable(false);
-            dateOfBirthUpdateEmployee.setDisable(false);
-            phoneNumberUpdateEmployee.setDisable(false);
-            nationalIdUpdateEmployee.setDisable(false);
+    void setEmployeeChooserEdit(ActionEvent event) {
+        if (employeeChooserEditUpdateEmployee.getValue().isEmpty()) {
+            editButton.setDisable(true);
         } else {
-            lastNameUpdateEmployee.setDisable(true);
-            lastNameUpdateEmployee.setDisable(true);
-            genderChooserUpdateEmployee.setDisable(true);
-            dateOfBirthUpdateEmployee.setDisable(true);
-            phoneNumberUpdateEmployee.setDisable(true);
-            nationalIdUpdateEmployee.setDisable(true);
-        }*/
+            editButton.setDisable(false);
+        }
+        Employee.loadAllEmployee();
+        for (Employee employee : University.allEmployees){
+            if (employee.getId().equals(employeeChooserEditUpdateEmployee.getValue())){
+                firstNameUpdateEmployee.setPromptText(employee.getFirst_name());
+                lastNameUpdateEmployee.setPromptText(employee.getLast_name());
+                genderChooserUpdateEmployee.setPromptText(String.valueOf(employee.getGender()));
+                nationalIdUpdateEmployee.setPromptText(employee.getNationalId());
+                phoneNumberUpdateEmployee.setPromptText(employee.getPhoneNumber());
+                dateOfBirthUpdateEmployee.setPromptText(employee.getDateOfBirth().getDay() + " " + Month.of(employee.getDateOfBirth().getMonth()) + " " + employee.getDateOfBirth().getYear());
+                break;
+            }
+        }
+    }
+
+    @FXML
+    void setEmployeeChooserDeactive(ActionEvent event) {
+        if (employeeChooserDeactiveUpdateEmployee.getValue().isEmpty()) {
+            deactiveButton.setDisable(true);
+        } else {
+            deactiveButton.setDisable(false);
+        }
     }
 
     @FXML
@@ -271,9 +290,19 @@ public class UpdateEmployeeAdminPortalController implements Initializable {
         if(operationChooserUpdateEmployeeAdmin.getValue().toString() == "EDIT"){
             containerBarEditVBox.setDisable(false);
             containerBarDeactiveVBox.setDisable(true);
+            if (employeeChooserEditUpdateEmployee.getValue()!=null) {
+                editButton.setDisable(false);
+            } else {
+                editButton.setDisable(true);
+            }
         } else if (operationChooserUpdateEmployeeAdmin.getValue().toString() == "DEACTIVE") {
             containerBarDeactiveVBox.setDisable(false);
             containerBarEditVBox.setDisable(true);
+            if (employeeChooserDeactiveUpdateEmployee.getValue()!=null) {
+                deactiveButton.setDisable(false);
+            } else {
+                deactiveButton.setDisable(true);
+            }
         }
     }
 
@@ -345,7 +374,7 @@ public class UpdateEmployeeAdminPortalController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {;
-        operationChooserUpdateEmployeeAdmin.getItems().addAll(  "DEACTIVE", "EDIT");
+        operationChooserUpdateEmployeeAdmin.getItems().addAll(  "EDIT", "DEACTIVE");
         operationChooserUpdateEmployeeAdmin.setVisibleRowCount(2);
 
         University.loadFaculties();

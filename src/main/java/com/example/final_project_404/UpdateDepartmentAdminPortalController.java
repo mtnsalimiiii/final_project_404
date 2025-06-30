@@ -139,23 +139,34 @@ public class UpdateDepartmentAdminPortalController implements Initializable {
     }
 
     @FXML
-    void setDepartmentChooserDeactiveUpdateDepartment(ActionEvent event) {
-
+    void setDepartmentChooserDeactive(ActionEvent event) {
+        if (departmentChooserDeactiveUpdateDepartment.getValue().isEmpty()){
+            deactiveButton.setDisable(true);
+        } else {
+            deactiveButton.setDisable(false);
+        }
     }
 
     @FXML
-    void setDepartmentChooserEditUpdateDepartment(ActionEvent event) {
-
-    }
-
-    @FXML
-    void setFacultyChooserDeactiveUpdateDepartment(ActionEvent event) {
-
-    }
-
-    @FXML
-    void setFacultyChooserEditUpdateDepartment(ActionEvent event) {
-
+    void setDepartmentChooserEdit(ActionEvent event) {
+        if (departmentChooserEditUpdateDepartment.getValue().isEmpty()){
+            editButton.setDisable(true);
+        } else {
+            editButton.setDisable(false);
+        }
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties){
+            if (faculty.getFacultyName().equals(facultyChooserEditUpdateDepartment.getValue())){
+                for (Department department : faculty.departments){
+                    if (department.getName().equals(departmentChooserEditUpdateDepartment.getValue())){
+                        departmentNameUpdateDepartment.setPromptText(department.getName());
+                        establishmentYearUpdateDepartment.setPromptText(String.valueOf(department.getEstablishmentYear()));
+                        break;
+                    }
+                }
+                break;
+            }
+        }
     }
 
     @FXML
@@ -264,17 +275,19 @@ public class UpdateDepartmentAdminPortalController implements Initializable {
         if(operationChooserUpdateDepartmentAdmin.getValue().equals("EDIT")){
             containerBarEditVBox.setDisable(false);
             containerBarDeactiveVBox.setDisable(true);
-            /*if(facultyChooserEditUpdateDepartment.isVisible() && departmentChooserEditUpdateDepartment.getValue().equals("")){
-                departmentNameUpdateDepartment.setDisable(true);
-                establishmentYearUpdateDepartment.setDisable(true);
+            if (departmentChooserEditUpdateDepartment.getValue()!=null){
+                editButton.setDisable(false);
+            } else {
                 editButton.setDisable(true);
-            }*/
+            }
         } else if (operationChooserUpdateDepartmentAdmin.getValue().toString() == "DEACTIVE") {
             containerBarDeactiveVBox.setDisable(false);
             containerBarEditVBox.setDisable(true);
-            /*if (facultyChooserDeactiveUpdateDepartment.getValue().equals("") && departmentChooserDeactiveUpdateDepartment.getValue().equals("")) {
+            if (departmentChooserDeactiveUpdateDepartment.getValue()!=null){
+                deactiveButton.setDisable(false);
+            } else {
                 deactiveButton.setDisable(true);
-            }*/
+            }
         }
     }
 

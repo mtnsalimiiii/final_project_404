@@ -51,12 +51,12 @@
             <padding>
                 <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
             </padding>
-            <ComboBox fx:id="facultyChooserEdit" maxHeight="157.0" maxWidth="300.0" minHeight="37.0" onAction="#setFacultyEdit" prefHeight="37.0" prefWidth="268.0" promptText="Faculty" stylesheets="@EmployeePortal.css">
+            <ComboBox fx:id="facultyChooserEdit" maxHeight="157.0" maxWidth="300.0" minHeight="37.0" prefHeight="37.0" prefWidth="268.0" promptText="Faculty" stylesheets="@EmployeePortal.css">
                 <VBox.margin>
                     <Insets bottom="10.0" />
                 </VBox.margin>
             </ComboBox>
-            <ComboBox fx:id="departmentChooserEdit" layoutX="31.0" layoutY="31.0" maxWidth="300.0" minHeight="37.0" onAction="#setDepartmentEdit" prefWidth="150.0" promptText="Department" stylesheets="@EmployeePortal.css">
+            <ComboBox fx:id="departmentChooserEdit" layoutX="31.0" layoutY="31.0" maxWidth="300.0" minHeight="37.0" prefWidth="150.0" promptText="Department" stylesheets="@EmployeePortal.css">
                 <VBox.margin>
                     <Insets bottom="10.0" />
                 </VBox.margin>
@@ -92,12 +92,12 @@
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
             <children>
-            <ComboBox fx:id="facultyChooserDeactive" maxHeight="157.0" maxWidth="300.0" minHeight="37.0" onAction="#setFacultyDeactive" prefHeight="37.0" prefWidth="268.0" promptText="Faculty" stylesheets="@EmployeePortal.css">
+            <ComboBox fx:id="facultyChooserDeactive" maxHeight="157.0" maxWidth="300.0" minHeight="37.0" prefHeight="37.0" prefWidth="268.0" promptText="Faculty" stylesheets="@EmployeePortal.css">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
             </ComboBox>
-            <ComboBox fx:id="departmentChooserDeactive" maxWidth="300.0" minHeight="37.0" onAction="#setDepartmentDeactive" prefWidth="150.0" promptText="Department" stylesheets="@EmployeePortal.css">
+            <ComboBox fx:id="departmentChooserDeactive" maxWidth="300.0" minHeight="37.0" prefWidth="150.0" promptText="Department" stylesheets="@EmployeePortal.css">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>

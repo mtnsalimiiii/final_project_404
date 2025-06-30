@@ -70,7 +70,7 @@
                 <Insets bottom="5.0" />
             </VBox.margin>
         </ComboBox>
-        <ComboBox fx:id="studentChooserEdit" layoutX="31.0" layoutY="86.0" minWidth="275.0" onAction="#setStudentChooserEditStudentEmployee" promptText="Student" stylesheets="@EmployeePortal.css" visibleRowCount="12">
+        <ComboBox fx:id="studentChooserEdit" layoutX="31.0" layoutY="86.0" minWidth="275.0" onAction="#setStudentEdit" promptText="Student" stylesheets="@EmployeePortal.css" visibleRowCount="12">
             <VBox.margin>
                 <Insets bottom="5.0" />
             </VBox.margin>
@@ -142,7 +142,7 @@
                     <Insets bottom="5.0" />
                 </VBox.margin>
             </ComboBox>
-            <ComboBox fx:id="studentChooserDeactive" minWidth="275.0" onAction="#setStudentChooserDeactiveStudentEmployee" promptText="Professor" stylesheets="@EmployeePortal.css">
+            <ComboBox fx:id="studentChooserDeactive" minWidth="275.0" onAction="#setStudentDeactive" promptText="Professor" stylesheets="@EmployeePortal.css">
                 <VBox.margin>
                     <Insets bottom="5.0" />
                 </VBox.margin>

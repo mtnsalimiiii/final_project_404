@@ -50,7 +50,7 @@
             <padding>
                 <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
             </padding>
-            <ComboBox fx:id="facultyChooserEditUpdateFaculty" maxHeight="157.0" maxWidth="300.0" minHeight="37.0" onAction="#setFacultyChooserEditUpdateFaculty" prefHeight="37.0" prefWidth="268.0" promptText="Faculty" stylesheets="@comboBoxStyle.css">
+            <ComboBox fx:id="facultyChooserEditUpdateFaculty" maxHeight="157.0" maxWidth="300.0" minHeight="37.0" onAction="#setFacultyChooserEdit" prefHeight="37.0" prefWidth="268.0" promptText="Faculty" stylesheets="@comboBoxStyle.css">
                 <VBox.margin>
                     <Insets bottom="15.0" />
                 </VBox.margin>
@@ -82,7 +82,7 @@
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
             <children>
-                <ComboBox fx:id="facultyChooserDeactiveUpdateFaculty" layoutX="31.0" layoutY="31.0" maxWidth="300.0" onAction="#setFacultyChooserDeactiveUpdateFaculty" prefWidth="150.0" promptText="Faculty" stylesheets="@comboBoxStyle.css">
+                <ComboBox fx:id="facultyChooserDeactiveUpdateFaculty" layoutX="31.0" layoutY="31.0" maxWidth="300.0" onAction="#setFacultyChooserDeactive" prefWidth="150.0" promptText="Faculty" stylesheets="@comboBoxStyle.css">
                     <VBox.margin>
                         <Insets bottom="15.0" />
                     </VBox.margin>

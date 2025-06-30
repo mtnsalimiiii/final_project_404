@@ -62,7 +62,7 @@
                     <Insets bottom="5.0" />
                 </VBox.margin>
             </ComboBox>
-         <ComboBox fx:id="employeeChooserEditUpdateEmployee" layoutX="31.0" layoutY="86.0" maxWidth="300.0" minHeight="37.0" onAction="#setEmployeeChooserEditUpdateEmployee" prefWidth="150.0" promptText="Employee ID" stylesheets="@EmployeePortal.css">
+         <ComboBox fx:id="employeeChooserEditUpdateEmployee" layoutX="31.0" layoutY="86.0" maxWidth="300.0" minHeight="37.0" onAction="#setEmployeeChooserEdit" prefWidth="150.0" promptText="Employee ID" stylesheets="@EmployeePortal.css">
             <VBox.margin>
                <Insets bottom="5.0" />
             </VBox.margin>
@@ -97,7 +97,7 @@
                <Insets bottom="10.0" />
             </VBox.margin>
          </TextField>
-            <Button mnemonicParsing="false" onAction="#editEmployee" stylesheets="@EmployeePortal.css" text="EDIT">
+            <Button fx:id="editButton" mnemonicParsing="false" onAction="#editEmployee" stylesheets="@EmployeePortal.css" text="EDIT">
                 <VBox.margin>
                     <Insets bottom="5.0" />
                 </VBox.margin>
@@ -123,12 +123,12 @@
                         <Insets bottom="10.0" />
                     </VBox.margin>
                 </ComboBox>
-            <ComboBox fx:id="employeeChooserDeactiveUpdateEmployee" maxWidth="300.0" minHeight="37.0" prefWidth="150.0" promptText="Employee ID" stylesheets="@EmployeePortal.css">
+            <ComboBox fx:id="employeeChooserDeactiveUpdateEmployee" maxWidth="300.0" minHeight="37.0" onAction="#setEmployeeChooserDeactive" prefWidth="150.0" promptText="Employee ID" stylesheets="@EmployeePortal.css">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
             </ComboBox>
-                <Button mnemonicParsing="false" onAction="#deactiveEmployee" stylesheets="@EmployeePortal.css" text="DEACTIVE">
+                <Button fx:id="deactiveButton" mnemonicParsing="false" onAction="#deactiveEmployee" stylesheets="@EmployeePortal.css" text="DEACTIVE">
                     <VBox.margin>
                         <Insets top="20.0" />
                     </VBox.margin>

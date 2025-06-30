@@ -159,19 +159,30 @@ public class UpdateFacultyAdminPortalController implements Initializable {
     }
 
     @FXML
-    void setFacultyChooserDeactiveUpdateFaculty(ActionEvent event) {
-//        if(!facultyChooserDeactiveUpdateFaculty.getValue().isBlank()){
-//            deactiveButton.setDisable(false);
-//        }
+    void setFacultyChooserEdit(ActionEvent event) {
+        if(facultyChooserEditUpdateFaculty.getValue().isBlank()){
+            editButton.setDisable(true);
+        } else {
+            editButton.setDisable(false);
+        }
+
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties){
+            if (faculty.getFacultyName().equals(facultyChooserEditUpdateFaculty.getValue())){
+                newFacultyNameUpdateFaculty.setPromptText(faculty.getFacultyName());
+                newEstablishmentYearUpdateFaculty.setPromptText(String.valueOf(faculty.getEstablishmentYear()));
+                break;
+            }
+        }
     }
 
     @FXML
-    void setFacultyChooserEditUpdateFaculty(ActionEvent event) {
-//        if (!facultyChooserEditUpdateFaculty.getValue().isBlank()){
-//            newFacultyNameUpdateFaculty.setDisable(false);
-//            newEstablishmentYearUpdateFaculty.setDisable(false);
-//            editButton.setDisable(false);
-//        }
+    void setFacultyChooserDeactive(ActionEvent event) {
+        if (facultyChooserEditUpdateFaculty.getValue().isBlank()){
+            deactiveButton.setDisable(true);
+        } else {
+            deactiveButton.setDisable(false);
+        }
     }
 
     @FXML
@@ -198,16 +209,22 @@ public class UpdateFacultyAdminPortalController implements Initializable {
 
     @FXML
     void setOperationChooserUpdateFacultyAdmin(ActionEvent event) {
-        if(operationChooserUpdateFacultyAdmin.getValue() == "EDIT"){
+        if(operationChooserUpdateFacultyAdmin.getValue().equals("EDIT")){
             containerBarDeactiveVBox.setDisable(true);
             containerBarEditVBox.setDisable(false);
-            /*newFacultyNameUpdateFaculty.setDisable(true);
-            newEstablishmentYearUpdateFaculty.setDisable(true);
-            editButton.setDisable(true);*/
-        } else if (operationChooserUpdateFacultyAdmin.getValue() == "DEACTIVE") {
+            if (facultyChooserEditUpdateFaculty.getValue()!=null){
+            editButton.setDisable(false);
+            } else {
+                editButton.setDisable(true);
+            }
+        } else if (operationChooserUpdateFacultyAdmin.getValue().equals("DEACTIVE")) {
             containerBarEditVBox.setDisable(true);
             containerBarDeactiveVBox.setDisable(false);
-            //deactiveButton.setDisable(true);
+            if (facultyChooserDeactiveUpdateFaculty.getValue()!=null){
+                deactiveButton.setDisable(false);
+            } else {
+                deactiveButton.setDisable(true);
+            }
         }
     }
 

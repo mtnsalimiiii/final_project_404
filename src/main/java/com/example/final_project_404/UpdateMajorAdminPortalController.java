@@ -211,33 +211,39 @@ public class UpdateMajorAdminPortalController implements Initializable {
     }
 
     @FXML
-    void setDepartmentDeactive(ActionEvent event) {
-
-    }
-
-    @FXML
-    void setDepartmentEdit(ActionEvent event) {
-
-    }
-
-    @FXML
-    void setFacultyDeactive(ActionEvent event) {
-
-    }
-
-    @FXML
-    void setFacultyEdit(ActionEvent event) {
-
-    }
-
-    @FXML
     void setMajorDeactive(ActionEvent event) {
-
+        if (majorChooserDeactive.getValue().isEmpty()) {
+            deactiveButton.setDisable(true);
+        } else {
+            deactiveButton.setDisable(false);
+        }
     }
 
     @FXML
     void setMajorEdit(ActionEvent event) {
-
+        if (majorChooserEdit.getValue().isEmpty()) {
+            editButton.setDisable(true);
+        } else {
+            editButton.setDisable(false);
+        }
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties){
+            if (faculty.getFacultyName().equals(facultyChooserEdit.getValue())){
+                for (Department department : faculty.departments){
+                    if (department.getName().equals(departmentChooserEdit.getValue())){
+                        for (Major major : department.majors){
+                            if (major.getName().equals(majorChooserEdit.getValue())){
+                                newMajorNameEditMajor.setPromptText(major.getName());
+                                newEstablishmentYearEditMajor.setPromptText(String.valueOf(major.getEstablishmentYear()));
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
     }
 
     @FXML
@@ -245,13 +251,19 @@ public class UpdateMajorAdminPortalController implements Initializable {
         if(operationChooserUpdateMajorAdmin.getValue().equals("EDIT")){
             containerBarEditVBox.setDisable(false);
             containerBarDeactiveVBox.setDisable(true);
-            //newMajorNameEditMajor.setDisable(true);
-            //newEstablishmentYearEditMajor.setDisable(true);
-            //editButton.setDisable(true);
+            if (majorChooserEdit.getValue()!=null) {
+                editButton.setDisable(false);
+            } else {
+                editButton.setDisable(true);
+            }
         } else if (operationChooserUpdateMajorAdmin.getValue().equals("DEACTIVE")) {
             containerBarDeactiveVBox.setDisable(false);
             containerBarEditVBox.setDisable(true);
-            //deactiveButton.setDisable(true);
+            if (majorChooserDeactive.getValue()!=null) {
+                deactiveButton.setDisable(false);
+            } else {
+                deactiveButton.setDisable(true);
+            }
         }
     }
 

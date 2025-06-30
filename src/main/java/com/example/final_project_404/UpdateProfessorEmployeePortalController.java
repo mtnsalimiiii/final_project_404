@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Month;
 import java.util.ResourceBundle;
 
 public class UpdateProfessorEmployeePortalController implements Initializable {
@@ -323,8 +324,33 @@ public class UpdateProfessorEmployeePortalController implements Initializable {
     }
 
     @FXML
-    void setEmployeeChooserEditUpdateEmployee(ActionEvent event) {
+    void setProfessorEdit(ActionEvent event) throws Exception {
+        if (professorChooserEdit.getValue().isEmpty()) {
+            editButton.setDisable(true);
+        } else {
+            editButton.setDisable(false);
+        }
+        Professor.loadAllProfessor();
+        for (Professor professor : University.allProfessors){
+            if (professor.getId().equals(professorChooserEdit.getValue())){
+                firstNameEdit.setPromptText(professor.getFirst_name());
+                lastNameEdit.setPromptText(professor.getLast_name());
+                genderChooserEdit.setPromptText(professor.getGender().toString());
+                dateOfBirthEdit.setPromptText(professor.getDateOfBirth().getDay() + " " + Month.of(professor.getDateOfBirth().getMonth()) + " " + professor.getDateOfBirth().getYear());
+                nationalIdEdit.setPromptText(professor.getNationalId());
+                phoneNumberEdit.setPromptText(professor.getPhoneNumber());
+                break;
+            }
+        }
+    }
 
+    @FXML
+    void setProfessorDeactive(ActionEvent event) {
+        if (professorChooserDeactive.getValue().isEmpty()) {
+            deactiveButton.setDisable(true);
+        } else {
+            deactiveButton.setDisable(false);
+        }
     }
 
     @FXML
@@ -332,10 +358,20 @@ public class UpdateProfessorEmployeePortalController implements Initializable {
         if(operationChooserUpdateProfessorEmployee.getValue().equals("EDIT")){
             containerBarDeactiveVBox.setDisable(true);
             containerBarEditVBox.setDisable(false);
+            if (professorChooserEdit.getValue()!=null) {
+                editButton.setDisable(false);
+            } else {
+                editButton.setDisable(true);
+            }
 
         } else if (operationChooserUpdateProfessorEmployee.getValue().equals("DEACTIVE")) {
             containerBarEditVBox.setDisable(true);
             containerBarDeactiveVBox.setDisable(false);
+            if (professorChooserDeactive.getValue()!=null) {
+                editButton.setDisable(false);
+            } else {
+                editButton.setDisable(true);
+            }
         }
     }
 
@@ -486,12 +522,5 @@ public class UpdateProfessorEmployeePortalController implements Initializable {
                 }
             }
         });
-    }
-
-    public void setProfessorChooserEditProfessorEmployee(ActionEvent event) {
-    }
-
-    public void setProfessorChooserDeactiveProfessorEmployee(ActionEvent event) {
-
     }
 }

@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.server.UID;
+import java.time.Month;
 import java.util.ResourceBundle;
 
 public class UpdateStudentEmployeePortalController implements Initializable {
@@ -164,6 +165,25 @@ public class UpdateStudentEmployeePortalController implements Initializable {
     }
 
 
+    public void setStudentEdit(ActionEvent event) {
+        Student.loadAllStudents();
+        for (Student student : University.allStudents){
+            if (student.getId().equals(studentChooserEdit.getValue())){
+                firstNameEdit.setPromptText(student.getLast_name());
+                lastNameEdit.setPromptText(student.getLast_name());
+                genderChooserEdit.setPromptText(student.getGender().toString());
+                nationalIdEdit.setPromptText(student.getNationalId());
+                phoneNumberEdit.setPromptText(student.getPhoneNumber());
+                dateOfBirthEdit.setPromptText(student.getDateOfBirth().getDay() + " " + Month.of(student.getDateOfBirth().getMonth()) + " " + student.getDateOfBirth().getYear());
+                break;
+            }
+        }
+    }
+
+    public void setStudentDeactive(ActionEvent event) {
+
+    }
+
     @FXML
     void deactiveStudent(ActionEvent event) throws IOException {
         University.loadFaculties();
@@ -184,7 +204,7 @@ public class UpdateStudentEmployeePortalController implements Initializable {
             }
         }
         University.saveFaculties();
-        
+
         Student.loadAllStudents();
         University.allStudents.removeIf(student -> student.getId().equals(studentChooserDeactive.getValue()));
         Student.saveAllStudent();
@@ -197,12 +217,12 @@ public class UpdateStudentEmployeePortalController implements Initializable {
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
-        
+
     }
 
     @FXML
     void editStudent(ActionEvent event) throws IOException {
-        
+
         University.loadFaculties();
         for (Faculty faculty : University.allFaculties) {
             if (faculty.getFacultyName().equals(facultyChooserDeactive.getValue())) {
@@ -247,7 +267,7 @@ public class UpdateStudentEmployeePortalController implements Initializable {
             }
         }
         University.saveFaculties();
-        
+
         Student.loadAllStudents();
         for (Student student : University.allStudents){
             if (student.getId().equals(studentChooserEdit.getValue())){
@@ -489,12 +509,5 @@ public class UpdateStudentEmployeePortalController implements Initializable {
                 }
             }
         });
-    }
-
-    public void setStudentChooserDeactiveStudentEmployee(ActionEvent event) {
-    }
-
-    public void setStudentChooserEditStudentEmployee(ActionEvent event) {
-
     }
 }
