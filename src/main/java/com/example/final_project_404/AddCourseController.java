@@ -30,7 +30,7 @@ public class AddCourseController implements Initializable{
     private TextField courseName;
 
     @FXML
-    private ComboBox<String> departmentChooser;
+    private ComboBox<String> degreeChooser;
 
     @FXML
     private ComboBox<String> facultyChooser;
@@ -222,45 +222,24 @@ public class AddCourseController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         University.loadFaculties();
-        for (Faculty faculty : University.allFaculties){
-            facultyChooser.getItems().add(faculty.getFacultyName());
-        }
-        facultyChooser.setVisibleRowCount(4);
+        if (LoginPanelController.employeePerson == null) return;
 
-        facultyChooser.setOnAction(event -> {
-            departmentChooser.getItems().clear();
-            departmentChooser.setPromptText("Department");
-            for (Faculty faculty : University.allFaculties){
-                if (faculty.getFacultyName().equals(facultyChooser.getValue())){
-                    for (Department department : faculty.departments){
-                        departmentChooser.getItems().add(department.getName());
-                    }
-                    departmentChooser.setVisibleRowCount(4);
-                    break;
-                }
-            }
-        });
-
-        departmentChooser.setOnAction(event -> {
-            majorChooser.getItems().clear();
-            majorChooser.setPromptText("Major");
-
-            for (Faculty faculty : University.allFaculties) {
-                if (faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFacultyEmployee())) {
-                    for (Department department : faculty.departments){
-                        if(department.getName().equals( LoginPanelController.employeePerson.getDepartmentEmployee())){
-                            for(Major major : department.majors){
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName() != null && faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFacultyEmployee())) {
+                for (Department department : faculty.departments) {
+                    if (department.getName() != null && department.getName().equals(LoginPanelController.employeePerson.getDepartmentEmployee())) {
+                        for (Major major : department.majors) {
+                            if (major.getName() != null) {
                                 majorChooser.getItems().add(major.getName());
                             }
-                            majorChooser.setVisibleRowCount(4);
-                            break;
                         }
+                        majorChooser.setVisibleRowCount(4);
+                        break;
                     }
-                    break;
                 }
+                break;
             }
-        });
-
+        }
     }
 
 
