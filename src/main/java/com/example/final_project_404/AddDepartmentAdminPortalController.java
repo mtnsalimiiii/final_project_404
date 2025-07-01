@@ -168,7 +168,10 @@ public class AddDepartmentAdminPortalController implements Initializable {
         String id = "";
         for (Faculty faculty : University.allFaculties){
             if(faculty.getFacultyName().equals(facultyName)){
-                id = faculty.getId()+faculty.departments.size()+1;
+                if(faculty.departments.size()<9)
+                    id= faculty.getId()+0+(faculty.departments.size()+1);
+                else
+                    id = faculty.getId()+(faculty.departments.size()+1);
                 break;
             }
         }

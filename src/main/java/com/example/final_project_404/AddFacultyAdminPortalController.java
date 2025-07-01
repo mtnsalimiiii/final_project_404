@@ -157,7 +157,11 @@ public class AddFacultyAdminPortalController {
 //    }
 
     public String getFacultyId(){
-        return University.allFaculties.size()+1+"";
+
+        if(University.allFaculties.size()<9)
+            return 0+University.allFaculties.size()+1+"";
+        else
+            return University.allFaculties.size()+1+"";
     }
 
     public void addNewFaculty(ActionEvent event) {

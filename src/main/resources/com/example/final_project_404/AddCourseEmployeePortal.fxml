@@ -33,7 +33,7 @@
                     <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#RegisterNewProfessorEmployeePortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Register New&#10;Professor" textAlignment="CENTER" />
                     <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#UpdateProfessorEmployeePortal" styleClass="nav-button" text="Update&#10;Professor" />
                     <Button layoutX="20.0" layoutY="107.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#studentsEmpoyeePortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Students" />
-                    <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addStudentEmployeePortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Register New&#10;Student" textAlignment="CENTER"/>
+                    <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addStudentEmployeePortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Register New&#10;Student" textAlignment="CENTER" />
                     <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#UpdateStudentEmployeePortal" styleClass="nav-button" text="Update&#10;Student" />
                     <Button layoutX="20.0" layoutY="150.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#profileEmployeePortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Profile" />
                     <Button layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#reportsEmployeePortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Reports" />
@@ -46,21 +46,16 @@
         </ScrollPane>
         <VBox fx:id="containerBarVBox" layoutX="170.0" layoutY="80.0" prefHeight="420.0" prefWidth="630.0" styleClass="content-box" stylesheets="@EmployeePortal.css">
             <children>
-            <ComboBox fx:id="facultyChooser" layoutX="31.0" layoutY="211.0" maxWidth="300.0" prefWidth="150.0" promptText="Faculty" stylesheets="@comboBoxStyle.css">
-               <VBox.margin>
-                  <Insets bottom="15.0" />
-               </VBox.margin>
-            </ComboBox>
-            <ComboBox fx:id="departmentChooser" layoutX="31.0" layoutY="112.0" maxWidth="300.0" prefWidth="150.0" promptText="Department" stylesheets="@comboBoxStyle.css">
-               <VBox.margin>
-                  <Insets bottom="15.0" />
-               </VBox.margin>
-            </ComboBox>
                 <ComboBox fx:id="majorChooser" layoutX="31.0" layoutY="173.0" maxWidth="300.0" prefWidth="150.0" promptText="Major" stylesheets="@comboBoxStyle.css">
                     <VBox.margin>
                         <Insets bottom="15.0" />
                     </VBox.margin>
                 </ComboBox>
+            <ComboBox fx:id="degreeChooser" layoutX="31.0" layoutY="112.0" maxWidth="300.0" prefWidth="150.0" promptText="Degre" stylesheets="@comboBoxStyle.css">
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </ComboBox>
                 <TextField fx:id="courseName" maxHeight="0.0" maxWidth="300.0" prefHeight="26.0" prefWidth="200.0" promptText="Name" stylesheets="@EmployeePortal.css">
                     <VBox.margin>
                         <Insets bottom="15.0" />
