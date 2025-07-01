@@ -26,7 +26,7 @@ public class StudentPortalController {
     @FXML
     void profileStudentPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ProfileStudentPortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Profile");
         stage.setScene(scene);
@@ -37,7 +37,7 @@ public class StudentPortalController {
     @FXML
     void reportsStudentPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ReportsStudentPortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Reports");
         stage.setScene(scene);
@@ -48,7 +48,7 @@ public class StudentPortalController {
     @FXML
     void signOutStudentPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("LoginPanel.fxml"));
-        Scene scene = new Scene(root, 350, 480);
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Login Panel");
         stage.setScene(scene);

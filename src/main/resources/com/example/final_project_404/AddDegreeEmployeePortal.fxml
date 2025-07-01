@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.AddDegreeController">
+<AnchorPane minHeight="550.0" minWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.AddDegreeController">
     <children>
         <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0" styleClass="header" stylesheets="@EmployeePortal.css">
             <children>
@@ -18,7 +18,7 @@
                 <Label styleClass="header-title" stylesheets="@EmployeePortal.css" text=" --&gt; Add New Degree" />
             </children>
         </HBox>
-        <ScrollPane layoutY="80.0" prefHeight="420.0" prefWidth="170.0">
+        <ScrollPane layoutY="80.0" prefHeight="470.0" prefWidth="170.0">
             <VBox fx:id="navigationBarVBox" alignment="TOP_CENTER" layoutY="80.0" prefHeight="420.0" prefWidth="150.0" styleClass="nav-bar" stylesheets="@EmployeePortal.css">
                 <children>
                     <Button layoutX="20.0" layoutY="20.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#dashboardEmployeePortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Dashboard" />
@@ -32,7 +32,7 @@
                     <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#RegisterNewProfessorEmployeePortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Register New&#10;Professor" textAlignment="CENTER" />
                     <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#UpdateProfessorEmployeePortal" styleClass="nav-button" text="Update&#10;Professor" />
                     <Button layoutX="20.0" layoutY="107.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#studentsEmpoyeePortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Students" />
-                    <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addStudentEmployeePortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Register New&#10;Student" textAlignment="CENTER"/>
+                    <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addStudentEmployeePortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Register New&#10;Student" textAlignment="CENTER" />
                     <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#UpdateStudentEmployeePortal" styleClass="nav-button" text="Update&#10;Student" />
                     <Button layoutX="20.0" layoutY="150.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#profileEmployeePortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Profile" />
                     <Button layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#reportsEmployeePortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Reports" />
@@ -43,7 +43,7 @@
                 </padding>
             </VBox>
         </ScrollPane>
-        <VBox fx:id="containerBarVBox" layoutX="170.0" layoutY="80.0" prefHeight="420.0" prefWidth="630.0" styleClass="content-box" stylesheets="@EmployeePortal.css">
+        <VBox fx:id="containerBarVBox" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" styleClass="content-box" stylesheets="@EmployeePortal.css">
             <children>
                 <ComboBox fx:id="majorChooser" layoutX="31.0" layoutY="173.0" maxWidth="300.0" prefWidth="150.0" promptText="Major" stylesheets="@comboBoxStyle.css">
                     <VBox.margin>

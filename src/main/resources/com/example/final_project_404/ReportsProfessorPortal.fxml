@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.ReportsProfessorPortalController">
+<AnchorPane minHeight="550.0" minWidth="800" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.ReportsProfessorPortalController">
     <children>
         <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0" styleClass="header" stylesheets="@EmployeePortal.css">
             <children>
@@ -17,7 +17,7 @@
             <Label styleClass="header-title" text=" --&gt; Reports" />
             </children>
         </HBox>
-        <ScrollPane layoutY="80.0" prefHeight="420.0" prefWidth="168.0">
+        <ScrollPane layoutY="80.0" prefHeight="470.0" prefWidth="168.0">
             <content>
                 <VBox fx:id="navigationBarVBox" alignment="TOP_CENTER" prefHeight="420.0" prefWidth="150.0" styleClass="nav-bar" stylesheets="@EmployeePortal.css">
                     <children>
@@ -35,7 +35,7 @@
                 </VBox>
             </content>
         </ScrollPane>
-        <VBox fx:id="containerBarVBox" layoutX="170.0" layoutY="80.0" prefHeight="420.0" prefWidth="630.0" stylesheets="@EmployeePortal.css">
+        <VBox fx:id="containerBarVBox" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" stylesheets="@EmployeePortal.css">
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>

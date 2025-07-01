@@ -34,7 +34,7 @@ public class AddFacultyAdminPortalController {
     @FXML
     void addDepartmentAdminPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("AddDepartmentAdminPortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Add New Department");
         stage.setScene(scene);
@@ -45,7 +45,7 @@ public class AddFacultyAdminPortalController {
     @FXML
     void addEmployeeAdminPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("AddEmployeeAdminPortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Add New Employee");
         stage.setScene(scene);
@@ -56,7 +56,7 @@ public class AddFacultyAdminPortalController {
     @FXML
     void addMajorAdminPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("AddMajorAdminPortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Add New Major");
         stage.setScene(scene);
@@ -67,7 +67,7 @@ public class AddFacultyAdminPortalController {
     @FXML
     void dashboardAdminPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("AdminPortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Admin Portal");
         stage.setScene(scene);
@@ -78,7 +78,7 @@ public class AddFacultyAdminPortalController {
     @FXML
     void profileAdminPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ProfileAdminPortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Profile");
         stage.setScene(scene);
@@ -89,7 +89,7 @@ public class AddFacultyAdminPortalController {
     @FXML
     void reportsAdminPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ReportsAdminPortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Reports");
         stage.setScene(scene);
@@ -100,7 +100,7 @@ public class AddFacultyAdminPortalController {
     @FXML
     void signOutAdminPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("LoginPanel.fxml"));
-        Scene scene = new Scene(root, 350, 480);
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Login Panel");
         stage.setScene(scene);
@@ -111,7 +111,7 @@ public class AddFacultyAdminPortalController {
     @FXML
     void updateDepartmentAdminPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("UpdateDepartmentAdminPortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Update Department");
         stage.setScene(scene);
@@ -122,7 +122,7 @@ public class AddFacultyAdminPortalController {
     @FXML
     void updateEmployeeAdminPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("UpdateEmployeeAdminPortal.fxml"));
-        Scene scene = new Scene(root, 800, 530);
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Update Employee");
         stage.setScene(scene);
@@ -133,7 +133,7 @@ public class AddFacultyAdminPortalController {
     @FXML
     void updateFacultyAdminPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("UpdateFacultyAdminPortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Update Faculty");
         stage.setScene(scene);
@@ -144,7 +144,7 @@ public class AddFacultyAdminPortalController {
     @FXML
     void updateMajorAdminPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("UpdateMajorAdminPortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Update Major");
         stage.setScene(scene);

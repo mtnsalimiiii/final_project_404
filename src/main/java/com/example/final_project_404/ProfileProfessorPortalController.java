@@ -52,7 +52,7 @@ public class ProfileProfessorPortalController implements Initializable {
     @FXML
     void dashboardProfessorPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ProfessorPortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Professor Portal");
         stage.setScene(scene);
@@ -63,7 +63,7 @@ public class ProfileProfessorPortalController implements Initializable {
     @FXML
     void reportsProfessorPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("ReportsProfessorPortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Reports");
         stage.setScene(scene);
@@ -74,7 +74,7 @@ public class ProfileProfessorPortalController implements Initializable {
     @FXML
     void signOutProfessorPortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("LoginPanel.fxml"));
-        Scene scene = new Scene(root, 350, 480);
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Login Panel");
         stage.setScene(scene);
@@ -197,7 +197,7 @@ public class ProfileProfessorPortalController implements Initializable {
         System.out.println(LoginPanelController.professorPerson.getDateOfJoin().getDay() + " " + Month.of(LoginPanelController.professorPerson.getDateOfJoin().getMonth()) + " " + LoginPanelController.professorPerson.getDateOfJoin().getYear()); // must work on dates of Date
 
         Parent root = FXMLLoader.load(getClass().getResource("ProfileProfessorPortal.fxml"));
-        Scene scene = new Scene(root, 800, 500);
+        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setTitle("Profile");
         stage.setScene(scene);

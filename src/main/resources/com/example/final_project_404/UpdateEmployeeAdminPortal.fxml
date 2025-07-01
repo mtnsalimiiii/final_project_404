@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="600.0" minHeight="530.0" minWidth="800.0" prefHeight="526.0" prefWidth="800.0" style="-fx-background-color: #7b7b7b;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.UpdateEmployeeAdminPortalController">
+<AnchorPane maxHeight="550.0" maxWidth="800.0" minHeight="550.0" minWidth="800.0" style="-fx-background-color: #7b7b7b;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.UpdateEmployeeAdminPortalController">
     <children>
         <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0" styleClass="header" stylesheets="@EmployeePortal.css">
             <children>
@@ -21,7 +21,7 @@
             <Label styleClass="header-title" text=" --&gt; Update Employee" />
             </children>
         </HBox>
-        <ScrollPane layoutY="80.0" minHeight="450.0" prefHeight="420.0" prefWidth="170.0">
+        <ScrollPane layoutY="80.0" prefHeight="470.0" prefWidth="170.0">
             <content>
                 <VBox fx:id="navigationBarVBox" alignment="TOP_CENTER" prefHeight="420.0" prefWidth="150.0" styleClass="nav-bar" stylesheets="@EmployeePortal.css">
                     <children>
@@ -48,7 +48,7 @@
                 </VBox>
             </content>
         </ScrollPane>
-        <VBox fx:id="containerBarEditVBox" disable="true" layoutX="170.0" layoutY="126.0" prefHeight="365.0" prefWidth="315.0" styleClass="content-box" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="315.0" AnchorPane.topAnchor="130.0">
+        <VBox fx:id="containerBarEditVBox" disable="true" layoutX="170.0" layoutY="125.0" prefHeight="415.0" prefWidth="315.0" styleClass="content-box" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="315.0" AnchorPane.topAnchor="130.0">
             <padding>
                 <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
             </padding>
@@ -108,7 +108,7 @@
          </stylesheets>
         </VBox>
         <ComboBox fx:id="operationChooserUpdateEmployeeAdmin" layoutX="372.0" layoutY="82.0" maxWidth="315.0" minHeight="40.0" onAction="#setOperationChooserUpdateEmployeeAdmin" promptText="Choose Your Operation" stylesheets="@comboBoxStyle.css" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="85.0" />
-        <VBox fx:id="containerBarDeactiveVBox" disable="true" layoutX="492.0" layoutY="126.0" prefHeight="365.0" prefWidth="315.0" styleClass="content-box" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="490.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="130.0">
+        <VBox fx:id="containerBarDeactiveVBox" disable="true" layoutX="492.0" layoutY="125.0" prefHeight="415.0" prefWidth="315.0" styleClass="content-box" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="490.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="130.0">
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>

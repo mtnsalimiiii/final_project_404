@@ -132,7 +132,7 @@ public class LoginPanelController{
                         studentPerson = student;
                         System.out.println("Successfull login"  + student.getFirst_name());
                         Parent root = FXMLLoader.load(getClass().getResource("StudentPortal.fxml"));
-                        Scene scene = new Scene(root, 800, 500);
+                        Scene scene = new Scene(root);
                         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                         stage.setTitle("Student Portal");
                         stage.setScene(scene);
@@ -151,7 +151,7 @@ public class LoginPanelController{
                         professorPerson = professor;
                         System.out.println("Successfull login " + professor.getFirst_name());
                         Parent root = FXMLLoader.load(getClass().getResource("ProfessorPortal.fxml"));
-                        Scene scene = new Scene(root, 800, 500);
+                        Scene scene = new Scene(root);
                         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                         stage.setTitle("Professor Portal");
                         stage.setScene(scene);
@@ -166,7 +166,7 @@ public class LoginPanelController{
             case "admin":
                 if ("admin".equals(username) && "admin404".equals(password)){
                     Parent root = FXMLLoader.load(getClass().getResource("AdminPortal.fxml"));
-                    Scene scene = new Scene(root, 800, 500);
+                    Scene scene = new Scene(root);
                     Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                     stage.setTitle("Admin Portal");
                     stage.setScene(scene);
@@ -183,7 +183,7 @@ public class LoginPanelController{
                         employeePerson = employee;
                         System.out.println("Successfull login " + employee.getFirst_name());
                         Parent root = FXMLLoader.load(getClass().getResource("EmployeePortal.fxml"));
-                        Scene scene = new Scene(root, 800, 500);
+                        Scene scene = new Scene(root);
                         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                         stage.setTitle("Employee Portal");
                         stage.setScene(scene);
