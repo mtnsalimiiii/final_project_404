@@ -214,13 +214,13 @@ public class RegisterStudentController implements Initializable {
         String studentId = generateStudentId();
 
         if (!firstName.isBlank() && !lastName.isBlank() && !phoneNumber.isBlank() && !nationalId.isBlank() && gender!=null && faculty!=null && department!=null && major!=null){
-            Student student = new Student(firstName, lastName, dateOfBirth, nationalId, gender, phoneNumber, studentId, dateOfRegistration, faculty, department,major);
+            Student student = new Student(firstName, lastName, dateOfBirth, nationalId, gender, phoneNumber, studentId, dateOfRegistration, faculty, department,major,Status.Active);
             for (Faculty faculty1 : University.allFaculties) {
-                if (faculty1.getFacultyName().equals(faculty)) {
+                if (faculty1.getFacultyName().equals(faculty) && faculty1.getStatus().equals(Status.Active)) {
                     for (Department department1 : faculty1.departments) {
-                        if (department1.getName().equals(department)) {
+                        if (department1.getName().equals(department) && department1.getStatus().equals(Status.Active)) {
                             for (Major major1 : department1.majors) {
-                                if (!major1.students.contains(student)) {
+                                if (!major1.students.contains(student) && major1.getStatus().equals(Status.Active)) {
                                     major1.students.add(student);
                                 } else {
                                     System.out.println("This Student Has Registered Earlier!");
@@ -270,7 +270,9 @@ public class RegisterStudentController implements Initializable {
         University.loadFaculties();
 
         for(Faculty faculty : University.allFaculties){
-            facultyChooserRegisterStudentEmployee.getItems().add(faculty.getFacultyName());
+            if (faculty.getStatus().equals(Status.Active)){
+                facultyChooserRegisterStudentEmployee.getItems().add(faculty.getFacultyName());
+            }
         }
         facultyChooserRegisterStudentEmployee.setVisibleRowCount(4);
 
@@ -279,9 +281,11 @@ public class RegisterStudentController implements Initializable {
             departmentChooserRegisterStudentEmployee.setPromptText("Department");
 
             for (Faculty faculty : University.allFaculties){
-                if (faculty.getFacultyName().equals(facultyChooserRegisterStudentEmployee.getValue())){
+                if (faculty.getFacultyName().equals(facultyChooserRegisterStudentEmployee.getValue()) && faculty.getStatus().equals(Status.Active)){
                     for (Department department : faculty.departments){
-                        departmentChooserRegisterStudentEmployee.getItems().add(department.getName());
+                        if (department.getStatus().equals(Status.Active)){
+                            departmentChooserRegisterStudentEmployee.getItems().add(department.getName());
+                        }
                     }
                     departmentChooserRegisterStudentEmployee.setVisibleRowCount(4);
                     break;

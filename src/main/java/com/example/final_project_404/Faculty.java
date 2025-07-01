@@ -9,33 +9,43 @@ public class Faculty implements Serializable {
     private String facultyName;
     private String id;
     private int establishmentYear;
-//    public List<String> departmentNames = new ArrayList<>();
+    private Status status;
+
     public List<Department> departments = new ArrayList<>();
 
-    public Faculty(String facultyName, String id, int establishmentYear) {
+    public Faculty(String facultyName, String id, int establishmentYear, Status status) {
         this.facultyName = facultyName;
         this.id = id;
         this.establishmentYear = establishmentYear;
+        this.status = status;
     }
 
     public String getFacultyName() { return facultyName; }
     public void setFacultyName(String name){
         this.facultyName = name;
     }
+
     public String getId() { return id; }
     public void setId(String id1){
         this.id = id1;
     }
+
     public int getEstablishmentYear() { return establishmentYear;}
     public void setEstablishmentYear(int establishmentYear1){
         this.establishmentYear = establishmentYear1;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
 //    public List<String> getDepartmentNames() {
 //        return departmentNames;
-//    }
 
+//    }
 //    public Department getDepartment(String departmentName) {
 //        if (!departmentNames.contains(departmentName)) return null;
 //
@@ -49,6 +59,7 @@ public class Faculty implements Serializable {
 //            System.err.println("Error loading department: " + e.getMessage());
 //            return null;
 //        }
+
 //    }
 
 

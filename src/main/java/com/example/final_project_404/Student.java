@@ -11,8 +11,8 @@ public class Student extends Person implements Serializable {
     private String department;
     private String major;
 
-    public Student(String first_name, String last_name, Date dateOfBirth, String nationalId,Gender gender, String phoneNumber, String id, Date dateOfRegistration, String faculty, String department, String major){
-        super(first_name,last_name,dateOfBirth,nationalId,gender,phoneNumber, dateOfRegistration);
+    public Student(String first_name, String last_name, Date dateOfBirth, String nationalId,Gender gender, String phoneNumber, String id, Date dateOfRegistration, String faculty, String department, String major,Status status){
+        super(first_name,last_name,dateOfBirth,nationalId,gender,phoneNumber, dateOfRegistration,status);
         this.id=id;
         this.faculty = faculty;
         this.department = department;

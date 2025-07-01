@@ -14,9 +14,10 @@ public abstract class  Person implements Serializable {
     private String phoneNumber;
 //    private String dateOfJoin;
     private com.example.final_project_404.Date dateOfJoin;
+    private Status status;
 
 
-    Person(String first_name, String last_name, Date dateOfBirth, String nationalId, Gender gender, String phoneNumber, Date dateOfJoin){
+    Person(String first_name, String last_name, Date dateOfBirth, String nationalId, Gender gender, String phoneNumber, Date dateOfJoin, Status status){
         this.first_name=first_name;
         this.last_name=last_name;
         this.dateOfBirth = dateOfBirth;
@@ -24,6 +25,7 @@ public abstract class  Person implements Serializable {
         this.gender = gender;
         this.phoneNumber=phoneNumber;
         this.dateOfJoin = dateOfJoin;
+        this.status = status;
     }
 
 
@@ -74,5 +76,12 @@ public abstract class  Person implements Serializable {
     }
     public void setGender(Gender gender) {
         this.gender = gender;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+    public void setStatus(Status status) {
+        this.status = status;
     }
 }

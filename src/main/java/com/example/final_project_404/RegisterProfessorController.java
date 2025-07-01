@@ -217,14 +217,14 @@ public class RegisterProfessorController implements Initializable {
         String professorId = generateProfessorId();
 
         if (!firstName.isBlank() && !lastName.isBlank() && !phoneNumber.isBlank() && !nationalId.isBlank() && gender!=null && faculty!=null && department!=null && major!=null){
-            Professor professor = new Professor(firstName,lastName, dateOfBirth, nationalId,gender,phoneNumber,professorId,dateOfHire,faculty,department,major);
+            Professor professor = new Professor(firstName,lastName, dateOfBirth, nationalId,gender,phoneNumber,professorId,dateOfHire,faculty,department,major,Status.Active);
 
             for (Faculty faculty1 : University.allFaculties) {
-                if (faculty1.getFacultyName().equals(faculty)) {
+                if (faculty1.getFacultyName().equals(faculty) && faculty1.getStatus().equals(Status.Active)) {
                     for (Department department1 : faculty1.departments) {
-                        if (department1.getName().equals(department)) {
+                        if (department1.getName().equals(department) && department1.getStatus().equals(Status.Active)) {
                             for (Major major1 : department1.majors) {
-                                if (!major1.professors.contains(professor)) {
+                                if (!major1.professors.contains(professor) && major1.getStatus().equals(Status.Active)) {
                                     major1.professors.add(professor);
                                 } else {
                                     System.out.println("The Professor Has Registered Earlier.");
@@ -269,7 +269,9 @@ public class RegisterProfessorController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         University.loadFaculties();
         for (Faculty faculty : University.allFaculties){
-            facultyChooserRegisterProfessorEmployee.getItems().add(faculty.getFacultyName());
+            if (faculty.getStatus().equals(Status.Active)){
+                facultyChooserRegisterProfessorEmployee.getItems().add(faculty.getFacultyName());
+            }
         }
         facultyChooserRegisterProfessorEmployee.setVisibleRowCount(4);
 
@@ -278,9 +280,11 @@ public class RegisterProfessorController implements Initializable {
             departmentChooserRegisterProfessorEmployee.setPromptText("Department");
 
             for (Faculty faculty : University.allFaculties){
-                if (faculty.getFacultyName().equals(facultyChooserRegisterProfessorEmployee.getValue())){
+                if (faculty.getFacultyName().equals(facultyChooserRegisterProfessorEmployee.getValue()) && faculty.getStatus().equals(Status.Active)){
                     for (Department department : faculty.departments){
-                        departmentChooserRegisterProfessorEmployee.getItems().add(department.getName());
+                        if (department.getStatus().equals(Status.Active)){
+                            departmentChooserRegisterProfessorEmployee.getItems().add(department.getName());
+                        }
                     }
                     departmentChooserRegisterProfessorEmployee.setVisibleRowCount(4);
                     break;
@@ -293,11 +297,13 @@ public class RegisterProfessorController implements Initializable {
             majorChooserRegisterProfessorEmployee.setPromptText("Major");
 
             for (Faculty faculty : University.allFaculties){
-                if (faculty.getFacultyName().equals(facultyChooserRegisterProfessorEmployee.getValue())){
+                if (faculty.getFacultyName().equals(facultyChooserRegisterProfessorEmployee.getValue()) && faculty.getStatus().equals(Status.Active)){
                     for (Department department : faculty.departments){
-                        if (department.getName().equals(departmentChooserRegisterProfessorEmployee.getValue())){
+                        if (department.getName().equals(departmentChooserRegisterProfessorEmployee.getValue()) && department.getStatus().equals(Status.Active)){
                             for (Major major : department.majors){
-                                majorChooserRegisterProfessorEmployee.getItems().add(major.getName());
+                                if (major.getStatus().equals(Status.Active)){
+                                    majorChooserRegisterProfessorEmployee.getItems().add(major.getName());
+                                }
                             }
                             majorChooserRegisterProfessorEmployee.setVisibleRowCount(4);
                             break;

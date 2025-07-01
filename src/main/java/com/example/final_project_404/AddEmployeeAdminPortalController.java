@@ -216,11 +216,11 @@ public class AddEmployeeAdminPortalController implements Initializable {
         String id = getEmployeeId();
 
         if (!firstName.isBlank() && !lastName.isBlank() && !phoneNumber.isBlank() && !nationalId.isBlank() && gender!=null && faculty!=null && department!=null) {
-            Employee employee = new Employee(firstName, lastName, dateOfBirth, nationalId, gender, phoneNumber, id, department, faculty, dateOfHire);
+            Employee employee = new Employee(firstName, lastName, dateOfBirth, nationalId, gender, phoneNumber, id, department, faculty, dateOfHire, Status.Active);
             for (Faculty faculty1 : University.allFaculties) {
-                if (faculty1.getFacultyName().equals(faculty)) {
+                if (faculty1.getFacultyName().equals(faculty) && faculty1.getStatus().equals(Status.Active)) {
                     for (Department department1 : faculty1.departments) {
-                        if (department1.getName().equals(department)) {
+                        if (department1.getName().equals(department) && department1.getStatus().equals(Status.Active)) {
                             if (!department1.employees.contains(employee)) {
                                 department1.employees.add(employee);
 
@@ -250,7 +250,7 @@ public class AddEmployeeAdminPortalController implements Initializable {
             System.out.println(dateOfHire);
 
             Parent root = FXMLLoader.load(getClass().getResource("AddEmployeeAdminPortal.fxml"));
-            Scene scene = new Scene(root, 800, 500);
+            Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle("Add New Employee");
             stage.setScene(scene);
@@ -265,7 +265,9 @@ public class AddEmployeeAdminPortalController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         University.loadFaculties();
         for(Faculty faculty : University.allFaculties){
-            facultyChooserRegisterEmployeeAdmin.getItems().add(faculty.getFacultyName());
+            if (faculty.getStatus().equals(Status.Active)){
+                facultyChooserRegisterEmployeeAdmin.getItems().add(faculty.getFacultyName());
+            }
         }
         facultyChooserRegisterEmployeeAdmin.setVisibleRowCount(4);
 
@@ -273,10 +275,12 @@ public class AddEmployeeAdminPortalController implements Initializable {
             departmentChooserRegisterEmployeeAdmin.getItems().clear();
             departmentChooserRegisterEmployeeAdmin.setPromptText("Department");
 
-            for (Faculty faculty1 : University.allFaculties){
-                if (faculty1.getFacultyName().equals(facultyChooserRegisterEmployeeAdmin.getValue())){
-                    for (Department department : faculty1.departments){
-                        departmentChooserRegisterEmployeeAdmin.getItems().add(department.getName());
+            for (Faculty faculty : University.allFaculties){
+                if (faculty.getFacultyName().equals(facultyChooserRegisterEmployeeAdmin.getValue()) && faculty.getStatus().equals(Status.Active)){
+                    for (Department department : faculty.departments){
+                        if (department.getStatus().equals(Status.Active)){
+                            departmentChooserRegisterEmployeeAdmin.getItems().add(department.getName());
+                        }
                     }
                     departmentChooserRegisterEmployeeAdmin.setVisibleRowCount(4);
                     break;

@@ -173,7 +173,7 @@ public class AddFacultyAdminPortalController {
         String id = getFacultyId();
 
         if (!facultyName.isBlank() && !establishmentYearAddFacultyAdmin.getText().isBlank()){
-            Faculty faculty = new Faculty(facultyName, id, establishmentYear);
+            Faculty faculty = new Faculty(facultyName, id, establishmentYear, Status.Active);
             if (!University.allFaculties.contains(faculty)){
                 University.allFaculties.add(faculty);
             } else {

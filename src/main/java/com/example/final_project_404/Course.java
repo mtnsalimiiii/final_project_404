@@ -8,34 +8,41 @@ public class Course implements Serializable {
     private String name;
     private int credit;
     private String id;
-    public List<CourseGroup> courseGroups=new ArrayList<>();
-    public Course(String name,int credit) {
-        this.name = name;
-        this.credit=credit;
-    }
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public int getCredit() {
-        return credit;
-    }
-    public void setCredit(int credit) {
-        this.credit = credit;
-    }
-    public String getId() {
-        return id;
-    }
+    private Status status;
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public List<CourseGroup> courseGroups = new ArrayList<>();
+
     public Course(String name,int credit,String id) {
         this.name = name;
         this.credit=credit;
         this.id=id;
     }
 
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getCredit() {
+        return credit;
+    }
+    public void setCredit(int credit) {
+        this.credit = credit;
+    }
+
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 }

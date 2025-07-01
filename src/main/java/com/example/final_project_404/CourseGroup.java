@@ -10,6 +10,15 @@ public class CourseGroup implements Serializable {
     private Course course;
     private String semasterCode;
     private Professor professor;
+    private Status status;
+
     private List<Student> enrolledStudents = new ArrayList<>();
     private Map<Student, Double> grades = new HashMap<>();
+
+    public Status getStatus() {
+        return status;
+    }
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 }

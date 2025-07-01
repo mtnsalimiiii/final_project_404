@@ -194,14 +194,14 @@ public class AddMajorAdminPortalController implements Initializable {
         String majorId = getMajorId(facultyName, departmentName);
 
         if (!nameMajor.isBlank() && !establishmentYearAddMajorAdmin.getText().isBlank()){
-            Major newMajor = new Major(nameMajor, majorId, establishmentYear);
+            Major newMajor = new Major(nameMajor, majorId, establishmentYear, Status.Active);
 
-            for (Faculty faculty1 : University.allFaculties) {
-                if (faculty1.getFacultyName().equals(facultyName)) {
-                    for (Department department1 : faculty1.departments) {
-                        if (department1.getName().equals(departmentName)) {
-                            if (!department1.majors.contains(newMajor)) {
-                                department1.majors.add(newMajor);
+            for (Faculty faculty : University.allFaculties) {
+                if (faculty.getFacultyName().equals(facultyName) && faculty.getStatus().equals(Status.Active)) {
+                    for (Department department : faculty.departments) {
+                        if (department.getName().equals(departmentName) && department.getStatus().equals(Status.Active)) {
+                            if (!department.majors.contains(newMajor)) {
+                                department.majors.add(newMajor);
                             } else {
                                 System.out.println("This Major has Registered earlier!");
                             }
@@ -219,7 +219,7 @@ public class AddMajorAdminPortalController implements Initializable {
             System.out.println("major id: " + majorId);
 
             Parent root = FXMLLoader.load(getClass().getResource("AddMajorAdminPortal.fxml"));
-            Scene scene = new Scene(root, 800, 500);
+            Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle("Add New Major");
             stage.setScene(scene);
@@ -234,7 +234,9 @@ public class AddMajorAdminPortalController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         University.loadFaculties();
         for (Faculty faculty : University.allFaculties) {
-            facultyChooserAddMajorAdmin.getItems().add(faculty.getFacultyName());
+            if (faculty.getStatus().equals(Status.Active)){
+                facultyChooserAddMajorAdmin.getItems().add(faculty.getFacultyName());
+            }
         }
         facultyChooserAddMajorAdmin.setVisibleRowCount(4);
 
@@ -243,9 +245,11 @@ public class AddMajorAdminPortalController implements Initializable {
             departmentChooserAddMajorAdmin.setPromptText("Department");
 
             for (Faculty faculty : University.allFaculties){
-                if (faculty.getFacultyName().equals(facultyChooserAddMajorAdmin.getValue())){
+                if (faculty.getFacultyName().equals(facultyChooserAddMajorAdmin.getValue()) && faculty.getStatus().equals(Status.Active)){
                     for (Department department : faculty.departments){
-                        departmentChooserAddMajorAdmin.getItems().add(department.getName());
+                        if (department.getStatus().equals(Status.Active)){
+                            departmentChooserAddMajorAdmin.getItems().add(department.getName());
+                        }
                     }
                     departmentChooserAddMajorAdmin.setVisibleRowCount(4);
                 }

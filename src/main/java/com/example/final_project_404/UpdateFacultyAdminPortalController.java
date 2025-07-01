@@ -115,7 +115,16 @@ public class UpdateFacultyAdminPortalController implements Initializable {
     @FXML
     void deactiveFaculty(ActionEvent event) throws IOException {
         University.loadFaculties();
-        University.allFaculties.removeIf(faculty -> faculty.getFacultyName().equals(facultyChooserDeactiveUpdateFaculty.getValue()));
+
+//        University.allFaculties.removeIf(faculty -> faculty.getFacultyName().equals(facultyChooserDeactiveUpdateFaculty.getValue()));
+
+        for (Faculty faculty : University.allFaculties){
+            if (faculty.getFacultyName().equals(facultyChooserDeactiveUpdateFaculty.getValue())){
+                faculty.setStatus(Status.Inactive);
+                break;
+            }
+        }
+
         University.saveFaculties();
         System.out.println("successful");
 
@@ -178,7 +187,7 @@ public class UpdateFacultyAdminPortalController implements Initializable {
 
     @FXML
     void setFacultyChooserDeactive(ActionEvent event) {
-        if (facultyChooserEditUpdateFaculty.getValue().isBlank()){
+        if (facultyChooserDeactiveUpdateFaculty.getValue().isBlank()){
             deactiveButton.setDisable(true);
         } else {
             deactiveButton.setDisable(false);
@@ -279,8 +288,10 @@ public class UpdateFacultyAdminPortalController implements Initializable {
 
         University.loadFaculties();
         for (Faculty faculty : University.allFaculties){
-            facultyChooserDeactiveUpdateFaculty.getItems().add(faculty.getFacultyName());
-            facultyChooserEditUpdateFaculty.getItems().add(faculty.getFacultyName());
+            if (faculty.getStatus().equals(Status.Active)){
+                facultyChooserDeactiveUpdateFaculty.getItems().add(faculty.getFacultyName());
+                facultyChooserEditUpdateFaculty.getItems().add(faculty.getFacultyName());
+            }
         }
         facultyChooserEditUpdateFaculty.setVisibleRowCount(4);
         facultyChooserDeactiveUpdateFaculty.setVisibleRowCount(4);

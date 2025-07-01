@@ -218,7 +218,16 @@ public class UpdateDepartmentAdminPortalController implements Initializable {
         University.loadFaculties();
         for (Faculty faculty : University.allFaculties){
             if (faculty.getFacultyName().equals(facultyChooserDeactiveUpdateDepartment.getValue())){
-                faculty.departments.removeIf( department -> department.getName().equals(departmentChooserDeactiveUpdateDepartment.getValue()));
+
+//                faculty.departments.removeIf( department -> department.getName().equals(departmentChooserDeactiveUpdateDepartment.getValue()));
+//                break;
+
+                for (Department department : faculty.departments){
+                    if (department.getName().equals(departmentChooserDeactiveUpdateDepartment.getValue())){
+                        department.setStatus(Status.Inactive);
+                        break;
+                    }
+                }
                 break;
             }
         }
@@ -297,8 +306,10 @@ public class UpdateDepartmentAdminPortalController implements Initializable {
 
         University.loadFaculties();
         for (Faculty faculty : University.allFaculties){
-            facultyChooserEditUpdateDepartment.getItems().add(faculty.getFacultyName());
-            facultyChooserDeactiveUpdateDepartment.getItems().add(faculty.getFacultyName());
+            if (faculty.getStatus().equals(Status.Active)){
+                facultyChooserEditUpdateDepartment.getItems().add(faculty.getFacultyName());
+                facultyChooserDeactiveUpdateDepartment.getItems().add(faculty.getFacultyName());
+            }
         }
         facultyChooserEditUpdateDepartment.setVisibleRowCount(4);
         facultyChooserDeactiveUpdateDepartment.setVisibleRowCount(4);
@@ -309,9 +320,11 @@ public class UpdateDepartmentAdminPortalController implements Initializable {
             departmentChooserDeactiveUpdateDepartment.setPromptText("Department");
 
             for (Faculty faculty : University.allFaculties){
-                if (faculty.getFacultyName().equals(facultyChooserDeactiveUpdateDepartment.getValue())){
+                if (faculty.getFacultyName().equals(facultyChooserDeactiveUpdateDepartment.getValue()) && faculty.getStatus().equals(Status.Active)){
                     for (Department department : faculty.departments){
-                        departmentChooserDeactiveUpdateDepartment.getItems().add(department.getName());
+                        if (department.getStatus().equals(Status.Active)){
+                            departmentChooserDeactiveUpdateDepartment.getItems().add(department.getName());
+                        }
                     }
                     departmentChooserDeactiveUpdateDepartment.setVisibleRowCount(4);
                     break;
@@ -324,15 +337,15 @@ public class UpdateDepartmentAdminPortalController implements Initializable {
             departmentChooserEditUpdateDepartment.setPromptText("Department");
 
             for (Faculty faculty : University.allFaculties){
-                if (faculty.getFacultyName().equals(facultyChooserEditUpdateDepartment.getValue())){
+                if (faculty.getFacultyName().equals(facultyChooserEditUpdateDepartment.getValue()) && faculty.getStatus().equals(Status.Active)){
                     for (Department department : faculty.departments){
-                        departmentChooserEditUpdateDepartment.getItems().add(department.getName());
-                    }
+                        if (department.getStatus().equals(Status.Active)){
+                            departmentChooserEditUpdateDepartment.getItems().add(department.getName());
+                        }                    }
                     departmentChooserEditUpdateDepartment.setVisibleRowCount(4);
                     break;
                 }
             }
         });
-
     }
 }

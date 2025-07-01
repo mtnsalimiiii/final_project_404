@@ -189,9 +189,9 @@ public class AddDepartmentAdminPortalController implements Initializable {
         String departmentId = getDepartmentId(facultyName);
 
         if (!departmentName.isBlank() && !establishmentYearAddDepartmentAdmin.getText().isBlank()) {
-            Department department = new Department(departmentName, establishmentYear, departmentId);
+            Department department = new Department(departmentName, establishmentYear, departmentId, Status.Active);
             for (Faculty faculty : University.allFaculties) {
-                if (faculty.getFacultyName().equals(facultyName)) {
+                if (faculty.getFacultyName().equals(facultyName) && faculty.getStatus().equals(Status.Active)) {
                     if (!faculty.departments.contains(department)) {
                         faculty.departments.add(department);
                     } else {
@@ -208,7 +208,7 @@ public class AddDepartmentAdminPortalController implements Initializable {
             System.out.println("id: " + departmentId);
 
             Parent root = FXMLLoader.load(getClass().getResource("AddDepartmentAdminPortal.fxml"));
-            Scene scene = new Scene(root, 800, 500);
+            Scene scene = new Scene(root);
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setTitle("Add New Department");
             stage.setScene(scene);
@@ -223,7 +223,9 @@ public class AddDepartmentAdminPortalController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         University.loadFaculties();
         for (Faculty faculty : University.allFaculties) {
-            facultyChooserAddDepartmentAdmin.getItems().add(faculty.getFacultyName());
+            if (faculty.getStatus().equals(Status.Active)){
+                facultyChooserAddDepartmentAdmin.getItems().add(faculty.getFacultyName());
+            }
         }
         facultyChooserAddDepartmentAdmin.setVisibleRowCount(4);
     }

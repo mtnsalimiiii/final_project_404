@@ -10,15 +10,18 @@ public class Major implements Serializable{
     private String name;
     private String id;
     private int establishmentYear;
+    private Status status;
+
     public List<Degree> degrees=new ArrayList<>();
     //public List<Course>  courses=new ArrayList<>();
     public List<Student> students = new ArrayList<>();
     public List<Professor> professors = new ArrayList<>();
 
-    public Major(String name, String id, int establishmentYear) {
+    public Major(String name, String id, int establishmentYear, Status status) {
         this.name = name;
         this.id = id;
         this.establishmentYear = establishmentYear;
+        this.status = status;
     }
 
 //    public void addStudent(Student student) {
@@ -42,6 +45,12 @@ public class Major implements Serializable{
     }
     public void setEstablishmentYear(int establishmentYear) {
         this.establishmentYear = establishmentYear;
+    }
+    public Status getStatus() {
+        return status;
+    }
+    public void setStatus(Status status){
+        this.status = status;
     }
 
 //    public static void addStudentToMajor(String departmentName, String majorName, Student student) {

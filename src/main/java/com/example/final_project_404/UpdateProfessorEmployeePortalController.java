@@ -172,7 +172,16 @@ public class UpdateProfessorEmployeePortalController implements Initializable {
                     if (department.getName().equals(departmentChooserEdit.getValue())) {
                         for (Major major : department.majors) {
                             if (major.getName().equals(majorChooserEdit.getValue())) {
-                                major.professors.removeIf(professor -> professor.getId().equals(professorChooserDeactive.getValue()));
+
+//                                major.professors.removeIf(professor -> professor.getId().equals(professorChooserDeactive.getValue()));
+//                                break;
+
+                                for (Professor professor : major.professors){
+                                    if (professor.getId().equals(professorChooserDeactive.getValue())){
+                                        professor.setStatus(Status.Inactive);
+                                        break;
+                                    }
+                                }
                                 break;
                             }
                         }
@@ -394,8 +403,10 @@ public class UpdateProfessorEmployeePortalController implements Initializable {
 
         University.loadFaculties();
         for (Faculty faculty : University.allFaculties){
-            facultyChooserDeactive.getItems().add(faculty.getFacultyName());
-            facultyChooserEdit.getItems().add(faculty.getFacultyName());
+            if (faculty.getStatus().equals(Status.Active)){
+                facultyChooserDeactive.getItems().add(faculty.getFacultyName());
+                facultyChooserEdit.getItems().add(faculty.getFacultyName());
+            }
         }
         facultyChooserDeactive.setVisibleRowCount(4);
         facultyChooserEdit.setVisibleRowCount(4);
@@ -405,9 +416,11 @@ public class UpdateProfessorEmployeePortalController implements Initializable {
             departmentChooserEdit.setPromptText("Department");
 
             for (Faculty faculty : University.allFaculties){
-                if (faculty.getFacultyName().equals(facultyChooserEdit.getValue())){
+                if (faculty.getFacultyName().equals(facultyChooserEdit.getValue()) && faculty.getStatus().equals(Status.Active)){
                     for (Department department : faculty.departments){
-                        departmentChooserEdit.getItems().add(department.getName());
+                        if (department.getStatus().equals(Status.Active)){
+                            departmentChooserEdit.getItems().add(department.getName());
+                        }
                     }
                     departmentChooserEdit.setVisibleRowCount(4);
                     break;
@@ -420,9 +433,11 @@ public class UpdateProfessorEmployeePortalController implements Initializable {
             departmentChooserDeactive.setPromptText("Department");
 
             for (Faculty faculty : University.allFaculties){
-                if (faculty.getFacultyName().equals(facultyChooserDeactive.getValue())){
+                if (faculty.getFacultyName().equals(facultyChooserDeactive.getValue()) && faculty.getStatus().equals(Status.Active)){
                     for (Department department : faculty.departments){
-                        departmentChooserDeactive.getItems().add(department.getName());
+                        if (department.getStatus().equals(Status.Active)){
+                            departmentChooserDeactive.getItems().add(department.getName());
+                        }
                     }
                     departmentChooserDeactive.setVisibleRowCount(4);
                     break;
@@ -436,11 +451,13 @@ public class UpdateProfessorEmployeePortalController implements Initializable {
 
 
             for (Faculty faculty : University.allFaculties){
-                if (faculty.getFacultyName().equals(facultyChooserEdit.getValue())){
+                if (faculty.getFacultyName().equals(facultyChooserEdit.getValue()) && faculty.getStatus().equals(Status.Active)){
                     for (Department department : faculty.departments){
-                        if (department.getName().equals(departmentChooserEdit.getValue())){
+                        if (department.getName().equals(departmentChooserEdit.getValue()) && department.getStatus().equals(Status.Active)){
                             for (Major major : department.majors){
-                                majorChooserEdit.getItems().add(major.getName());
+                                if (major.getStatus().equals(Status.Active)){
+                                    majorChooserEdit.getItems().add(major.getName());
+                                }
                             }
                             majorChooserEdit.setVisibleRowCount(4);
                             break;
@@ -457,11 +474,13 @@ public class UpdateProfessorEmployeePortalController implements Initializable {
 
 
             for (Faculty faculty : University.allFaculties){
-                if (faculty.getFacultyName().equals(facultyChooserDeactive.getValue())){
+                if (faculty.getFacultyName().equals(facultyChooserDeactive.getValue()) && faculty.getStatus().equals(Status.Active)){
                     for (Department department : faculty.departments){
-                        if (department.getName().equals(departmentChooserDeactive.getValue())){
+                        if (department.getName().equals(departmentChooserDeactive.getValue()) && department.getStatus().equals(Status.Active)){
                             for (Major major : department.majors){
-                                majorChooserDeactive.getItems().add(major.getName());
+                                if (major.getStatus().equals(Status.Active)){
+                                    majorChooserDeactive.getItems().add(major.getName());
+                                }
                             }
                             majorChooserDeactive.setVisibleRowCount(4);
                             break;
@@ -477,13 +496,15 @@ public class UpdateProfessorEmployeePortalController implements Initializable {
             professorChooserEdit.setPromptText("Professor");
 
             for (Faculty faculty : University.allFaculties){
-                if (faculty.getFacultyName().equals(facultyChooserEdit.getValue())){
+                if (faculty.getFacultyName().equals(facultyChooserEdit.getValue()) && faculty.getStatus().equals(Status.Active)){
                     for (Department department : faculty.departments){
-                        if (department.getName().equals(departmentChooserEdit.getValue())){
+                        if (department.getName().equals(departmentChooserEdit.getValue()) && department.getStatus().equals(Status.Active)){
                             for (Major major : department.majors){
-                                if (major.getName().equals(majorChooserEdit.getValue())){
+                                if (major.getName().equals(majorChooserEdit.getValue()) && major.getStatus().equals(Status.Active)){
                                     for (Professor professor : major.professors){
-                                        professorChooserEdit.getItems().add(professor.getId());
+                                        if (professor.getStatus().equals(Status.Active)) {
+                                            professorChooserEdit.getItems().add(professor.getId());
+                                        }
                                     }
                                     professorChooserEdit.setVisibleRowCount(4);
                                     break;
@@ -503,14 +524,15 @@ public class UpdateProfessorEmployeePortalController implements Initializable {
 
 
             for (Faculty faculty : University.allFaculties){
-                if (faculty.getFacultyName().equals(facultyChooserDeactive.getValue())){
+                if (faculty.getFacultyName().equals(facultyChooserDeactive.getValue()) && faculty.getStatus().equals(Status.Active)){
                     for (Department department : faculty.departments){
-                        if (department.getName().equals(departmentChooserDeactive.getValue())){
+                        if (department.getName().equals(departmentChooserDeactive.getValue()) && department.getStatus().equals(Status.Active)){
                             for (Major major : department.majors){
-                                if (major.getName().equals(majorChooserDeactive.getValue())){
+                                if (major.getName().equals(majorChooserDeactive.getValue()) && major.getStatus().equals(Status.Active)){
                                     for (Professor professor : major.professors){
-                                        professorChooserDeactive.getItems().add(professor.getId());
-                                    }
+                                        if (professor.getStatus().equals(Status.Active)) {
+                                            professorChooserDeactive.getItems().add(professor.getId());
+                                        }                                    }
                                     professorChooserDeactive.setVisibleRowCount(4);
                                     break;
                                 }

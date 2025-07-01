@@ -128,7 +128,7 @@ public class LoginPanelController{
             case "student":
                 Student.loadAllStudents();
                 for (Student student : University.allStudents) {
-                    if (student.getId().equals(username) && student.getNationalId().equals(password)) {
+                    if (student.getId().equals(username) && student.getNationalId().equals(password) && student.getStatus().equals(Status.Active)) {
                         studentPerson = student;
                         System.out.println("Successfull login"  + student.getFirst_name());
                         Parent root = FXMLLoader.load(getClass().getResource("StudentPortal.fxml"));
@@ -147,7 +147,7 @@ public class LoginPanelController{
             case "professor":
                 Professor.loadAllProfessor();
                 for (Professor professor : University.allProfessors) {
-                    if (professor.getId().equals(username) && professor.getNationalId().equals(password)) {
+                    if (professor.getId().equals(username) && professor.getNationalId().equals(password) && professor.getStatus().equals(Status.Active)) {
                         professorPerson = professor;
                         System.out.println("Successfull login " + professor.getFirst_name());
                         Parent root = FXMLLoader.load(getClass().getResource("ProfessorPortal.fxml"));
@@ -179,7 +179,7 @@ public class LoginPanelController{
             case "employee":
                 Employee.loadAllEmployee();
                 for (Employee employee : University.allEmployees) {
-                    if (employee.getId().equals(username) && employee.getNationalId().equals(password)) {
+                    if (employee.getId().equals(username) && employee.getNationalId().equals(password) && employee.getStatus().equals(Status.Active)) {
                         employeePerson = employee;
                         System.out.println("Successfull login " + employee.getFirst_name());
                         Parent root = FXMLLoader.load(getClass().getResource("EmployeePortal.fxml"));

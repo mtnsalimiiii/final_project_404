@@ -11,14 +11,16 @@ public class Department implements Serializable {
     private String name;
     private int establishmentYear;
     private String id;
+    private Status status;
 
     public List<Major> majors = new ArrayList<>();
     public List<Employee> employees = new ArrayList<>();
 
-    public Department(String name, int establishmentYear, String id) {
+    public Department(String name, int establishmentYear, String id, Status status) {
         this.name = name;
         this.establishmentYear = establishmentYear;
-        this.id=id;
+        this.id = id;
+        this.status = status;
     }
 
     public String getName() {
@@ -27,9 +29,11 @@ public class Department implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
     public String getId() {
         return id;
     }
+
     public int getEstablishmentYear(){
         return establishmentYear;
     }
@@ -37,6 +41,12 @@ public class Department implements Serializable {
         this.establishmentYear = establishmentYear;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+    public void setStatus(Status status) {
+        this.status = status;
+    }
 
 //    public List<Major> getMajors() {
 //        return majors;
@@ -47,6 +57,7 @@ public class Department implements Serializable {
 //            majors.add(major);
 //            saveToFile();
 //        }
+
 //    }
 
     public void addMajor(Major major){
