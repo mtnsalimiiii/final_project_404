@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane minHeight="550.0" minWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.ProfessorPortalController">
@@ -16,30 +17,36 @@
                 <Label styleClass="header-title" stylesheets="@EmployeePortal.css" text="Professor Portal" />
             </children>
         </HBox>
-      <ScrollPane layoutY="80.0" prefHeight="470.0" prefWidth="170.0">
-         <content>
-              <VBox fx:id="navigationBarVBox" alignment="TOP_CENTER" layoutY="80.0" prefHeight="470.0" prefWidth="150.0" styleClass="nav-bar" stylesheets="@EmployeePortal.css">
-                  <children>
-                      <Button layoutX="20.0" layoutY="20.0" minHeight="55.0" minWidth="132.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="136.0" stylesheets="@EmployeePortal.css" text="Dashboard">
-                          <styleClass>
-                              <String fx:value="nav-button" />
-                              <String fx:value="active" />
-                          </styleClass>
-                      </Button>
-                      <Button layoutX="20.0" layoutY="150.0" minHeight="55.0" minWidth="132.0" mnemonicParsing="false" onAction="#profileProfessorPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Profile" />
-                      <Button layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="132.0" mnemonicParsing="false" onAction="#reportsProfessorPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Reports" />
-                      <Button layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="132.0" mnemonicParsing="false" onAction="#signOutProfessorPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Sign out" />
-                  </children>
-                  <padding>
-                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                  </padding>
-              </VBox>
-         </content>
-      </ScrollPane>
-        <VBox fx:id="containerBarVBox" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" stylesheets="@EmployeePortal.css">
+        <VBox fx:id="containerBarVBox" layoutY="80.0" prefHeight="470.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" stylesheets="@EmployeePortal.css">
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
+         <children>
+            <Label maxWidth="1.7976931348623157E308" styleClass="label-title" stylesheets="@EmployeePortal.css" text="Welcome Professor!!">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin>
+            </Label>
+            <GridPane prefHeight="370.0" prefWidth="760.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="0.0" prefWidth="379.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#profileProfessorPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Profile" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#reportsProfessorPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Reports" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#signOutProfessorPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Sign out" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+               </children>
+            </GridPane>
+         </children>
         </VBox>
     </children>
 </AnchorPane>

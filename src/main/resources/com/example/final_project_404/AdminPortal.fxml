@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane minHeight="550.0" minWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.AdminPortalController">
@@ -16,40 +17,42 @@
                 <Label styleClass="header-title" stylesheets="@EmployeePortal.css" text="Admin Portal" />
             </children>
         </HBox>
-      <ScrollPane layoutY="80.0" prefHeight="470.0" prefWidth="170.0">
-         <content>
-              <VBox fx:id="navigationBarVBox" prefHeight="420.0" prefWidth="150.0" styleClass="nav-bar" stylesheets="@EmployeePortal.css">
-                  <children>
-                      <Button layoutX="20.0" layoutY="20.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" stylesheets="@EmployeePortal.css" text="Dashboard">
-                          <styleClass>
-                              <String fx:value="nav-button" />
-                              <String fx:value="active" />
-                          </styleClass>
-                      </Button>
-                      <Button layoutX="20.0" layoutY="62.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addFacultyAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Add Faculty" />
-                      <Button layoutX="20.0" layoutY="65.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateFacultyAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Update&#10;Faculty" />
-                      <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addDepartmentAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Add &#10;Department" textAlignment="CENTER" />
-                      <Button layoutX="20.0" layoutY="176.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateDepartmentAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Update&#10;Department" textAlignment="CENTER" />
-                      <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addMajorAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Add Major" textAlignment="CENTER" />
-                      <Button layoutX="20.0" layoutY="307.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateMajorAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Update Major" textAlignment="CENTER" />
-                      <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addEmployeeAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Add Employee" textAlignment="CENTER" />
-                      <Button layoutX="20.0" layoutY="396.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateEmployeeAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Update&#10;Employee" textAlignment="CENTER" />
-                      <Button layoutX="20.0" layoutY="150.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#profileAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Profile" />
-                      <Button layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#reportsAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Reports" />
-                      <Button layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#signOutAdminPortal" styleClass="nav-button" stylesheets="@EmployeePortal.css" text="Sign out" />
-                  </children>
-                  <padding>
-                      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                  </padding>
-              </VBox>
-         </content>
-      </ScrollPane>
-        <VBox fx:id="containerBarVBox" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" styleClass="content-box" stylesheets="@EmployeePortal.css">
+        <VBox fx:id="containerBarVBox" layoutY="80.0" prefHeight="470.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" stylesheets="@EmployeePortal.css">
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
             <children>
-                <Label prefHeight="30.0" prefWidth="170.0" styleClass="label-title" stylesheets="@EmployeePortal.css" text="welcome, Admin!" />
+                <Label maxWidth="1.7976931348623157E308" prefHeight="30.0" styleClass="label-title" stylesheets="@EmployeePortal.css" text="welcome, Admin!">
+               <VBox.margin>
+                  <Insets bottom="20.0" />
+               </VBox.margin></Label>
+            <GridPane alignment="CENTER" prefHeight="370.0" prefWidth="760.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="393.4000244140625" minWidth="343.79998779296875" prefWidth="379.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="414.2000122070313" minWidth="364.59997558593756" prefWidth="379.00000000000006" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button alignment="CENTER" minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#addFacultyAdminPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Add Faculty" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#updateFacultyAdminPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Update Faculty" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#addDepartmentAdminPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Add Department" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#updateDepartmentAdminPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Update Department" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#addMajorAdminPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Add Major" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#updateMajorAdminPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Update Major" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#addEmployeeAdminPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Add Employee" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#updateEmployeeAdminPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Update Employee" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#profileAdminPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Profile" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#reportsAdminPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Reports" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#signOutAdminPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Sign out" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+               </children>
+            </GridPane>
             </children>
         </VBox>
     </children>

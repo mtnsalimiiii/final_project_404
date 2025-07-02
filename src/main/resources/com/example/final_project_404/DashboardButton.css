@@ -1,0 +1,41 @@
+.button-dashboard {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #007BFF, #0056b3);
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-family: "Roboto", "Arial";
+    -fx-padding: 10 20 10 20;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 4);
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s ease;
+}
+}.button-dashboard:hover {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #0056b3, #004080);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+.nav-button-dashboard {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #007BFF, #0056b3);
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-family: "Roboto", "Arial";
+    -fx-padding: 10 20 10 20;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 4);
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s ease;
+}
+.nav-button-dashboard:hover {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #0056b3, #004080);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+.nav-button-dashboard:pressed {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #004080, #002e66);
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 4, 0, 0, 2);
+}
