@@ -232,7 +232,6 @@ public class AddCourseController implements Initializable{
                         for (Major major : department.majors) {
                             if (major.getName() != null) {
                                 majorChooser.getItems().add(major.getName());
-                                //major.degrees.add(new Bachelor());
 
                                 for (Degree degree : major.degrees) {
                                     if (degree != null) {
@@ -252,9 +251,77 @@ public class AddCourseController implements Initializable{
         }
     }
 
+    @FXML
+    public void addCourse(ActionEvent event) {
+        String majorName = majorChooser.getValue();
+        String selectedDegree = degreeChooser.getValue();
+        String name = courseName.getText().trim();
+        String creditStr = courseCredit.getText().trim();
+
+        if (majorName == null || selectedDegree == null || name.isEmpty() || creditStr.isEmpty()) {
+            System.out.println("Please fill in all the fields!");
+            return;
+        }
+
+        int credit;
+        try {
+            credit = Integer.parseInt(creditStr);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid credit value.");
+            return;
+        }
+
+        University.loadFaculties();
+
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFacultyEmployee())) {
+                for (Department department : faculty.departments) {
+                    if (department.getName().equals(LoginPanelController.employeePerson.getDepartmentEmployee())) {
+                        for (Major major : department.majors) {
+                            if (major.getName().equals(majorName)) {
+
+                                String degreeCode;
+                                if (selectedDegree.equalsIgnoreCase("Bachelor")) {
+                                    degreeCode = "0";
+                                } else if (selectedDegree.equalsIgnoreCase("Master")) {
+                                    degreeCode = "1";
+                                } else if (selectedDegree.equalsIgnoreCase("Phd")) {
+                                    degreeCode = "2";
+                                } else {
+                                    System.out.println("Unknown degree selected");
+                                    return;
+                                }
 
 
-        public void addCourse(ActionEvent event) {
+                                Degree targetDegree = null;
+                                for (Degree degree : major.degrees) {
+                                    if (degree.getClass().getSimpleName().equalsIgnoreCase(selectedDegree)) {
+                                        targetDegree = degree;
+                                        break;
+                                    }
+                                }
 
+                                if (targetDegree == null) {
+                                    System.out.println("Degree not found in major.");
+                                    return;
+                                }
+
+                                int courseCount = targetDegree.courses.size();  // تعداد درس های موجود
+                                String id = major.getId() + degreeCode + (courseCount + 1);
+
+                                Course newCourse = new Course(name, credit, id);
+                                targetDegree.courses.add(newCourse);
+
+                                University.saveFaculties();
+                                System.out.println("Course added with ID: " + id);
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println("Major not found!");
     }
+
 }

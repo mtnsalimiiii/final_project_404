@@ -171,7 +171,13 @@ public class AddMajorAdminPortalController implements Initializable {
             if(faculty.getFacultyName().equals(facultyName)){
                 for (Department department : faculty.departments){
                     if (department.getName().equals(departmentName)){
-                        id = department.getId()+(department.majors.size()+1);
+                        if (department.majors.size()<9){
+                            id = department.getId()+"0"+(department.majors.size()+1);
+                        }
+                        else {
+                            id = department.getId()+(department.majors.size()+1);
+                        }
+
                     }
                 }
                 break;
