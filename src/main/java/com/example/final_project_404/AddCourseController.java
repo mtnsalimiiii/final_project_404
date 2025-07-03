@@ -32,8 +32,6 @@ public class AddCourseController implements Initializable{
     @FXML
     private ComboBox<String> degreeChooser;
 
-    @FXML
-    private ComboBox<String> facultyChooser;
 
     @FXML
     private HBox headerHBox;
@@ -224,16 +222,28 @@ public class AddCourseController implements Initializable{
         University.loadFaculties();
         if (LoginPanelController.employeePerson == null) return;
 
+        String facultyName = LoginPanelController.employeePerson.getFacultyEmployee();
+        String departmentName = LoginPanelController.employeePerson.getDepartmentEmployee();
+
         for (Faculty faculty : University.allFaculties) {
-            if (faculty.getFacultyName() != null && faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFacultyEmployee())) {
+            if (facultyName.equals(faculty.getFacultyName())) {
                 for (Department department : faculty.departments) {
-                    if (department.getName() != null && department.getName().equals(LoginPanelController.employeePerson.getDepartmentEmployee())) {
+                    if (departmentName.equals(department.getName())) {
                         for (Major major : department.majors) {
                             if (major.getName() != null) {
                                 majorChooser.getItems().add(major.getName());
+                                //major.degrees.add(new Bachelor());
+
+                                for (Degree degree : major.degrees) {
+                                    if (degree != null) {
+                                        degreeChooser.getItems().add(degree.getClass().getSimpleName());
+                                    }
+                                }
                             }
                         }
+
                         majorChooser.setVisibleRowCount(4);
+                        degreeChooser.setVisibleRowCount(4);
                         break;
                     }
                 }
@@ -243,7 +253,8 @@ public class AddCourseController implements Initializable{
     }
 
 
-    public void addCourse(ActionEvent event) {
+
+        public void addCourse(ActionEvent event) {
 
     }
 }

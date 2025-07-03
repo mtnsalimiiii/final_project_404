@@ -1,9 +1,11 @@
 package com.example.final_project_404;
 
 import static java.lang.String.format;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class Date {
+public class Date implements Serializable {
 
     private int year;
     private int month;

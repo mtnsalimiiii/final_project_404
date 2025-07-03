@@ -185,16 +185,17 @@ public class AddDegreeController implements Initializable {
 
                         for (Major major : dep.majors) {
                             if (major.getName() != null && major.getName().equals(majorChooser.getValue())) {
-                                if(majorChooser.equals("Bachelor")){
-                                    degree=new Bachelor();
+                                String selectedDegree = degreeChooser.getValue();
+                                if ("Bachelor".equals(selectedDegree)) {
+                                    degree = new Bachelor();
+                                } else if ("Master".equals(selectedDegree)) {
+                                    degree = new Master();
+                                } else if ("Phd".equals(selectedDegree)) {
+                                    degree = new Phd();
                                 }
-                                else if(majorChooser.equals("Master")){
-                                    degree=new Master();
-                                }
-                                else if(majorChooser.equals("Phd")){
-                                    degree=new Phd();
-                                }
+
                                 major.degrees.add(degree);
+                                University.saveFaculties();
                             }
                         }
 
