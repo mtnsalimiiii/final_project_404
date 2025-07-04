@@ -7,14 +7,14 @@ import java.util.List;
 
 public class Employee extends Person implements Serializable{
     private String id;
-    private String facultyEmployee;
-    private String departmentEmployee;
+    private String faculty;
+    private String department;
 
     public Employee(String first_name, String last_name, Date dateOfBirth, String nationalId,Gender gender, String phoneNumber, String id, String department, String faculty, Date dateOfHire, Status status){
         super(first_name,last_name,dateOfBirth,nationalId,gender,phoneNumber,dateOfHire,status);
         this.id=id;
-        this.departmentEmployee = department;
-        this.facultyEmployee = faculty;
+        this.faculty = faculty;
+        this.department = department;
     }
 
     public String getId() {
@@ -23,17 +23,17 @@ public class Employee extends Person implements Serializable{
     public void setId(String employeeId) {
         this.id = employeeId;
     }
-    public String getFacultyEmployee(){
-        return facultyEmployee;
+    public String getFaculty(){
+        return faculty;
     }
-    public void setFacultyEmployee(String facultyEmployee){
-        this.facultyEmployee = facultyEmployee;
+    public void setFaculty(String facultyEmployee){
+        this.faculty = facultyEmployee;
     }
-    public String getDepartmentEmployee(){
-        return departmentEmployee;
+    public String getDepartment(){
+        return department;
     }
-    public void setDepartmentEmployee(String departmentEmployee){
-        this.departmentEmployee = departmentEmployee;
+    public void setDepartment(String departmentEmployee){
+        this.department = departmentEmployee;
     }
 
     public static void loadAllEmployee() {

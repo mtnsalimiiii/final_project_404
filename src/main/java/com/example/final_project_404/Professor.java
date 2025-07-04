@@ -22,18 +22,21 @@ public class Professor extends Person implements Serializable {
     public String getId() {
         return id;
     }
+
     public void setFaculty(String faculty){
         this.faculty = faculty;
     }
     public String getFaculty(){
         return faculty;
     }
+
     public void setDepartment(String department){
         this.department = department;
     }
     public String getDepartment(){
         return department;
     }
+
     public String getMajor() {
         return major;
     }
@@ -63,6 +66,7 @@ public class Professor extends Person implements Serializable {
     }
 //    public static void addProfessor(String firstname,String lastname,String dateOfBirth,String nationalId,Gender gender,String phoneNumber,String professorId,String dateOfHire,String faculty,String department){
 //        University.allProfessors.add(new Professor(firstname,lastname,dateOfBirth,nationalId,gender,phoneNumber, professorId, dateOfHire, faculty, department));
+
 //
 
 //    }

@@ -8,6 +8,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
 <AnchorPane minHeight="550.0" minWidth="800" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.ProfessorsEmployeePortalController">
     <children>
         <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0" styleClass="header" stylesheets="@EmployeePortal.css">
@@ -38,6 +42,32 @@
             </VBox>
         </ScrollPane>
         <VBox fx:id="containerBarVBox" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" styleClass="content-box" stylesheets="@EmployeePortal.css">
+            <ComboBox prefWidth="300.0" promptText="what topic do you want search:" stylesheets="@comboBoxStyle.css">
+                <VBox.margin>
+                    <Insets bottom="15.0" left="145.0" />
+                </VBox.margin>
+            </ComboBox>
+            <TextField>
+                <VBox.margin>
+                    <Insets bottom="15.0" />
+                </VBox.margin>
+            </TextField>
+            <ScrollPane prefHeight="366.0" prefWidth="589.0">
+                <content>
+                    <TableView prefHeight="331.0" prefWidth="574.0">
+                        <columns>
+                            <TableColumn prefWidth="75.0" text="number" />
+                            <TableColumn prefWidth="75.0" text="name" />
+                            <TableColumn prefWidth="75.0" text="age" />
+                            <TableColumn prefWidth="75.0" text="faculty" />
+                            <TableColumn prefWidth="75.0" text="department" />
+                            <TableColumn prefWidth="75.0" text="major" />
+                            <TableColumn prefWidth="75.0" text="degree" />
+                            <TableColumn prefWidth="75.0" text="course" />
+                        </columns>
+                    </TableView>
+                </content>
+            </ScrollPane>
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>

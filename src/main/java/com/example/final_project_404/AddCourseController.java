@@ -309,7 +309,7 @@ public class AddCourseController implements Initializable{
                                 int courseCount = targetDegree.courses.size();  // تعداد درس های موجود
                                 String id = major.getId() + degreeCode + (courseCount + 1);
 
-                                Course newCourse = new Course(name, credit, id);
+                                Course newCourse = new Course(name, credit, id, Status.Active);
                                 targetDegree.courses.add(newCourse);
 
                                 University.saveFaculties();

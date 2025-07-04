@@ -12,10 +12,11 @@ public class Course implements Serializable {
 
     public List<CourseGroup> courseGroups = new ArrayList<>();
 
-    public Course(String name,int credit,String id) {
+    public Course(String name,int credit,String id, Status status) {
         this.name = name;
         this.credit=credit;
         this.id=id;
+        this.status = status;
     }
 
     public String getName() {
