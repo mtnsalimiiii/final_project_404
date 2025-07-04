@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane minHeight="550.0" minWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.AddCourseGroupEmployeePortalController">
+    <children>
+        <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0" styleClass="header" stylesheets="@EmployeePortal.css">
+            <children>
+                <Label styleClass="header-title" stylesheets="@EmployeePortal.css" text="Employee Portal" />
+                <Label styleClass="header-title" stylesheets="@EmployeePortal.css" text=" --&gt; Add New Course" />
+            </children>
+        </HBox>
+        <ScrollPane layoutY="80.0" prefHeight="470.0" prefWidth="170.0">
+            <VBox fx:id="navigationBarVBox" alignment="TOP_CENTER" layoutY="80.0" prefHeight="420.0" prefWidth="150.0" styleClass="nav-bar" stylesheets="@EmployeePortal.css">
+                <children>
+                    <Button layoutX="20.0" layoutY="20.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#dashboardEmployeePortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Dashboard" />
+                    <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addDegreeEmployeePortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add Degree" />
+                    <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add Course" />
+                    <Button layoutX="20.0" layoutY="62.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#professorEmployeePortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Professors" />
+                    <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#RegisterNewProfessorEmployeePortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Register New&#10;Professor" textAlignment="CENTER" />
+                    <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#UpdateProfessorEmployeePortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Update&#10;Professor" />
+                    <Button layoutX="20.0" layoutY="107.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#studentsEmpoyeePortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Students" />
+                    <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addStudentEmployeePortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Register New&#10;Student" textAlignment="CENTER" />
+                    <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#UpdateStudentEmployeePortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Update&#10;Student" />
+                    <Button layoutX="20.0" layoutY="150.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#profileEmployeePortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Profile" />
+                    <Button layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#reportsEmployeePortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Reports" />
+                    <Button layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#signOutEmployeePortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Sign out" />
+                </children>
+                <padding>
+                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                </padding>
+            </VBox>
+        </ScrollPane>
+        <VBox fx:id="containerBarVBox" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" styleClass="content-box" stylesheets="@EmployeePortal.css">
+            <children>
+                <ComboBox fx:id="majorChooser" layoutX="31.0" layoutY="173.0" maxWidth="300.0" prefWidth="150.0" promptText="Major" stylesheets="@comboBoxStyle.css">
+                    <VBox.margin>
+                        <Insets bottom="15.0" />
+                    </VBox.margin>
+                </ComboBox>
+                <ComboBox fx:id="degreeChooser" layoutX="31.0" layoutY="112.0" maxWidth="300.0" prefWidth="150.0" promptText="Degree" stylesheets="@comboBoxStyle.css">
+                    <VBox.margin>
+                        <Insets bottom="15.0" />
+                    </VBox.margin>
+                </ComboBox>
+            <ComboBox fx:id="course" layoutX="31.0" layoutY="173.0" maxWidth="300.0" prefWidth="150.0" promptText="Course" stylesheets="@comboBoxStyle.css">
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </ComboBox>
+            <ComboBox fx:id="professor" layoutX="31.0" layoutY="173.0" maxWidth="300.0" prefWidth="150.0" promptText="Professor" stylesheets="@comboBoxStyle.css">
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </ComboBox>
+                <TextField fx:id="capacity" maxHeight="0.0" maxWidth="300.0" prefHeight="26.0" prefWidth="200.0" promptText="Capacity" stylesheets="@EmployeePortal.css">
+                    <VBox.margin>
+                        <Insets bottom="15.0" />
+                    </VBox.margin>
+                </TextField>
+                <Button mnemonicParsing="false" onAction="#addCourse" stylesheets="@EmployeePortal.css" text="Add">
+                    <VBox.margin>
+                        <Insets top="15.0" />
+                    </VBox.margin>
+                </Button>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
