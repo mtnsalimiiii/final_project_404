@@ -222,8 +222,8 @@ public class AddCourseController implements Initializable{
         University.loadFaculties();
         if (LoginPanelController.employeePerson == null) return;
 
-        String facultyName = LoginPanelController.employeePerson.getFacultyEmployee();
-        String departmentName = LoginPanelController.employeePerson.getDepartmentEmployee();
+        String facultyName = LoginPanelController.employeePerson.getFaculty();
+        String departmentName = LoginPanelController.employeePerson.getDepartment();
 
         for (Faculty faculty : University.allFaculties) {
             if (facultyName.equals(faculty.getFacultyName())) {
@@ -232,14 +232,23 @@ public class AddCourseController implements Initializable{
                         for (Major major : department.majors) {
                             if (major.getName() != null) {
                                 majorChooser.getItems().add(major.getName());
-
-                                for (Degree degree : major.degrees) {
-                                    if (degree != null) {
-                                        degreeChooser.getItems().add(degree.getClass().getSimpleName());
-                                    }
-                                }
                             }
                         }
+                        majorChooser.setOnAction(e -> {
+                            String selectedMajorName = majorChooser.getValue();
+                            degreeChooser.getItems().clear();
+
+                            for (Major major : department.majors) {
+                                if (major.getName().equals(selectedMajorName)) {
+                                    for (Degree degree : major.degrees) {
+                                        if (degree != null) {
+                                            degreeChooser.getItems().add(degree.getClass().getSimpleName());
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                        });
 
                         majorChooser.setVisibleRowCount(4);
                         degreeChooser.setVisibleRowCount(4);
@@ -250,6 +259,7 @@ public class AddCourseController implements Initializable{
             }
         }
     }
+
 
     @FXML
     public void addCourse(ActionEvent event) {
@@ -274,9 +284,9 @@ public class AddCourseController implements Initializable{
         University.loadFaculties();
 
         for (Faculty faculty : University.allFaculties) {
-            if (faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFacultyEmployee())) {
+            if (faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFaculty())) {
                 for (Department department : faculty.departments) {
-                    if (department.getName().equals(LoginPanelController.employeePerson.getDepartmentEmployee())) {
+                    if (department.getName().equals(LoginPanelController.employeePerson.getDepartment())) {
                         for (Major major : department.majors) {
                             if (major.getName().equals(majorName)) {
 
@@ -306,7 +316,7 @@ public class AddCourseController implements Initializable{
                                     return;
                                 }
 
-                                int courseCount = targetDegree.courses.size();  // تعداد درس های موجود
+                                int courseCount = targetDegree.courses.size();
                                 String id = major.getId() + degreeCode + (courseCount + 1);
 
                                 Course newCourse = new Course(name, credit, id, Status.Active);

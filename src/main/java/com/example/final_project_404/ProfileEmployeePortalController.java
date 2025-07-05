@@ -174,9 +174,9 @@ public class ProfileEmployeePortalController implements Initializable {
 
         University.loadFaculties();
         for (Faculty faculty : University.allFaculties){
-            if (faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFacultyEmployee())){
+            if (faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFaculty())){
                 for (Department department : faculty.departments){
-                    if (department.getName().equals(LoginPanelController.employeePerson.getDepartmentEmployee())){
+                    if (department.getName().equals(LoginPanelController.employeePerson.getDepartment())){
                         for (Employee employee : department.employees){
                             if (employee.equals(LoginPanelController.employeePerson)){
                                 if (!newFirstName.getText().isBlank()){

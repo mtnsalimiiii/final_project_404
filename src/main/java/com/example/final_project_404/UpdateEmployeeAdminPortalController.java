@@ -247,8 +247,8 @@ public class UpdateEmployeeAdminPortalController implements Initializable {
                 System.out.println(employee.getPhoneNumber());
                 System.out.println(employee.getNationalId());
                 System.out.println(employee.getGender());
-                System.out.println(employee.getFacultyEmployee());
-                System.out.println(employee.getDepartmentEmployee());
+                System.out.println(employee.getFaculty());
+                System.out.println(employee.getDepartment());
 
                 break;
             }

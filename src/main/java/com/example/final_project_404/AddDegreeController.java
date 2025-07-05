@@ -177,11 +177,11 @@ public class AddDegreeController implements Initializable {
         University.loadFaculties();
         for (Faculty fac : University.allFaculties) {
             if (fac.getFacultyName() != null &&
-                    fac.getFacultyName().equals(LoginPanelController.employeePerson.getFacultyEmployee())) {
+                    fac.getFacultyName().equals(LoginPanelController.employeePerson.getFaculty())) {
 
                 for (Department dep : fac.departments) {
                     if (dep.getName() != null &&
-                            dep.getName().equals(LoginPanelController.employeePerson.getDepartmentEmployee())) {
+                            dep.getName().equals(LoginPanelController.employeePerson.getDepartment())) {
 
                         for (Major major : dep.majors) {
                             if (major.getName() != null && major.getName().equals(majorChooser.getValue())) {
@@ -211,9 +211,9 @@ public class AddDegreeController implements Initializable {
         if (LoginPanelController.employeePerson == null) return;
 
         for (Faculty faculty : University.allFaculties) {
-            if (faculty.getFacultyName() != null && faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFacultyEmployee())) {
+            if (faculty.getFacultyName() != null && faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFaculty())) {
                 for (Department department : faculty.departments) {
-                    if (department.getName() != null && department.getName().equals(LoginPanelController.employeePerson.getDepartmentEmployee())) {
+                    if (department.getName() != null && department.getName().equals(LoginPanelController.employeePerson.getDepartment())) {
                         for (Major major : department.majors) {
                             if (major.getName() != null) {
                                 majorChooser.getItems().add(major.getName());

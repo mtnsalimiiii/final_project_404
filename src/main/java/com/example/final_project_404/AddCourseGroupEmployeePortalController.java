@@ -164,13 +164,12 @@ public class AddCourseGroupEmployeePortalController implements Initializable{
         stage.show();
     }
 
-    @Override
     public void initialize(URL location, ResourceBundle resources) {
         University.loadFaculties();
         if (LoginPanelController.employeePerson == null) return;
 
-        String facultyName = LoginPanelController.employeePerson.getFacultyEmployee();
-        String departmentName = LoginPanelController.employeePerson.getDepartmentEmployee();
+        String facultyName = LoginPanelController.employeePerson.getFaculty();
+        String departmentName = LoginPanelController.employeePerson.getDepartment();
 
         for (Faculty faculty : University.allFaculties) {
             if (facultyName.equals(faculty.getFacultyName())) {
@@ -179,17 +178,30 @@ public class AddCourseGroupEmployeePortalController implements Initializable{
                         for (Major major : department.majors) {
                             if (major.getName() != null) {
                                 majorChooser.getItems().add(major.getName());
-
-                                for (Degree degree : major.degrees) {
-                                    if (degree != null) {
-                                        degreeChooser.getItems().add(degree.getClass().getSimpleName());
-                                    }
-                                }
                             }
                         }
+                        majorChooser.setOnAction(e -> {
+                            String selectedMajorName = majorChooser.getValue();
+                            degreeChooser.getItems().clear();
+
+                            for (Major major : department.majors) {
+                                if (major.getName().equals(selectedMajorName)) {
+                                    for (Degree degree : major.degrees) {
+                                        if (degree != null) {
+                                            degreeChooser.getItems().add(degree.getClass().getSimpleName());
+                                        }
+                                    }
+                                    for (Professor prof : major.professors){
+                                        professor.getItems().add(prof.getFirst_name()+" "+prof.getLast_name());
+                                    }
+                                    break;
+                                }
+                            }
+                        });
 
                         majorChooser.setVisibleRowCount(4);
                         degreeChooser.setVisibleRowCount(4);
+                        professor.setVisibleRowCount(4);
                         break;
                     }
                 }
