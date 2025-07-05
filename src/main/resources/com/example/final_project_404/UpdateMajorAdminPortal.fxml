@@ -42,7 +42,7 @@
                 </VBox>
             </content>
         </ScrollPane>
-        <VBox fx:id="containerBarEditVBox" disable="true" layoutX="170.0" layoutY="125.0" prefHeight="415.0" prefWidth="315.0" styleClass="content-box" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="315.0" AnchorPane.topAnchor="130.0">
+        <VBox fx:id="containerBarEditVBox" layoutX="170.0" layoutY="125.0" prefHeight="415.0" prefWidth="315.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 100.0% 43.9394%, #00a1ff 0.0%, #ffffff 100.0%);" styleClass="content-box" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="315.0" AnchorPane.topAnchor="130.0">
             <padding>
                 <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
             </padding>
@@ -82,7 +82,7 @@
             </stylesheets>
         </VBox>
         <ComboBox fx:id="operationChooserUpdateMajorAdmin" layoutX="372.0" layoutY="82.0" maxWidth="315.0" minHeight="40.0" onAction="#setOperationChooserUpdateMajor" promptText="Choose Your Operation" stylesheets="@comboBoxStyle.css" AnchorPane.leftAnchor="320.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="85.0" />
-        <VBox fx:id="containerBarDeactiveVBox" disable="true" layoutX="492.0" layoutY="125.0" prefHeight="415.0" prefWidth="315.0" styleClass="content-box" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="490.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="130.0">
+        <VBox fx:id="containerBarDeactiveVBox" layoutX="492.0" layoutY="125.0" prefHeight="415.0" prefWidth="315.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 100.0% 43.9394%, #00a1ff 0.0%, #ffffff 100.0%);" styleClass="content-box" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="490.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="130.0">
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
             </padding>
