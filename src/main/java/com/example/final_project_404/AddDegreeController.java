@@ -175,16 +175,12 @@ public class AddDegreeController implements Initializable {
     void addDegree(ActionEvent event)throws IOException{
         Degree degree = null;
         University.loadFaculties();
-        for (Faculty fac : University.allFaculties) {
-            if (fac.getFacultyName() != null &&
-                    fac.getFacultyName().equals(LoginPanelController.employeePerson.getFaculty())) {
-
-                for (Department dep : fac.departments) {
-                    if (dep.getName() != null &&
-                            dep.getName().equals(LoginPanelController.employeePerson.getDepartment())) {
-
-                        for (Major major : dep.majors) {
-                            if (major.getName() != null && major.getName().equals(majorChooser.getValue())) {
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName() != null && faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
+                for (Department department : faculty.departments) {
+                    if (department.getName() != null && department.getName().equals(LoginPanelController.employeePerson.getDepartment()) && department.getStatus().equals(Status.Active)) {
+                        for (Major major : department.majors) {
+                            if (major.getName() != null && major.getName().equals(majorChooser.getValue()) && major.getStatus().equals(Status.Active)) {
                                 String selectedDegree = degreeChooser.getValue();
                                 if ("Bachelor".equals(selectedDegree)) {
                                     degree = new Bachelor();
@@ -208,14 +204,13 @@ public class AddDegreeController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         University.loadFaculties();
-        if (LoginPanelController.employeePerson == null) return;
 
         for (Faculty faculty : University.allFaculties) {
-            if (faculty.getFacultyName() != null && faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFaculty())) {
+            if (faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
                 for (Department department : faculty.departments) {
-                    if (department.getName() != null && department.getName().equals(LoginPanelController.employeePerson.getDepartment())) {
+                    if (department.getName().equals(LoginPanelController.employeePerson.getDepartment()) && department.getStatus().equals(Status.Active)) {
                         for (Major major : department.majors) {
-                            if (major.getName() != null) {
+                            if (major.getStatus().equals(Status.Active)){
                                 majorChooser.getItems().add(major.getName());
                             }
                         }

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Degree implements CheckCondition,CheckPass {
-    public List<Course> courses=new ArrayList<>();
+    public List<Course> courses = new ArrayList<>();
     @Override
     public boolean isPass(double passingScore,double grade) {
         return grade >= passingScore;

@@ -220,26 +220,27 @@ public class AddCourseController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         University.loadFaculties();
-        if (LoginPanelController.employeePerson == null) return;
+//        if (LoginPanelController.employeePerson == null) return;
 
-        String facultyName = LoginPanelController.employeePerson.getFaculty();
-        String departmentName = LoginPanelController.employeePerson.getDepartment();
+//        String facultyName = LoginPanelController.employeePerson.getFaculty();
+//        String departmentName = LoginPanelController.employeePerson.getDepartment();
 
         for (Faculty faculty : University.allFaculties) {
-            if (facultyName.equals(faculty.getFacultyName())) {
+            if (LoginPanelController.employeePerson.getFaculty().equals(faculty.getFacultyName()) && faculty.getStatus().equals(Status.Active)) {
                 for (Department department : faculty.departments) {
-                    if (departmentName.equals(department.getName())) {
+                    if (LoginPanelController.employeePerson.getDepartment().equals(department.getName()) && department.getStatus().equals(Status.Active)) {
                         for (Major major : department.majors) {
-                            if (major.getName() != null) {
+                            if (major.getStatus().equals(Status.Active)) {
                                 majorChooser.getItems().add(major.getName());
                             }
                         }
+                        majorChooser.setVisibleRowCount(4);
+
                         majorChooser.setOnAction(e -> {
-                            String selectedMajorName = majorChooser.getValue();
                             degreeChooser.getItems().clear();
 
                             for (Major major : department.majors) {
-                                if (major.getName().equals(selectedMajorName)) {
+                                if (major.getName().equals(majorChooser.getValue()) && major.getStatus().equals(Status.Active)) {
                                     for (Degree degree : major.degrees) {
                                         if (degree != null) {
                                             degreeChooser.getItems().add(degree.getClass().getSimpleName());
@@ -250,7 +251,6 @@ public class AddCourseController implements Initializable{
                             }
                         });
 
-                        majorChooser.setVisibleRowCount(4);
                         degreeChooser.setVisibleRowCount(4);
                         break;
                     }
@@ -258,8 +258,8 @@ public class AddCourseController implements Initializable{
                 break;
             }
         }
-    }
 
+    }
 
     @FXML
     public void addCourse(ActionEvent event) {
@@ -284,11 +284,11 @@ public class AddCourseController implements Initializable{
         University.loadFaculties();
 
         for (Faculty faculty : University.allFaculties) {
-            if (faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFaculty())) {
+            if (faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
                 for (Department department : faculty.departments) {
-                    if (department.getName().equals(LoginPanelController.employeePerson.getDepartment())) {
+                    if (department.getName().equals(LoginPanelController.employeePerson.getDepartment()) && department.getStatus().equals(Status.Active)) {
                         for (Major major : department.majors) {
-                            if (major.getName().equals(majorName)) {
+                            if (major.getName().equals(majorName) && major.getStatus().equals(Status.Active)) {
 
                                 String degreeCode;
                                 if (selectedDegree.equalsIgnoreCase("Bachelor")) {

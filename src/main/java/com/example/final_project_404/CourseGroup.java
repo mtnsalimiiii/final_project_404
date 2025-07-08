@@ -24,9 +24,6 @@ public class CourseGroup implements Serializable {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
     public Status getStatus() {return status;
     }
     public void setStatus(Status status) {
@@ -46,10 +43,10 @@ public class CourseGroup implements Serializable {
     public void setProfessor(String professorName) {
         this.professorName = professorName;
     }
+
     public int getCapacity() {
         return capacity;
     }
-
     public void setCapacity(int capacity) {
         this.capacity = capacity;
     }
