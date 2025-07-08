@@ -211,20 +211,21 @@ public class AddCourseGroupEmployeePortalController implements Initializable{
     }
 
     @FXML
-    public void addCourse(ActionEvent event) {
-       /* String majorName = majorChooser.getValue();
+    public void addCourseGroup(ActionEvent event) {
+        String majorName = majorChooser.getValue();
         String selectedDegree = degreeChooser.getValue();
-        /String name = courseName.getText().trim();
-        String creditStr = courseCredit.getText().trim();
+        String capacityGroupStr = capacity.getText().trim();
+        String courseTarget=course.getValue();
 
-        if (majorName == null || selectedDegree == null || name.isEmpty() || creditStr.isEmpty()) {
+        if (majorName == null || selectedDegree == null || capacityGroupStr.isEmpty()
+                || course.getValue() == null || professor.getValue() == null) {
             System.out.println("Please fill in all the fields!");
             return;
         }
 
-        int credit;
+        int capacityGroup;
         try {
-            credit = Integer.parseInt(creditStr);
+            capacityGroup = Integer.parseInt(capacityGroupStr);
         } catch (NumberFormatException e) {
             System.out.println("Invalid credit value.");
             return;
@@ -233,9 +234,9 @@ public class AddCourseGroupEmployeePortalController implements Initializable{
         University.loadFaculties();
 
         for (Faculty faculty : University.allFaculties) {
-            if (faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFacultyEmployee())) {
+            if (faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFaculty())) {
                 for (Department department : faculty.departments) {
-                    if (department.getName().equals(LoginPanelController.employeePerson.getDepartmentEmployee())) {
+                    if (department.getName().equals(LoginPanelController.employeePerson.getDepartment())) {
                         for (Major major : department.majors) {
                             if (major.getName().equals(majorName)) {
 
@@ -250,37 +251,36 @@ public class AddCourseGroupEmployeePortalController implements Initializable{
                                     System.out.println("Unknown degree selected");
                                     return;
                                 }
+                                try {
+                                    for (Degree degree : major.degrees) {
+                                        if (degree.getClass().getSimpleName().equalsIgnoreCase(selectedDegree)) {
+                                            try {
+                                                for(Course course1:degree.courses){
+                                                    if(courseTarget==course1.getName()){
+                                                        String id=course1.getId()+(course1.courseGroups.size()+1);
+                                                        course1.courseGroups.add(new CourseGroup(professor.getValue(),capacityGroup,id,Status.Active));
+                                                        University.saveFaculties();
+                                                        System.out.println("coursegroup add successful");
+                                                    }
+                                                }
+                                            }catch (Exception e){
+                                                System.out.println("Course not found in degree.");
+                                            }
 
-
-                                Degree targetDegree = null;
-                                for (Degree degree : major.degrees) {
-                                    if (degree.getClass().getSimpleName().equalsIgnoreCase(selectedDegree)) {
-                                        targetDegree = degree;
-                                        break;
-                                    }
+                                        }
                                 }
 
-                                if (targetDegree == null) {
+                                }catch (Exception exception){
                                     System.out.println("Degree not found in major.");
-                                    return;
                                 }
 
-                                int courseCount = targetDegree.courses.size();  // تعداد درس های موجود
-                                String id = major.getId() + degreeCode + (courseCount + 1);
 
-                                Course newCourse = new Course(name, credit, id);
-                                targetDegree.courses.add(newCourse);
-
-                                University.saveFaculties();
-                                System.out.println("Course added with ID: " + id);
-                                return;
                             }
                         }
                     }
                 }
             }
         }
-        System.out.println("Major not found!");*/
+        System.out.println("Major not found!");
     }
-
 }

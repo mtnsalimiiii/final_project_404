@@ -66,7 +66,7 @@
                         <Insets bottom="15.0" />
                     </VBox.margin>
                 </TextField>
-                <Button mnemonicParsing="false" onAction="#addCourse" stylesheets="@EmployeePortal.css" text="Add">
+                <Button mnemonicParsing="false" onAction="#addCourseGroup" stylesheets="@EmployeePortal.css" text="Add">
                     <VBox.margin>
                         <Insets top="15.0" />
                     </VBox.margin>

@@ -7,26 +7,30 @@ import java.util.List;
 import java.util.Map;
 
 public class CourseGroup implements Serializable {
-    private Course course;
     private String semasterCode;
-    private Professor professor;
+    private String professorName;
     private Status status;
-
+    private int capacity;
+    private String id;
     private Map<Student, Double> grades = new HashMap<>();
     private List<Student> enrolledStudents = new ArrayList<>();
+    public CourseGroup(String professorName,int capacity,String id,Status status) {
+        this.professorName = professorName;
+        this.capacity=capacity;
+        this.id=id;
+        this.status=status;
+    }
+    public String getId() {
+        return id;
+    }
 
-    public Status getStatus() {
-        return status;
+    public void setId(String id) {
+        this.id = id;
+    }
+    public Status getStatus() {return status;
     }
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-    public void setCourse(Course course) {
-        this.course = course;
     }
 
     public String getSemasterCode() {
@@ -36,10 +40,17 @@ public class CourseGroup implements Serializable {
         this.semasterCode = semasterCode;
     }
 
-    public Professor getProfessor() {
-        return professor;
+    public String getProfessor() {
+        return professorName;
     }
-    public void setProfessor(Professor professor) {
-        this.professor = professor;
+    public void setProfessor(String professorName) {
+        this.professorName = professorName;
+    }
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 }
