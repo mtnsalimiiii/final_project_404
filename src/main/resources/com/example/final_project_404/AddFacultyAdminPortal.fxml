@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -22,7 +23,11 @@
                 <VBox fx:id="navigationBarVBox" prefHeight="420.0" prefWidth="150.0" styleClass="nav-bar" stylesheets="@EmployeePortal.css">
                     <children>
                         <Button layoutX="20.0" layoutY="20.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#dashboardAdminPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Dashboard" />
-                        <Button layoutX="20.0" layoutY="62.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add Faculty" />
+                        <Button layoutX="20.0" layoutY="62.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" stylesheets="@DashboardButton.css" text="Add Faculty">
+                     <styleClass>
+                        <String fx:value="nav-button-dashboard" />
+                        <String fx:value="pressed" />
+                     </styleClass></Button>
                         <Button layoutX="20.0" layoutY="65.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateFacultyAdminPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Update&#10;Faculty" />
                         <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addDepartmentAdminPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add &#10;Department" textAlignment="CENTER" />
                         <Button layoutX="20.0" layoutY="176.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateDepartmentAdminPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Update&#10;Department" textAlignment="CENTER" />

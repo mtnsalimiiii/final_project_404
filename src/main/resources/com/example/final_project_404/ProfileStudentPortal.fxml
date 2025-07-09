@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -27,7 +28,11 @@
               <VBox fx:id="navigationBarVBox" alignment="TOP_CENTER" prefHeight="470.0" prefWidth="150.0" styleClass="nav-bar" stylesheets="@EmployeePortal.css">
                   <children>
                       <Button layoutX="20.0" layoutY="20.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#dashboardStudentPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Dashboard" />
-                      <Button layoutX="20.0" layoutY="150.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Profile" />
+                      <Button layoutX="20.0" layoutY="150.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" stylesheets="@DashboardButton.css" text="Profile">
+                     <styleClass>
+                        <String fx:value="nav-button-dashboard" />
+                        <String fx:value="pressed" />
+                     </styleClass></Button>
                       <Button layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#reportsStudentPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Reports" />
                       <Button layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#signOutStudentPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Sign out" />
                   </children>

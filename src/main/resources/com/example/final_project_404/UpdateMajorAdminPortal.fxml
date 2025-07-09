@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import java.net.URL?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -29,7 +30,11 @@
                         <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addDepartmentAdminPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add &#10;Department" textAlignment="CENTER" />
                         <Button layoutX="20.0" layoutY="176.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateDepartmentAdminPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Update&#10;Department" textAlignment="CENTER" />
                         <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addMajorAdminPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add Major" textAlignment="CENTER" />
-                        <Button layoutX="20.0" layoutY="307.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Update Major" textAlignment="CENTER" />
+                        <Button layoutX="20.0" layoutY="307.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" stylesheets="@DashboardButton.css" text="Update Major" textAlignment="CENTER">
+                     <styleClass>
+                        <String fx:value="nav-button-dashboard" />
+                        <String fx:value="pressed" />
+                     </styleClass></Button>
                         <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addEmployeeAdminPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add Employee" textAlignment="CENTER" />
                         <Button layoutX="20.0" layoutY="396.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateEmployeeAdminPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Update&#10;Employee" textAlignment="CENTER" />
                         <Button layoutX="20.0" layoutY="150.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#profileAdminPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Profile" />

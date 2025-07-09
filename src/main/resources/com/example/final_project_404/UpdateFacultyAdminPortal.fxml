@@ -25,7 +25,11 @@
                     <children>
                         <Button layoutX="20.0" layoutY="20.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#dashboardAdminPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Dashboard" />
                         <Button layoutX="20.0" layoutY="62.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addFacultyAdminPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add Faculty" />
-                        <Button layoutX="20.0" layoutY="65.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Update&#10;Faculty" />
+                        <Button layoutX="20.0" layoutY="65.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" stylesheets="@DashboardButton.css" text="Update&#10;Faculty">
+                     <styleClass>
+                        <String fx:value="nav-button-dashboard" />
+                        <String fx:value="pressed" />
+                     </styleClass></Button>
                         <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addDepartmentAdminPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add &#10;Department" textAlignment="CENTER" />
                         <Button layoutX="20.0" layoutY="176.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateDepartmentAdminPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Update&#10;Department" textAlignment="CENTER" />
                         <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addMajorAdminPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add Major" textAlignment="CENTER" />

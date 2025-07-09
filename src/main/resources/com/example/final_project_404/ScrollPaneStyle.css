@@ -1,0 +1,42 @@
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: #1e1e2e; /* پس‌زمینه تیره جدول */
+    -fx-border-radius: 10;
+/*    -fx-background-radius: 10;*/
+}
+
+.scroll-bar:vertical, .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-padding: 5;
+}
+
+.scroll-bar:vertical .thumb,
+.scroll-bar:horizontal .thumb {
+    -fx-background-color: #4aa9ff; /* رنگ آبی مشابه دکمه‌ها */
+    -fx-background-insets: 2;
+    -fx-background-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 4, 0, 0, 1);
+    -fx-opacity: 0.8;
+}
+
+.scroll-bar .thumb:hover {
+    -fx-background-color: #74c0ff;
+    -fx-opacity: 1.0;
+}
+
+.scroll-bar .track {
+    -fx-background-color: #2a2a3c; /* زمینه مسیر اسکرول */
+    -fx-background-insets: 0;
+    -fx-background-radius: 10;
+}
+
+.scroll-bar .increment-button,
+.scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-shape: "";
+}

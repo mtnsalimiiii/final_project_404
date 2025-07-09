@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -25,8 +26,13 @@
                 <children>
                     <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#dashboardEmployeePortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Dashboard" />
                     <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addDegreeEmployeePortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add Degree" />
-                    <Button layoutX="20.0" layoutY="86.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addCourseEmployeePortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add Course" />
-                    <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Professors" />
+                    <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addCourseEmployeePortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add Course" />
+                    <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addCourseGroupEmployeePortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add&#10;Course Group" textAlignment="CENTER" />
+                    <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" stylesheets="@DashboardButton.css" text="Professors">
+                  <styleClass>
+                     <String fx:value="nav-button-dashboard" />
+                     <String fx:value="pressed" />
+                  </styleClass></Button>
                     <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#RegisterNewProfessorEmployeePortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Register New&#10;Professor" textAlignment="CENTER" />
                     <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#UpdateProfessorEmployeePortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Update&#10;Professor" />
                     <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#studentsEmpoyeePortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Students" />
@@ -52,18 +58,18 @@
                     <Insets bottom="15.0" />
                 </VBox.margin>
             </TextField>
-            <ScrollPane prefHeight="366.0" prefWidth="589.0">
+            <ScrollPane>
                 <content>
-                    <TableView prefHeight="331.0" prefWidth="574.0" stylesheets="@TableViewStyle.css">
+                    <TableView stylesheets="@TableViewStyle.css">
                         <columns>
-                            <TableColumn prefWidth="75.0" text="number" />
-                            <TableColumn prefWidth="75.0" text="name" />
-                            <TableColumn prefWidth="75.0" text="age" />
-                            <TableColumn prefWidth="75.0" text="faculty" />
-                            <TableColumn prefWidth="75.0" text="department" />
-                            <TableColumn prefWidth="75.0" text="major" />
-                            <TableColumn prefWidth="75.0" text="degree" />
-                            <TableColumn prefWidth="75.0" text="course" />
+                            <TableColumn fx:id="rowNumberTableview" editable="false" prefWidth="75.0" resizable="false" text="number" />
+                            <TableColumn fx:id="nameTableview" editable="false" prefWidth="75.0" resizable="false" text="name" />
+                            <TableColumn fx:id="ageTableview" editable="false" prefWidth="75.0" resizable="false" text="age" />
+                            <TableColumn fx:id="facultyTableview" editable="false" prefWidth="75.0" resizable="false" text="faculty" />
+                            <TableColumn fx:id="departmentTableview" editable="false" prefWidth="75.0" resizable="false" text="department" />
+                            <TableColumn fx:id="majorTableview" editable="false" prefWidth="75.0" resizable="false" text="major" />
+                            <TableColumn fx:id="degreeTableview" editable="false" prefWidth="75.0" resizable="false" text="degree" />
+                            <TableColumn fx:id="courseTableview" editable="false" prefWidth="75.0" resizable="false" text="course" />
                         </columns>
                     </TableView>
                 </content>

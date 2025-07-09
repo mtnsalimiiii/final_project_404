@@ -180,6 +180,17 @@ public class RegisterStudentController implements Initializable {
         stage.show();
     }
 
+    @FXML
+    public void addCourseGroupEmployeePortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("AddCourseGroupEmployeePortal.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Add New Course Group");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
 
     public Date getDateOfBirth(ActionEvent event) {
         Date dateOfBirth = new Date();
@@ -196,7 +207,6 @@ public class RegisterStudentController implements Initializable {
         date.setDay(LocalDate.now().getDayOfMonth());
         return date;
     }
-
     public void addNewStudent(ActionEvent event) throws IOException {
         Student.loadAllStudents();
         University.loadFaculties();
@@ -260,6 +270,7 @@ public class RegisterStudentController implements Initializable {
             System.out.println("Please Fill All Field!");
         }
     }
+
     public String generateStudentId() {
         return "STU" + (University.allStudents.size() + 1);
     }

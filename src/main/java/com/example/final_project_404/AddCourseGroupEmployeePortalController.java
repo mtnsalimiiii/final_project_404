@@ -153,6 +153,18 @@ public class AddCourseGroupEmployeePortalController implements Initializable{
         stage.setResizable(false);
         stage.show();
     }
+
+    @FXML
+    public void addCourseEmployeePortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("AddCourseEmployeePortal.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Add New Course");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
     @FXML
     void addStudentEmployeePortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("RegisterStudent.fxml"));
