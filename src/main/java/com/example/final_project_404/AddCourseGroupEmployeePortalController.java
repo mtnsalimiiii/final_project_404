@@ -30,7 +30,7 @@ public class AddCourseGroupEmployeePortalController implements Initializable{
     private ComboBox<String> degreeChooser;
 
     @FXML
-    private ComboBox<String> course;;
+    private ComboBox<String> courseChooser;;
 
     @FXML
     private ComboBox<String> professor;
@@ -172,28 +172,50 @@ public class AddCourseGroupEmployeePortalController implements Initializable{
         String departmentName = LoginPanelController.employeePerson.getDepartment();
 
         for (Faculty faculty : University.allFaculties) {
-            if (facultyName.equals(faculty.getFacultyName()) && faculty.getStatus().equals(Status.Active)) {
+            if (facultyName.equals(faculty.getFacultyName()) && faculty.getStatus() == Status.Active) {
                 for (Department department : faculty.departments) {
-                    if (departmentName.equals(department.getName()) && department.getStatus().equals(Status.Active)) {
+                    if (departmentName.equals(department.getName()) && department.getStatus() == Status.Active) {
+
                         for (Major major : department.majors) {
-                            if (major.getName() != null && major.getStatus().equals(Status.Active)) {
+                            if (major.getName() != null && major.getStatus() == Status.Active) {
                                 majorChooser.getItems().add(major.getName());
                             }
                         }
+
                         majorChooser.setOnAction(e -> {
                             String selectedMajorName = majorChooser.getValue();
                             degreeChooser.getItems().clear();
+                            professor.getItems().clear();
+                            courseChooser.getItems().clear();
 
                             for (Major major : department.majors) {
-                                if (major.getName().equals(selectedMajorName) && major.getStatus().equals(Status.Active)) {
+                                if (major.getName().equals(selectedMajorName) && major.getStatus() == Status.Active) {
+
                                     for (Degree degree : major.degrees) {
                                         if (degree != null) {
                                             degreeChooser.getItems().add(degree.getClass().getSimpleName());
                                         }
                                     }
-                                    for (Professor prof : major.professors){
-                                        professor.getItems().add(prof.getFirst_name()+" "+prof.getLast_name());
+
+                                    for (Professor prof : major.professors) {
+                                        professor.getItems().add(prof.getFirst_name() + " " + prof.getLast_name());
                                     }
+                                    degreeChooser.setOnAction(ev -> {
+                                        String selectedDegree = degreeChooser.getValue();
+                                        courseChooser.getItems().clear();
+
+                                        for (Degree degree : major.degrees) {
+                                            if (degree.getClass().getSimpleName().equalsIgnoreCase(selectedDegree)) {
+                                                for (Course course : degree.courses) {
+                                                    if (course.getStatus() == Status.Active) {
+                                                        courseChooser.getItems().add(course.getName());
+                                                    }
+                                                }
+                                                break;
+                                            }
+                                        }
+                                    });
+
                                     break;
                                 }
                             }
@@ -202,6 +224,7 @@ public class AddCourseGroupEmployeePortalController implements Initializable{
                         majorChooser.setVisibleRowCount(4);
                         degreeChooser.setVisibleRowCount(4);
                         professor.setVisibleRowCount(4);
+                        courseChooser.setVisibleRowCount(4);
                         break;
                     }
                 }
@@ -215,10 +238,10 @@ public class AddCourseGroupEmployeePortalController implements Initializable{
         String majorName = majorChooser.getValue();
         String selectedDegree = degreeChooser.getValue();
         String capacityGroupStr = capacity.getText().trim();
-        String courseTarget=course.getValue();
+        String courseTarget=courseChooser.getValue();
 
         if (majorName == null || selectedDegree == null || capacityGroupStr.isEmpty()
-                || course.getValue() == null || professor.getValue() == null) {
+                || courseChooser.getValue() == null || professor.getValue() == null) {
             System.out.println("Please fill in all the fields!");
             return;
         }

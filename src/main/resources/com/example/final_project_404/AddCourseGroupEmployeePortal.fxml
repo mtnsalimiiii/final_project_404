@@ -51,7 +51,7 @@
                         <Insets bottom="15.0" />
                     </VBox.margin>
                 </ComboBox>
-            <ComboBox fx:id="course" layoutX="31.0" layoutY="173.0" maxWidth="300.0" prefWidth="150.0" promptText="Course" stylesheets="@comboBoxStyle.css">
+            <ComboBox fx:id="courseChooser" layoutX="31.0" layoutY="173.0" maxWidth="300.0" prefWidth="150.0" promptText="Course" stylesheets="@comboBoxStyle.css">
                <VBox.margin>
                   <Insets bottom="15.0" />
                </VBox.margin>

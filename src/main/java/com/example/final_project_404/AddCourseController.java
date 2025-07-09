@@ -301,37 +301,26 @@ public class AddCourseController implements Initializable{
                                     System.out.println("Unknown degree selected");
                                     return;
                                 }
-
-
-                                Degree targetDegree = null;
-                                for (Degree degree : major.degrees) {
-                                    if (degree.getClass().getSimpleName().equalsIgnoreCase(selectedDegree)) {
-                                        targetDegree = degree;
-                                        break;
+                                try {
+                                    for (Degree degree : major.degrees) {
+                                        if (degree.getClass().getSimpleName().equalsIgnoreCase(selectedDegree)) {
+                                            String id = major.getId() + degreeCode + (degree.courses.size() + 1);
+                                            degree.courses.add(new Course(name,credit,id,Status.Active));
+                                            University.saveFaculties();
+                                            System.out.println("Course add successful");
+                                        }
                                     }
-                                }
 
-                                if (targetDegree == null) {
+
+                                }catch (Exception exception){
                                     System.out.println("Degree not found in major.");
-                                    return;
                                 }
-
-                                int courseCount = targetDegree.courses.size();
-                                String id = major.getId() + degreeCode + (courseCount + 1);
-
-                                Course newCourse = new Course(name, credit, id, Status.Active);
-                                targetDegree.courses.add(newCourse);
-
-                                University.saveFaculties();
-                                System.out.println("Course added with ID: " + id);
-                                return;
                             }
                         }
                     }
                 }
             }
         }
-        System.out.println("Major not found!");
     }
 
 }

@@ -1,9 +1,10 @@
 package com.example.final_project_404;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Degree implements CheckCondition,CheckPass {
+public abstract class Degree implements CheckCondition,CheckPass, Serializable {
     public List<Course> courses = new ArrayList<>();
     @Override
     public boolean isPass(double passingScore,double grade) {
