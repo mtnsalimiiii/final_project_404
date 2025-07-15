@@ -166,24 +166,39 @@ public class AddMajorAdminPortalController implements Initializable {
 
 
     public String getMajorId(String facultyName, String departmentName) throws FileNotFoundException {
+        University.loadFaculties();
         String id = "";
         for (Faculty faculty : University.allFaculties){
-            if(faculty.getFacultyName().equals(facultyName)){
+            if (faculty.getFacultyName().equals(facultyChooserAddMajorAdmin.getValue())){
                 for (Department department : faculty.departments){
-                    if (department.getName().equals(departmentName)){
-                        if (department.majors.size()<9){
-                            id = department.getId()+"0"+(department.majors.size()+1);
-                        }
-                        else {
-                            id = department.getId()+(department.majors.size()+1);
-                        }
-
+                    if (department.getName().equals(departmentChooserAddMajorAdmin.getValue())){
+                        id = String.format("%02d", department.majors.size()+1);
+                        break;
                     }
                 }
                 break;
             }
         }
         return id;
+
+//        String id = "";
+//        for (Faculty faculty : University.allFaculties){
+//            if(faculty.getFacultyName().equals(facultyName)){
+//                for (Department department : faculty.departments){
+//                    if (department.getName().equals(departmentName)){
+//                        if (department.majors.size()<9){
+//                            id = department.getId()+"0"+(department.majors.size()+1);
+//                        }
+//                        else {
+//                            id = department.getId()+(department.majors.size()+1);
+//                        }
+//
+//                    }
+//                }
+//                break;
+//            }
+//        }
+//        return id;
     }
 
 //    public int getPublishYear(){

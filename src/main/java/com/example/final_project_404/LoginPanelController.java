@@ -130,7 +130,7 @@ public class LoginPanelController{
                 for (Student student : University.allStudents) {
                     if (student.getId().equals(username) && student.getNationalId().equals(password) && student.getStatus().equals(Status.Active)) {
                         studentPerson = student;
-                        System.out.println("Successfull login"  + student.getFirst_name());
+                        System.out.println("Successfull login "  + student.getFirst_name());
                         Parent root = FXMLLoader.load(getClass().getResource("StudentPortal.fxml"));
                         Scene scene = new Scene(root);
                         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

@@ -166,17 +166,27 @@ public class AddDepartmentAdminPortalController implements Initializable {
 //    }
 
     public String getDepartmentId(String facultyName) throws FileNotFoundException {
+        University.loadFaculties();
         String id = "";
         for (Faculty faculty : University.allFaculties){
-            if(faculty.getFacultyName().equals(facultyName)){
-                if(faculty.departments.size()<9)
-                    id= faculty.getId()+0+(faculty.departments.size()+1);
-                else
-                    id = faculty.getId()+(faculty.departments.size()+1);
+            if (faculty.getFacultyName().equals(facultyChooserAddDepartmentAdmin.getValue())){
+                id = String.format("%02d", faculty.departments.size()+1);
                 break;
             }
         }
         return id;
+
+//        String id = "";
+//        for (Faculty faculty : University.allFaculties){
+//            if(faculty.getFacultyName().equals(facultyName)){
+//                if(faculty.departments.size()<9)
+//                    id= faculty.getId()+0+(faculty.departments.size()+1);
+//                else
+//                    id = faculty.getId()+(faculty.departments.size()+1);
+//                break;
+//            }
+//        }
+//        return id;
     }
 
     public void addNewDepartment(ActionEvent event) throws IOException {
