@@ -4,6 +4,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -47,38 +48,41 @@
                 </padding>
             </VBox>
         </ScrollPane>
-        <VBox fx:id="containerBarVBox" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" styleClass="content-box" stylesheets="@EmployeePortal.css">
-         <children>
-            <ComboBox prefWidth="300.0" promptText="what topic do you want search:" stylesheets="@comboBoxStyle.css">
-               <VBox.margin>
-                  <Insets bottom="15.0" left="145.0" />
-               </VBox.margin>
-            </ComboBox>
-            <TextField>
-               <VBox.margin>
-                  <Insets bottom="15.0" />
-               </VBox.margin>
-            </TextField>
-            <ScrollPane prefHeight="335.0">
-               <content>
-                  <TableView prefHeight="334.0" prefWidth="585.0" stylesheets="@TableViewStyle.css">
-                    <columns>
-                      <TableColumn fx:id="rowNumberTableview" editable="false" prefWidth="70.0" resizable="false" text="number" />
-                      <TableColumn fx:id="nameTableview" editable="false" prefWidth="100.0" resizable="false" text="name" />
-                        <TableColumn fx:id="ageTableview" editable="false" prefWidth="50.0" resizable="false" text="age" />
-                        <TableColumn fx:id="facultyTableview" editable="false" prefWidth="100.0" resizable="false" text="faculty" />
-                        <TableColumn fx:id="departmentTableview" editable="false" prefWidth="100.0" resizable="false" text="department" />
-                        <TableColumn fx:id="majorTableview" editable="false" prefWidth="100.0" resizable="false" text="major" />
-                        <TableColumn fx:id="degreeTableview" editable="false" prefWidth="100.0" resizable="false" text="degree" />
-                        <TableColumn fx:id="courseTableview" editable="false" prefWidth="100.0" resizable="false" text="course" />
-                    </columns>
-                  </TableView>
-               </content>
-            </ScrollPane>
-         </children>
-         <padding>
-            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-         </padding>
-        </VBox>
+        <AnchorPane layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" AnchorPane.leftAnchor="170.0">
+            <children>
+                <ComboBox fx:id="topicChooser" layoutX="164.0" layoutY="14.0" prefWidth="300.0" promptText="what topic do you want search:" stylesheets="@comboBoxStyle.css" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="165.0" AnchorPane.topAnchor="0.0" />
+                <TextField fx:id="searchBox" layoutX="19.0" layoutY="67.0" prefHeight="26.0" prefWidth="540.0" visible="false" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0" />
+                <ScrollPane layoutX="60.0" layoutY="113.0" prefHeight="350.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0">
+                    <content>
+                        <TableView fx:id="professorsTableview" stylesheets="@TableViewStyle.css">
+                            <columns>
+                                <TableColumn fx:id="rowNumberTableview" editable="false" prefWidth="60.0" resizable="false" text="Number" />
+                                <TableColumn fx:id="nameTableview" editable="false" prefWidth="240.0" resizable="false" text="Name">
+                                    <columns>
+                                        <TableColumn fx:id="firstNameTableview" editable="false" prefWidth="120.0" resizable="false" text="First Name" />
+                                        <TableColumn fx:id="lastNameTableview" editable="false" prefWidth="120.0" resizable="false" text="Last Name" />
+                                    </columns>
+                                </TableColumn>
+                                <TableColumn fx:id="ageTableview" editable="false" prefWidth="50.0" resizable="false" text="Age" />
+                                <TableColumn fx:id="genderTableview" editable="false" prefWidth="75.0" resizable="false" text="Gender" />
+                                <TableColumn fx:id="phoneTableview" editable="false" prefWidth="100.0" resizable="false" text="Phone Number" />
+                                <TableColumn fx:id="nationalIdTableview" editable="false" prefWidth="100.0" resizable="false" text="National ID" />
+                                <TableColumn fx:id="studentIdTableview" editable="false" prefWidth="75.0" resizable="false" text="Student ID" />
+                                <TableColumn fx:id="dateOfJoinTableview" editable="false" prefWidth="100.0" resizable="false" text="Date of&#10;Registration" />
+                                <TableColumn fx:id="facultyTableview" editable="false" prefWidth="100.0" resizable="false" text="Facullty" />
+                                <TableColumn fx:id="departmentTableview" editable="false" prefWidth="100.0" resizable="false" text="Department" />
+                                <TableColumn fx:id="majorTableview" editable="false" prefWidth="100.0" resizable="false" text="Major" />
+                            </columns>
+                        </TableView>
+                    </content>
+                </ScrollPane>
+                <ComboBox fx:id="itemChooser" layoutX="183.0" layoutY="64.0" prefHeight="38.0" prefWidth="261.0" stylesheets="@comboBoxStyle.css" visible="false" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="165.0" />
+                <DatePicker fx:id="primaryDate" layoutX="148.0" layoutY="71.0" visible="false" AnchorPane.leftAnchor="95.0" AnchorPane.rightAnchor="340.0" />
+                <DatePicker fx:id="secondaryDate" layoutX="363.0" layoutY="71.0" visible="false" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="95.0" />
+            </children>
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+        </AnchorPane>
     </children>
 </AnchorPane>

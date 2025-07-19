@@ -46,9 +46,9 @@
                 </padding>
             </VBox>
         </ScrollPane>
-        <VBox fx:id="containerBarVBox" alignment="CENTER_LEFT" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" styleClass="content-box" stylesheets="@EmployeePortal.css">
+        <VBox fx:id="containerBarVBox" alignment="CENTER_LEFT" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" stylesheets="@EmployeePortal.css">
             <padding>
-                <Insets bottom="20.0" left="20.0" top="10.0" />
+                <Insets bottom="20.0" left="20.0" right="20.0" />
             </padding>
          <children>
             <TextField fx:id="firstnameRegisterStudentEmployee" maxHeight="0.0" maxWidth="300.0" prefHeight="26.0" prefWidth="200.0" promptText="First Name" stylesheets="@EmployeePortal.css">
@@ -93,7 +93,7 @@
             </ComboBox>
             <ComboBox fx:id="majorChooserRegisterStudentEmployee" layoutX="31.0" layoutY="173.0" maxWidth="300.0" prefWidth="150.0" promptText="Major" stylesheets="@comboBoxStyle.css">
                <VBox.margin>
-                  <Insets bottom="7.0" />
+                  <Insets bottom="20.0" />
                </VBox.margin>
             </ComboBox>
             <Button mnemonicParsing="false" onAction="#addNewStudent" stylesheets="@EmployeePortal.css" text="Register">

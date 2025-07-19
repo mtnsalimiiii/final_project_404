@@ -1,5 +1,7 @@
 package com.example.final_project_404;
 
+import javafx.beans.property.StringProperty;
+
 import javax.swing.*;
 import java.io.*;
 import java.nio.file.Files;
@@ -18,6 +20,7 @@ public class Professor extends Person implements Serializable {
         this.department = department;
         this.major = major;
     }
+
 
     public String getId() {
         return id;

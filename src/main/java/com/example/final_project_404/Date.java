@@ -1,15 +1,22 @@
 package com.example.final_project_404;
 
-import static java.lang.String.format;
+import javafx.fxml.LoadException;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Period;
 
 public class Date implements Serializable {
 
     private int year;
     private int month;
     private int day;
+    private LocalDate date;
+
+    public int getAge() {
+        Period period = Period.between(date, LocalDate.now());
+        return period.getYears();
+    }
 
     public int getYear() {
         return year;
