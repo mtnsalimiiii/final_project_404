@@ -6,23 +6,27 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
-public class AdminPortalController {
+public class AddSemesterAdminPortalController {
 
     @FXML
     private VBox containerBarVBox;
+
+    @FXML
+    private TextField semesterCode;
 
     @FXML
     private HBox headerHBox;
 
     @FXML
     private VBox navigationBarVBox;
-
 
     @FXML
     void addDepartmentAdminPortal(ActionEvent event) throws IOException {
@@ -47,22 +51,22 @@ public class AdminPortalController {
     }
 
     @FXML
-    void addFacultyAdminPortal(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("AddFacultyAdminPortal.fxml"));
+    void addMajorAdminPortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("AddMajorAdminPortal.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Add New Faculty");
+        stage.setTitle("Add New Major");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
     }
 
     @FXML
-    void addMajorAdminPortal(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("AddMajorAdminPortal.fxml"));
+    void dashboardAdminPortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("AdminPortal.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Add New Major");
+        stage.setTitle("Admin Portal");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
@@ -144,16 +148,22 @@ public class AdminPortalController {
         stage.setResizable(false);
         stage.show();
     }
-
     @FXML
-    void addSemesterAdminPortal(ActionEvent event) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("AddSemesterAdminPortal.fxml"));
+    void addFacultyAdminPortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("addFacultyAdminPortalController.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Add Semester");
+        stage.setTitle("Add Faculty");
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();
+    }
+
+    public void addSemester(ActionEvent event){
+        University.loadAllSemester();
+        University.allSemesters.add(new Semester(semesterCode.getText().trim()));
+        University.saveAllSemester();
+        System.out.println("Semester with code:"+ semesterCode.getText().trim()+"add successfull.");
     }
 
 }
