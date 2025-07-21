@@ -282,16 +282,16 @@ public class UpdateDepartmentAdminPortalController implements Initializable {
     @FXML
     void operationChooserUpdateDepartmentAdmin(ActionEvent event) {
         if(operationChooserUpdateDepartmentAdmin.getValue().equals("EDIT")){
-            containerBarEditVBox.setDisable(false);
-            containerBarDeactiveVBox.setDisable(true);
+            containerBarEditVBox.setVisible(true);
+            containerBarDeactiveVBox.setVisible(false);
             if (departmentChooserEditUpdateDepartment.getValue()!=null){
                 editButton.setDisable(false);
             } else {
                 editButton.setDisable(true);
             }
         } else if (operationChooserUpdateDepartmentAdmin.getValue().toString() == "DEACTIVE") {
-            containerBarDeactiveVBox.setDisable(false);
-            containerBarEditVBox.setDisable(true);
+            containerBarDeactiveVBox.setVisible(true);
+            containerBarEditVBox.setVisible(false);
             if (departmentChooserDeactiveUpdateDepartment.getValue()!=null){
                 deactiveButton.setDisable(false);
             } else {

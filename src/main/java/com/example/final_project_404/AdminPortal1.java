@@ -444,7 +444,7 @@ public class AdminPortal1 implements Initializable {
 
     }
 
-    public Date getDateOfBirthAddEmployee(ActionEvent event) {
+    public Date getDateOfBirthAddEmployee() {
         Date date = new Date();
         date.setYear(dateOfBirthAddEmployee.getValue().getYear());
         date.setMonth(dateOfBirthAddEmployee.getValue().getMonthValue());
@@ -471,7 +471,7 @@ public class AdminPortal1 implements Initializable {
         Employee.loadAllEmployee();
         University.loadFaculties();
 
-        Date dateOfBirth = getDateOfBirthAddEmployee(event);
+        Date dateOfBirth = getDateOfBirthAddEmployee();
         String firstName = firstNameAddEmployee.getText().trim();
         String lastName = lastNameAddEmployee.getText().trim();
         String phoneNumber = phoneNumberAddEmployee.getText().trim();
@@ -865,6 +865,12 @@ public class AdminPortal1 implements Initializable {
                 for (Department department : faculty.departments){
                     if (department.getName().equals(departmentChooserDeactiveDepartment.getValue())){
                         department.setStatus(Status.Inactive);
+
+                        facultyChooserDeactiveDepartment.getSelectionModel().selectFirst();
+                        departmentChooserDeactiveDepartment.getSelectionModel().selectFirst();
+
+                        System.out.println("successful");
+
                         break;
                     }
                 }
@@ -872,11 +878,9 @@ public class AdminPortal1 implements Initializable {
             }
         }
         University.saveFaculties();
-        System.out.println("successful");
 
-        facultyChooserDeactiveDepartment.getSelectionModel().selectFirst();
-        departmentChooserDeactiveDepartment.getSelectionModel().selectFirst();
-
+        deactiveDepartmentVbox.setVisible(false);
+        operationChooserUpdateDepartment.getSelectionModel().selectFirst();
     }
 
     @FXML
@@ -904,15 +908,21 @@ public class AdminPortal1 implements Initializable {
         for (Employee employee : University.allEmployees){
             if (employee.getId().equals(employeeChooserDeactiveEmployee.getValue())){
                 employee.setStatus(Status.Inactive);
+
+                facultyChooserDeactiveEmployee.getSelectionModel().selectFirst();
+                departmentChooserDeactiveEmployee.getSelectionModel().selectFirst();
+                employeeChooserDeactiveEmployee.getSelectionModel().selectFirst();
+
+                System.out.println("successful");
+
                 break;
             }
         }
         Employee.saveAllEmployee();
-        System.out.println("successful");
 
-        facultyChooserDeactiveEmployee.getSelectionModel().selectFirst();
-        departmentChooserDeactiveEmployee.getSelectionModel().selectFirst();
-        employeeChooserDeactiveEmployee.getSelectionModel().selectFirst();
+        deactiveEmployeeVbox.setVisible(false);
+        operationChooserUpdateEmployee.getSelectionModel().selectFirst();
+
     }
 
     @FXML
@@ -921,13 +931,18 @@ public class AdminPortal1 implements Initializable {
         for (Faculty faculty : University.allFaculties){
             if (faculty.getFacultyName().equals(facultyChooserDeactiveFaculty.getValue())){
                 faculty.setStatus(Status.Inactive);
+
+//                facultyChooserDeactiveFaculty.getSelectionModel().selectFirst();
+
+                System.out.println("successful");
+
                 break;
             }
         }
         University.saveFaculties();
-        System.out.println("successful");
 
-        facultyChooserDeactiveFaculty.getSelectionModel().selectFirst();
+//        deactiveFacultyVbox.setVisible(false);
+//        operationChooserUpdateFaculty.getSelectionModel().selectFirst();
     }
 
     @FXML
@@ -940,6 +955,13 @@ public class AdminPortal1 implements Initializable {
                         for (Major major : department.majors){
                             if (major.getName().equals(majorChooserDeactiveMajor.getValue())){
                                 major.setStatus(Status.Inactive);
+
+                                facultyChooserDeactiveMajor.getSelectionModel().selectFirst();
+                                departmentChooserDeactiveMajor.getSelectionModel().selectFirst();
+                                majorChooserDeactiveMajor.getSelectionModel().selectFirst();
+
+                                System.out.println("successful");
+
                                 break;
                             }
                         }
@@ -950,11 +972,10 @@ public class AdminPortal1 implements Initializable {
             }
         }
         University.saveFaculties();
-        System.out.println("successful");
 
-        facultyChooserDeactiveMajor.getSelectionModel().selectFirst();
-        departmentChooserDeactiveMajor.getSelectionModel().selectFirst();
-        majorChooserDeactiveMajor.getSelectionModel().selectFirst();
+        deactiveMajorVbox.setVisible(false);
+        operationChooserUpdateMajor.getSelectionModel().selectFirst();
+
     }
 
     @FXML
@@ -975,6 +996,10 @@ public class AdminPortal1 implements Initializable {
                         System.out.println(department.getEstablishmentYear());
                         System.out.println(department.getId());
 
+                        facultyChooserEditDepartment.getSelectionModel().selectFirst();
+                        departmentChooserEditDepartment.getSelectionModel().selectFirst();
+                        newDepartmentNameEditDepartment.clear();
+                        newEstablishmentYearEditDepartment.clear();
                         break;
                     }
                 }
@@ -982,12 +1007,9 @@ public class AdminPortal1 implements Initializable {
             }
         }
         University.saveFaculties();
-        System.out.println("successful");
 
-        facultyChooserEditDepartment.getSelectionModel().selectFirst();
-        departmentChooserEditDepartment.getSelectionModel().selectFirst();
-        newDepartmentNameEditDepartment.clear();
-        newEstablishmentYearEditDepartment.clear();
+        editDepartmentVbox.setVisible(false);
+        operationChooserUpdateDepartment.getSelectionModel().selectFirst();
     }
 
     @FXML
@@ -1081,6 +1103,9 @@ public class AdminPortal1 implements Initializable {
             }
         }
         Employee.saveAllEmployee();
+
+        editEmployeeVbox.setVisible(false);
+        operationChooserUpdateEmployee.getSelectionModel().selectFirst();
     }
 
     @FXML
@@ -1105,6 +1130,9 @@ public class AdminPortal1 implements Initializable {
             }
         }
         University.saveFaculties();
+
+        editFacultyVbox.setVisible(true);
+        operationChooserUpdateFaculty.getSelectionModel().selectFirst();
     }
 
     @FXML
@@ -1141,6 +1169,9 @@ public class AdminPortal1 implements Initializable {
             }
         }
         University.saveFaculties();
+
+        editMajorVbox.setVisible(false);
+        operationChooserUpdateMajor.getSelectionModel().selectFirst();
     }
 
 
@@ -1334,9 +1365,9 @@ public class AdminPortal1 implements Initializable {
         if (operationChooserUpdateFaculty.getValue().equals("Edit")){
             editFacultyVbox.setVisible(true);
             deactiveFacultyVbox.setVisible(false);
-            facultyChooserEditFaculty.getSelectionModel().selectFirst();
-            newFacultyNameEditFaculty.clear();
-            newEstablishmentYearEditFaculty.clear();
+//            facultyChooserEditFaculty.getSelectionModel().selectFirst();
+//            newFacultyNameEditFaculty.clear();
+//            newEstablishmentYearEditFaculty.clear();
         } else if (operationChooserUpdateFaculty.getValue().equals("Deactive")){
             editFacultyVbox.setVisible(false);
             deactiveFacultyVbox.setVisible(true);
@@ -1629,25 +1660,59 @@ public class AdminPortal1 implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         University.loadFaculties();
 
+        //        ------------------------Operation Chooser-----------------------------
+
+        operationChooserUpdateFaculty.getItems().addAll("Choose Your Operation: ", "Edit", "Deactive");
+        operationChooserUpdateFaculty.getSelectionModel().selectFirst();
+        operationChooserUpdateFaculty.setVisibleRowCount(3);
+
+        operationChooserUpdateDepartment.getItems().addAll("Choose Your Operation: ", "Edit", "Deactive");
+        operationChooserUpdateDepartment.getSelectionModel().selectFirst();
+        operationChooserUpdateDepartment.setVisibleRowCount(3);
+
+        operationChooserUpdateMajor.getItems().addAll("Choose Your Operation: ", "Edit", "Deactive");
+        operationChooserUpdateMajor.getSelectionModel().selectFirst();
+        operationChooserUpdateMajor.setVisibleRowCount(3);
+
+        operationChooserUpdateEmployee.getItems().addAll("Choose Your Operation: ", "Edit", "Deactive");
+        operationChooserUpdateEmployee.getSelectionModel().selectFirst();
+        operationChooserUpdateEmployee.setVisibleRowCount(3);
 
 //        ------------------------Faculty Chooser-----------------------------
-        facultyChooserEditFaculty.getItems().clear();
-        facultyChooserEditFaculty.getItems().add("Faculty");
-        for (Faculty faculty : University.allFaculties) {
-            if (faculty.getStatus().equals(Status.Active)){
-                facultyChooserEditFaculty.getItems().add(faculty.getFacultyName());
-            }
-        }
-        facultyChooserEditFaculty.setVisibleRowCount(4);
 
-        facultyChooserDeactiveFaculty.getItems().clear();
-        facultyChooserDeactiveFaculty.getItems().add("Faculty");
-        for (Faculty faculty : University.allFaculties) {
-            if (faculty.getStatus().equals(Status.Active)){
-                facultyChooserDeactiveFaculty.getItems().add(faculty.getFacultyName());
+        operationChooserUpdateFaculty.setOnAction(event -> {
+            facultyChooserEditFaculty.getItems().clear();
+            facultyChooserDeactiveFaculty.getItems().clear();
+            facultyChooserEditFaculty.getItems().add("Faculty");
+            facultyChooserDeactiveFaculty.getItems().add("Faculty");
+
+            for (Faculty faculty : University.allFaculties) {
+                if (faculty.getStatus().equals(Status.Active)){
+                    facultyChooserEditFaculty.getItems().add(faculty.getFacultyName());
+                    facultyChooserDeactiveFaculty.getItems().add(faculty.getFacultyName());
+                }
             }
-        }
-        facultyChooserDeactiveFaculty.setVisibleRowCount(4);
+
+            facultyChooserEditFaculty.setVisibleRowCount(4);
+            facultyChooserDeactiveFaculty.setVisibleRowCount(4);
+
+        });
+
+        operationChooserUpdateDepartment.setOnAction(event -> {
+            facultyChooserEditDepartment.getItems().clear();
+            facultyChooserDeactiveDepartment.getItems().clear();
+            facultyChooserEditDepartment.getItems().add("Faculty");
+            facultyChooserDeactiveDepartment.getItems().add("Faculty");
+            for (Faculty faculty : University.allFaculties) {
+                if (faculty.getStatus().equals(Status.Active)) {
+                    facultyChooserEditDepartment.getItems().add(faculty.getFacultyName());
+                    facultyChooserDeactiveDepartment.getItems().add(faculty.getFacultyName());
+                }
+            }
+            facultyChooserEditDepartment.setVisibleRowCount(4);
+            facultyChooserDeactiveDepartment.setVisibleRowCount(4);
+
+        });
 
         facultyChooserAddDepartment.getItems().clear();
         facultyChooserAddDepartment.getItems().add("Faculty");
@@ -1658,23 +1723,21 @@ public class AdminPortal1 implements Initializable {
         }
         facultyChooserAddDepartment.setVisibleRowCount(4);
 
-        facultyChooserEditDepartment.getItems().clear();
-        facultyChooserEditDepartment.getItems().add("Faculty");
-        for (Faculty faculty : University.allFaculties) {
-            if (faculty.getStatus().equals(Status.Active)){
-                facultyChooserEditDepartment.getItems().add(faculty.getFacultyName());
+        operationChooserUpdateMajor.setOnAction(event -> {
+            facultyChooserEditMajor.getItems().clear();
+            facultyChooserDeactiveMajor.getItems().clear();
+            facultyChooserEditMajor.getItems().add("Faculty");
+            facultyChooserDeactiveMajor.getItems().add("Faculty");
+            for (Faculty faculty : University.allFaculties) {
+                if (faculty.getStatus().equals(Status.Active)) {
+                    facultyChooserEditMajor.getItems().add(faculty.getFacultyName());
+                    facultyChooserDeactiveMajor.getItems().add(faculty.getFacultyName());
+                }
             }
-        }
-        facultyChooserEditDepartment.setVisibleRowCount(4);
+            facultyChooserEditMajor.setVisibleRowCount(4);
+            facultyChooserDeactiveMajor.setVisibleRowCount(4);
 
-        facultyChooserDeactiveDepartment.getItems().clear();
-        facultyChooserDeactiveDepartment.getItems().add("Faculty");
-        for (Faculty faculty : University.allFaculties) {
-            if (faculty.getStatus().equals(Status.Active)){
-                facultyChooserDeactiveDepartment.getItems().add(faculty.getFacultyName());
-            }
-        }
-        facultyChooserDeactiveDepartment.setVisibleRowCount(4);
+        });
 
         facultyChooserAddMajor.getItems().clear();
         facultyChooserAddMajor.getItems().add("Faculty");
@@ -1685,24 +1748,20 @@ public class AdminPortal1 implements Initializable {
         }
         facultyChooserAddMajor.setVisibleRowCount(4);
 
-        facultyChooserEditMajor.getItems().clear();
-        facultyChooserEditMajor.getItems().add("Faculty");
-        for (Faculty faculty : University.allFaculties) {
-            if (faculty.getStatus().equals(Status.Active)){
-                facultyChooserEditMajor.getItems().add(faculty.getFacultyName());
+        operationChooserUpdateEmployee.setOnAction(event -> {
+            facultyChooserEditEmployee.getItems().clear();
+            facultyChooserDeactiveEmployee.getItems().clear();
+            facultyChooserEditEmployee.getItems().add("Faculty");
+            facultyChooserDeactiveEmployee.getItems().add("Faculty");
+            for (Faculty faculty : University.allFaculties) {
+                if (faculty.getStatus().equals(Status.Active)) {
+                    facultyChooserEditEmployee.getItems().add(faculty.getFacultyName());
+                    facultyChooserDeactiveEmployee.getItems().add(faculty.getFacultyName());
+                }
             }
-        }
-        facultyChooserEditMajor.setVisibleRowCount(4);
-
-
-        facultyChooserDeactiveMajor.getItems().clear();
-        facultyChooserDeactiveMajor.getItems().add("Faculty");
-        for (Faculty faculty : University.allFaculties) {
-            if (faculty.getStatus().equals(Status.Active)){
-                facultyChooserDeactiveMajor.getItems().add(faculty.getFacultyName());
-            }
-        }
-        facultyChooserDeactiveMajor.setVisibleRowCount(4);
+            facultyChooserEditEmployee.setVisibleRowCount(4);
+            facultyChooserDeactiveEmployee.setVisibleRowCount(4);
+        });
 
         facultyChooserAddEmployee.getItems().clear();
         facultyChooserAddEmployee.getItems().add("Faculty");
@@ -1712,24 +1771,6 @@ public class AdminPortal1 implements Initializable {
             }
         }
         facultyChooserAddEmployee.setVisibleRowCount(4);
-
-        facultyChooserEditEmployee.getItems().clear();
-        facultyChooserEditEmployee.getItems().add("Faculty");
-        for (Faculty faculty : University.allFaculties) {
-            if (faculty.getStatus().equals(Status.Active)){
-                facultyChooserEditEmployee.getItems().add(faculty.getFacultyName());
-            }
-        }
-        facultyChooserEditEmployee.setVisibleRowCount(4);
-
-        facultyChooserDeactiveEmployee.getItems().clear();
-        facultyChooserDeactiveEmployee.getItems().add("Faculty");
-        for (Faculty faculty : University.allFaculties) {
-            if (faculty.getStatus().equals(Status.Active)){
-                facultyChooserDeactiveEmployee.getItems().add(faculty.getFacultyName());
-            }
-        }
-        facultyChooserDeactiveEmployee.setVisibleRowCount(4);
 
 //        ------------------------Department Chooser-----------------------------
 
@@ -1747,6 +1788,7 @@ public class AdminPortal1 implements Initializable {
                     departmentChooserAddMajor.setVisibleRowCount(4);
                 }
             }
+            departmentChooserAddMajor.getSelectionModel().selectFirst();
         });
 
         facultyChooserAddEmployee.setOnAction(e -> {
@@ -1763,6 +1805,7 @@ public class AdminPortal1 implements Initializable {
                     departmentChooserAddEmployee.setVisibleRowCount(4);
                 }
             }
+            departmentChooserAddEmployee.getSelectionModel().selectFirst();
         });
 
         facultyChooserEditDepartment.setOnAction(e -> {
@@ -1779,6 +1822,7 @@ public class AdminPortal1 implements Initializable {
                     departmentChooserEditDepartment.setVisibleRowCount(4);
                 }
             }
+            departmentChooserEditDepartment.getSelectionModel().selectFirst();
         });
 
         facultyChooserEditMajor.setOnAction(e -> {
@@ -1795,6 +1839,7 @@ public class AdminPortal1 implements Initializable {
                     departmentChooserEditMajor.setVisibleRowCount(4);
                 }
             }
+            departmentChooserEditMajor.getSelectionModel().selectFirst();
         });
 
         facultyChooserEditEmployee.setOnAction(e -> {
@@ -1811,6 +1856,7 @@ public class AdminPortal1 implements Initializable {
                     departmentChooserEditEmployee.setVisibleRowCount(4);
                 }
             }
+            departmentChooserEditEmployee.getSelectionModel().selectFirst();
         });
 
         facultyChooserDeactiveDepartment.setOnAction(e -> {
@@ -1827,6 +1873,7 @@ public class AdminPortal1 implements Initializable {
                     departmentChooserDeactiveDepartment.setVisibleRowCount(4);
                 }
             }
+            departmentChooserDeactiveDepartment.getSelectionModel().selectFirst();
         });
 
         facultyChooserDeactiveMajor.setOnAction(e -> {
@@ -1843,6 +1890,7 @@ public class AdminPortal1 implements Initializable {
                     departmentChooserDeactiveMajor.setVisibleRowCount(4);
                 }
             }
+            departmentChooserDeactiveMajor.getSelectionModel().selectFirst();
         });
 
         facultyChooserDeactiveEmployee.setOnAction(e -> {
@@ -1859,6 +1907,7 @@ public class AdminPortal1 implements Initializable {
                     departmentChooserDeactiveEmployee.setVisibleRowCount(4);
                 }
             }
+            departmentChooserDeactiveEmployee.getSelectionModel().selectFirst();
         });
         //        ------------------------Major Chooser-----------------------------
 
@@ -1878,6 +1927,7 @@ public class AdminPortal1 implements Initializable {
                     majorChooserEditMajor.setVisibleRowCount(4);
                 }
             }
+            majorChooserEditMajor.getSelectionModel().selectFirst();
         });
 
         departmentChooserDeactiveMajor.setOnAction(e -> {
@@ -1896,6 +1946,7 @@ public class AdminPortal1 implements Initializable {
                     majorChooserDeactiveMajor.setVisibleRowCount(4);
                 }
             }
+            majorChooserDeactiveMajor.getSelectionModel().selectFirst();
         });
 
         //        ------------------------Employee Chooser-----------------------------
@@ -1916,6 +1967,7 @@ public class AdminPortal1 implements Initializable {
                     employeeChooserEditEmployee.setVisibleRowCount(4);
                 }
             }
+            employeeChooserEditEmployee.getSelectionModel().selectFirst();
         });
 
         departmentChooserDeactiveEmployee.setOnAction(e -> {
@@ -1934,29 +1986,20 @@ public class AdminPortal1 implements Initializable {
                     employeeChooserDeactiveEmployee.setVisibleRowCount(4);
                 }
             }
+            employeeChooserDeactiveEmployee.getSelectionModel().selectFirst();
         });
 
         //        ------------------------Gender Chooser-----------------------------
 
         genderChooserAddEmployee.getItems().addAll("Gender", Gender.Male.toString(), Gender.Female.toString());
+        genderChooserAddEmployee.getSelectionModel().selectFirst();
         genderChooserAddEmployee.setVisibleRowCount(3);
 
         genderChooserEditEmployee.getItems().addAll("Gender", Gender.Male.toString(), Gender.Female.toString());
+        genderChooserEditEmployee.getSelectionModel().selectFirst();
         genderChooserEditEmployee.setVisibleRowCount(3);
 
-        //        ------------------------Operation Chooser-----------------------------
 
-        operationChooserUpdateFaculty.getItems().addAll("Choose Your Operation: ", "Edit", "Deactive");
-        operationChooserUpdateFaculty.setVisibleRowCount(3);
-
-        operationChooserUpdateDepartment.getItems().addAll("Choose Your Operation: ", "Edit", "Deactive");
-        operationChooserUpdateDepartment.setVisibleRowCount(3);
-
-        operationChooserUpdateMajor.getItems().addAll("Choose Your Operation: ", "Edit", "Deactive");
-        operationChooserUpdateMajor.setVisibleRowCount(3);
-
-        operationChooserUpdateEmployee.getItems().addAll("Choose Your Operation: ", "Edit", "Deactive");
-        operationChooserUpdateEmployee.setVisibleRowCount(3);
 
     }
 }

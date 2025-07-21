@@ -405,7 +405,7 @@
                                 <Insets bottom="10.0" />
                             </VBox.margin>
                         </TextField>
-                        <DatePicker fx:id="dateOfBirthAddEmployee" maxWidth="300.0" onAction="#getDateOfBirthAddEmployee" promptText="Date of Birth" stylesheets="@EmployeePortal.css">
+                        <DatePicker fx:id="dateOfBirthAddEmployee" maxWidth="300.0" promptText="Date of Birth" stylesheets="@EmployeePortal.css">
                             <VBox.margin>
                                 <Insets bottom="10.0" />
                             </VBox.margin>

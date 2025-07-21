@@ -365,8 +365,8 @@ public class UpdateProfessorEmployeePortalController implements Initializable {
     @FXML
     void setOperationChooserUpdateProfessorEmployee(ActionEvent event) {
         if(operationChooserUpdateProfessorEmployee.getValue().equals("EDIT")){
-            containerBarDeactiveVBox.setDisable(true);
-            containerBarEditVBox.setDisable(false);
+            containerBarEditVBox.setVisible(true);
+            containerBarDeactiveVBox.setVisible(false);
             if (professorChooserEdit.getValue()!=null) {
                 editButton.setDisable(false);
             } else {
@@ -374,12 +374,12 @@ public class UpdateProfessorEmployeePortalController implements Initializable {
             }
 
         } else if (operationChooserUpdateProfessorEmployee.getValue().equals("DEACTIVE")) {
-            containerBarEditVBox.setDisable(true);
-            containerBarDeactiveVBox.setDisable(false);
+            containerBarEditVBox.setVisible(false);
+            containerBarDeactiveVBox.setVisible(true);
             if (professorChooserDeactive.getValue()!=null) {
-                editButton.setDisable(false);
+                deactiveButton.setDisable(false);
             } else {
-                editButton.setDisable(true);
+                deactiveButton.setDisable(true);
             }
         }
     }

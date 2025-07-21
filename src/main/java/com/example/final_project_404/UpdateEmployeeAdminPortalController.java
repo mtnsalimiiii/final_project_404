@@ -297,16 +297,16 @@ public class UpdateEmployeeAdminPortalController implements Initializable {
     @FXML
     void setOperationChooserUpdateEmployeeAdmin(ActionEvent event) {
         if(operationChooserUpdateEmployeeAdmin.getValue().toString() == "EDIT"){
-            containerBarEditVBox.setDisable(false);
-            containerBarDeactiveVBox.setDisable(true);
+            containerBarEditVBox.setVisible(true);
+            containerBarDeactiveVBox.setVisible(false);
             if (employeeChooserEditUpdateEmployee.getValue()!=null) {
                 editButton.setDisable(false);
             } else {
                 editButton.setDisable(true);
             }
         } else if (operationChooserUpdateEmployeeAdmin.getValue().toString() == "DEACTIVE") {
-            containerBarDeactiveVBox.setDisable(false);
-            containerBarEditVBox.setDisable(true);
+            containerBarEditVBox.setVisible(false);
+            containerBarDeactiveVBox.setVisible(true);
             if (employeeChooserDeactiveUpdateEmployee.getValue()!=null) {
                 deactiveButton.setDisable(false);
             } else {
