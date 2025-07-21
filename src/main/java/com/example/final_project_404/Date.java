@@ -13,6 +13,13 @@ public class Date implements Serializable {
     private int day;
     private LocalDate date;
 
+    public LocalDate getDate() {
+        return date;
+    }
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
     public int getAge() {
         Period period = Period.between(date, LocalDate.now());
         return period.getYears();

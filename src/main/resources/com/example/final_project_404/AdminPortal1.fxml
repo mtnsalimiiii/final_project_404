@@ -1,0 +1,547 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.AdminPortal1">
+    <children>
+        <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0" styleClass="header" stylesheets="@EmployeePortal.css">
+            <children>
+                <Label styleClass="header-title" stylesheets="@EmployeePortal.css" text="Admin Portal" />
+                <Label fx:id="headerTitle" styleClass="header-title" stylesheets="@EmployeePortal.css" />
+            </children>
+        </HBox>
+        <ScrollPane fx:id="buttonsScrollPane" layoutY="80.0" prefHeight="470.0" prefWidth="170.0" visible="false">
+            <content>
+                <VBox fx:id="navigationBarVBox" prefHeight="420.0" prefWidth="150.0" styleClass="nav-bar" stylesheets="@EmployeePortal.css">
+                    <children>
+                        <Button fx:id="dashboardScrollPane" layoutX="20.0" layoutY="20.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#dashboardScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Dashboard" />
+                        <Button fx:id="addFacultyScrollPane" layoutX="20.0" layoutY="62.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addFacultyScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add Faculty" />
+                        <Button fx:id="updateFacultyScrollPane" layoutX="20.0" layoutY="65.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateFacultyScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Update&#10;Faculty" />
+                        <Button fx:id="addDepartmentScrollPane" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addDepartmentScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add &#10;Department" textAlignment="CENTER" />
+                        <Button fx:id="updateDepartmentScrollPane" layoutX="20.0" layoutY="176.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateDepartmentScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Update&#10;Department" textAlignment="CENTER" />
+                        <Button fx:id="addMajorScrollPane" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addMajorScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add Major" textAlignment="CENTER" />
+                        <Button fx:id="updateMajorScrollPane" layoutX="20.0" layoutY="307.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateMajorScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Update Major" textAlignment="CENTER" />
+                        <Button fx:id="addEmployeeScrollPane" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addEmployeeScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add Employee" textAlignment="CENTER" />
+                        <Button fx:id="updateEmployeeScrollPane" layoutX="20.0" layoutY="396.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateEmployeeScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Update &#10;Employee" textAlignment="CENTER" />
+                        <Button fx:id="profileScrollPane" layoutX="20.0" layoutY="150.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#profileScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Profile" />
+                        <Button fx:id="reportsScrollPane" layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#reportsScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Reports" />
+                        <Button layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#signOutScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Sign out" />
+                    </children>
+                    <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </padding>
+                </VBox>
+            </content>
+        </ScrollPane>
+        <AnchorPane fx:id="dashboardAnchorPane" layoutY="80.0" prefHeight="470.0" prefWidth="800.0">
+            <children>
+                <VBox fx:id="DashboardVbox" prefHeight="470.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" stylesheets="@EmployeePortal.css">
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                    <children>
+                        <Label fx:id="dashboardText" maxWidth="1.7976931348623157E308" prefHeight="30.0" styleClass="label-title" stylesheets="@EmployeePortal.css" text="welcome, Admin!">
+                            <VBox.margin>
+                                <Insets bottom="20.0" />
+                            </VBox.margin></Label>
+                        <GridPane alignment="CENTER" prefHeight="370.0" prefWidth="760.0">
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="393.4000244140625" minWidth="343.79998779296875" prefWidth="379.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="414.2000122070313" minWidth="364.59997558593756" prefWidth="379.00000000000006" />
+                            </columnConstraints>
+                            <rowConstraints>
+                                <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
+                                <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
+                            </rowConstraints>
+                            <children>
+                                <Button alignment="CENTER" minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#addFacultyDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Add Faculty" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#updateFacultyDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Update Faculty" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#addDepartmentDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Add Department" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#updateDepartmentDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Update Department" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#addMajorDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Add Major" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                                <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#updateMajorDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Update Major" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                                <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#addEmployeeDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Add Employee" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                                <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#updateEmployeeDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Update Employee" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                                <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#profileDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Profile" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                                <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#reportsDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Reports" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                                <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#signOutDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Sign out" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                            </children>
+                        </GridPane>
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="addFacultyAnchorPane" layoutX="170.0" layoutY="80.0" visible="false">
+            <children>
+                <VBox fx:id="addFacultyVbox" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" stylesheets="@EmployeePortal.css">
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                    <TextField fx:id="facultyNameAddFaculty" maxHeight="30.0" maxWidth="300.0" prefHeight="30.0" prefWidth="300.0" promptText="Faculty Name" stylesheets="@EmployeePortal.css">
+                        <VBox.margin>
+                            <Insets bottom="15.0" />
+                        </VBox.margin>
+                    </TextField>
+                    <TextField fx:id="establishmentYearAddFaculty" layoutX="31.0" layoutY="31.0" maxHeight="30.0" maxWidth="300.0" prefHeight="30.0" prefWidth="300.0" promptText="Establishment Year" stylesheets="@EmployeePortal.css">
+                        <VBox.margin>
+                            <Insets bottom="15.0" />
+                        </VBox.margin>
+                    </TextField>
+                    <Button mnemonicParsing="false" onAction="#addFaculty" stylesheets="@EmployeePortal.css" text="Add">
+                        <VBox.margin>
+                            <Insets top="15.0" />
+                        </VBox.margin>
+                    </Button>
+                </VBox>
+            </children>
+        </AnchorPane>
+
+        <AnchorPane fx:id="updateFacultyAnchorPane" layoutX="170.0" layoutY="80.0" prefWidth="630.0" style="-fx-background-color: #7b7b7b;" visible="false">
+            <children>
+                <VBox fx:id="editFacultyVbox" layoutX="170.0" layoutY="125.0" prefHeight="415.0" prefWidth="306.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 100.0% 43.9394%, #00a1ff 0.0%, #ffffff 100.0%);" styleClass="content-box" stylesheets="@EmployeePortal.css" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+                    <padding>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                    </padding>
+                    <ComboBox fx:id="facultyChooserEditFaculty" maxHeight="157.0" maxWidth="580.0" minHeight="37.0" onAction="#setFacultyChooserEditFaculty" prefHeight="37.0" prefWidth="268.0" promptText="Faculty" stylesheets="@comboBoxStyle.css">
+                        <VBox.margin>
+                            <Insets bottom="15.0" />
+                        </VBox.margin>
+                    </ComboBox>
+                    <TextField fx:id="newFacultyNameEditFaculty" promptText="New Faculty Name">
+                        <VBox.margin>
+                            <Insets bottom="15.0" />
+                        </VBox.margin>
+                    </TextField>
+                    <TextField fx:id="newEstablishmentYearEditFaculty" layoutX="31.0" layoutY="146.0" promptText="Establishment Year">
+                        <VBox.margin>
+                            <Insets bottom="15.0" />
+                        </VBox.margin>
+                    </TextField>
+                    <Button fx:id="editFacultyButton" mnemonicParsing="false" onAction="#editFaculty" stylesheets="@EmployeePortal.css" text="EDIT">
+                        <VBox.margin>
+                            <Insets top="10.0" />
+                        </VBox.margin>
+                    </Button>
+                </VBox>
+                <ComboBox fx:id="operationChooserUpdateFaculty" layoutX="200.0" layoutY="10.0" maxHeight="35.0" maxWidth="315.0" minHeight="40.0" onAction="#setOperationChooserUpdateFaculty" prefHeight="35.0" prefWidth="256.0" promptText="Choose Your Operation" stylesheets="@comboBoxStyle.css" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="175.0" AnchorPane.topAnchor="5.0">
+                    <styleClass>
+                        <String fx:value="arrow" />
+                        <String fx:value="arrow-button" />
+                        <String fx:value="combo-box" />
+                    </styleClass></ComboBox>
+                <VBox fx:id="deactiveFacultyVbox" layoutX="492.0" layoutY="125.0" prefHeight="415.0" prefWidth="315.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 100.0% 43.9394%, #00a1ff 0.0%, #ffffff 100.0%);" styleClass="content-box" stylesheets="@EmployeePortal.css" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                    <children>
+                        <ComboBox fx:id="facultyChooserDeactiveFaculty" layoutX="31.0" layoutY="31.0" maxWidth="580.0" onAction="#setFacultyChooserDeactiveFaculty" prefWidth="150.0" promptText="Faculty" stylesheets="@comboBoxStyle.css">
+                            <VBox.margin>
+                                <Insets bottom="15.0" />
+                            </VBox.margin>
+                        </ComboBox>
+                        <Button fx:id="deactiveFacultyButton" mnemonicParsing="false" onAction="#deactiveFaculty" stylesheets="@EmployeePortal.css" text="DEACTIVE">
+                            <VBox.margin>
+                                <Insets top="10.0" />
+                            </VBox.margin>
+                        </Button>
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="addDepartmentAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" visible="false">
+            <children>
+                <VBox fx:id="addDepartmentVbox" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" stylesheets="@EmployeePortal.css">
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                    <ComboBox fx:id="facultyChooserAddDepartment" maxWidth="300.0" prefWidth="150.0" promptText="Faculty" styleClass="combo-box" stylesheets="@comboBoxStyle.css">
+                        <VBox.margin>
+                            <Insets bottom="15.0" />
+                        </VBox.margin>
+                    </ComboBox>
+                    <TextField fx:id="departmentNameAddDepartment" maxHeight="0.0" maxWidth="300.0" prefHeight="26.0" prefWidth="200.0" promptText="Department Name" stylesheets="@EmployeePortal.css">
+                        <VBox.margin>
+                            <Insets bottom="15.0" />
+                        </VBox.margin>
+                    </TextField>
+                    <TextField fx:id="establishmentYearAddDepartment" layoutX="31.0" layoutY="86.0" maxHeight="0.0" maxWidth="300.0" prefHeight="26.0" prefWidth="200.0" promptText="Establishment Year" stylesheets="@EmployeePortal.css">
+                        <VBox.margin>
+                            <Insets bottom="15.0" />
+                        </VBox.margin>
+                    </TextField>
+                    <Button mnemonicParsing="false" onAction="#addDepartment" stylesheets="@EmployeePortal.css" text="Add">
+                        <VBox.margin>
+                            <Insets top="15.0" />
+                        </VBox.margin>
+                    </Button>
+                </VBox>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="updateDepartmentAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: #7b7b7b;" visible="false">
+            <children>
+                <VBox fx:id="editDepartmentVbox" layoutX="170.0" layoutY="125.0" prefHeight="415.0" prefWidth="315.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 100.0% 43.9394%, #00a1ff 0.0%, #ffffff 100.0%);" styleClass="content-box" visible="false" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                    <ComboBox fx:id="facultyChooserEditDepartment" maxWidth="580.0" prefWidth="150.0" promptText="Faculty" stylesheets="@EmployeePortal.css">
+                        <VBox.margin>
+                            <Insets bottom="15.0" />
+                        </VBox.margin>
+                    </ComboBox>
+                    <ComboBox fx:id="departmentChooserEditDepartment" layoutX="31.0" layoutY="31.0" maxWidth="580.0" onAction="#setDepartmentChooserEditDepartment" prefWidth="150.0" promptText="Department" stylesheets="@EmployeePortal.css">
+                        <VBox.margin>
+                            <Insets bottom="15.0" />
+                        </VBox.margin>
+                    </ComboBox>
+                    <TextField fx:id="newDepartmentNameEditDepartment" promptText="Department Name">
+                        <VBox.margin>
+                            <Insets bottom="15.0" />
+                        </VBox.margin>
+                    </TextField>
+                    <TextField fx:id="newEstablishmentYearEditDepartment" layoutX="31.0" layoutY="146.0" promptText="Establishment Year">
+                        <VBox.margin>
+                            <Insets bottom="15.0" />
+                        </VBox.margin>
+                    </TextField>
+                    <Button fx:id="editDepartmentButton" mnemonicParsing="false" onAction="#editDepartment" stylesheets="@EmployeePortal.css" text="EDIT">
+                        <VBox.margin>
+                            <Insets top="15.0" />
+                        </VBox.margin>
+                    </Button>
+                    <stylesheets>
+                        <URL value="@EmployeePortal.css" />
+                        <URL value="@comboBoxStyle.css" />
+                    </stylesheets>
+                </VBox>
+                <ComboBox fx:id="operationChooserUpdateDepartment" layoutX="372.0" layoutY="82.0" maxWidth="315.0" minHeight="40.0" onAction="#setOperationChooserUpdateDepartment" promptText="Choose Your Operation" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="5.0">
+                    <stylesheets>
+                        <URL value="@EmployeePortal.css" />
+                        <URL value="@comboBoxStyle.css" />
+                    </stylesheets></ComboBox>
+                <VBox fx:id="deactiveDepartmentVbox" layoutX="492.0" layoutY="125.0" prefHeight="415.0" prefWidth="315.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 100.0% 43.9394%, #00a1ff 0.0%, #ffffff 100.0%);" styleClass="content-box" visible="false" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                    <children>
+                        <ComboBox fx:id="facultyChooserDeactiveDepartment" layoutX="31.0" layoutY="31.0" maxWidth="580.0" prefWidth="150.0" promptText="Faculty" stylesheets="@EmployeePortal.css">
+                            <VBox.margin>
+                                <Insets bottom="15.0" />
+                            </VBox.margin>
+                        </ComboBox>
+                        <ComboBox fx:id="departmentChooserDeactiveDepartment" maxWidth="580.0" onAction="#setDepartmentChooserDeactiveDepartment" prefWidth="150.0" promptText="Department" stylesheets="@EmployeePortal.css">
+                            <VBox.margin>
+                                <Insets bottom="15.0" />
+                            </VBox.margin>
+                        </ComboBox>
+                        <Button fx:id="deactiveDepartmentButton" mnemonicParsing="false" onAction="#deactiveDepartment" stylesheets="@EmployeePortal.css" text="DEACTIVE">
+                            <VBox.margin>
+                                <Insets top="15.0" />
+                            </VBox.margin>
+                        </Button>
+                    </children>
+                    <stylesheets>
+                        <URL value="@EmployeePortal.css" />
+                        <URL value="@comboBoxStyle.css" />
+                    </stylesheets>
+                </VBox>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="addMajorAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" visible="false">
+            <children>
+                <VBox fx:id="addMajorVbox" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" stylesheets="@EmployeePortal.css">
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                    <ComboBox fx:id="facultyChooserAddMajor" maxWidth="300.0" prefWidth="150.0" promptText="Faculty" stylesheets="@comboBoxStyle.css">
+                        <VBox.margin>
+                            <Insets bottom="10.0" />
+                        </VBox.margin>
+                    </ComboBox>
+                    <ComboBox fx:id="departmentChooserAddMajor" layoutX="31.0" layoutY="31.0" maxWidth="300.0" prefWidth="150.0" promptText="Department" stylesheets="@comboBoxStyle.css">
+                        <VBox.margin>
+                            <Insets bottom="10.0" />
+                        </VBox.margin>
+                    </ComboBox>
+                    <TextField fx:id="majorNameAddMajor" maxHeight="0.0" maxWidth="300.0" prefHeight="26.0" prefWidth="200.0" promptText="Name Of Major" stylesheets="@EmployeePortal.css">
+                        <VBox.margin>
+                            <Insets bottom="10.0" />
+                        </VBox.margin>
+                    </TextField>
+                    <TextField fx:id="establishmentYearAddMajor" layoutX="31.0" layoutY="127.0" maxHeight="0.0" maxWidth="300.0" prefHeight="26.0" prefWidth="200.0" promptText="Establishment Year" stylesheets="@EmployeePortal.css">
+                        <VBox.margin>
+                            <Insets bottom="10.0" />
+                        </VBox.margin>
+                    </TextField>
+                    <Button mnemonicParsing="false" onAction="#addMajor" stylesheets="@EmployeePortal.css" text="Add">
+                        <VBox.margin>
+                            <Insets top="15.0" />
+                        </VBox.margin>
+                    </Button>
+                </VBox>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="updateMajorAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: #7b7b7b;" visible="false">
+            <children>
+                <VBox fx:id="editMajorVbox" layoutX="170.0" layoutY="125.0" prefHeight="415.0" prefWidth="315.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 100.0% 43.9394%, #00a1ff 0.0%, #ffffff 100.0%);" styleClass="content-box" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+                    <padding>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                    </padding>
+                    <ComboBox fx:id="facultyChooserEditMajor" maxHeight="157.0" maxWidth="580.0" minHeight="37.0" prefHeight="37.0" prefWidth="268.0" promptText="Faculty" stylesheets="@EmployeePortal.css">
+                        <VBox.margin>
+                            <Insets bottom="10.0" />
+                        </VBox.margin>
+                    </ComboBox>
+                    <ComboBox fx:id="departmentChooserEditMajor" layoutX="31.0" layoutY="31.0" maxWidth="580.0" minHeight="37.0" prefWidth="150.0" promptText="Department" stylesheets="@EmployeePortal.css">
+                        <VBox.margin>
+                            <Insets bottom="10.0" />
+                        </VBox.margin>
+                    </ComboBox>
+                    <ComboBox fx:id="majorChooserEditMajor" layoutX="31.0" layoutY="86.0" maxWidth="580.0" minHeight="37.0" onAction="#setMajorChooserEditMajor" prefWidth="150.0" promptText="Major" stylesheets="@EmployeePortal.css">
+                        <VBox.margin>
+                            <Insets bottom="10.0" />
+                        </VBox.margin>
+                    </ComboBox>
+                    <TextField fx:id="newMajorNameEditMajor" promptText="Major Name">
+                        <VBox.margin>
+                            <Insets bottom="10.0" />
+                        </VBox.margin>
+                    </TextField>
+                    <TextField fx:id="newEstablishmentYearEditMajor" layoutX="31.0" layoutY="146.0" promptText="Establishment Year">
+                        <VBox.margin>
+                            <Insets bottom="10.0" />
+                        </VBox.margin>
+                    </TextField>
+                    <Button fx:id="editMajorButton" mnemonicParsing="false" onAction="#editMajor" stylesheets="@EmployeePortal.css" text="EDIT">
+                        <VBox.margin>
+                            <Insets top="20.0" />
+                        </VBox.margin>
+                    </Button>
+                    <stylesheets>
+                        <URL value="@EmployeePortal.css" />
+                        <URL value="@comboBoxStyle.css" />
+                    </stylesheets>
+                </VBox>
+                <ComboBox fx:id="operationChooserUpdateMajor" layoutX="372.0" layoutY="82.0" maxWidth="315.0" minHeight="40.0" onAction="#setOperationChooserUpdateMajor" promptText="Choose Your Operation" stylesheets="@comboBoxStyle.css" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="5.0" />
+                <VBox fx:id="deactiveMajorVbox" layoutX="492.0" layoutY="125.0" prefHeight="415.0" prefWidth="315.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 100.0% 43.9394%, #00a1ff 0.0%, #ffffff 100.0%);" styleClass="content-box" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                    <children>
+                        <ComboBox fx:id="facultyChooserDeactiveMajor" maxHeight="157.0" maxWidth="580.0" minHeight="37.0" prefHeight="37.0" prefWidth="268.0" promptText="Faculty" stylesheets="@EmployeePortal.css">
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </ComboBox>
+                        <ComboBox fx:id="departmentChooserDeactiveMajor" maxWidth="580.0" minHeight="37.0" prefWidth="150.0" promptText="Department" stylesheets="@EmployeePortal.css">
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </ComboBox>
+                        <ComboBox fx:id="majorChooserDeactiveMajor" maxWidth="580.0" minHeight="37.0" onAction="#setMajorChooserDeactiveMajor" prefWidth="150.0" promptText="Major" stylesheets="@EmployeePortal.css">
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </ComboBox>
+                        <Button fx:id="deactiveMajorButton" mnemonicParsing="false" onAction="#deactiveMajor" stylesheets="@EmployeePortal.css" text="DEACTIVE">
+                            <VBox.margin>
+                                <Insets top="20.0" />
+                            </VBox.margin>
+                        </Button>
+                    </children>
+                    <stylesheets>
+                        <URL value="@EmployeePortal.css" />
+                        <URL value="@comboBoxStyle.css" />
+                    </stylesheets>
+                </VBox>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="addEmployeeAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" visible="false">
+            <children>
+                <VBox fx:id="addEmployeeVbox" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" stylesheets="@EmployeePortal.css">
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                    <children>
+                        <TextField fx:id="firstNameAddEmployee" maxHeight="0.0" maxWidth="300.0" prefHeight="26.0" prefWidth="200.0" promptText="First Name" stylesheets="@EmployeePortal.css">
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="lastNameAddEmployee" layoutX="31.0" layoutY="31.0" maxWidth="300.0" promptText="Last Name" stylesheets="@EmployeePortal.css">
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="nationalIdAddEmployee" layoutX="31.0" layoutY="56.0" maxWidth="300.0" prefHeight="25.0" prefWidth="609.0" promptText="National ID" stylesheets="@EmployeePortal.css">
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </TextField>
+                        <ComboBox fx:id="genderChooserAddEmployee" layoutX="31.0" layoutY="186.0" maxWidth="300.0" prefWidth="150.0" promptText="Gender" stylesheets="@comboBoxStyle.css">
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </ComboBox>
+                        <TextField fx:id="phoneNumberAddEmployee" layoutX="31.0" layoutY="103.0" maxWidth="300.0" prefHeight="25.0" prefWidth="609.0" promptText="Phone Number" stylesheets="@EmployeePortal.css">
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </TextField>
+                        <DatePicker fx:id="dateOfBirthAddEmployee" maxWidth="300.0" onAction="#getDateOfBirthAddEmployee" promptText="Date of Birth" stylesheets="@EmployeePortal.css">
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </DatePicker>
+                        <ComboBox fx:id="facultyChooserAddEmployee" maxWidth="300.0" prefWidth="150.0" promptText="Faculty" stylesheets="@comboBoxStyle.css">
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </ComboBox>
+                        <ComboBox fx:id="departmentChooserAddEmployee" layoutX="31.0" layoutY="133.0" maxWidth="300.0" prefWidth="150.0" promptText="Department" stylesheets="@comboBoxStyle.css">
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </ComboBox>
+                        <Button mnemonicParsing="false" onAction="#addEmployee" stylesheets="@EmployeePortal.css" text="Register">
+                            <VBox.margin>
+                                <Insets top="15.0" />
+                            </VBox.margin>
+                        </Button>
+                    </children>
+                </VBox>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="updateEmployeeAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: #7b7b7b;" visible="false">
+            <children>
+                <VBox fx:id="editEmployeeVbox" layoutX="170.0" layoutY="125.0" prefHeight="415.0" prefWidth="315.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 100.0% 43.9394%, #00a1ff 0.0%, #ffffff 100.0%);" styleClass="content-box" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+                    <padding>
+                        <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
+                    </padding>
+                    <ComboBox fx:id="facultyChooserEditEmployee" maxHeight="157.0" maxWidth="580.0" minHeight="37.0" prefHeight="37.0" prefWidth="268.0" promptText="Faculty" stylesheets="@EmployeePortal.css">
+                        <VBox.margin>
+                            <Insets bottom="5.0" />
+                        </VBox.margin>
+                    </ComboBox>
+                    <ComboBox fx:id="departmentChooserEditEmployee" layoutX="31.0" layoutY="31.0" maxWidth="580.0" minHeight="37.0" prefWidth="150.0" promptText="Department" stylesheets="@EmployeePortal.css">
+                        <VBox.margin>
+                            <Insets bottom="5.0" />
+                        </VBox.margin>
+                    </ComboBox>
+                    <ComboBox fx:id="employeeChooserEditEmployee" layoutX="31.0" layoutY="86.0" maxWidth="580.0" minHeight="37.0" onAction="#setEmployeeChooserEditEmployee" prefWidth="150.0" promptText="Employee ID" stylesheets="@EmployeePortal.css">
+                        <VBox.margin>
+                            <Insets bottom="5.0" />
+                        </VBox.margin>
+                    </ComboBox>
+                    <TextField fx:id="newFirstNameEditEmployee" promptText="First Name">
+                        <VBox.margin>
+                            <Insets bottom="5.0" />
+                        </VBox.margin>
+                    </TextField>
+                    <TextField fx:id="newLastNameEditEmployee" layoutX="31.0" layoutY="146.0" promptText="Last Name">
+                        <VBox.margin>
+                            <Insets bottom="5.0" />
+                        </VBox.margin>
+                    </TextField>
+                    <ComboBox fx:id="genderChooserEditEmployee" layoutX="31.0" layoutY="132.0" maxWidth="580.0" minHeight="35.0" prefWidth="150.0" promptText="Gender" stylesheets="@EmployeePortal.css">
+                        <VBox.margin>
+                            <Insets bottom="5.0" />
+                        </VBox.margin>
+                    </ComboBox>
+                    <DatePicker fx:id="dateOfBirthEditEmployee" maxWidth="300.0" prefHeight="26.0" prefWidth="300.0" promptText="Date Of Birth">
+                        <VBox.margin>
+                            <Insets bottom="5.0" />
+                        </VBox.margin>
+                    </DatePicker>
+                    <TextField fx:id="phoneNumberEditEmployee" layoutX="31.0" layoutY="182.0" promptText="Phone Number">
+                        <VBox.margin>
+                            <Insets bottom="5.0" />
+                        </VBox.margin>
+                    </TextField>
+                    <TextField fx:id="nationalIdEditEmployee" layoutX="31.0" layoutY="182.0" promptText="National ID">
+                        <VBox.margin>
+                            <Insets bottom="10.0" />
+                        </VBox.margin>
+                    </TextField>
+                    <Button fx:id="editEmployeeButton" mnemonicParsing="false" onAction="#editEmployee" stylesheets="@EmployeePortal.css" text="EDIT">
+                        <VBox.margin>
+                            <Insets top="10.0" />
+                        </VBox.margin>
+                    </Button>
+                    <stylesheets>
+                        <URL value="@EmployeePortal.css" />
+                        <URL value="@comboBoxStyle.css" />
+                    </stylesheets>
+                </VBox>
+                <ComboBox fx:id="operationChooserUpdateEmployee" layoutX="372.0" layoutY="82.0" maxWidth="315.0" minHeight="40.0" onAction="#setOperationChooserUpdateEmployee" promptText="Choose Your Operation" stylesheets="@comboBoxStyle.css" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="5.0" />
+                <VBox fx:id="deactiveEmployeeVbox" layoutX="492.0" layoutY="125.0" prefHeight="415.0" prefWidth="315.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 100.0% 43.9394%, #00a1ff 0.0%, #ffffff 100.0%);" styleClass="content-box" visible="false" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="50.0">
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                    <children>
+                        <ComboBox fx:id="facultyChooserDeactiveEmployee" layoutX="31.0" layoutY="31.0" maxWidth="580.0" prefWidth="150.0" promptText="Faculty" stylesheets="@EmployeePortal.css">
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </ComboBox>
+                        <ComboBox fx:id="departmentChooserDeactiveEmployee" maxWidth="580.0" prefWidth="150.0" promptText="Department" stylesheets="@EmployeePortal.css">
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </ComboBox>
+                        <ComboBox fx:id="employeeChooserDeactiveEmployee" maxWidth="580.0" minHeight="37.0" onAction="#setEmployeeChooserDeactive" prefWidth="150.0" promptText="Employee ID" stylesheets="@EmployeePortal.css">
+                            <VBox.margin>
+                                <Insets bottom="10.0" />
+                            </VBox.margin>
+                        </ComboBox>
+                        <Button fx:id="deactiveEmployeeButton" mnemonicParsing="false" onAction="#deactiveEmployee" stylesheets="@EmployeePortal.css" text="DEACTIVE">
+                            <VBox.margin>
+                                <Insets top="20.0" />
+                            </VBox.margin>
+                        </Button>
+                    </children>
+                    <stylesheets>
+                        <URL value="@EmployeePortal.css" />
+                        <URL value="@comboBoxStyle.css" />
+                    </stylesheets>
+                </VBox>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="profileAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" visible="false">
+            <children>
+                <VBox fx:id="profileVbox" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" stylesheets="@EmployeePortal.css">
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                </VBox>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="reportsAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" visible="false">
+            <children>
+                <VBox fx:id="reportsVbox" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" stylesheets="@EmployeePortal.css">
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                </VBox>
+            </children>
+        </AnchorPane>
+
+    </children>
+</AnchorPane>
