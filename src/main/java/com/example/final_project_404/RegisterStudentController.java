@@ -60,6 +60,9 @@ public class RegisterStudentController implements Initializable {
     private TextField phoneNumberRegisterStudentEmployee;
 
     @FXML
+    private ComboBox<String> degreeChooser;
+
+    @FXML
     void RegisterNewProfessorEmployeePortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("RegisterProfessor.fxml"));
         Scene scene = new Scene(root);
@@ -224,7 +227,7 @@ public class RegisterStudentController implements Initializable {
         String studentId = generateStudentId();
 
         if (!firstName.isBlank() && !lastName.isBlank() && !phoneNumber.isBlank() && !nationalId.isBlank() && gender!=null && faculty!=null && department!=null && major!=null){
-            Student student = new Student(firstName, lastName, dateOfBirth, nationalId, gender, phoneNumber, studentId, dateOfRegistration, faculty, department,major,Status.Active);
+            Student student = new Student(firstName, lastName, dateOfBirth, nationalId, gender, phoneNumber, studentId, dateOfRegistration, faculty, department,major,Status.Active,degreeChooser.getValue());
             for (Faculty faculty1 : University.allFaculties) {
                 if (faculty1.getFacultyName().equals(faculty) && faculty1.getStatus().equals(Status.Active)) {
                     for (Department department1 : faculty1.departments) {
@@ -279,7 +282,8 @@ public class RegisterStudentController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         University.loadFaculties();
-
+        degreeChooser.getItems().addAll("Bachelor","Master","Phd");
+        degreeChooser.setVisibleRowCount(3);
         for(Faculty faculty : University.allFaculties){
             if (faculty.getStatus().equals(Status.Active)){
                 facultyChooserRegisterStudentEmployee.getItems().add(faculty.getFacultyName());

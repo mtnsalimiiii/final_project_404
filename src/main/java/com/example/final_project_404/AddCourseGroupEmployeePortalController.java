@@ -45,6 +45,9 @@ public class AddCourseGroupEmployeePortalController implements Initializable{
     private VBox navigationBarVBox;
 
     @FXML
+    private ComboBox<String> semesterChooser;
+
+    @FXML
     void RegisterNewProfessorEmployeePortal(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("RegisterProfessor.fxml"));
         Scene scene = new Scene(root);
@@ -178,6 +181,12 @@ public class AddCourseGroupEmployeePortalController implements Initializable{
 
     public void initialize(URL location, ResourceBundle resources) {
         University.loadFaculties();
+        University.loadAllSemester();
+        for (Semester semester:University.allSemesters){
+            if(semester.getStatus()==Status.Active){
+                semesterChooser.getItems().add(semester.getName());
+            }
+        }
         if (LoginPanelController.employeePerson == null) return;
 
         String facultyName = LoginPanelController.employeePerson.getFaculty();
@@ -293,7 +302,7 @@ public class AddCourseGroupEmployeePortalController implements Initializable{
                                                 for(Course course1:degree.courses){
                                                     if(courseTarget==course1.getName()){
                                                         String id=course1.getId()+(course1.courseGroups.size()+1);
-                                                        course1.courseGroups.add(new CourseGroup(professor.getValue(),capacityGroup,id,Status.Active));
+                                                        course1.courseGroups.add(new CourseGroup(professor.getValue(),semesterChooser.getValue(),capacityGroup,id,Status.Active));
                                                         University.saveFaculties();
                                                         System.out.println("coursegroup add successful");
                                                     }

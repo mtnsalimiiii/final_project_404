@@ -12,10 +12,12 @@ public class CourseGroup implements Serializable {
     private Status status;
     private int capacity;
     private String id;
+    private String semesterCode;
     private Map<Student, Double> grades = new HashMap<>();
     private List<Student> enrolledStudents = new ArrayList<>();
-    public CourseGroup(String professorName,int capacity,String id,Status status) {
+    public CourseGroup(String professorName,String semasterCode,int capacity,String id,Status status) {
         this.professorName = professorName;
+        this.semasterCode=semasterCode;
         this.capacity=capacity;
         this.id=id;
         this.status=status;

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane minHeight="550.0" minWidth="800" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.RegisterStudentController">
+<AnchorPane minHeight="550.0" minWidth="800" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.RegisterStudentController">
     <children>
         <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0" styleClass="header" stylesheets="@EmployeePortal.css">
             <children>
@@ -46,7 +46,7 @@
                 </padding>
             </VBox>
         </ScrollPane>
-        <VBox fx:id="containerBarVBox" alignment="CENTER_LEFT" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" stylesheets="@EmployeePortal.css">
+        <VBox fx:id="containerBarVBox" alignment="CENTER_LEFT" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" stylesheets="@comboBoxStyle.css">
             <padding>
                 <Insets bottom="20.0" left="20.0" right="20.0" />
             </padding>
@@ -96,6 +96,7 @@
                   <Insets bottom="20.0" />
                </VBox.margin>
             </ComboBox>
+            <ComboBox fx:id="degreeChooser" layoutX="31.0" layoutY="173.0" maxWidth="300.0" prefWidth="150.0" promptText="Degree" />
             <Button mnemonicParsing="false" onAction="#addNewStudent" stylesheets="@EmployeePortal.css" text="Register">
                <VBox.margin>
                   <Insets top="15.0" />

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane minHeight="550.0" minWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.AddCourseGroupEmployeePortalController">
+<AnchorPane minHeight="550.0" minWidth="800.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.AddCourseGroupEmployeePortalController">
     <children>
         <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0" styleClass="header" stylesheets="@EmployeePortal.css">
             <children>
@@ -64,6 +64,11 @@
                </VBox.margin>
             </ComboBox>
             <ComboBox fx:id="professor" layoutX="31.0" layoutY="173.0" maxWidth="300.0" prefWidth="150.0" promptText="Professor" stylesheets="@comboBoxStyle.css">
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </ComboBox>
+            <ComboBox fx:id="semesterChooser" layoutX="31.0" layoutY="173.0" maxWidth="300.0" prefWidth="150.0" promptText="Semaster" stylesheets="@comboBoxStyle.css">
                <VBox.margin>
                   <Insets bottom="15.0" />
                </VBox.margin>

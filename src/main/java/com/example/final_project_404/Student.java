@@ -11,12 +11,23 @@ public class Student extends Person implements Serializable {
     private String department;
     private String major;
 
-    public Student(String first_name, String last_name, Date dateOfBirth, String nationalId,Gender gender, String phoneNumber, String id, Date dateOfRegistration, String faculty, String department, String major,Status status){
+    public String getDegree() {
+        return degree;
+    }
+
+    public void setDegree(String degree) {
+        this.degree = degree;
+    }
+
+    private String degree;
+
+    public Student(String first_name, String last_name, Date dateOfBirth, String nationalId,Gender gender, String phoneNumber, String id, Date dateOfRegistration, String faculty, String department, String major,Status status,String degree){
         super(first_name,last_name,dateOfBirth,nationalId,gender,phoneNumber, dateOfRegistration,status);
         this.id=id;
         this.faculty = faculty;
         this.department = department;
         this.major = major;
+        this.degree=degree;
     }
 
 
