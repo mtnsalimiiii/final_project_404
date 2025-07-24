@@ -56,4 +56,15 @@ public class StudentPortalController {
         stage.show();
     }
 
+    @FXML
+    void EnrollmentStudentPortal(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("EnrollStudent.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Enrollment Panel");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
 }

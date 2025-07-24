@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane minHeight="550.0" minWidth="800" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.StudentPortalController">
+<AnchorPane minHeight="550.0" minWidth="800" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.StudentPortalController">
     <children>
         <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0" styleClass="header" stylesheets="@EmployeePortal.css">
             <children>
@@ -26,7 +26,7 @@
                <VBox.margin>
                   <Insets bottom="20.0" />
                </VBox.margin></Label>
-            <GridPane prefHeight="370.0" prefWidth="760.0">
+            <GridPane prefHeight="370.0" prefWidth="760.0" stylesheets="@DashboardButton.css">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="380.0" percentWidth="0.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -43,6 +43,7 @@
                   <Button alignment="CENTER" minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#profileStudentPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Profile" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                   <Button alignment="CENTER" minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#reportsStudentPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Reports" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                   <Button alignment="CENTER" minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#signOutStudentPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Sign out" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                  <Button contentDisplay="CENTER" minHeight="40.0" minWidth="280.0" mnemonicParsing="false" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Enrollment" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
             </children>
