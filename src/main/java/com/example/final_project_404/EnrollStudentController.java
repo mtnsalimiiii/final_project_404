@@ -67,7 +67,7 @@ public class EnrollStudentController {
 
         // اضافه کردن listener برای تغییرات انتخاب دروس
         coursesTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            updateTotalCredits();
+            //updateTotalCredits();
         });
     }
 
