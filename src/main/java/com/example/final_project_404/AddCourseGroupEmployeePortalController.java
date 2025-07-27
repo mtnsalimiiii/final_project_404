@@ -326,6 +326,6 @@ public class AddCourseGroupEmployeePortalController implements Initializable{
                 }
             }
         }
-        System.out.println("add successfull!!");
+        System.out.println("add successful!!");
     }
 }

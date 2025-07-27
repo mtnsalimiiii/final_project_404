@@ -12,7 +12,6 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 public class EnrollStudentController {
@@ -43,17 +42,24 @@ public class EnrollStudentController {
 
     @FXML
     public void initialize() {
-        University.loadAllSemester();
-        University.loadFaculties();
+        System.out.println("EnrollStudentController initialized ✅");
 
-        for (Semester semester : University.allSemesters) {
-            if (semester.getStatus() == Status.Active) {
-                semesterComboBox.getItems().add(semester.getName());
+        try {
+            University.loadAllSemester();
+            University.loadFaculties();
+
+            for (Semester semester : University.allSemesters) {
+                if (semester.getStatus() == Status.Active) {
+                    semesterComboBox.getItems().add(semester.getName());
+                }
             }
+
+            semesterComboBox.setVisibleRowCount(4);
+            setupCoursesTable();
+
+        } catch (Exception e) {
+            System.out.println("خطا در initialize: " + e.getMessage());
         }
-        semesterComboBox.setVisibleRowCount(4);
-        University.saveAllSemester();
-        setupCoursesTable();
     }
 
     private void setupCoursesTable() {
@@ -70,7 +76,6 @@ public class EnrollStudentController {
 
     @FXML
     private void searchCourses() {
-        University.loadFaculties();
         availableCourses.clear();
 
         String selectedSemesterName = semesterComboBox.getValue();
@@ -80,19 +85,30 @@ public class EnrollStudentController {
         }
 
         Student student = LoginPanelController.studentPerson;
+        if (student == null) {
+            showMessage("دانشجو یافت نشد", "error");
+            return;
+        }
 
         for (Faculty faculty : University.allFaculties) {
             if (faculty.getFacultyName().equals(student.getFaculty())) {
+                System.out.println("1");
                 for (Department department : faculty.departments) {
                     if (department.getName().equals(student.getDepartment())) {
+                        System.out.println("2");
                         for (Major major : department.majors) {
                             if (major.getName().equals(student.getMajor())) {
+                                System.out.println("3");
                                 for (Degree degree : major.degrees) {
                                     if (degree.getClass().getSimpleName().equals(student.getDegree())) {
+                                        System.out.println("4");
                                         for (Course course : degree.courses) {
+                                            System.out.println(course.getName());
                                             for (CourseGroup group : course.courseGroups) {
                                                 if (group.getStatus() == Status.Active) {
                                                     availableCourses.add(new CourseGroupRow(group));
+                                                    System.out.println("5");
+                                                    System.out.println(group.getCourse().getName());
                                                 }
                                             }
                                         }
@@ -108,7 +124,6 @@ public class EnrollStudentController {
         showMessage(availableCourses.size() + " درس یافت شد", "success");
         updateTotalCredits();
     }
-
 
     @FXML
     private void registerCourses() {
@@ -132,13 +147,11 @@ public class EnrollStudentController {
             if (row.isSelected()) {
                 CourseGroup group = row.getCourseGroup();
 
-                // چک ظرفیت
                 if (group.getRegisteredStudents().size() >= group.getCapacity()) {
                     showMessage("ظرفیت کلاس " + group.getCourse().getName() + " پر شده است.", "error");
                     return;
                 }
 
-                // جلوگیری از ثبت تکراری
                 if (!studentSemester.getCourseGroups().contains(group)) {
                     studentSemester.getCourseGroups().add(group);
                     group.getRegisteredStudents().add(student);
@@ -175,13 +188,11 @@ public class EnrollStudentController {
         }
     }
 
-
     public void dashboardStudentPortal(javafx.event.ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("StudentPortal.fxml"));
-        Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setTitle("Admin Portal");
-        stage.setScene(scene);
+        stage.setScene(new Scene(root));
+        stage.setTitle("Student Portal");
         stage.setResizable(false);
         stage.show();
     }
