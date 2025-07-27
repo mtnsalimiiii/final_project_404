@@ -3,61 +3,52 @@ package com.example.final_project_404;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 public class EnrollStudentController {
+
     @FXML
     private ComboBox<String> semesterComboBox;
 
     @FXML
-    private TableView<Course> coursesTableView; // جدول نمایش دروس
+    private TableView<CourseGroupRow> coursesTableView;
 
     @FXML
-    private TableColumn<Course, Boolean> selectCol; // ستون انتخاب درس
+    private TableColumn<CourseGroupRow, Boolean> selectCol;
+    @FXML
+    private TableColumn<CourseGroupRow, String> courseCodeCol;
+    @FXML
+    private TableColumn<CourseGroupRow, String> courseNameCol;
+    @FXML
+    private TableColumn<CourseGroupRow, Integer> creditsCol;
+    @FXML
+    private TableColumn<CourseGroupRow, String> scheduleCol;
 
     @FXML
-    private TableColumn<Course, String> courseCodeCol; // ستون کد درس
-
+    private Label totalCreditsLabel;
     @FXML
-    private TableColumn<Course, String> courseNameCol; // ستون نام درس
+    private Label messageLabel;
 
-    @FXML
-    private TableColumn<Course, Integer> creditsCol; // ستون تعداد واحد
-
-    @FXML
-    private TableColumn<Course, String> scheduleCol; // ستون زمان برگزاری
-
-    @FXML
-    private Label totalCreditsLabel; // نمایش مجموع واحدهای انتخاب شده
-
-    @FXML
-    private Label messageLabel; // نمایش پیام‌های سیستم
-
-    // لیست دروس قابل نمایش
-    private ObservableList<CourseGroup> availableCourses = FXCollections.observableArrayList();
-
+    private ObservableList<CourseGroupRow> availableCourses = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
         University.loadAllSemester();
-        for(Semester semester:University.allSemesters){
-            if(semester.getStatus()==Status.Active){
+        University.loadFaculties();
+
+        for (Semester semester : University.allSemesters) {
+            if (semester.getStatus() == Status.Active) {
                 semesterComboBox.getItems().add(semester.getName());
             }
         }
         semesterComboBox.setVisibleRowCount(4);
+        setupCoursesTable();
     }
+
     private void setupCoursesTable() {
-        // تنظیم ستون‌ها
-        selectCol.setCellValueFactory(new PropertyValueFactory<>("selected"));
+        selectCol.setCellValueFactory(cellData -> cellData.getValue().selectedProperty());
         selectCol.setCellFactory(CheckBoxTableCell.forTableColumn(selectCol));
 
         courseCodeCol.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
@@ -65,28 +56,39 @@ public class EnrollStudentController {
         creditsCol.setCellValueFactory(new PropertyValueFactory<>("credits"));
         scheduleCol.setCellValueFactory(new PropertyValueFactory<>("schedule"));
 
-        // اضافه کردن listener برای تغییرات انتخاب دروس
-        coursesTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            //updateTotalCredits();
-        });
+        coursesTableView.setItems(availableCourses);
     }
 
     @FXML
     private void searchCourses() {
-        University.loadFaculties();
         availableCourses.clear();
-        for(Faculty faculty:University.allFaculties){
-            if(faculty.getFacultyName()==LoginPanelController.studentPerson.getFaculty()){
-                for (Department department:faculty.departments){
-                    if (department.getName()==LoginPanelController.studentPerson.getDepartment()){
-                        for (Major major:department.majors){
-                            if (major.getName()==LoginPanelController.studentPerson.getMajor()){
-                                for(Degree degree: major.degrees){
-                                    if(degree.getClass().getName()==LoginPanelController.studentPerson.getDegree()){
-                                        for (Course course:degree.courses){
-                                            for (CourseGroup courseGroup:course.courseGroups){
-                                                if(courseGroup.getStatus()==Status.Active){
-                                                    availableCourses.add(courseGroup);
+
+        String selectedSemesterName = semesterComboBox.getValue();
+        if (selectedSemesterName == null) {
+            showMessage("لطفاً یک ترم را انتخاب کنید", "error");
+            return;
+        }
+
+        Student student = LoginPanelController.studentPerson;
+        String facultyName = student.getFaculty();
+        String departmentName = student.getDepartment();
+        String majorName = student.getMajor();
+        String degreeName = student.getDegree();
+
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName().equals(facultyName)) {
+                for (Department department : faculty.departments) {
+                    if (department.getName().equals(departmentName)) {
+                        for (Major major : department.majors) {
+                            if (major.getName().equals(majorName)) {
+                                for (Degree degree : major.degrees) {
+                                    if (degree.getClass().getSimpleName().equals(degreeName)) {
+                                        for (Course course : degree.courses) {
+                                            for (CourseGroup group : course.courseGroups) {
+                                                if (group.getStatus() == Status.Active &&
+                                                        group.getSemester().getName().equals(selectedSemesterName)) {
+
+                                                    availableCourses.add(new CourseGroupRow(group));
                                                 }
                                             }
                                         }
@@ -98,8 +100,73 @@ public class EnrollStudentController {
                 }
             }
         }
+
+        showMessage(availableCourses.size() + " درس یافت شد", "success");
+        updateTotalCredits();
     }
 
+    @FXML
+    private void registerCourses() {
+        Student student = LoginPanelController.studentPerson;
+        String selectedSemesterName = semesterComboBox.getValue();
 
+        if (selectedSemesterName == null) {
+            showMessage("لطفاً یک ترم را انتخاب کنید", "error");
+            return;
+        }
 
+        Semester studentSemester = student.getSemesterByName(selectedSemesterName);
+        if (studentSemester == null) {
+            studentSemester = new Semester(selectedSemesterName, Status.Active);
+            student.getSemesters().add(studentSemester);
+        }
+
+        int selectedCount = 0;
+
+        for (CourseGroupRow row : availableCourses) {
+            if (row.isSelected()) {
+                CourseGroup group = row.getCourseGroup();
+
+                // چک ظرفیت
+                if (group.getRegisteredStudents().size() >= group.getCapacity()) {
+                    showMessage("ظرفیت کلاس " + group.getCourse().getName() + " پر شده است.", "error");
+                    return;
+                }
+
+                // جلوگیری از ثبت تکراری
+                if (!studentSemester.getCourseGroups().contains(group)) {
+                    studentSemester.getCourseGroups().add(group);
+                    group.getRegisteredStudents().add(student);
+                    selectedCount++;
+                }
+            }
+        }
+
+        if (selectedCount == 0) {
+            showMessage("هیچ درسی برای ثبت انتخاب نشده است", "error");
+        } else {
+            University.saveStudents();
+            showMessage(selectedCount + " درس با موفقیت ثبت شد", "success");
+        }
+
+        updateTotalCredits();
+    }
+
+    private void updateTotalCredits() {
+        int total = availableCourses.stream()
+                .filter(CourseGroupRow::isSelected)
+                .mapToInt(CourseGroupRow::getCredits)
+                .sum();
+
+        totalCreditsLabel.setText("مجموع واحدها: " + total);
+    }
+
+    private void showMessage(String message, String type) {
+        messageLabel.setText(message);
+        if ("error".equals(type)) {
+            messageLabel.setStyle("-fx-text-fill: red;");
+        } else {
+            messageLabel.setStyle("-fx-text-fill: green;");
+        }
+    }
 }

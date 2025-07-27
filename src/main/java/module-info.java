@@ -5,6 +5,7 @@ module com.example.final_project_404 {
     requires jdk.nio.mapmode;
     requires java.rmi;
     requires jdk.security.auth;
+    requires java.compiler;
 
 
     opens com.example.final_project_404 to javafx.fxml;

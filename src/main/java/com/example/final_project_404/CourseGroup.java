@@ -1,5 +1,6 @@
 package com.example.final_project_404;
 
+import javax.tools.Diagnostic;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,5 +52,8 @@ public class CourseGroup implements Serializable {
     }
     public void setCapacity(int capacity) {
         this.capacity = capacity;
+    }
+
+    public Diagnostic<Object> getCourse() {
     }
 }
