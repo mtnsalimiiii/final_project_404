@@ -43,7 +43,7 @@
                   <Button alignment="CENTER" minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#profileStudentPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Profile" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                   <Button alignment="CENTER" minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#reportsStudentPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Reports" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                   <Button alignment="CENTER" minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#signOutStudentPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Sign out" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-                  <Button contentDisplay="CENTER" minHeight="40.0" minWidth="280.0" mnemonicParsing="false" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Enrollment" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button contentDisplay="CENTER" minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#EnrollmentStudentPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Enrollment" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                </children>
             </GridPane>
             </children>

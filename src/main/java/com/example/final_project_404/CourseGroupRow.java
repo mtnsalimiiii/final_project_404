@@ -28,7 +28,7 @@ public class CourseGroupRow {
     }
 
     public String getCourseCode() {
-        return courseGroup.getCourse().getCode();
+        return courseGroup.getCourse().getId();
     }
 
     public String getCourseName() {
@@ -36,10 +36,10 @@ public class CourseGroupRow {
     }
 
     public int getCredits() {
-        return courseGroup.getCourse().getUnits();
+        return courseGroup.getCourse().getCredit();
     }
 
     public String getSchedule() {
-        return courseGroup.getTimeSchedule(); // فرض بر این است که این متد وجود دارد
+        return "Shanbeh"; // فرض بر این است که این متد وجود دارد
     }
 }

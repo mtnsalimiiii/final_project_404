@@ -14,61 +14,61 @@
 
 <AnchorPane minHeight="550.0" minWidth="800.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.EnrollStudentController">
     <children>
+        <!-- Header -->
         <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0" styleClass="header" stylesheets="@EmployeePortal.css">
             <children>
-                <Label styleClass="header-title" stylesheets="@EmployeePortal.css" text="Student Portal" />
+                <Label styleClass="header-title" text="Student Portal" />
                 <Label styleClass="header-title" text=" --&gt; Course Registration" />
             </children>
         </HBox>
+
+        <!-- Navigation Sidebar -->
         <ScrollPane layoutY="80.0" prefHeight="470.0" prefWidth="170.0">
             <content>
                 <VBox fx:id="navigationBarVBox" prefHeight="420.0" prefWidth="150.0" styleClass="nav-bar" stylesheets="@EmployeePortal.css">
                     <children>
-                        <Button layoutX="20.0" layoutY="20.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#dashboardStudentPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Dashboard" />
-                        <Button layoutX="20.0" layoutY="62.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#courseRegistration" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Course Registration" wrapText="true" />
-                        <Button layoutX="20.0" layoutY="65.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#viewSchedule" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="View Schedule" />
-                        <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#viewGrades" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="View Grades" />
-                        <Button layoutX="20.0" layoutY="176.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#financialInfo" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Financial Info" />
-                        <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#profileStudentPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Profile" />
-                        <Button minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#signOutStudentPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Sign out" />
+                        <Button onAction="#dashboardStudentPortal" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Dashboard" />
+                        <Button styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Course Registration" />
+                        <Button styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="View Schedule" />
+                        <Button styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="View Grades" />
+                        <Button styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Financial Info" />
+                        <Button styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Profile" />
+                        <Button styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Sign out" />
                     </children>
                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="10" left="10" right="10" top="10" />
                     </padding>
                 </VBox>
             </content>
         </ScrollPane>
-        <VBox fx:id="containerBarVBox" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" stylesheets="@EmployeePortal.css">
+
+        <!-- Main Panel -->
+        <VBox fx:id="containerBarVBox" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100% 100% to 0% 0%, #00a1ffb1 0%, #ffffff 100%);" stylesheets="@EmployeePortal.css">
             <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                <Insets bottom="20" left="20" right="20" top="20" />
             </padding>
-            <HBox spacing="10.0">
+
+            <!-- ComboBox & Search -->
+            <HBox spacing="10">
                 <ComboBox fx:id="semesterComboBox" prefWidth="200.0" promptText="Select Semester" />
-                <Button mnemonicParsing="false" onAction="#searchCourses" text="Search" />
+                <Button onAction="#searchCourses" text="Search" />
             </HBox>
 
+            <!-- Courses Table -->
             <TableView fx:id="coursesTableView" prefHeight="300.0" prefWidth="590.0">
                 <columns>
-                    <TableColumn fx:id="selectCol" prefWidth="50.0" text="Select" />
+                    <TableColumn fx:id="selectCol" prefWidth="60.0" text="Select" />
                     <TableColumn fx:id="courseCodeCol" prefWidth="100.0" text="Course Code">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="courseCode" />
-                        </cellValueFactory>
+                        <cellValueFactory><PropertyValueFactory property="courseCode" /></cellValueFactory>
                     </TableColumn>
                     <TableColumn fx:id="courseNameCol" prefWidth="200.0" text="Course Name">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="courseName" />
-                        </cellValueFactory>
+                        <cellValueFactory><PropertyValueFactory property="courseName" /></cellValueFactory>
                     </TableColumn>
                     <TableColumn fx:id="creditsCol" prefWidth="70.0" text="Credits">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="credits" />
-                        </cellValueFactory>
+                        <cellValueFactory><PropertyValueFactory property="credits" /></cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="scheduleCol" prefWidth="170.0" text="Schedule">
-                        <cellValueFactory>
-                            <PropertyValueFactory property="schedule" />
-                        </cellValueFactory>
+                    <TableColumn fx:id="scheduleCol" prefWidth="150.0" text="Schedule">
+                        <cellValueFactory><PropertyValueFactory property="schedule" /></cellValueFactory>
                     </TableColumn>
                 </columns>
                 <VBox.margin>
@@ -76,11 +76,13 @@
                 </VBox.margin>
             </TableView>
 
+            <!-- Register & Total -->
             <HBox alignment="CENTER_RIGHT" spacing="10.0">
                 <Label fx:id="totalCreditsLabel" style="-fx-font-weight: bold;" text="Total Credits: 0" />
-                <Button mnemonicParsing="false" onAction="#registerCourses" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Register Selected Courses" />
+                <Button onAction="#registerCourses" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Register Selected Courses" />
             </HBox>
 
+            <!-- Message Label -->
             <Label fx:id="messageLabel" style="-fx-text-fill: red;" />
         </VBox>
     </children>

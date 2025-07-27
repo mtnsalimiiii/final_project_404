@@ -3,6 +3,7 @@ package com.example.final_project_404;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Student extends Person implements Serializable {
@@ -10,6 +11,8 @@ public class Student extends Person implements Serializable {
     private String faculty;
     private String department;
     private String major;
+    private List<Semester> semesters = new ArrayList<>();
+
 
     public String getDegree() {
         return degree;
@@ -81,5 +84,14 @@ public class Student extends Person implements Serializable {
         } catch (IOException e) {
             System.err.println("Error saving Students list: " + e.getMessage());
         }
+    }
+    public Semester getSemesterByName(String name) {
+        for (Semester s : semesters) {
+            if (s.getName().equals(name)) return s;
+        }
+        return null;
+    }
+    public List<Semester> getSemesters() {
+        return semesters;
     }
 }

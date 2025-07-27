@@ -3,9 +3,17 @@ package com.example.final_project_404;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
+
+import java.awt.event.ActionEvent;
+import java.io.IOException;
 
 public class EnrollStudentController {
 
@@ -44,6 +52,7 @@ public class EnrollStudentController {
             }
         }
         semesterComboBox.setVisibleRowCount(4);
+        University.saveAllSemester();
         setupCoursesTable();
     }
 
@@ -61,6 +70,7 @@ public class EnrollStudentController {
 
     @FXML
     private void searchCourses() {
+        University.loadFaculties();
         availableCourses.clear();
 
         String selectedSemesterName = semesterComboBox.getValue();
@@ -70,24 +80,18 @@ public class EnrollStudentController {
         }
 
         Student student = LoginPanelController.studentPerson;
-        String facultyName = student.getFaculty();
-        String departmentName = student.getDepartment();
-        String majorName = student.getMajor();
-        String degreeName = student.getDegree();
 
         for (Faculty faculty : University.allFaculties) {
-            if (faculty.getFacultyName().equals(facultyName)) {
+            if (faculty.getFacultyName().equals(student.getFaculty())) {
                 for (Department department : faculty.departments) {
-                    if (department.getName().equals(departmentName)) {
+                    if (department.getName().equals(student.getDepartment())) {
                         for (Major major : department.majors) {
-                            if (major.getName().equals(majorName)) {
+                            if (major.getName().equals(student.getMajor())) {
                                 for (Degree degree : major.degrees) {
-                                    if (degree.getClass().getSimpleName().equals(degreeName)) {
+                                    if (degree.getClass().getSimpleName().equals(student.getDegree())) {
                                         for (Course course : degree.courses) {
                                             for (CourseGroup group : course.courseGroups) {
-                                                if (group.getStatus() == Status.Active &&
-                                                        group.getSemester().getName().equals(selectedSemesterName)) {
-
+                                                if (group.getStatus() == Status.Active) {
                                                     availableCourses.add(new CourseGroupRow(group));
                                                 }
                                             }
@@ -105,6 +109,7 @@ public class EnrollStudentController {
         updateTotalCredits();
     }
 
+
     @FXML
     private void registerCourses() {
         Student student = LoginPanelController.studentPerson;
@@ -117,7 +122,7 @@ public class EnrollStudentController {
 
         Semester studentSemester = student.getSemesterByName(selectedSemesterName);
         if (studentSemester == null) {
-            studentSemester = new Semester(selectedSemesterName, Status.Active);
+            studentSemester = new Semester(selectedSemesterName);
             student.getSemesters().add(studentSemester);
         }
 
@@ -145,7 +150,7 @@ public class EnrollStudentController {
         if (selectedCount == 0) {
             showMessage("هیچ درسی برای ثبت انتخاب نشده است", "error");
         } else {
-            University.saveStudents();
+            University.saveFaculties();
             showMessage(selectedCount + " درس با موفقیت ثبت شد", "success");
         }
 
@@ -168,5 +173,16 @@ public class EnrollStudentController {
         } else {
             messageLabel.setStyle("-fx-text-fill: green;");
         }
+    }
+
+
+    public void dashboardStudentPortal(javafx.event.ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("StudentPortal.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Admin Portal");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 }

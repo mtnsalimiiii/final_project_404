@@ -26,7 +26,7 @@ public class University implements Serializable{
     }
 
     public static void saveAllSemester() {
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("Semester.ser"))) {
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("Semesters.ser"))) {
             output.writeObject(allSemesters);
         } catch (IOException e) {
             System.err.println("Error saving Semester list: " + e.getMessage());

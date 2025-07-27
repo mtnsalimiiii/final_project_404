@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CourseGroup implements Serializable {
+    private Course course;
     private String semasterCode;
     private String professorName;
     private Status status;
@@ -16,12 +17,13 @@ public class CourseGroup implements Serializable {
     private String semesterCode;
     private Map<Student, Double> grades = new HashMap<>();
     private List<Student> enrolledStudents = new ArrayList<>();
-    public CourseGroup(String professorName,String semasterCode,int capacity,String id,Status status) {
+    public CourseGroup(String professorName,String semasterCode,int capacity,String id,Status status, Course course) {
         this.professorName = professorName;
         this.semasterCode=semasterCode;
         this.capacity=capacity;
         this.id=id;
         this.status=status;
+        this.course=course;
     }
     public String getId() {
         return id;
@@ -54,6 +56,14 @@ public class CourseGroup implements Serializable {
         this.capacity = capacity;
     }
 
-    public Diagnostic<Object> getCourse() {
+    public List<Student> getRegisteredStudents() {
+        return enrolledStudents;
+    }
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }

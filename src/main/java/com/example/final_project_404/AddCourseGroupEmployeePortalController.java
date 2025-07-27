@@ -187,6 +187,7 @@ public class AddCourseGroupEmployeePortalController implements Initializable{
                 semesterChooser.getItems().add(semester.getName());
             }
         }
+        University.saveAllSemester();
         if (LoginPanelController.employeePerson == null) return;
 
         String facultyName = LoginPanelController.employeePerson.getFaculty();
@@ -302,7 +303,7 @@ public class AddCourseGroupEmployeePortalController implements Initializable{
                                                 for(Course course1:degree.courses){
                                                     if(courseTarget==course1.getName()){
                                                         String id=course1.getId()+(course1.courseGroups.size()+1);
-                                                        course1.courseGroups.add(new CourseGroup(professor.getValue(),semesterChooser.getValue(),capacityGroup,id,Status.Active));
+                                                        course1.courseGroups.add(new CourseGroup(professor.getValue(),semesterChooser.getValue(),capacityGroup,id,Status.Active,course1));
                                                         University.saveFaculties();
                                                         System.out.println("coursegroup add successful");
                                                     }
@@ -325,6 +326,6 @@ public class AddCourseGroupEmployeePortalController implements Initializable{
                 }
             }
         }
-        System.out.println("Major not found!");
+        System.out.println("add successfull!!");
     }
 }
