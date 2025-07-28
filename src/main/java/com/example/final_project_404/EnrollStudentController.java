@@ -70,6 +70,11 @@ public class EnrollStudentController {
         courseNameCol.setCellValueFactory(new PropertyValueFactory<>("courseName"));
         creditsCol.setCellValueFactory(new PropertyValueFactory<>("credits"));
         scheduleCol.setCellValueFactory(new PropertyValueFactory<>("schedule"));
+        coursesTableView.setEditable(true); // کل جدول قابل ویرایش باشه
+        selectCol.setEditable(true);        // ستون CheckBox هم همین‌طور
+        coursesTableView.setEditable(true); // کل جدول قابل ویرایش باشه
+        selectCol.setEditable(true);        // ستون CheckBox هم همین‌طور
+
 
         coursesTableView.setItems(availableCourses);
     }
@@ -92,22 +97,17 @@ public class EnrollStudentController {
 
         for (Faculty faculty : University.allFaculties) {
             if (faculty.getFacultyName().equals(student.getFaculty())) {
-                System.out.println("1");
                 for (Department department : faculty.departments) {
                     if (department.getName().equals(student.getDepartment())) {
-                        System.out.println("2");
                         for (Major major : department.majors) {
                             if (major.getName().equals(student.getMajor())) {
-                                System.out.println("3");
                                 for (Degree degree : major.degrees) {
                                     if (degree.getClass().getSimpleName().equals(student.getDegree())) {
-                                        System.out.println("4");
                                         for (Course course : degree.courses) {
                                             System.out.println(course.getName());
                                             for (CourseGroup group : course.courseGroups) {
                                                 if (group.getStatus() == Status.Active) {
                                                     availableCourses.add(new CourseGroupRow(group));
-                                                    System.out.println("5");
                                                     System.out.println(group.getCourse().getName());
                                                 }
                                             }

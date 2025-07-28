@@ -55,7 +55,7 @@
             </HBox>
 
             <!-- Courses Table -->
-            <TableView fx:id="coursesTableView" prefHeight="300.0" prefWidth="590.0">
+            <TableView fx:id="coursesTableView" prefHeight="300.0" prefWidth="590.0" stylesheets="@TableViewStyle.css">
                 <columns>
                     <TableColumn fx:id="selectCol" prefWidth="60.0" text="Select" />
                     <TableColumn fx:id="courseCodeCol" prefWidth="100.0" text="Course Code">

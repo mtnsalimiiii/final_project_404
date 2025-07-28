@@ -301,11 +301,20 @@ public class AddCourseGroupEmployeePortalController implements Initializable{
                                         if (degree.getClass().getSimpleName().equalsIgnoreCase(selectedDegree)) {
                                             try {
                                                 for(Course course1:degree.courses){
-                                                    if(courseTarget==course1.getName()){
+                                                    if(courseTarget.equals(course1.getName())){
                                                         String id=course1.getId()+(course1.courseGroups.size()+1);
-                                                        course1.courseGroups.add(new CourseGroup(professor.getValue(),semesterChooser.getValue(),capacityGroup,id,Status.Active,course1));
+                                                        CourseGroup newGroup = new CourseGroup(
+                                                                professor.getValue(),
+                                                                semesterChooser.getValue(),
+                                                                capacityGroup,
+                                                                id,
+                                                                Status.Active,
+                                                                new Course(course1.getName(), course1.getCredit(), course1.getId(), Status.Active)
+                                                        );
+                                                        course1.courseGroups.add(newGroup);
                                                         University.saveFaculties();
                                                         System.out.println("coursegroup add successful");
+                                                        return;
                                                     }
                                                 }
                                             }catch (Exception e){
