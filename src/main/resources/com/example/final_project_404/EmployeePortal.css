@@ -47,7 +47,7 @@
 /* Content area */
 .content-box {
     -fx-background-color: white;
-    -fx-padding: 20;
+    -fx-padding: 10;
     -fx-border-color: #dddddd;
     -fx-border-radius: 10;
     -fx-background-radius: 10;
