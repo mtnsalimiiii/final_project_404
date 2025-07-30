@@ -141,7 +141,7 @@
                         </VBox.margin>
                     </Button>
                 </VBox>
-                <ComboBox fx:id="operationChooserUpdateFaculty" layoutX="200.0" layoutY="10.0" maxHeight="35.0" maxWidth="315.0" minHeight="40.0" onAction="#setOperationChooserUpdateFaculty" prefHeight="35.0" prefWidth="256.0" promptText="Choose Your Operation" stylesheets="@comboBoxStyle.css" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="175.0" AnchorPane.topAnchor="5.0">
+                <ComboBox fx:id="operationChooserUpdateFaculty" layoutX="200.0" layoutY="10.0" maxHeight="35.0" maxWidth="315.0" minHeight="40.0" onAction="#setOperationChooserUpdateFaculty" prefHeight="35.0" prefWidth="256.0" promptText="Choose Your Operation" stylesheets="@comboBoxStyle.css" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="5.0">
                     <styleClass>
                         <String fx:value="arrow" />
                         <String fx:value="arrow-button" />

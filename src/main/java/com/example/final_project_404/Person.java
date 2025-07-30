@@ -7,6 +7,7 @@ import java.util.List;
 public abstract class  Person implements Serializable {
     private String first_name;
     private String last_name;
+    private String fullName;
 //    private String dateOfBirth;
     private String nationalId;
     private com.example.final_project_404.Date dateOfBirth;
@@ -18,12 +19,12 @@ public abstract class  Person implements Serializable {
 
 
     Person(String first_name, String last_name, Date dateOfBirth, String nationalId, Gender gender, String phoneNumber, Date dateOfJoin, Status status){
-        this.first_name=first_name;
-        this.last_name=last_name;
+        this.first_name = first_name;
+        this.last_name = last_name;
         this.dateOfBirth = dateOfBirth;
-        this.nationalId=nationalId;
+        this.nationalId = nationalId;
         this.gender = gender;
-        this.phoneNumber=phoneNumber;
+        this.phoneNumber = phoneNumber;
         this.dateOfJoin = dateOfJoin;
         this.status = status;
     }
@@ -83,5 +84,13 @@ public abstract class  Person implements Serializable {
     }
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public String getFullName() {
+        setFullName();
+        return fullName;
+    }
+    public void setFullName() {
+        fullName = first_name.concat(" ").concat(last_name);
     }
 }

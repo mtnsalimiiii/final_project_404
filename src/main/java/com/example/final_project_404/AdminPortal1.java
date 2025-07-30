@@ -1335,6 +1335,8 @@ public class AdminPortal1 implements Initializable {
             profileAnchorPane.setVisible(true);
             profileScrollPane.getStyleClass().add("pressed");
         }
+
+
     }
 
     @FXML
@@ -1464,324 +1466,332 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     void setOperationChooserUpdateDepartment(ActionEvent event) {
-        if (operationChooserUpdateDepartment.getValue().equals("Edit")){
+        if (operationChooserUpdateDepartment.getValue() != null) {
+            if (operationChooserUpdateDepartment.getValue().equals("Edit")){
 //            activate the edit screen and deactivate the deactive screen
-            editDepartmentVbox.setVisible(true);
-            deactiveDepartmentVbox.setVisible(false);
+                editDepartmentVbox.setVisible(true);
+                deactiveDepartmentVbox.setVisible(false);
 //            initialize the faculty chooser combo box
-            facultyChooserEditDepartment.getItems().clear();
-            facultyChooserEditDepartment.getItems().add("Faculty");
-            for (Faculty faculty : University.allFaculties) {
-                if (faculty.getStatus().equals(Status.Active)) {
-                    facultyChooserEditDepartment.getItems().add(faculty.getFacultyName());
-                }
-            }
-            facultyChooserEditDepartment.setVisibleRowCount(4);
-            facultyChooserEditDepartment.getSelectionModel().selectFirst();
-//            initialize the department chooser combo box
-            facultyChooserEditDepartment.setOnAction(event1 -> {
-                departmentChooserEditDepartment.getItems().clear();
-                departmentChooserEditDepartment.getItems().add("Department");
+                facultyChooserEditDepartment.getItems().clear();
+                facultyChooserEditDepartment.getItems().add("Faculty");
                 for (Faculty faculty : University.allFaculties) {
-                    if (faculty.getStatus().equals(Status.Active) && facultyChooserEditDepartment.getValue().equals(faculty.getFacultyName())) {
-                        for (Department department : faculty.departments) {
-                            if (department.getStatus().equals(Status.Active)) {
-                                departmentChooserEditDepartment.getItems().add(department.getName());
+                    if (faculty.getStatus().equals(Status.Active)) {
+                        facultyChooserEditDepartment.getItems().add(faculty.getFacultyName());
+                    }
+                }
+                facultyChooserEditDepartment.setVisibleRowCount(4);
+                facultyChooserEditDepartment.getSelectionModel().selectFirst();
+//            initialize the department chooser combo box
+                facultyChooserEditDepartment.setOnAction(event1 -> {
+                    departmentChooserEditDepartment.getItems().clear();
+                    departmentChooserEditDepartment.getItems().add("Department");
+                    for (Faculty faculty : University.allFaculties) {
+                        if (faculty.getStatus().equals(Status.Active) && facultyChooserEditDepartment.getValue().equals(faculty.getFacultyName())) {
+                            for (Department department : faculty.departments) {
+                                if (department.getStatus().equals(Status.Active)) {
+                                    departmentChooserEditDepartment.getItems().add(department.getName());
+                                }
                             }
                         }
                     }
-                }
-                departmentChooserEditDepartment.setVisibleRowCount(4);
-                departmentChooserEditDepartment.getSelectionModel().selectFirst();
-            });
+                    departmentChooserEditDepartment.setVisibleRowCount(4);
+                    departmentChooserEditDepartment.getSelectionModel().selectFirst();
+                });
 //        clear the textfields
-            newDepartmentNameEditDepartment.clear();
-            newEstablishmentYearEditDepartment.clear();
-        } else if (operationChooserUpdateDepartment.getValue().equals("Deactive")){
+                newDepartmentNameEditDepartment.clear();
+                newEstablishmentYearEditDepartment.clear();
+            } else if (operationChooserUpdateDepartment.getValue().equals("Deactive")){
 //            activate the deactive screen and deactivate the edit screen
-            editDepartmentVbox.setVisible(false);
-            deactiveDepartmentVbox.setVisible(true);
+                editDepartmentVbox.setVisible(false);
+                deactiveDepartmentVbox.setVisible(true);
 //            initialize the faculty chooser combo box
-            facultyChooserDeactiveDepartment.getItems().clear();
-            facultyChooserDeactiveDepartment.getItems().add("Faculty");
-            for (Faculty faculty : University.allFaculties) {
-                if (faculty.getStatus().equals(Status.Active)) {
-                    facultyChooserDeactiveDepartment.getItems().add(faculty.getFacultyName());
-                }
-            }
-            facultyChooserDeactiveDepartment.setVisibleRowCount(4);
-            facultyChooserDeactiveDepartment.getSelectionModel().selectFirst();
-//            initialize the department chooser combo box
-            facultyChooserDeactiveDepartment.setOnAction(event1 -> {
-                departmentChooserDeactiveDepartment.getItems().clear();
-                departmentChooserDeactiveDepartment.getItems().add("Department");
+                facultyChooserDeactiveDepartment.getItems().clear();
+                facultyChooserDeactiveDepartment.getItems().add("Faculty");
                 for (Faculty faculty : University.allFaculties) {
-                    if (faculty.getStatus().equals(Status.Active) && facultyChooserDeactiveDepartment.getValue().equals(faculty.getFacultyName())) {
-                        for (Department department : faculty.departments) {
-                            if (department.getStatus().equals(Status.Active)) {
-                                departmentChooserDeactiveDepartment.getItems().add(department.getName());
+                    if (faculty.getStatus().equals(Status.Active)) {
+                        facultyChooserDeactiveDepartment.getItems().add(faculty.getFacultyName());
+                    }
+                }
+                facultyChooserDeactiveDepartment.setVisibleRowCount(4);
+                facultyChooserDeactiveDepartment.getSelectionModel().selectFirst();
+//            initialize the department chooser combo box
+                facultyChooserDeactiveDepartment.setOnAction(event1 -> {
+                    departmentChooserDeactiveDepartment.getItems().clear();
+                    departmentChooserDeactiveDepartment.getItems().add("Department");
+                    for (Faculty faculty : University.allFaculties) {
+                        if (faculty.getStatus().equals(Status.Active) && facultyChooserDeactiveDepartment.getValue().equals(faculty.getFacultyName())) {
+                            for (Department department : faculty.departments) {
+                                if (department.getStatus().equals(Status.Active)) {
+                                    departmentChooserDeactiveDepartment.getItems().add(department.getName());
+                                }
                             }
                         }
                     }
-                }
-                departmentChooserDeactiveDepartment.setVisibleRowCount(4);
-                departmentChooserDeactiveDepartment.getSelectionModel().selectFirst();
-            });
+                    departmentChooserDeactiveDepartment.setVisibleRowCount(4);
+                    departmentChooserDeactiveDepartment.getSelectionModel().selectFirst();
+                });
+            }
         }
     }
 
     @FXML
     void setOperationChooserUpdateEmployee(ActionEvent event) {
-        if (operationChooserUpdateEmployee.getValue().equals("Edit")){
+        if (operationChooserUpdateEmployee.getValue() != null) {
+            if (operationChooserUpdateEmployee.getValue().equals("Edit")){
 //            activate the edit screen and deactivate the deactive screen
-            editEmployeeVbox.setVisible(true);
-            deactiveEmployeeVbox.setVisible(false);
+                editEmployeeVbox.setVisible(true);
+                deactiveEmployeeVbox.setVisible(false);
 //            initialize the faculty chooser combo box
-            facultyChooserEditEmployee.getItems().clear();
-            facultyChooserEditEmployee.getItems().add("Faculty");
-            for (Faculty faculty : University.allFaculties) {
-                if (faculty.getStatus().equals(Status.Active)) {
-                    facultyChooserEditEmployee.getItems().add(faculty.getFacultyName());
-                }
-            }
-            facultyChooserEditEmployee.setVisibleRowCount(4);
-            facultyChooserEditEmployee.getSelectionModel().selectFirst();
-//            initialize the department chooser combo box
-            facultyChooserEditEmployee.setOnAction(event1 -> {
-                departmentChooserEditEmployee.getItems().clear();
-                departmentChooserEditEmployee.getItems().add("Department");
+                facultyChooserEditEmployee.getItems().clear();
+                facultyChooserEditEmployee.getItems().add("Faculty");
                 for (Faculty faculty : University.allFaculties) {
-                    if (faculty.getStatus().equals(Status.Active) && facultyChooserEditEmployee.getValue().equals(faculty.getFacultyName())) {
-                        for (Department department : faculty.departments) {
-                            if (department.getStatus().equals(Status.Active)) {
-                                departmentChooserEditEmployee.getItems().add(department.getName());
+                    if (faculty.getStatus().equals(Status.Active)) {
+                        facultyChooserEditEmployee.getItems().add(faculty.getFacultyName());
+                    }
+                }
+                facultyChooserEditEmployee.setVisibleRowCount(4);
+                facultyChooserEditEmployee.getSelectionModel().selectFirst();
+//            initialize the department chooser combo box
+                facultyChooserEditEmployee.setOnAction(event1 -> {
+                    departmentChooserEditEmployee.getItems().clear();
+                    departmentChooserEditEmployee.getItems().add("Department");
+                    for (Faculty faculty : University.allFaculties) {
+                        if (faculty.getStatus().equals(Status.Active) && facultyChooserEditEmployee.getValue().equals(faculty.getFacultyName())) {
+                            for (Department department : faculty.departments) {
+                                if (department.getStatus().equals(Status.Active)) {
+                                    departmentChooserEditEmployee.getItems().add(department.getName());
+                                }
                             }
                         }
                     }
-                }
-                departmentChooserEditEmployee.setVisibleRowCount(4);
-                departmentChooserEditEmployee.getSelectionModel().selectFirst();
-            });
+                    departmentChooserEditEmployee.setVisibleRowCount(4);
+                    departmentChooserEditEmployee.getSelectionModel().selectFirst();
+                });
 //            initialize the employee chooser combo box
-            departmentChooserEditEmployee.setOnAction(event1 -> {
-                Employee.loadAllEmployee();
-                employeeChooserEditEmployee.getItems().clear();
-                employeeChooserEditEmployee.getItems().add("Employee ID");
-                for (Employee employee : University.allEmployees) {
-                    if (employee.getStatus().equals(Status.Active) && employee.getDepartment().equals(departmentChooserEditEmployee.getValue())) {
-                        employeeChooserEditEmployee.getItems().add(employee.getId());
+                departmentChooserEditEmployee.setOnAction(event1 -> {
+                    Employee.loadAllEmployee();
+                    employeeChooserEditEmployee.getItems().clear();
+                    employeeChooserEditEmployee.getItems().add("Employee ID");
+                    for (Employee employee : University.allEmployees) {
+                        if (employee.getStatus().equals(Status.Active) && employee.getDepartment().equals(departmentChooserEditEmployee.getValue())) {
+                            employeeChooserEditEmployee.getItems().add(employee.getId());
+                        }
                     }
-                }
-                employeeChooserEditEmployee.setVisibleRowCount(4);
-                employeeChooserEditEmployee.getSelectionModel().selectFirst();
+                    employeeChooserEditEmployee.setVisibleRowCount(4);
+                    employeeChooserEditEmployee.getSelectionModel().selectFirst();
 
-            });
+                });
 //            initialize the Gender chooser combo box
-            genderChooserEditEmployee.getItems().clear();
-            genderChooserEditEmployee.getItems().addAll("Gender", Gender.Male.toString(), Gender.Female.toString());
-            genderChooserEditEmployee.setVisibleRowCount(3);
-            genderChooserEditEmployee.getSelectionModel().selectFirst();
+                genderChooserEditEmployee.getItems().clear();
+                genderChooserEditEmployee.getItems().addAll("Gender", Gender.Male.toString(), Gender.Female.toString());
+                genderChooserEditEmployee.setVisibleRowCount(3);
+                genderChooserEditEmployee.getSelectionModel().selectFirst();
 //        clear the textfields and datepicker
-            newFirstNameEditEmployee.clear();
-            newLastNameEditEmployee.clear();
-            phoneNumberEditEmployee.clear();
-            nationalIdEditEmployee.clear();
-            dateOfBirthEditEmployee.setValue(null);
-            dateOfBirthEditEmployee.setPromptText("Date of Birth");
-        } else if (operationChooserUpdateEmployee.getValue().equals("Deactive")){
+                newFirstNameEditEmployee.clear();
+                newLastNameEditEmployee.clear();
+                phoneNumberEditEmployee.clear();
+                nationalIdEditEmployee.clear();
+                dateOfBirthEditEmployee.setValue(null);
+                dateOfBirthEditEmployee.setPromptText("Date of Birth");
+            } else if (operationChooserUpdateEmployee.getValue().equals("Deactive")){
 //            activate the deactive screen and deactivate the edit screen
-            editEmployeeVbox.setVisible(false);
-            deactiveEmployeeVbox.setVisible(true);
+                editEmployeeVbox.setVisible(false);
+                deactiveEmployeeVbox.setVisible(true);
 //            initialize the faculty chooser combo box
-            facultyChooserDeactiveEmployee.getItems().clear();
-            facultyChooserDeactiveEmployee.getItems().add("Faculty");
-            for (Faculty faculty : University.allFaculties) {
-                if (faculty.getStatus().equals(Status.Active)) {
-                    facultyChooserDeactiveEmployee.getItems().add(faculty.getFacultyName());
-                }
-            }
-            facultyChooserDeactiveEmployee.setVisibleRowCount(4);
-            facultyChooserDeactiveEmployee.getSelectionModel().selectFirst();
-//            initialize the department chooser combo box
-            facultyChooserDeactiveEmployee.setOnAction(event1 -> {
-                departmentChooserDeactiveEmployee.getItems().clear();
-                departmentChooserDeactiveEmployee.getItems().add("Department");
+                facultyChooserDeactiveEmployee.getItems().clear();
+                facultyChooserDeactiveEmployee.getItems().add("Faculty");
                 for (Faculty faculty : University.allFaculties) {
-                    if (faculty.getStatus().equals(Status.Active) && facultyChooserDeactiveEmployee.getValue().equals(faculty.getFacultyName())) {
-                        for (Department department : faculty.departments) {
-                            if (department.getStatus().equals(Status.Active)) {
-                                departmentChooserDeactiveEmployee.getItems().add(department.getName());
+                    if (faculty.getStatus().equals(Status.Active)) {
+                        facultyChooserDeactiveEmployee.getItems().add(faculty.getFacultyName());
+                    }
+                }
+                facultyChooserDeactiveEmployee.setVisibleRowCount(4);
+                facultyChooserDeactiveEmployee.getSelectionModel().selectFirst();
+//            initialize the department chooser combo box
+                facultyChooserDeactiveEmployee.setOnAction(event1 -> {
+                    departmentChooserDeactiveEmployee.getItems().clear();
+                    departmentChooserDeactiveEmployee.getItems().add("Department");
+                    for (Faculty faculty : University.allFaculties) {
+                        if (faculty.getStatus().equals(Status.Active) && facultyChooserDeactiveEmployee.getValue().equals(faculty.getFacultyName())) {
+                            for (Department department : faculty.departments) {
+                                if (department.getStatus().equals(Status.Active)) {
+                                    departmentChooserDeactiveEmployee.getItems().add(department.getName());
+                                }
                             }
                         }
                     }
-                }
-                departmentChooserDeactiveEmployee.setVisibleRowCount(4);
-                departmentChooserDeactiveEmployee.getSelectionModel().selectFirst();
-            });
+                    departmentChooserDeactiveEmployee.setVisibleRowCount(4);
+                    departmentChooserDeactiveEmployee.getSelectionModel().selectFirst();
+                });
 //            initialize the employee chooser combo box
-            departmentChooserDeactiveEmployee.setOnAction(event1 -> {
-                Employee.loadAllEmployee();
-                employeeChooserDeactiveEmployee.getItems().clear();
-                employeeChooserDeactiveEmployee.getItems().add("Employee ID");
-                for (Employee employee : University.allEmployees) {
-                    if (employee.getStatus().equals(Status.Active) && employee.getDepartment().equals(departmentChooserDeactiveEmployee.getValue())) {
-                        employeeChooserDeactiveEmployee.getItems().add(employee.getId());
+                departmentChooserDeactiveEmployee.setOnAction(event1 -> {
+                    Employee.loadAllEmployee();
+                    employeeChooserDeactiveEmployee.getItems().clear();
+                    employeeChooserDeactiveEmployee.getItems().add("Employee ID");
+                    for (Employee employee : University.allEmployees) {
+                        if (employee.getStatus().equals(Status.Active) && employee.getDepartment().equals(departmentChooserDeactiveEmployee.getValue())) {
+                            employeeChooserDeactiveEmployee.getItems().add(employee.getId());
+                        }
                     }
-                }
-                employeeChooserDeactiveEmployee.setVisibleRowCount(4);
-                employeeChooserDeactiveEmployee.getSelectionModel().selectFirst();
+                    employeeChooserDeactiveEmployee.setVisibleRowCount(4);
+                    employeeChooserDeactiveEmployee.getSelectionModel().selectFirst();
 
-            });
-            employeeChooserDeactiveEmployee.getSelectionModel().selectFirst();
+                });
+                employeeChooserDeactiveEmployee.getSelectionModel().selectFirst();
+            }
         }
     }
 
     @FXML
     void setOperationChooserUpdateFaculty(ActionEvent event) {
-        if (operationChooserUpdateFaculty.getValue().equals("Edit")){
-            University.loadFaculties();
-//            activate the edit screen and deactivate the deactive screen
-            editFacultyVbox.setVisible(true);
-            deactiveFacultyVbox.setVisible(false);
-//            initialize the faculty chooser combo box
-            facultyChooserEditFaculty.getItems().clear();
-            facultyChooserEditFaculty.getItems().add("Faculty");
-            for (Faculty faculty : University.allFaculties) {
-                if (faculty.getStatus().equals(Status.Active)) {
-                    facultyChooserEditFaculty.getItems().add(faculty.getFacultyName());
+        if(operationChooserUpdateFaculty.getValue() != null) {
+            if (operationChooserUpdateFaculty.getValue().equals("Edit")) {
+                University.loadFaculties();
+    //                activate the edit screen and deactivate the deactive screen
+                editFacultyVbox.setVisible(true);
+                deactiveFacultyVbox.setVisible(false);
+    //                initialize the faculty chooser combo box
+                facultyChooserEditFaculty.getItems().clear();
+                facultyChooserEditFaculty.getItems().add("Faculty");
+                for (Faculty faculty : University.allFaculties) {
+                    if (faculty.getStatus().equals(Status.Active)) {
+                        facultyChooserEditFaculty.getItems().add(faculty.getFacultyName());
+                    }
                 }
-            }
-            facultyChooserEditFaculty.setVisibleRowCount(4);
-            facultyChooserEditFaculty.getSelectionModel().selectFirst();
-//        clear the textfields
-            newFacultyNameEditFaculty.clear();
-            newEstablishmentYearEditFaculty.clear();
-        } else if (operationChooserUpdateFaculty.getValue().equals("Deactive")){
-//            activate the deactive screen and deactivate the edit screen
-            editFacultyVbox.setVisible(false);
-            deactiveFacultyVbox.setVisible(true);
-//            initialize the faculty chooser combo box
-            facultyChooserDeactiveFaculty.getItems().clear();
-            facultyChooserDeactiveFaculty.getItems().add("Faculty");
-            for (Faculty faculty : University.allFaculties) {
-                if (faculty.getStatus().equals(Status.Active)) {
-                    facultyChooserDeactiveFaculty.getItems().add(faculty.getFacultyName());
+                facultyChooserEditFaculty.setVisibleRowCount(4);
+                facultyChooserEditFaculty.getSelectionModel().selectFirst();
+    //                clear the textfields
+                newFacultyNameEditFaculty.clear();
+                newEstablishmentYearEditFaculty.clear();
+            } else if (operationChooserUpdateFaculty.getValue().equals("Deactive")) {
+    //                activate the deactive screen and deactivate the edit screen
+                editFacultyVbox.setVisible(false);
+                deactiveFacultyVbox.setVisible(true);
+    //                initialize the faculty chooser combo box
+                facultyChooserDeactiveFaculty.getItems().clear();
+                facultyChooserDeactiveFaculty.getItems().add("Faculty");
+                for (Faculty faculty : University.allFaculties) {
+                    if (faculty.getStatus().equals(Status.Active)) {
+                        facultyChooserDeactiveFaculty.getItems().add(faculty.getFacultyName());
+                    }
                 }
+                facultyChooserDeactiveFaculty.setVisibleRowCount(4);
+                facultyChooserDeactiveFaculty.getSelectionModel().selectFirst();
             }
-            facultyChooserDeactiveFaculty.setVisibleRowCount(4);
-            facultyChooserDeactiveFaculty.getSelectionModel().selectFirst();
         }
     }
 
     @FXML
     void setOperationChooserUpdateMajor(ActionEvent event) {
-        if (operationChooserUpdateMajor.getValue().equals("Edit")){
-            University.loadFaculties();
+        if (operationChooserUpdateMajor.getValue() != null) {
+            if (operationChooserUpdateMajor.getValue().equals("Edit")){
+                University.loadFaculties();
 //            activate the edit screen and deactivate the deactive screen
-            editMajorVbox.setVisible(true);
-            deactiveMajorVbox.setVisible(false);
+                editMajorVbox.setVisible(true);
+                deactiveMajorVbox.setVisible(false);
 //            initialize the faculty chooser combo box
-            facultyChooserEditMajor.getItems().clear();
-            facultyChooserEditMajor.getItems().add("Faculty");
-            for (Faculty faculty : University.allFaculties) {
-                if (faculty.getStatus().equals(Status.Active)) {
-                    facultyChooserEditMajor.getItems().add(faculty.getFacultyName());
-                }
-            }
-            facultyChooserEditMajor.setVisibleRowCount(4);
-            facultyChooserEditMajor.getSelectionModel().selectFirst();
-//            initialize the department chooser combo box
-            facultyChooserEditMajor.setOnAction(event1 -> {
-                departmentChooserEditMajor.getItems().clear();
-                departmentChooserEditMajor.getItems().add("Department");
+                facultyChooserEditMajor.getItems().clear();
+                facultyChooserEditMajor.getItems().add("Faculty");
                 for (Faculty faculty : University.allFaculties) {
-                    if (faculty.getStatus().equals(Status.Active) && faculty.getFacultyName().equals(facultyChooserEditMajor.getValue())) {
-                        for (Department department : faculty.departments) {
-                            if (department.getStatus().equals(Status.Active)) {
-                                departmentChooserEditMajor.getItems().add(department.getName());
-                            }
-                        }
-                        break;
+                    if (faculty.getStatus().equals(Status.Active)) {
+                        facultyChooserEditMajor.getItems().add(faculty.getFacultyName());
                     }
                 }
-                departmentChooserEditMajor.setVisibleRowCount(4);
-                departmentChooserEditMajor.getSelectionModel().selectFirst();
-            });
+                facultyChooserEditMajor.setVisibleRowCount(4);
+                facultyChooserEditMajor.getSelectionModel().selectFirst();
+//            initialize the department chooser combo box
+                facultyChooserEditMajor.setOnAction(event1 -> {
+                    departmentChooserEditMajor.getItems().clear();
+                    departmentChooserEditMajor.getItems().add("Department");
+                    for (Faculty faculty : University.allFaculties) {
+                        if (faculty.getStatus().equals(Status.Active) && faculty.getFacultyName().equals(facultyChooserEditMajor.getValue())) {
+                            for (Department department : faculty.departments) {
+                                if (department.getStatus().equals(Status.Active)) {
+                                    departmentChooserEditMajor.getItems().add(department.getName());
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    departmentChooserEditMajor.setVisibleRowCount(4);
+                    departmentChooserEditMajor.getSelectionModel().selectFirst();
+                });
 //            initialize the major chooser combo box
-            departmentChooserEditMajor.setOnAction(event1 -> {
-                majorChooserEditMajor.getItems().clear();
-                majorChooserEditMajor.getItems().add("Major");
-                for (Faculty faculty : University.allFaculties) {
-                    if (faculty.getStatus().equals(Status.Active) && faculty.getFacultyName().equals(facultyChooserEditMajor.getValue())) {
-                        for (Department department : faculty.departments) {
-                            if (department.getStatus().equals(Status.Active)) {
-                                for (Major major : department.majors) {
-                                    if (major.getStatus().equals(Status.Active)) {
-                                        majorChooserEditMajor.getItems().add(department.getName());
+                departmentChooserEditMajor.setOnAction(event1 -> {
+                    majorChooserEditMajor.getItems().clear();
+                    majorChooserEditMajor.getItems().add("Major");
+                    for (Faculty faculty : University.allFaculties) {
+                        if (faculty.getStatus().equals(Status.Active) && faculty.getFacultyName().equals(facultyChooserEditMajor.getValue())) {
+                            for (Department department : faculty.departments) {
+                                if (department.getStatus().equals(Status.Active)) {
+                                    for (Major major : department.majors) {
+                                        if (major.getStatus().equals(Status.Active)) {
+                                            majorChooserEditMajor.getItems().add(department.getName());
+                                        }
                                     }
                                 }
                             }
+                            break;
                         }
-                        break;
                     }
-                }
-                majorChooserEditMajor.setVisibleRowCount(4);
-                majorChooserEditMajor.getSelectionModel().selectFirst();
-            });
+                    majorChooserEditMajor.setVisibleRowCount(4);
+                    majorChooserEditMajor.getSelectionModel().selectFirst();
+                });
 //        clear the textfields
-            newMajorNameEditMajor.clear();
-            newEstablishmentYearEditMajor.clear();
-        } else if (operationChooserUpdateMajor.getValue().equals("Deactive")){
+                newMajorNameEditMajor.clear();
+                newEstablishmentYearEditMajor.clear();
+            } else if (operationChooserUpdateMajor.getValue().equals("Deactive")){
 //            activate the deactive screen and deactivate the edit screen
-            editMajorVbox.setVisible(false);
-            deactiveMajorVbox.setVisible(true);
+                editMajorVbox.setVisible(false);
+                deactiveMajorVbox.setVisible(true);
 //            initialize the faculty chooser combo box
-            facultyChooserDeactiveMajor.getItems().clear();
-            facultyChooserDeactiveMajor.getItems().add("Faculty");
-            for (Faculty faculty : University.allFaculties) {
-                if (faculty.getStatus().equals(Status.Active)) {
-                    facultyChooserDeactiveMajor.getItems().add(faculty.getFacultyName());
+                facultyChooserDeactiveMajor.getItems().clear();
+                facultyChooserDeactiveMajor.getItems().add("Faculty");
+                for (Faculty faculty : University.allFaculties) {
+                    if (faculty.getStatus().equals(Status.Active)) {
+                        facultyChooserDeactiveMajor.getItems().add(faculty.getFacultyName());
+                    }
                 }
-            }
-            facultyChooserDeactiveMajor.setVisibleRowCount(4);
-            facultyChooserDeactiveMajor.getSelectionModel().selectFirst();
+                facultyChooserDeactiveMajor.setVisibleRowCount(4);
+                facultyChooserDeactiveMajor.getSelectionModel().selectFirst();
 //            initialize the department chooser combo box
-            facultyChooserDeactiveMajor.setOnAction(event1 -> {
-                departmentChooserDeactiveMajor.getItems().clear();
-                departmentChooserDeactiveMajor.getItems().add("Department");
-                for (Faculty faculty : University.allFaculties) {
-                    if (faculty.getStatus().equals(Status.Active) && faculty.getFacultyName().equals(facultyChooserDeactiveMajor.getValue())) {
-                        for (Department department : faculty.departments) {
-                            if (department.getStatus().equals(Status.Active)) {
-                                departmentChooserDeactiveMajor.getItems().add(department.getName());
+                facultyChooserDeactiveMajor.setOnAction(event1 -> {
+                    departmentChooserDeactiveMajor.getItems().clear();
+                    departmentChooserDeactiveMajor.getItems().add("Department");
+                    for (Faculty faculty : University.allFaculties) {
+                        if (faculty.getStatus().equals(Status.Active) && faculty.getFacultyName().equals(facultyChooserDeactiveMajor.getValue())) {
+                            for (Department department : faculty.departments) {
+                                if (department.getStatus().equals(Status.Active)) {
+                                    departmentChooserDeactiveMajor.getItems().add(department.getName());
+                                }
                             }
+                            break;
                         }
-                        break;
                     }
-                }
-                departmentChooserDeactiveMajor.setVisibleRowCount(4);
-                departmentChooserDeactiveMajor.getSelectionModel().selectFirst();
-            });
+                    departmentChooserDeactiveMajor.setVisibleRowCount(4);
+                    departmentChooserDeactiveMajor.getSelectionModel().selectFirst();
+                });
 //            initialize the major chooser combo box
-            departmentChooserDeactiveMajor.setOnAction(event1 -> {
-                majorChooserDeactiveMajor.getItems().clear();
-                majorChooserDeactiveMajor.getItems().add("Major");
-                for (Faculty faculty : University.allFaculties) {
-                    if (faculty.getStatus().equals(Status.Active) && faculty.getFacultyName().equals(facultyChooserDeactiveMajor.getValue())) {
-                        for (Department department : faculty.departments) {
-                            if (department.getStatus().equals(Status.Active)) {
-                                for (Major major : department.majors) {
-                                    if (major.getStatus().equals(Status.Active)) {
-                                        majorChooserDeactiveMajor.getItems().add(department.getName());
-                                    }
-                                }                            }
+                departmentChooserDeactiveMajor.setOnAction(event1 -> {
+                    majorChooserDeactiveMajor.getItems().clear();
+                    majorChooserDeactiveMajor.getItems().add("Major");
+                    for (Faculty faculty : University.allFaculties) {
+                        if (faculty.getStatus().equals(Status.Active) && faculty.getFacultyName().equals(facultyChooserDeactiveMajor.getValue())) {
+                            for (Department department : faculty.departments) {
+                                if (department.getStatus().equals(Status.Active)) {
+                                    for (Major major : department.majors) {
+                                        if (major.getStatus().equals(Status.Active)) {
+                                            majorChooserDeactiveMajor.getItems().add(department.getName());
+                                        }
+                                    }                            }
+                            }
+                            break;
                         }
-                        break;
                     }
-                }
-                majorChooserDeactiveMajor.setVisibleRowCount(4);
-                majorChooserDeactiveMajor.getSelectionModel().selectFirst();
-            });
+                    majorChooserDeactiveMajor.setVisibleRowCount(4);
+                    majorChooserDeactiveMajor.getSelectionModel().selectFirst();
+                });
+            }
         }
     }
 
