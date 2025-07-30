@@ -10,6 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class StudentPortalController {
@@ -58,6 +59,15 @@ public class StudentPortalController {
 
     @FXML
     void EnrollmentStudentPortal(ActionEvent event) throws IOException {
+        File file = new File("Enrollment.txt");
+
+        if (file.exists()) {
+            String content = java.nio.file.Files.readString(file.toPath()).trim();
+            if ("Deactive".equalsIgnoreCase(content)) {
+                System.out.println("ٍEnrollment is deactive.");
+                return;
+            }
+        }
         Parent root = FXMLLoader.load(getClass().getResource("EnrollStudent.fxml"));
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -66,5 +76,6 @@ public class StudentPortalController {
         stage.setResizable(false);
         stage.show();
     }
+
 
 }

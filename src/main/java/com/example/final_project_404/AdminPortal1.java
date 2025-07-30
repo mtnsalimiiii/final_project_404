@@ -18,8 +18,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
@@ -37,6 +36,9 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     private VBox addDepartmentVbox;
+
+    @FXML
+    private AnchorPane enrollmentAnchorPane;
 
     @FXML
     private AnchorPane addEmployeeAnchorPane;
@@ -328,6 +330,15 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     private Button updateMajorScrollPane;
+
+    @FXML
+    private Button enrollment;
+
+    @FXML
+    private Button activeButton;
+
+    @FXML
+    private Button deactiveButton;
 
 
 //      public int getEstablishmentYear(){
@@ -1903,6 +1914,59 @@ public class AdminPortal1 implements Initializable {
 //        deactivate the edit and deactive vboxs
         editEmployeeVbox.setVisible(false);
         deactiveEmployeeVbox.setVisible(false);
+    }
+
+    @FXML
+    void enrollmentDashboard(ActionEvent event) {
+        // Set the header title
+        headerTitle.setText(" --> Update Employee");
+
+        // Hide all anchor panes
+        dashboardAnchorPane.setVisible(false);
+        buttonsScrollPane.setVisible(true);
+        enrollmentAnchorPane.setVisible(true);
+    }
+
+    @FXML
+    void activeEnrollment(ActionEvent event){
+        File file = new File("Enrollment.txt");
+        try {
+            if (file.exists()) {
+                if (!file.delete()) {
+                    System.out.println("Error in delete file!!");
+                    return;
+                }
+            }
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer.write("Active");
+                System.out.println("Enrollment is active now!");
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error in Active Enrollment!! " + e.getMessage());
+        }
+    }
+
+    @FXML
+    void deactiveEnrollment(ActionEvent event){
+        File file = new File("Enrollment.txt");
+        try {
+            if (file.exists()) {
+                if (!file.delete()) {
+                    System.out.println("Error in delete file!!");
+                    return;
+                }
+            }
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer.write("Deactive");
+                System.out.println("Enrollment is Deactive now!");
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error in Deactive Enrollment!! " + e.getMessage());
+        }
     }
 
     @FXML
