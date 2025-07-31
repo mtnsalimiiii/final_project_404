@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -18,6 +19,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import javax.lang.model.type.UnionType;
@@ -177,6 +179,63 @@ public class EmployeePortal1 {
 
     @FXML
     private Button editStudentsButton;
+
+    @FXML
+    private Label errorLabelAddCourse;
+
+    @FXML
+    private Label errorLabelAddCourseGroup;
+
+    @FXML
+    private Label errorLabelAddDegree;
+
+    @FXML
+    private Label errorLabelBirthDateProfile;
+
+    @FXML
+    private Label errorLabelCreditAddCourse;
+
+    @FXML
+    private Label errorLabelDeactiveProfessor;
+
+    @FXML
+    private Label errorLabelDeactiveStudent;
+
+    @FXML
+    private Label errorLabelDegreeAddCourse;
+
+    @FXML
+    private Label errorLabelEditProfessor;
+
+    @FXML
+    private Label errorLabelEditStudent;
+
+    @FXML
+    private Label errorLabelFirstnameProfile;
+
+    @FXML
+    private Label errorLabelGenderProfile;
+
+    @FXML
+    private Label errorLabelLastnameProfile;
+
+    @FXML
+    private Label errorLabelMajorAddCourse;
+
+    @FXML
+    private Label errorLabelNameAddCourse;
+
+    @FXML
+    private Label errorLabelNationalIdProfile;
+
+    @FXML
+    private Label errorLabelPhoneProfile;
+
+    @FXML
+    private Label errorLabelRegisterProfessor;
+
+    @FXML
+    private Label errorLabelRegisterStudent;
 
     @FXML
     private ComboBox<String> facultyChooserDeactiveProfessor;
@@ -461,6 +520,9 @@ public class EmployeePortal1 {
     private TableView<?> studetnsTableview;
 
     @FXML
+    private Label successfulLabelAddCourse;
+
+    @FXML
     private ComboBox<String> topicChooserProfessors;
 
     @FXML
@@ -480,7 +542,85 @@ public class EmployeePortal1 {
 
     @FXML
     void addCourse(ActionEvent event) {
+        String majorName = majorChooserAddCourse.getValue();
+        String selectedDegree = degreeChooserAddCourse.getValue();
+        String name = courseNameAddCourse.getText().trim();
+        String creditStr = courseCreditAddCourse.getText().trim();
+        if (majorName.equals("Major")) {
+            errorLabelMajorAddCourse.setText("Choose The Major");
+            errorLabelAddCourse.setText("The Course Wasn't Added");
+        } else {
+            errorLabelMajorAddCourse.setText(null);
+        }
+        if (selectedDegree.equals("Degree")) {
+            errorLabelDegreeAddCourse.setText("Choose The Degree");
+            errorLabelAddCourse.setText("The Course Wasn't Added");
+        } else {
+            errorLabelDegreeAddCourse.setText(null);
+        }
+        if (name.isEmpty()) {
+            errorLabelNameAddCourse.setText("Enter The Name");
+            errorLabelAddCourse.setText("The Course Wasn't Added");
+        } else {
+            errorLabelNameAddCourse.setText(null);
+        }
+        if (creditStr.isEmpty()) {
+            errorLabelCreditAddCourse.setText("Enter The Credit");
+            errorLabelAddCourse.setText("The Course Wasn't Added");
+        } else {
+            errorLabelCreditAddCourse.setText(null);
+        }
+        if (majorName != "Major" || selectedDegree != "Degree" || !name.isEmpty() || !creditStr.isEmpty()) {
+            int credit;
+            try {
+                credit = Integer.parseInt(creditStr);
+            } catch (NumberFormatException e) {
+                errorLabelCreditAddCourse.setText("Please Enter The Number");
+                return;
+            }
 
+            University.loadFaculties();
+
+            for (Faculty faculty : University.allFaculties) {
+                if (faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
+                    for (Department department : faculty.departments) {
+                        if (department.getName().equals(LoginPanelController.employeePerson.getDepartment()) && department.getStatus().equals(Status.Active)) {
+                            for (Major major : department.majors) {
+                                if (major.getName().equals(majorName) && major.getStatus().equals(Status.Active)) {
+
+                                    String degreeCode = "";
+                                    if (selectedDegree.equalsIgnoreCase("Bachelor")) {
+                                        degreeCode = "0";
+                                    } else if (selectedDegree.equalsIgnoreCase("Master")) {
+                                        degreeCode = "1";
+                                    } else if (selectedDegree.equalsIgnoreCase("Phd")) {
+                                        degreeCode = "2";
+                                    }
+                                    try {
+                                        for (Degree degree : major.degrees) {
+                                            if (degree.getClass().getSimpleName().equalsIgnoreCase(selectedDegree)) {
+                                                String id = major.getId() + degreeCode + (degree.courses.size() + 1);
+                                                Course course = new Course(name, credit, id, Status.Active);
+                                                if (!degree.courses.contains(course)) {
+                                                    degree.courses.add(course);
+                                                    University.saveFaculties();
+                                                    System.out.println("Course add successful");
+                                                    successfulLabelAddCourse.setText("Course Addede Successfully");
+                                                }
+                                            }
+                                        }
+
+
+                                    }catch (Exception exception){
+                                        errorLabelDegreeAddCourse.setText("The Selected Degree Not Found In Major");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @FXML
@@ -1896,13 +2036,9 @@ public class EmployeePortal1 {
     }
 
     @FXML
-    void setTopicChooserProfessors(ActionEvent event) {
+    void setTopicChooserProfessors(ActionEvent event) throws Exception {
         University.loadFaculties();
-        try {
-            Professor.loadAllProfessor();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        Professor.loadAllProfessor();
 
         if (topicChooserProfessors.getValue().equals("First Name") || topicChooserProfessors.getValue().equals("Last Name") || topicChooserProfessors.getValue().equals("Age") || topicChooserProfessors.getValue().equals("Phone Number") || topicChooserProfessors.getValue().equals("National ID")) {
             searchBoxProfessors.setVisible(true);
@@ -1988,24 +2124,20 @@ public class EmployeePortal1 {
         Student.loadAllStudents();
 
         if (topicChooserStudents.getValue().equals("First Name") || topicChooserStudents.getValue().equals("Last Name") || topicChooserStudents.getValue().equals("Age") || topicChooserStudents.getValue().equals("Phone Number") || topicChooserStudents.getValue().equals("National ID")) {
-            if (!searchBoxStudents.isVisible()) {
-                searchBoxStudents.setVisible(true);
-                searchBoxStudents.clear();
-                primaryDateStudents.setVisible(false);
-                secondaryDateStudents.setVisible(false);
-                itemChooserStudents.setVisible(false);
+            searchBoxStudents.setVisible(true);
+            searchBoxStudents.clear();
+            primaryDateStudents.setVisible(false);
+            secondaryDateStudents.setVisible(false);
+            itemChooserStudents.setVisible(false);
 
-                searchBoxStudents.setPromptText("Enter " + topicChooserStudents.getValue());
-            }
+            searchBoxStudents.setPromptText("Enter " + topicChooserStudents.getValue());
         } else if (topicChooserStudents.getValue().equals("Gender") || topicChooserStudents.getValue().equals("Student ID") || topicChooserStudents.getValue().equals("Faculty") || topicChooserStudents.getValue().equals("Department") || topicChooserStudents.getValue().equals("Major")) {
-            if (!itemChooserStudents.isVisible()) {
-                itemChooserStudents.setVisible(true);
-                searchBoxStudents.setVisible(false);
-                primaryDateStudents.setVisible(false);
-                secondaryDateStudents.setVisible(false);
+            itemChooserStudents.setVisible(true);
+            searchBoxStudents.setVisible(false);
+            primaryDateStudents.setVisible(false);
+            secondaryDateStudents.setVisible(false);
 
-                itemChooserStudents.setPromptText("Choose " + topicChooserStudents.getValue());
-            }
+            itemChooserStudents.setPromptText("Choose " + topicChooserStudents.getValue());
 
             if (topicChooserStudents.getValue().equals("Gender")){
                 itemChooserStudents.getItems().clear();
@@ -2338,12 +2470,12 @@ public class EmployeePortal1 {
         headerTitle.setText(" --> Students");
 
         studentsAnchorPane.setVisible(true);
-        studentsAnchorPane.getStyleClass().add("pressed");
+        studentsScrollPane.getStyleClass().add("pressed");
         buttonsScrollPane.setVisible(true);
         dashboardAnchorPane.setVisible(false);
 
         topicChooserStudents.getItems().clear();
-        topicChooserStudents.getItems().addAll("what topic do you want search:", "First Name", "Last Name", "Age", "Gender", "Phone Number", "National ID", "Professor ID", "Date of Registration", "Faculty", "Department", "Major");
+        topicChooserStudents.getItems().addAll("what topic do you want search:", "First Name", "Last Name", "Age", "Gender", "Phone Number", "National ID", "Student ID", "Date of Registration", "Faculty", "Department", "Major");
         topicChooserStudents.setVisibleRowCount(5);
         topicChooserStudents.getSelectionModel().selectFirst();
 
@@ -2416,7 +2548,7 @@ public class EmployeePortal1 {
         headerTitle.setText(" --> Update Professor");
 
         updateProfessorAnchorPane.setVisible(true);
-        updateProfessorAnchorPane.getStyleClass().add("pressed");
+        updateProfessorScrollPane.getStyleClass().add("pressed");
         buttonsScrollPane.setVisible(true);
         dashboardAnchorPane.setVisible(false);
 
