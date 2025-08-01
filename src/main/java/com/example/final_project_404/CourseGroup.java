@@ -9,17 +9,16 @@ import java.util.Map;
 
 public class CourseGroup implements Serializable {
     private Course course;
-    private String semasterCode;
+    private String semesterCode;
     private String professorName;
     private Status status;
     private int capacity;
     private String id;
-    private String semesterCode;
     private Map<Student, Double> grades = new HashMap<>();
     private List<Student> enrolledStudents = new ArrayList<>();
     public CourseGroup(String professorName,String semasterCode,int capacity,String id,Status status, Course course) {
         this.professorName = professorName;
-        this.semasterCode=semasterCode;
+        this.semesterCode=semasterCode;
         this.capacity=capacity;
         this.id=id;
         this.status=status;
@@ -36,10 +35,10 @@ public class CourseGroup implements Serializable {
     }
 
     public String getSemasterCode() {
-        return semasterCode;
+        return semesterCode;
     }
     public void setSemasterCode(String semasterCode) {
-        this.semasterCode = semasterCode;
+        this.semesterCode = semasterCode;
     }
 
     public String getProfessor() {
@@ -66,4 +65,34 @@ public class CourseGroup implements Serializable {
     public void setCourse(Course course) {
         this.course = course;
     }
+    public String getProfessorName() {
+        return professorName;
+    }
+
+    public String getCourseCode() {
+        return course != null ? course.getId() : "";
+    }
+
+    public String getCourseName() {
+        return course != null ? course.getName() : "";
+    }
+
+    public int getCredits() {
+        return course != null ? course.getCredit() : 0;
+    }
+
+    public String getGradeForStudent(Student student) {
+        return grades.containsKey(student) ? String.valueOf(grades.get(student)) : "-";
+    }
+
+    public String getStatusText() {
+        return status == Status.Active ? "Active" : "Inactive";
+    }
+
+    public Double getScore(Student student) {
+        return grades.get(student);
+    }
+
+
+
 }

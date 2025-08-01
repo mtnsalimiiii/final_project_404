@@ -127,7 +127,6 @@ public class EnrollStudentController {
 
     @FXML
     private void registerCourses() {
-        Student student = LoginPanelController.studentPerson;
         String selectedSemesterName = semesterComboBox.getValue();
 
         if (selectedSemesterName == null) {
@@ -135,10 +134,17 @@ public class EnrollStudentController {
             return;
         }
 
-        Semester studentSemester = student.getSemesterByName(selectedSemesterName);
+        // پیدا کردن دانشجو در ساختار اصلی
+        Student realStudent = findStudentInUniversity(LoginPanelController.studentPerson);
+        if (realStudent == null) {
+            showMessage("دانشجو در سیستم یافت نشد", "error");
+            return;
+        }
+
+        Semester studentSemester = realStudent.getSemesterByName(selectedSemesterName);
         if (studentSemester == null) {
             studentSemester = new Semester(selectedSemesterName);
-            student.getSemesters().add(studentSemester);
+            realStudent.getSemesters().add(studentSemester);
         }
 
         int selectedCount = 0;
@@ -147,14 +153,16 @@ public class EnrollStudentController {
             if (row.isSelected()) {
                 CourseGroup group = row.getCourseGroup();
 
+                // ظرفیت کلاس چک شود
                 if (group.getRegisteredStudents().size() >= group.getCapacity()) {
                     showMessage("ظرفیت کلاس " + group.getCourse().getName() + " پر شده است.", "error");
                     return;
                 }
 
+                // اگر قبلاً انتخاب نشده
                 if (!studentSemester.getCourseGroups().contains(group)) {
                     studentSemester.getCourseGroups().add(group);
-                    group.getRegisteredStudents().add(student);
+                    group.getRegisteredStudents().add(realStudent); // اضافه کردن دانشجو به گروه
                     selectedCount++;
                 }
             }
@@ -163,12 +171,37 @@ public class EnrollStudentController {
         if (selectedCount == 0) {
             showMessage("هیچ درسی برای ثبت انتخاب نشده است", "error");
         } else {
-            University.saveFaculties();
+            University.saveFaculties(); // حالا ذخیره روی ساختار اصلی انجام میشه
             showMessage(selectedCount + " درس با موفقیت ثبت شد", "success");
         }
 
         updateTotalCredits();
     }
+
+    /**
+     * پیدا کردن دانشجو داخل ساختار اصلی University
+     */
+    private Student findStudentInUniversity(Student loginStudent) {
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName().equals(loginStudent.getFaculty())) {
+                for (Department department : faculty.departments) {
+                    if (department.getName().equals(loginStudent.getDepartment())) {
+                        for (Major major : department.majors) {
+                            if (major.getName().equals(loginStudent.getMajor())) {
+                                for (Student s : major.students) {
+                                    if (s.getId().equals(loginStudent.getId())) {
+                                        return s; // همین دانشجو پیدا شد
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return null; // پیدا نشد
+    }
+
 
     private void updateTotalCredits() {
         int total = availableCourses.stream()
