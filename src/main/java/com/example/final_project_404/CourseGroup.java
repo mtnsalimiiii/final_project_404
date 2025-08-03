@@ -14,7 +14,7 @@ public class CourseGroup implements Serializable {
     private Status status;
     private int capacity;
     private String id;
-    private Map<Student, Double> grades = new HashMap<>();
+    private Map<String, Double> grades = new HashMap<>();
     private List<Student> enrolledStudents = new ArrayList<>();
     public CourseGroup(String professorName,String semasterCode,int capacity,String id,Status status, Course course) {
         this.professorName = professorName;
@@ -81,18 +81,18 @@ public class CourseGroup implements Serializable {
         return course != null ? course.getCredit() : 0;
     }
 
-    public String getGradeForStudent(Student student) {
+    /*public String getGradeForStudent(Student student) {
         return grades.containsKey(student) ? String.valueOf(grades.get(student)) : "-";
-    }
+    }*/
 
     public String getStatusText() {
         return status == Status.Active ? "Active" : "Inactive";
     }
 
     public Double getScore(Student student) {
-        return grades.get(student);
+        return grades.get(student.getId());
     }
-    public Map<Student, Double> getGrades() {
+    public Map<String, Double> getGrades() {
         return grades;
     }
 

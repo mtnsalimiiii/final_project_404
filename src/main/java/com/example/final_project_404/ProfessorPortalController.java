@@ -10,12 +10,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
-import javafx.util.converter.DoubleStringConverter;
 
 import java.io.IOException;
-import java.util.Map;
+import java.util.Optional;
 
 public class ProfessorPortalController {
 
@@ -23,6 +21,7 @@ public class ProfessorPortalController {
     @FXML private TableColumn<Student, String> studentIdCol;
     @FXML private TableColumn<Student, String> studentNameCol;
     @FXML private TableColumn<Student, Double> scoreCol;
+    @FXML private TableColumn<Student, Void> editCol;
 
     @FXML private ComboBox<String> semesterComboBox;
     @FXML private ComboBox<String> courseGroupComboBox;
@@ -31,46 +30,102 @@ public class ProfessorPortalController {
     @FXML private Node gradeSubmissionPane;
 
     private final ObservableList<Student> studentRows = FXCollections.observableArrayList();
-    private CourseGroup currentGroup; // گروه فعلی انتخاب شده
+    private CourseGroup currentGroup;
 
     @FXML
     public void initialize() {
-        // پر کردن لیست ترم‌ها
-        University.loadAllSemester();
-        semesterComboBox.getItems().clear();
-        for (Semester sem : University.allSemesters) {
-            semesterComboBox.getItems().add(sem.getName());
-        }
+        // پر کردن لیست ترم‌ها فقط برای همین استاد
+        loadSemestersForProfessor();
 
         semesterComboBox.setOnAction(e -> loadCourseGroupsForSemester());
 
         // تنظیم ستون‌ها
         studentIdCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getId()));
-        studentNameCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getFirst_name() + " " + cellData.getValue().getLast_name()));
+        studentNameCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(
+                cellData.getValue().getFirst_name() + " " + cellData.getValue().getLast_name()
+        ));
 
-
-        // ستون نمره قابل ویرایش
+        // ستون نمره غیرقابل ویرایش مستقیم
         scoreCol.setCellValueFactory(data -> {
             if (currentGroup != null) {
-                Double score = currentGroup.getGrades().get(data.getValue());
+                Double score = currentGroup.getGrades().get(data.getValue().getId());
                 return new javafx.beans.property.SimpleDoubleProperty(score != null ? score : 0.0).asObject();
             }
             return new javafx.beans.property.SimpleDoubleProperty(0.0).asObject();
         });
 
-        studentsTable.setItems(studentRows);
-        studentsTable.setEditable(true);
+        // تنظیم ستون ویرایش با دکمه
+        editCol.setCellFactory(col -> new TableCell<>() {
+            private final Button editButton = new Button("Edit");
 
-        // وقتی استاد نمره رو تغییر میده → مستقیم تو HashMap میره
-        scoreCol.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
-        scoreCol.setOnEditCommit(event -> {
-            Student student = event.getRowValue();
-            Double newScore = event.getNewValue();
-            if (currentGroup != null) {
-                currentGroup.getGrades().put(student, newScore); // آپدیت مستقیم
+            {
+                editButton.setOnAction(event -> {
+                    Student student = getTableView().getItems().get(getIndex());
+                    editGrade(student);
+                });
             }
-            studentsTable.refresh();
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(editButton);
+                }
+            }
         });
+
+        studentsTable.setItems(studentRows);
+    }
+
+    // متد برای ویرایش نمره با استفاده از Dialog
+    private void editGrade(Student student) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Edit Grade");
+        dialog.setHeaderText("وارد کردن نمره جدید برای " + student.getFirst_name() + " " + student.getLast_name());
+        dialog.setContentText("نمره:");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(grade -> {
+            try {
+                double newScore = Double.parseDouble(grade);
+                if (newScore < 0 || newScore > 20) {
+                    showAlert("نمره باید بین 0 تا 20 باشد.");
+                    return;
+                }
+                if (currentGroup != null) {
+                    currentGroup.getGrades().put(student.getId(), newScore);
+                    studentsTable.refresh();
+                }
+            } catch (NumberFormatException e) {
+                showAlert("لطفاً یک عدد معتبر وارد کنید.");
+            }
+        });
+    }
+
+    private void loadSemestersForProfessor() {
+        semesterComboBox.getItems().clear();
+        University.loadFaculties();
+
+        for (Faculty faculty : University.allFaculties) {
+            for (Department dept : faculty.departments) {
+                for (Major major : dept.majors) {
+                    for (Degree degree : major.degrees) {
+                        for (Course course : degree.courses) {
+                            for (CourseGroup group : course.courseGroups) {
+                                if (group.getProfessor().equals(LoginPanelController.professorPerson.getFullName())) {
+                                    String semCode = group.getSemasterCode();
+                                    if (!semesterComboBox.getItems().contains(semCode)) {
+                                        semesterComboBox.getItems().add(semCode);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private void loadCourseGroupsForSemester() {
@@ -87,7 +142,9 @@ public class ProfessorPortalController {
                             for (CourseGroup group : course.courseGroups) {
                                 if (group.getProfessor().equals(LoginPanelController.professorPerson.getFullName()) &&
                                         group.getSemasterCode().equals(selectedSemester)) {
-                                    courseGroupComboBox.getItems().add(group.getCourse().getName());
+                                    if (!courseGroupComboBox.getItems().contains(group.getCourse().getName())) {
+                                        courseGroupComboBox.getItems().add(group.getCourse().getName());
+                                    }
                                 }
                             }
                         }
@@ -112,7 +169,7 @@ public class ProfessorPortalController {
         String selectedCourse = courseGroupComboBox.getValue();
 
         if (selectedSemester == null || selectedCourse == null) {
-            showAlert("Please select semester and course.");
+            showAlert("لطفاً ترم و درس را انتخاب کنید.");
             return;
         }
 
@@ -127,12 +184,8 @@ public class ProfessorPortalController {
                                 if (group.getProfessor().equals(LoginPanelController.professorPerson.getFullName()) &&
                                         group.getCourse().getName().equals(selectedCourse) &&
                                         group.getSemasterCode().equals(selectedSemester)) {
-
                                     currentGroup = group;
-                                    // اضافه کردن دانشجوها از روی grades
-                                    for (Map.Entry<Student, Double> entry : group.getGrades().entrySet()) {
-                                        studentRows.add(entry.getKey());
-                                        studentsTable.refresh();                                    }
+                                    studentRows.addAll(group.getRegisteredStudents());
                                 }
                             }
                         }
@@ -142,19 +195,19 @@ public class ProfessorPortalController {
         }
 
         if (currentGroup == null) {
-            showAlert("No course group found.");
+            showAlert("گروه درسی یافت نشد.");
         }
     }
 
     @FXML
     void saveGrades(ActionEvent event) {
         if (currentGroup == null) {
-            showAlert("Please load a course first.");
+            showAlert("لطفاً ابتدا یک درس را بارگذاری کنید.");
             return;
         }
 
         University.saveFaculties();
-        showAlert("Grades saved successfully!");
+        showAlert("نمرات با موفقیت ذخیره شدند!");
     }
 
     private void showAlert(String msg) {
@@ -163,7 +216,6 @@ public class ProfessorPortalController {
         alert.showAndWait();
     }
 
-    // Navigation buttons
     @FXML
     void profileProfessorPortal(ActionEvent event) throws IOException {
         loadPage("ProfileProfessorPortal.fxml", event, "Profile");

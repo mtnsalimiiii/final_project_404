@@ -164,7 +164,7 @@ public class EnrollStudentController {
                 if (!studentSemester.getCourseGroups().contains(group)) {
                     studentSemester.getCourseGroups().add(group);
                     group.getRegisteredStudents().add(realStudent);
-                    group.getGrades().put(realStudent, 0.0);
+                    group.getGrades().put(realStudent.getId(), 0.0);
                     selectedCount++;
                 }
             }
