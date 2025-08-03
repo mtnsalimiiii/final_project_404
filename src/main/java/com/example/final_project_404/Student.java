@@ -60,6 +60,7 @@ public class Student extends Person implements Serializable {
     }
 
     public static void loadAllStudents() {
+        University.allStudents.clear();
         File file = new File("allStudents.ser");
         if (!file.exists() || file.length() == 0) {
             return;

@@ -48,6 +48,7 @@ public class Professor extends Person implements Serializable {
     }
 
     public static void loadAllProfessor() throws Exception {
+        University.allProfessors.clear();
         File file = new File("allProfessors.ser");
         if (!file.exists()) {
             return;

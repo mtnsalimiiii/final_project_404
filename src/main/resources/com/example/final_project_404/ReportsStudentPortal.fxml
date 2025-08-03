@@ -47,18 +47,18 @@
             </padding>
             <children>
                 <!-- AnchorPane برای دکمه‌ها -->
-                <AnchorPane fx:id="buttonsAnchorPane" managed="true" prefHeight="200.0" prefWidth="590.0" visible="false">
+                <AnchorPane fx:id="buttonsAnchorPane" managed="true" prefHeight="200.0" prefWidth="590.0">
                     <children>
                         <Button layoutX="170.0" layoutY="20.0" minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#showCourseReport" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="View semester courses" />
-                        <Button fx:id="financialReportButton" layoutX="170.0" layoutY="85.0" minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#showFinancialReport" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Financial Reports" />
-                        <Button fx:id="attendanceReportButton" layoutX="170.0" layoutY="150.0" minHeight="50.0" minWidth="250.0" mnemonicParsing="false" onAction="#showAttendanceReport" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Attendance Reports" />
+                        <Button layoutX="170.0" layoutY="83.0" minHeight="50.0" minWidth="250.0" mnemonicParsing="false" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Financial Reports" />
+                        <Button layoutX="170.0" layoutY="150.0" minHeight="50.0" minWidth="250.0" mnemonicParsing="false" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Attendance Reports" />
                     </children>
                     <padding>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                     </padding>
                 </AnchorPane>
                 <!-- AnchorPane برای نمایش جدول، ComboBox و دکمه جستجو -->
-                <AnchorPane fx:id="contentPane" managed="false" prefHeight="430.0" prefWidth="590.0">
+                <AnchorPane fx:id="contentPane" managed="false" prefHeight="430.0" prefWidth="590.0" visible="false">
                     <children>
                         <ComboBox fx:id="semesterComboBox" layoutX="10.0" layoutY="10.0" prefWidth="150.0" promptText="Choose Term">
                      <stylesheets>

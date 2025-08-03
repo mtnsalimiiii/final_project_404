@@ -13,6 +13,7 @@ public class University implements Serializable{
     public static List<Semester> allSemesters = new ArrayList<>();
 
     public static void loadAllSemester() {
+        allSemesters.clear();
         File file = new File("Semesters.ser");
         if (!file.exists()){
             return;
@@ -34,6 +35,7 @@ public class University implements Serializable{
     }
 
     public static void loadFaculties() {
+        allFaculties.clear();
         File file = new File("Faculties.ser");
         if (!file.exists()){
             return;

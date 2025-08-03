@@ -162,7 +162,8 @@ public class EnrollStudentController {
                 // اگر قبلاً انتخاب نشده
                 if (!studentSemester.getCourseGroups().contains(group)) {
                     studentSemester.getCourseGroups().add(group);
-                    group.getRegisteredStudents().add(realStudent); // اضافه کردن دانشجو به گروه
+                    group.getRegisteredStudents().add(realStudent); 
+                    group.getScores().put(realStudent, 0.0);
                     selectedCount++;
                 }
             }

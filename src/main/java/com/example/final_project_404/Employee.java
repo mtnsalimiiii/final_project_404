@@ -37,6 +37,7 @@ public class Employee extends Person implements Serializable{
     }
 
     public static void loadAllEmployee() {
+        University.allEmployees.clear();
         File file = new File("allEmployees.ser");
         if (!file.exists() || file.length() == 0) {
             return;
