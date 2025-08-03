@@ -92,7 +92,7 @@ public class CourseGroup implements Serializable {
     public Double getScore(Student student) {
         return grades.get(student);
     }
-    public Map<Student, Double> getScores() {
+    public Map<Student, Double> getGrades() {
         return grades;
     }
 

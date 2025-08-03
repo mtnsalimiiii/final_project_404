@@ -1,5 +1,6 @@
 package com.example.final_project_404;
 
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,14 +15,14 @@ import javafx.stage.Stage;
 import javafx.util.converter.DoubleStringConverter;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class ProfessorPortalController {
 
-    @FXML private TableView<StudentGradeRow> studentsTable;
-    @FXML private TableColumn<StudentGradeRow, String> studentIdCol;
-    @FXML private TableColumn<StudentGradeRow, String> studentNameCol;
-    @FXML private TableColumn<StudentGradeRow, Double> scoreCol;
-    @FXML private TableColumn<StudentGradeRow, String> statusCol;
+    @FXML private TableView<Student> studentsTable;
+    @FXML private TableColumn<Student, String> studentIdCol;
+    @FXML private TableColumn<Student, String> studentNameCol;
+    @FXML private TableColumn<Student, Double> scoreCol;
 
     @FXML private ComboBox<String> semesterComboBox;
     @FXML private ComboBox<String> courseGroupComboBox;
@@ -29,7 +30,8 @@ public class ProfessorPortalController {
     @FXML private Node mainMenuPane;
     @FXML private Node gradeSubmissionPane;
 
-    private final ObservableList<StudentGradeRow> gradeRows = FXCollections.observableArrayList();
+    private final ObservableList<Student> studentRows = FXCollections.observableArrayList();
+    private CourseGroup currentGroup; // گروه فعلی انتخاب شده
 
     @FXML
     public void initialize() {
@@ -40,23 +42,34 @@ public class ProfessorPortalController {
             semesterComboBox.getItems().add(sem.getName());
         }
 
-        // وقتی ترم انتخاب شد، لیست درس‌ها آپدیت شود
         semesterComboBox.setOnAction(e -> loadCourseGroupsForSemester());
 
-        // ستون‌ها
-        studentIdCol.setCellValueFactory(data -> data.getValue().studentIdProperty());
-        studentNameCol.setCellValueFactory(data -> data.getValue().studentNameProperty());
-        scoreCol.setCellValueFactory(data -> data.getValue().scoreProperty().asObject());
-        statusCol.setCellValueFactory(data -> data.getValue().statusProperty());
+        // تنظیم ستون‌ها
+        studentIdCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getId()));
+        studentNameCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getFirst_name() + " " + cellData.getValue().getLast_name()));
 
-        studentsTable.setItems(gradeRows);
-        studentsTable.setEditable(true);
 
         // ستون نمره قابل ویرایش
+        scoreCol.setCellValueFactory(data -> {
+            if (currentGroup != null) {
+                Double score = currentGroup.getGrades().get(data.getValue());
+                return new javafx.beans.property.SimpleDoubleProperty(score != null ? score : 0.0).asObject();
+            }
+            return new javafx.beans.property.SimpleDoubleProperty(0.0).asObject();
+        });
+
+        studentsTable.setItems(studentRows);
+        studentsTable.setEditable(true);
+
+        // وقتی استاد نمره رو تغییر میده → مستقیم تو HashMap میره
         scoreCol.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         scoreCol.setOnEditCommit(event -> {
-            StudentGradeRow row = event.getRowValue();
-            row.setScore(event.getNewValue());
+            Student student = event.getRowValue();
+            Double newScore = event.getNewValue();
+            if (currentGroup != null) {
+                currentGroup.getGrades().put(student, newScore); // آپدیت مستقیم
+            }
+            studentsTable.refresh();
         });
     }
 
@@ -94,7 +107,7 @@ public class ProfessorPortalController {
 
     @FXML
     void loadStudents(ActionEvent event) {
-        gradeRows.clear();
+        studentRows.clear();
         String selectedSemester = semesterComboBox.getValue();
         String selectedCourse = courseGroupComboBox.getValue();
 
@@ -103,6 +116,8 @@ public class ProfessorPortalController {
             return;
         }
 
+        currentGroup = null;
+
         for (Faculty faculty : University.allFaculties) {
             for (Department dept : faculty.departments) {
                 for (Major major : dept.majors) {
@@ -112,75 +127,34 @@ public class ProfessorPortalController {
                                 if (group.getProfessor().equals(LoginPanelController.professorPerson.getFullName()) &&
                                         group.getCourse().getName().equals(selectedCourse) &&
                                         group.getSemasterCode().equals(selectedSemester)) {
-                                    for (Student s : group.getRegisteredStudents()) {
-                                        Double score = group.getScores().get(s);
-                                        gradeRows.add(new StudentGradeRow(s.getId(), s.getFullName(), score, "Registered"));
-                                    }
+
+                                    currentGroup = group;
+                                    // اضافه کردن دانشجوها از روی grades
+                                    for (Map.Entry<Student, Double> entry : group.getGrades().entrySet()) {
+                                        studentRows.add(entry.getKey());
+                                        studentsTable.refresh();                                    }
                                 }
                             }
                         }
                     }
                 }
             }
+        }
+
+        if (currentGroup == null) {
+            showAlert("No course group found.");
         }
     }
 
     @FXML
     void saveGrades(ActionEvent event) {
-        String selectedSemester = semesterComboBox.getValue();
-        String selectedCourse = courseGroupComboBox.getValue();
-
-        if (selectedSemester == null || selectedCourse == null) {
-            showAlert("Please select semester and course first.");
+        if (currentGroup == null) {
+            showAlert("Please load a course first.");
             return;
-        }
-
-        for (Faculty faculty : University.allFaculties) {
-            for (Department dept : faculty.departments) {
-                for (Major major : dept.majors) {
-                    for (Degree degree : major.degrees) {
-                        for (Course course : degree.courses) {
-                            for (CourseGroup group : course.courseGroups) {
-                                if (group.getProfessor().equals(LoginPanelController.professorPerson.getFullName()) &&
-                                        group.getCourse().getName().equals(selectedCourse) &&
-                                        group.getSemasterCode().equals(selectedSemester)) {
-                                    for (StudentGradeRow row : gradeRows) {
-                                        Student student = findStudentById(row.getStudentId());
-                                        if (student != null) {
-                                            group.getScores().put(student, row.getScore());
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
         }
 
         University.saveFaculties();
         showAlert("Grades saved successfully!");
-    }
-
-    private Student findStudentById(String id) {
-        for (Faculty faculty : University.allFaculties) {
-            for (Department dept : faculty.departments) {
-                for (Major major : dept.majors) {
-                    for (Degree degree : major.degrees) {
-                        for (Course course : degree.courses) {
-                            for (CourseGroup group : course.courseGroups) {
-                                for (Student s : group.getRegisteredStudents()) {
-                                    if (s.getId().equals(id)) {
-                                        return s;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return null;
     }
 
     private void showAlert(String msg) {

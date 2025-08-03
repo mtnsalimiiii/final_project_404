@@ -95,4 +95,18 @@ public class Student extends Person implements Serializable {
     public List<Semester> getSemesters() {
         return semesters;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Student)) return false;
+        Student other = (Student) o;
+        return id != null && id.equals(other.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
 }

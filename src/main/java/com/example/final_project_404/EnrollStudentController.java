@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -162,8 +163,8 @@ public class EnrollStudentController {
                 // اگر قبلاً انتخاب نشده
                 if (!studentSemester.getCourseGroups().contains(group)) {
                     studentSemester.getCourseGroups().add(group);
-                    group.getRegisteredStudents().add(realStudent); 
-                    group.getScores().put(realStudent, 0.0);
+                    group.getRegisteredStudents().add(realStudent);
+                    group.getGrades().put(realStudent, 0.0);
                     selectedCount++;
                 }
             }
