@@ -23,10 +23,13 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import javax.lang.model.type.UnionType;
+import java.awt.*;
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
 import java.rmi.server.UID;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
@@ -193,7 +196,16 @@ public class EmployeePortal1 {
     private Label errorLabelBirthDateProfile;
 
     @FXML
+    private Label errorLabelCapacityAddCourseGroup;
+
+    @FXML
+    private Label errorLabelCourseAddCourseGroup;
+
+    @FXML
     private Label errorLabelCreditAddCourse;
+
+    @FXML
+    private Label errorLabelDateOfBirthRegisterProfessor;
 
     @FXML
     private Label errorLabelDeactiveProfessor;
@@ -205,10 +217,25 @@ public class EmployeePortal1 {
     private Label errorLabelDegreeAddCourse;
 
     @FXML
+    private Label errorLabelDegreeAddCourseGroup;
+
+    @FXML
+    private Label errorLabelDegreeAddDegree;
+
+    @FXML
+    private Label errorLabelDepartmentRegisterProfessor;
+
+    @FXML
     private Label errorLabelEditProfessor;
 
     @FXML
     private Label errorLabelEditStudent;
+
+    @FXML
+    private Label errorLabelFacultyRegisterProfessor;
+
+    @FXML
+    private Label errorLabelFirstNameRegisterProfessor;
 
     @FXML
     private Label errorLabelFirstnameProfile;
@@ -217,10 +244,25 @@ public class EmployeePortal1 {
     private Label errorLabelGenderProfile;
 
     @FXML
+    private Label errorLabelGenderRegisterProfessor;
+
+    @FXML
+    private Label errorLabelLastNameRegisterProfessor;
+
+    @FXML
     private Label errorLabelLastnameProfile;
 
     @FXML
     private Label errorLabelMajorAddCourse;
+
+    @FXML
+    private Label errorLabelMajorAddCourseGroup;
+
+    @FXML
+    private Label errorLabelMajorAddDegree;
+
+    @FXML
+    private Label errorLabelMajorRegisterProfessor;
 
     @FXML
     private Label errorLabelNameAddCourse;
@@ -229,13 +271,25 @@ public class EmployeePortal1 {
     private Label errorLabelNationalIdProfile;
 
     @FXML
+    private Label errorLabelNationalIdRegisterProfessor;
+
+    @FXML
     private Label errorLabelPhoneProfile;
+
+    @FXML
+    private Label errorLabelPhoneRegisterProfessor;
+
+    @FXML
+    private Label errorLabelProfessorAddCourseGroup;
 
     @FXML
     private Label errorLabelRegisterProfessor;
 
     @FXML
     private Label errorLabelRegisterStudent;
+
+    @FXML
+    private Label errorLabelSemasterAddCourseGroup;
 
     @FXML
     private ComboBox<String> facultyChooserDeactiveProfessor;
@@ -520,6 +574,15 @@ public class EmployeePortal1 {
     private TableView<?> studetnsTableview;
 
     @FXML
+    private Label successLabelAddCourseGroup;
+
+    @FXML
+    private Label successLabelAddDegree;
+
+    @FXML
+    private Label successLabelRegisterProfessor;
+
+    @FXML
     private Label successfulLabelAddCourse;
 
     @FXML
@@ -547,35 +610,35 @@ public class EmployeePortal1 {
         String name = courseNameAddCourse.getText().trim();
         String creditStr = courseCreditAddCourse.getText().trim();
         if (majorName.equals("Major")) {
-            errorLabelMajorAddCourse.setText("Choose The Major");
+            errorLabelMajorAddCourse.setText("Choose Major");
             errorLabelAddCourse.setText("The Course Wasn't Added");
         } else {
             errorLabelMajorAddCourse.setText(null);
         }
         if (selectedDegree.equals("Degree")) {
-            errorLabelDegreeAddCourse.setText("Choose The Degree");
+            errorLabelDegreeAddCourse.setText("Choose Degree");
             errorLabelAddCourse.setText("The Course Wasn't Added");
         } else {
             errorLabelDegreeAddCourse.setText(null);
         }
         if (name.isEmpty()) {
-            errorLabelNameAddCourse.setText("Enter The Name");
+            errorLabelNameAddCourse.setText("Enter Name");
             errorLabelAddCourse.setText("The Course Wasn't Added");
         } else {
             errorLabelNameAddCourse.setText(null);
         }
         if (creditStr.isEmpty()) {
-            errorLabelCreditAddCourse.setText("Enter The Credit");
+            errorLabelCreditAddCourse.setText("Enter Credit");
             errorLabelAddCourse.setText("The Course Wasn't Added");
         } else {
             errorLabelCreditAddCourse.setText(null);
         }
-        if (majorName != "Major" || selectedDegree != "Degree" || !name.isEmpty() || !creditStr.isEmpty()) {
+        if (majorName != "Major" && selectedDegree != "Degree" && !name.isEmpty() && !creditStr.isEmpty()) {
             int credit;
             try {
                 credit = Integer.parseInt(creditStr);
             } catch (NumberFormatException e) {
-                errorLabelCreditAddCourse.setText("Please Enter The Number");
+                errorLabelCreditAddCourse.setText("Just Enter Number");
                 return;
             }
 
@@ -605,12 +668,10 @@ public class EmployeePortal1 {
                                                     degree.courses.add(course);
                                                     University.saveFaculties();
                                                     System.out.println("Course add successful");
-                                                    successfulLabelAddCourse.setText("Course Addede Successfully");
+                                                    successfulLabelAddCourse.setText("Course Added Successfully");
                                                 }
                                             }
                                         }
-
-
                                     }catch (Exception exception){
                                         errorLabelDegreeAddCourse.setText("The Selected Degree Not Found In Major");
                                     }
@@ -632,30 +693,48 @@ public class EmployeePortal1 {
         addCourseScrollPane.getStyleClass().add("pressed");
         buttonsScrollPane.setVisible(true);
         dashboardAnchorPane.setVisible(false);
+
 //        Initialize the Degree and Major combobox for Add Course
-        majorChooserAddCourse.getItems().clear();
-        majorChooserAddCourse.getItems().add("Major");
+
+        Employee employee = LoginPanelController.employeePerson;
         for (Faculty faculty : University.allFaculties) {
-            if (faculty.getStatus().equals(Status.Active)) {
+            if (employee.getFaculty().equals(faculty.getFacultyName()) && faculty.getStatus().equals(Status.Active)) {
                 for (Department department : faculty.departments) {
-                    if (department.getStatus().equals(Status.Active)) {
+                    if (employee.getDepartment().equals(department.getName()) && department.getStatus().equals(Status.Active)) {
+
+                        majorChooserAddCourse.getItems().clear();
+                        majorChooserAddCourse.getItems().add("Major");
                         for (Major major : department.majors) {
                             if (major.getStatus().equals(Status.Active)) {
                                 majorChooserAddCourse.getItems().add(major.getName());
                             }
                         }
+                        majorChooserAddCourse.setVisibleRowCount(4);
+                        majorChooserAddCourse.getSelectionModel().selectFirst();
+
+                        majorChooserAddCourse.setOnAction(e -> {
+                            degreeChooserAddCourse.getItems().clear();
+                            degreeChooserAddCourse.getItems().add("Degree");
+                            for (Major major : department.majors) {
+                                if (major.getName().equals(majorChooserAddCourse.getValue()) && major.getStatus().equals(Status.Active)) {
+                                    for (Degree degree : major.degrees) {
+                                        if (degree != null) {
+                                            degreeChooserAddCourse.getItems().add(degree.getClass().getSimpleName());
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                            degreeChooserAddCourse.setVisibleRowCount(4);
+                            degreeChooserAddCourse.getSelectionModel().selectFirst();
+                        });
+
+                        break;
                     }
                 }
+                break;
             }
         }
-        majorChooserAddCourse.setVisibleRowCount(5);
-        majorChooserAddCourse.getSelectionModel().selectFirst();
-
-        degreeChooserAddCourse.getItems().clear();
-        degreeChooserAddCourse.getItems().addAll("Degree", "Bachelor", "Master", "PHD");
-        degreeChooserAddCourse.setVisibleRowCount(4);
-        degreeChooserAddCourse.getSelectionModel().selectFirst();
-
         courseNameAddCourse.clear();
         courseCreditAddCourse.clear();
     }
@@ -702,41 +781,176 @@ public class EmployeePortal1 {
         }
 
 //        Initialize the Degree and Major combobox for Add Course
-        majorChooserAddCourse.getItems().clear();
-        majorChooserAddCourse.getItems().add("Major");
+
+        Employee employee = LoginPanelController.employeePerson;
         for (Faculty faculty : University.allFaculties) {
-            if (faculty.getStatus().equals(Status.Active)) {
+            if (employee.getFaculty().equals(faculty.getFacultyName()) && faculty.getStatus().equals(Status.Active)) {
                 for (Department department : faculty.departments) {
-                    if (department.getStatus().equals(Status.Active)) {
+                    if (employee.getDepartment().equals(department.getName()) && department.getStatus().equals(Status.Active)) {
+
+                        majorChooserAddCourse.getItems().clear();
+                        majorChooserAddCourse.getItems().add("Major");
                         for (Major major : department.majors) {
                             if (major.getStatus().equals(Status.Active)) {
                                 majorChooserAddCourse.getItems().add(major.getName());
                             }
                         }
+                        majorChooserAddCourse.setVisibleRowCount(4);
+                        majorChooserAddCourse.getSelectionModel().selectFirst();
+
+                        majorChooserAddCourse.setOnAction(e -> {
+                            degreeChooserAddCourse.getItems().clear();
+                            degreeChooserAddCourse.getItems().add("Degree");
+                            for (Major major : department.majors) {
+                                if (major.getName().equals(majorChooserAddCourse.getValue()) && major.getStatus().equals(Status.Active)) {
+                                    for (Degree degree : major.degrees) {
+                                        if (degree != null) {
+                                            degreeChooserAddCourse.getItems().add(degree.getClass().getSimpleName());
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                            degreeChooserAddCourse.setVisibleRowCount(4);
+                            degreeChooserAddCourse.getSelectionModel().selectFirst();
+                        });
+
+                        break;
                     }
                 }
+                break;
             }
         }
-        majorChooserAddCourse.setVisibleRowCount(5);
-        majorChooserAddCourse.getSelectionModel().selectFirst();
-
-        degreeChooserAddCourse.getItems().clear();
-        degreeChooserAddCourse.getItems().addAll("Degree", "Bachelor", "Master", "PHD");
-        degreeChooserAddCourse.setVisibleRowCount(4);
-        degreeChooserAddCourse.getSelectionModel().selectFirst();
-
         courseNameAddCourse.clear();
         courseCreditAddCourse.clear();
     }
 
     @FXML
     void addCourseGroup(ActionEvent event) {
+        String majorName = majorChooserAddCourseGroup.getValue();
+        String selectedDegree = degreeChooserAddCourseGroup.getValue();
+        String capacityGroupStr = capacityAddCourseGroup.getText().trim();
+        String courseTarget = courseChooserAddCourseGroup.getValue();
 
+        if (majorName.equals("Major")) {
+            errorLabelMajorAddCourseGroup.setText("Choose Major");
+            errorLabelAddCourseGroup.setText("The CourseGroup Wasn't Added");
+        } else {
+            errorLabelMajorAddCourseGroup.setText(null);
+        }
+        if (selectedDegree.equals("Degree")) {
+            errorLabelDegreeAddCourseGroup.setText("Choose Degree");
+            errorLabelAddCourseGroup.setText("The CourseGroup Wasn't Added");
+        } else {
+            errorLabelDegreeAddCourseGroup.setText(null);
+        }
+        if (courseTarget == null) {
+            errorLabelCourseAddCourseGroup.setText("Choose Course");
+            errorLabelAddCourseGroup.setText("The CourseGroup Wasn't Added");
+        } else if (courseTarget.equals("Course")) {
+            errorLabelCourseAddCourseGroup.setText("Choose Course");
+            errorLabelAddCourseGroup.setText("The CourseGroup Wasn't Added");
+        }else {
+            errorLabelCourseAddCourseGroup.setText(null);
+        }
+        if (semasterChooserAddCourseGroup.getValue().equals("Semaster") || semasterChooserAddCourseGroup.getValue() == null) {
+            errorLabelSemasterAddCourseGroup.setText("Choose Semaster");
+            errorLabelAddCourseGroup.setText("The CourseGroup Wasn't Added");
+        } else {
+            errorLabelAddCourseGroup.setText(null);
+        }
+        if (professorChooserAddCourseGroup.getValue() == null) {
+            errorLabelProfessorAddCourseGroup.setText("Choose Professsor");
+            errorLabelAddCourseGroup.setText("The CourseGroup Wasn't Added");
+        } else if (professorChooserAddCourseGroup.getValue().equals("Professor")) {
+            errorLabelProfessorAddCourseGroup.setText("Choose Professsor");
+            errorLabelAddCourseGroup.setText("The CourseGroup Wasn't Added");
+        }else {
+            errorLabelAddCourseGroup.setText(null);
+        }
+        if (capacityGroupStr.isEmpty()) {
+            errorLabelCapacityAddCourseGroup.setText("Enter Capacity");
+            errorLabelAddCourseGroup.setText("The CourseGroup Wasn't Added");
+        } else {
+            errorLabelCapacityAddCourseGroup.setText(null);
+            try {
+                Integer.parseInt(capacityGroupStr);
+            } catch (NumberFormatException e) {
+                errorLabelCapacityAddCourseGroup.setText("Just Enter Number");
+                return;
+            }
+        }
+        if (majorName != "Major" && selectedDegree != "Degree" && courseChooserAddCourseGroup.getValue() != "Course" && professorChooserAddCourseGroup.getValue() != "Professor" && semasterChooserAddCourseGroup.getValue().equals("Semaster") && !capacityGroupStr.isEmpty()) {
+            int capacityGroup;
+            try {
+                capacityGroup = Integer.parseInt(capacityGroupStr);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid credit value.");
+                errorLabelCapacityAddCourseGroup.setText("Just Enter Number");
+                return;
+            }
+
+            University.loadFaculties();
+
+            for (Faculty faculty : University.allFaculties) {
+                if (faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
+                    for (Department department : faculty.departments) {
+                        if (department.getName().equals(LoginPanelController.employeePerson.getDepartment()) && department.getStatus().equals(Status.Active)) {
+                            for (Major major : department.majors) {
+                                if (major.getName().equals(majorName) && major.getStatus().equals(Status.Active)) {
+
+                                    String degreeCode;
+                                    if (selectedDegree.equalsIgnoreCase("Bachelor")) {
+                                        degreeCode = "0";
+                                    } else if (selectedDegree.equalsIgnoreCase("Master")) {
+                                        degreeCode = "1";
+                                    } else if (selectedDegree.equalsIgnoreCase("Phd")) {
+                                        degreeCode = "2";
+                                    }
+                                    try {
+                                        for (Degree degree : major.degrees) {
+                                            if (degree.getClass().getSimpleName().equalsIgnoreCase(selectedDegree)) {
+                                                try {
+                                                    for(Course course1:degree.courses){
+                                                        if(courseTarget.equals(course1.getName())){
+                                                            String id=course1.getId()+(course1.courseGroups.size()+1);
+                                                            CourseGroup newGroup = new CourseGroup(
+                                                                    professorChooserAddCourseGroup.getValue(),
+                                                                    semasterChooserAddCourseGroup.getValue(),
+                                                                    capacityGroup,
+                                                                    id,
+                                                                    Status.Active,
+                                                                    new Course(course1.getName(), course1.getCredit(), course1.getId(), Status.Active)
+                                                            );
+                                                            course1.courseGroups.add(newGroup);
+                                                            University.saveFaculties();
+                                                            successLabelAddCourseGroup.setText("The CourseGroup Added Successfully");
+                                                            return;
+                                                        }
+                                                    }
+                                                }catch (Exception e){
+                                                    errorLabelCourseAddCourseGroup.setText("The Selected Course Not Found In Degree");
+                                                }
+
+                                            }
+                                        }
+
+                                    }catch (Exception exception){
+                                        errorLabelDegreeAddCourseGroup.setText("The Selected Degree Not Found In Major");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     @FXML
     void addCourseGroupDashboard(ActionEvent event) throws Exception {
         University.loadFaculties();
+        University.loadAllSemester();
         Professor.loadAllProfessor();
         headerTitle.setText(" --> Add New Course Group");
 
@@ -747,83 +961,92 @@ public class EmployeePortal1 {
 
 
 //        Initialize the Degree and Major combobox for Add Course
-        majorChooserAddCourseGroup.getItems().clear();
-        majorChooserAddCourseGroup.getItems().add("Major");
+        capacityAddCourseGroup.clear();
+
+        semasterChooserAddCourseGroup.getItems().clear();
+        semasterChooserAddCourseGroup.getItems().add("Semaster");
+        for (Semester semester : University.allSemesters){
+            if(semester.getStatus()==Status.Active){
+                semasterChooserAddCourseGroup.getItems().add(semester.getName());
+            }
+        }
+        semasterChooserAddCourseGroup.setVisibleRowCount(5);
+        semasterChooserAddCourseGroup.getSelectionModel().selectFirst();
+        University.saveAllSemester();
+
+        Employee employee = LoginPanelController.employeePerson;
+
         for (Faculty faculty : University.allFaculties) {
-            if (faculty.getStatus().equals(Status.Active)) {
+            if (employee.getFaculty().equals(faculty.getFacultyName()) && faculty.getStatus().equals(Status.Active)) {
                 for (Department department : faculty.departments) {
-                    if (department.getStatus().equals(Status.Active)) {
+                    if (employee.getDepartment().equals(department.getName()) && department.getStatus().equals(Status.Active)) {
+
+                        majorChooserAddCourseGroup.getItems().clear();
+                        majorChooserAddCourseGroup.getItems().add("Major");
                         for (Major major : department.majors) {
                             if (major.getStatus().equals(Status.Active)) {
                                 majorChooserAddCourseGroup.getItems().add(major.getName());
                             }
                         }
-                    }
-                }
-            }
-        }
-        majorChooserAddCourseGroup.setVisibleRowCount(5);
-        majorChooserAddCourseGroup.getSelectionModel().selectFirst();
+                        majorChooserAddCourseGroup.setVisibleRowCount(5);
+                        majorChooserAddCourseGroup.getSelectionModel().selectFirst();
 
-        degreeChooserAddCourseGroup.getItems().clear();
-        degreeChooserAddCourseGroup.getItems().addAll("Degree", "Bachelor", "Master", "PHD");
-        degreeChooserAddCourseGroup.setVisibleRowCount(4);
-        degreeChooserAddCourseGroup.getSelectionModel().selectFirst();
-
-        majorChooserAddCourseGroup.setOnAction(event1 -> {
-            professorChooserAddCourseGroup.getItems().clear();
-            professorChooserAddCourseGroup.getItems().add("Professor");
-            for (Professor professor : University.allProfessors) {
-                if (professor.getMajor().equals(majorChooserAddCourseGroup.getValue()) && professor.getStatus().equals(Status.Active)) {
-                    professorChooserAddCourseGroup.getItems().add(professor.getFullName());
-                }
-            }
-            professorChooserAddCourseGroup.setVisibleRowCount(5);
-            professorChooserAddCourseGroup.getSelectionModel().selectFirst();
-        });
-
-        majorChooserAddCourseGroup.setOnAction(event1 -> {
-            courseChooserAddCourseGroup.getItems().clear();
-            courseChooserAddCourseGroup.getItems().add("Course");
-            for (Faculty faculty : University.allFaculties) {
-                if (faculty.getStatus().equals(Status.Active)) {
-                    for (Department department : faculty.departments) {
-                        if (department.getStatus().equals(Status.Active)) {
+                        majorChooserAddCourseGroup.setOnAction(e -> {
                             for (Major major : department.majors) {
-                                if (major.getStatus().equals(Status.Active) && major.getName().equals(majorChooserAddCourseGroup.getValue())) {
+                                if (major.getName().equals(majorChooserAddCourseGroup.getValue()) && major.getStatus().equals(Status.Active)) {
+
+                                    degreeChooserAddCourseGroup.getItems().clear();
+                                    degreeChooserAddCourseGroup.getItems().add("Degree");
                                     for (Degree degree : major.degrees) {
-                                        for (Course course : degree.courses) {
-                                            if (course.getStatus().equals(Status.Active)) {
-                                                courseChooserAddCourseGroup.getItems().add(course.getName());
-                                            }
+                                        if (degree != null) {
+                                            degreeChooserAddCourseGroup.getItems().add(degree.getClass().getSimpleName());
                                         }
                                     }
+                                    degreeChooserAddCourseGroup.setVisibleRowCount(5);
+                                    degreeChooserAddCourseGroup.getSelectionModel().selectFirst();
+
+                                    professorChooserAddCourseGroup.getItems().clear();
+                                    professorChooserAddCourseGroup.getItems().add("Professor");
+                                    for (Professor prof : major.professors) {
+                                        professorChooserAddCourseGroup.getItems().add(prof.getFullName());
+                                    }
+                                    professorChooserAddCourseGroup.setVisibleRowCount(5);
+                                    professorChooserAddCourseGroup.getSelectionModel().selectFirst();
+
+                                    degreeChooserAddCourseGroup.setOnAction(ev -> {
+                                        courseChooserAddCourseGroup.getItems().clear();
+                                        courseChooserAddCourseGroup.getItems().add("Course");
+                                        for (Degree degree : major.degrees) {
+                                            if (degree.getClass().getSimpleName().equalsIgnoreCase(degreeChooserAddCourseGroup.getValue())) {
+                                                for (Course course : degree.courses) {
+                                                    if (course.getStatus().equals(Status.Active)) {
+                                                        courseChooserAddCourseGroup.getItems().add(course.getName());
+                                                    }
+                                                }
+                                                break;
+                                            }
+                                        }
+                                        courseChooserAddCourseGroup.setVisibleRowCount(5);
+                                        courseChooserAddCourseGroup.getSelectionModel().selectFirst();
+                                    });
+
+                                    break;
                                 }
                             }
-                        }
+                        });
+
+                        break;
                     }
                 }
-            }
-            courseChooserAddCourseGroup.setVisibleRowCount(5);
-            courseChooserAddCourseGroup.getSelectionModel().selectFirst();
-        });
-
-        semasterChooserAddCourseGroup.getItems().clear();
-        semasterChooserAddCourseGroup.getItems().add("Semaster");
-        for (Semester semaster : University.allSemesters) {
-            if (semaster.getStatus().equals(Status.Active)) {
-                semasterChooserAddCourseGroup.getItems().add(semaster.getName());
+                break;
             }
         }
-        semasterChooserAddCourseGroup.setVisibleRowCount(4);
-        semasterChooserAddCourseGroup.getSelectionModel().selectFirst();
-
-        capacityAddCourseGroup.clear();
     }
 
     @FXML
     void addCourseGroupScrollPane(ActionEvent event) throws Exception {
         University.loadFaculties();
+        University.loadAllSemester();
         Professor.loadAllProfessor();
         headerTitle.setText(" --> Add New Course Group");
 
@@ -862,57 +1085,131 @@ public class EmployeePortal1 {
             addCourseGroupAnchorPane.setVisible(true);
             addCourseGroupScrollPane.getStyleClass().add("pressed");
         }
+
 //        Initialize the Degree and Major combobox for Add Course
-        majorChooserAddCourseGroup.getItems().clear();
-        majorChooserAddCourseGroup.getItems().add("Major");
+        capacityAddCourseGroup.clear();
+
+        semasterChooserAddCourseGroup.getItems().clear();
+        semasterChooserAddCourseGroup.getItems().add("Semaster");
+        for (Semester semester : University.allSemesters){
+            if(semester.getStatus()==Status.Active){
+                semasterChooserAddCourseGroup.getItems().add(semester.getName());
+            }
+        }
+        semasterChooserAddCourseGroup.setVisibleRowCount(5);
+        semasterChooserAddCourseGroup.getSelectionModel().selectFirst();
+        University.saveAllSemester();
+
+        Employee employee = LoginPanelController.employeePerson;
+
         for (Faculty faculty : University.allFaculties) {
-            if (faculty.getStatus().equals(Status.Active)) {
+            if (employee.getFaculty().equals(faculty.getFacultyName()) && faculty.getStatus().equals(Status.Active)) {
                 for (Department department : faculty.departments) {
-                    if (department.getStatus().equals(Status.Active)) {
+                    if (employee.getDepartment().equals(department.getName()) && department.getStatus().equals(Status.Active)) {
+
+                        majorChooserAddCourseGroup.getItems().clear();
+                        majorChooserAddCourseGroup.getItems().add("Major");
                         for (Major major : department.majors) {
                             if (major.getStatus().equals(Status.Active)) {
                                 majorChooserAddCourseGroup.getItems().add(major.getName());
                             }
                         }
-                    }
-                }
-            }
-        }
-        majorChooserAddCourseGroup.setVisibleRowCount(5);
-        majorChooserAddCourseGroup.getSelectionModel().selectFirst();
+                        majorChooserAddCourseGroup.setVisibleRowCount(5);
+                        majorChooserAddCourseGroup.getSelectionModel().selectFirst();
 
-        degreeChooserAddCourseGroup.getItems().clear();
-        degreeChooserAddCourseGroup.getItems().addAll("Degree", "Bachelor", "Master", "PHD");
-        degreeChooserAddCourseGroup.setVisibleRowCount(4);
-        degreeChooserAddCourseGroup.getSelectionModel().selectFirst();
-
-        majorChooserAddCourseGroup.setOnAction(event1 -> {
-            professorChooserAddCourseGroup.getItems().clear();
-            professorChooserAddCourseGroup.getItems().add("Professor");
-            for (Professor professor : University.allProfessors) {
-                if (professor.getMajor().equals(majorChooserAddCourseGroup.getValue()) && professor.getStatus().equals(Status.Active)) {
-                    professorChooserAddCourseGroup.getItems().add(professor.getFullName());
-                }
-            }
-            professorChooserAddCourseGroup.setVisibleRowCount(5);
-            professorChooserAddCourseGroup.getSelectionModel().selectFirst();
-        });
-
-        majorChooserAddCourseGroup.setOnAction(event1 -> {
-            courseChooserAddCourseGroup.getItems().clear();
-            courseChooserAddCourseGroup.getItems().add("Course");
-            for (Faculty faculty : University.allFaculties) {
-                if (faculty.getStatus().equals(Status.Active)) {
-                    for (Department department : faculty.departments) {
-                        if (department.getStatus().equals(Status.Active)) {
+                        majorChooserAddCourseGroup.setOnAction(e -> {
                             for (Major major : department.majors) {
-                                if (major.getStatus().equals(Status.Active) && major.getName().equals(majorChooserAddCourseGroup.getValue())) {
+                                if (major.getName().equals(majorChooserAddCourseGroup.getValue()) && major.getStatus().equals(Status.Active)) {
+
+                                    degreeChooserAddCourseGroup.getItems().clear();
+                                    degreeChooserAddCourseGroup.getItems().add("Degree");
                                     for (Degree degree : major.degrees) {
-                                        for (Course course : degree.courses) {
-                                            if (course.getStatus().equals(Status.Active)) {
-                                                courseChooserAddCourseGroup.getItems().add(course.getName());
+                                        if (degree != null) {
+                                            degreeChooserAddCourseGroup.getItems().add(degree.getClass().getSimpleName());
+                                        }
+                                    }
+                                    degreeChooserAddCourseGroup.setVisibleRowCount(5);
+                                    degreeChooserAddCourseGroup.getSelectionModel().selectFirst();
+
+                                    professorChooserAddCourseGroup.getItems().clear();
+                                    professorChooserAddCourseGroup.getItems().add("Professor");
+                                    for (Professor prof : major.professors) {
+                                        professorChooserAddCourseGroup.getItems().add(prof.getFullName());
+                                    }
+                                    professorChooserAddCourseGroup.setVisibleRowCount(5);
+                                    professorChooserAddCourseGroup.getSelectionModel().selectFirst();
+
+                                    degreeChooserAddCourseGroup.setOnAction(ev -> {
+                                        courseChooserAddCourseGroup.getItems().clear();
+                                        courseChooserAddCourseGroup.getItems().add("Course");
+                                        for (Degree degree : major.degrees) {
+                                            if (degree.getClass().getSimpleName().equalsIgnoreCase(degreeChooserAddCourseGroup.getValue())) {
+                                                for (Course course : degree.courses) {
+                                                    if (course.getStatus().equals(Status.Active)) {
+                                                        courseChooserAddCourseGroup.getItems().add(course.getName());
+                                                    }
+                                                }
+                                                break;
                                             }
                                         }
+                                        courseChooserAddCourseGroup.setVisibleRowCount(5);
+                                        courseChooserAddCourseGroup.getSelectionModel().selectFirst();
+                                    });
+
+                                    break;
+                                }
+                            }
+                        });
+
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+    }
+
+    @FXML
+    void addDegree(ActionEvent event) {
+        Degree degree = null;
+        University.loadFaculties();
+        Employee employee = LoginPanelController.employeePerson;
+
+        if (majorChooserAddDegree.getValue().equals("Major") || majorChooserAddDegree.getValue().isEmpty()) {
+            errorLabelMajorAddDegree.setText("Choose Major");
+            errorLabelAddDegree.setText("The Degree Wasn't Added");
+        } else {
+            errorLabelMajorAddDegree.setText(null);
+        }
+        if (degreeChooserAddDegree.getValue().equals("Degree") || degreeChooserAddDegree.getValue().isEmpty()) {
+            errorLabelDegreeAddDegree.setText("Choose Degree");
+            errorLabelAddDegree.setText("The Degree Wasn't Added");
+        } else {
+            errorLabelDegreeAddDegree.setText(null);
+        }
+
+        if (!degreeChooserAddDegree.getValue().isEmpty() && !majorChooserAddDegree.getValue().isEmpty()) {
+            for (Faculty faculty : University.allFaculties) {
+                if (faculty.getFacultyName().equals(employee.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
+                    for (Department department : faculty.departments) {
+                        if (department.getName().equals(employee.getDepartment()) && department.getStatus().equals(Status.Active)) {
+                            for (Major major : department.majors) {
+                                if (major.getName().equals(majorChooserAddDegree.getValue()) && major.getStatus().equals(Status.Active)) {
+                                    String selectedDegree = degreeChooserAddDegree.getValue();
+                                    if ("Bachelor".equals(selectedDegree)) {
+                                        degree = new Bachelor();
+                                    } else if ("Master".equals(selectedDegree)) {
+                                        degree = new Master();
+                                    } else if ("Phd".equals(selectedDegree)) {
+                                        degree = new Phd();
+                                    }
+                                    if (major.degrees.contains(degree)){
+                                        major.degrees.add(degree);
+                                        University.saveFaculties();
+                                        successLabelAddDegree.setText("The Selected Degree Added Successfully");
+                                    } else {
+                                        errorLabelAddDegree.setText("The Selected Degree Has Already Been Added");
                                     }
                                 }
                             }
@@ -920,25 +1217,7 @@ public class EmployeePortal1 {
                     }
                 }
             }
-            courseChooserAddCourseGroup.setVisibleRowCount(5);
-            courseChooserAddCourseGroup.getSelectionModel().selectFirst();
-        });
-
-        semasterChooserAddCourseGroup.getItems().clear();
-        semasterChooserAddCourseGroup.getItems().add("Semaster");
-        for (Semester semaster : University.allSemesters) {
-            if (semaster.getStatus().equals(Status.Active)) {
-                semasterChooserAddCourseGroup.getItems().add(semaster.getName());
-            }
         }
-        semasterChooserAddCourseGroup.setVisibleRowCount(4);
-        semasterChooserAddCourseGroup.getSelectionModel().selectFirst();
-
-        capacityAddCourseGroup.clear();
-    }
-
-    @FXML
-    void addDegree(ActionEvent event) {
 
     }
 
@@ -952,26 +1231,29 @@ public class EmployeePortal1 {
         buttonsScrollPane.setVisible(true);
         dashboardAnchorPane.setVisible(false);
 //        Initialize the Major and Degree combobox for Add Degree
-        majorChooserAddDegree.getItems().clear();
-        majorChooserAddDegree.getItems().add("Major");
+        Employee employee = LoginPanelController.employeePerson;
+
         for (Faculty faculty : University.allFaculties) {
-            if (faculty.getStatus().equals(Status.Active)) {
+            if (faculty.getFacultyName().equals(employee.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
                 for (Department department : faculty.departments) {
-                    if (department.getStatus().equals(Status.Active)) {
+                    if (department.getName().equals(employee.getDepartment()) && department.getStatus().equals(Status.Active)) {
+                        majorChooserAddDegree.getItems().clear();
+                        majorChooserAddDegree.getItems().add("Major");
                         for (Major major : department.majors) {
-                            if (major.getStatus().equals(Status.Active)) {
+                            if (major.getStatus().equals(Status.Active)){
                                 majorChooserAddDegree.getItems().add(major.getName());
                             }
                         }
+                        majorChooserAddDegree.setVisibleRowCount(4);
+                        majorChooserAddDegree.getSelectionModel().selectFirst();
+                        break;
                     }
                 }
+                break;
             }
         }
-        majorChooserAddDegree.setVisibleRowCount(5);
-        majorChooserAddDegree.getSelectionModel().selectFirst();
-
         degreeChooserAddDegree.getItems().clear();
-        degreeChooserAddDegree.getItems().addAll("Degree", "Bachelor", "Master", "PHD");
+        degreeChooserAddDegree.getItems().addAll("Degree", "Bachelor", "Master", "Phd");
         degreeChooserAddDegree.setVisibleRowCount(4);
         degreeChooserAddDegree.getSelectionModel().selectFirst();
     }
@@ -1017,33 +1299,170 @@ public class EmployeePortal1 {
             addDegreeScrollPane.getStyleClass().add("pressed");
         }
 //        Initialize the Major and Degree combobox for Add Degree
-        majorChooserAddDegree.getItems().clear();
-        majorChooserAddDegree.getItems().add("Major");
+        Employee employee = LoginPanelController.employeePerson;
+
         for (Faculty faculty : University.allFaculties) {
-            if (faculty.getStatus().equals(Status.Active)) {
+            if (faculty.getFacultyName().equals(employee.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
                 for (Department department : faculty.departments) {
-                    if (department.getStatus().equals(Status.Active)) {
+                    if (department.getName().equals(employee.getDepartment()) && department.getStatus().equals(Status.Active)) {
+                        majorChooserAddDegree.getItems().clear();
+                        majorChooserAddDegree.getItems().add("Major");
                         for (Major major : department.majors) {
-                            if (major.getStatus().equals(Status.Active)) {
+                            if (major.getStatus().equals(Status.Active)){
                                 majorChooserAddDegree.getItems().add(major.getName());
                             }
                         }
+                        majorChooserAddDegree.setVisibleRowCount(4);
+                        majorChooserAddDegree.getSelectionModel().selectFirst();
+                        break;
                     }
                 }
+                break;
             }
         }
-        majorChooserAddDegree.setVisibleRowCount(5);
-        majorChooserAddDegree.getSelectionModel().selectFirst();
-
         degreeChooserAddDegree.getItems().clear();
-        degreeChooserAddDegree.getItems().addAll("Degree", "Bachelor", "Master", "PHD");
+        degreeChooserAddDegree.getItems().addAll("Degree", "Bachelor", "Master", "Phd");
         degreeChooserAddDegree.setVisibleRowCount(4);
         degreeChooserAddDegree.getSelectionModel().selectFirst();
     }
 
     @FXML
-    void addProfessor(ActionEvent event) {
+    void addProfessor(ActionEvent event) throws Exception {
+        University.loadFaculties();
+        Professor.loadAllProfessor();
 
+
+        if (firstNameRegisterProfessor.getText().isEmpty()) {
+            errorLabelFirstNameRegisterProfessor.setText("Enter First Name");
+            errorLabelRegisterProfessor.setText("The Professor Wasn't Registered");
+        } else {
+            errorLabelFirstNameRegisterProfessor.setText(null);
+        }
+        if (lastNameRegisterProfessor.getText().isEmpty()) {
+            errorLabelLastNameRegisterProfessor.setText("Enter Last Name");
+            errorLabelRegisterProfessor.setText("The Professor Wasn't Registered");
+        } else {
+            errorLabelLastNameRegisterProfessor.setText(null);
+        }
+        if (phoneNumberRegisterProfessor.getText().isEmpty()) {
+            errorLabelPhoneRegisterProfessor.setText("Enter Phone Number");
+            errorLabelRegisterProfessor.setText("The Professor Wasn't Registered");
+        } else {
+            errorLabelPhoneRegisterProfessor.setText(null);
+            try{
+                long phone = Integer.parseInt(phoneNumberRegisterProfessor.getText());
+            } catch (NumberFormatException e) {
+                errorLabelPhoneRegisterProfessor.setText("Enter Just Number");
+            }
+        }
+        if (nationalIdRegisterProfessor.getText().isEmpty()) {
+            errorLabelNationalIdRegisterProfessor.setText("Enter National ID");
+            errorLabelRegisterProfessor.setText("The Professor Wasn't Registered");
+        } else {
+            errorLabelNationalIdRegisterProfessor.setText(null);
+            try {
+                long nationalid = Integer.parseInt(nationalIdRegisterProfessor.getText());
+            } catch (NumberFormatException e) {
+                errorLabelNationalIdRegisterProfessor.setText("Enter Just Number");
+            }
+        }
+        if (genderChooserRegisterProfessor.getValue().equals("Major") || genderChooserRegisterProfessor.getValue().isEmpty()) {
+            errorLabelGenderRegisterProfessor.setText("Choose Gender");
+            errorLabelRegisterProfessor.setText("The Professor Wasn't Registered");
+        } else {
+            errorLabelGenderRegisterProfessor.setText(null);
+        }
+        if (facultyChooserRegisterProfessor.getValue().equals("Faculty") || facultyChooserRegisterProfessor.getValue().isEmpty()) {
+            errorLabelFacultyRegisterProfessor.setText("Choose Faculty");
+            errorLabelRegisterProfessor.setText("The Professor Wasn't Registered");
+        } else {
+            errorLabelFacultyRegisterProfessor.setText(null);
+        }
+        if (departmentChooserRegisterProfessor.getValue().equals("Department") || departmentChooserRegisterProfessor.getValue().isEmpty()) {
+            errorLabelDepartmentRegisterProfessor.setText("Choose Department");
+            errorLabelRegisterProfessor.setText("The Professor Wasn't Registered");
+        } else {
+            errorLabelDepartmentRegisterProfessor.setText(null);
+        }
+        if (majorChooserRegisterProfessor.getValue().equals("Major") || majorChooserRegisterProfessor.getValue().isEmpty()) {
+            errorLabelMajorRegisterProfessor.setText("Choose Major");
+            errorLabelRegisterProfessor.setText("The Professor Wasn't Registered");
+        } else {
+            errorLabelMajorRegisterProfessor.setText(null);
+        }
+        if (dateOfBirthRegisterProfessor.getValue().toString().isEmpty()) {
+            errorLabelDateOfBirthRegisterProfessor.setText("Choose Date Of Birth");
+            errorLabelRegisterProfessor.setText("The Professor Wasn't Registered");
+        } else {
+            errorLabelDateOfBirthRegisterProfessor.setText(null);
+        }
+        Date dateOfBirth = getDateOfBirthRegisterProfessor();
+        String firstName = firstNameRegisterProfessor.getText().trim();
+        String lastName = lastNameRegisterProfessor.getText().trim();
+        String phoneNumber = phoneNumberRegisterProfessor.getText().trim();
+        String nationalId = nationalIdRegisterProfessor.getText().trim();
+        String gender = genderChooserRegisterProfessor.getValue();
+        String faculty = facultyChooserRegisterProfessor.getValue();
+        String department = departmentChooserRegisterProfessor.getValue();
+        String major = majorChooserRegisterProfessor.getValue();
+        Date dateOfHire = getDateOfHireRegisterProfessor();
+        String professorId = "PRO"+(University.allProfessors.size()+1);
+        if (!firstName.isBlank() && !lastName.isBlank() && !phoneNumber.isBlank() && !nationalId.isBlank() && gender!=null && faculty!=null && department!=null && major!=null){
+            Professor professor = new Professor(firstName,lastName, dateOfBirth, nationalId,Gender.valueOf(gender),phoneNumber,professorId, dateOfHire,faculty,department,major,Status.Active);
+
+            for (Faculty faculty1 : University.allFaculties) {
+                if (faculty1.getFacultyName().equals(faculty) && faculty1.getStatus().equals(Status.Active)) {
+                    for (Department department1 : faculty1.departments) {
+                        if (department1.getName().equals(department) && department1.getStatus().equals(Status.Active)) {
+                            for (Major major1 : department1.majors) {
+                                if (!major1.professors.contains(professor) && major1.getStatus().equals(Status.Active)) {
+                                    major1.professors.add(professor);
+                                    University.saveFaculties();
+                                    University.allProfessors.add(professor);
+                                    Professor.saveAllProfessor();
+                                    successLabelRegisterProfessor.setText("The Professor Registered Successfully");
+                                } else {
+                                    System.out.println("The Professor Has Registered Earlier.");
+                                    errorLabelRegisterProfessor.setText("The Professor Has Been Registered");
+                                }
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+
+            System.out.println("successful\nID: "+ professorId);
+            System.out.println("password: "+nationalId);
+            System.out.println();
+            System.out.println(firstName+" "+lastName);
+            System.out.println(phoneNumber);
+            System.out.println(nationalId);
+            System.out.println(gender);
+            System.out.println(faculty);
+            System.out.println(department);
+            System.out.println(major);
+
+        } else {
+            System.out.println("Please Fill All Fields!");
+            errorLabelRegisterProfessor.setText("Fill All Fields");
+            return;
+        }
+    }
+
+    private Date getDateOfHireRegisterProfessor(){
+        Date date = new Date();
+        date.setYear(LocalDate.now().getYear());
+        date.setMonth(LocalDate.now().getMonthValue());
+        date.setDay(LocalDate.now().getDayOfMonth());
+        return date;
+    }
+    private Date getDateOfBirthRegisterProfessor() {
+        Date dateOfBirth = new Date();
+        dateOfBirth.setYear(dateOfBirthRegisterProfessor.getValue().getYear());
+        dateOfBirth.setMonth(dateOfBirthRegisterProfessor.getValue().getMonthValue());
+        dateOfBirth.setDay(dateOfBirthRegisterProfessor.getValue().getDayOfMonth());
+        return dateOfBirth;
     }
 
     @FXML
@@ -1113,11 +1532,6 @@ public class EmployeePortal1 {
 
     @FXML
     void editStudent(ActionEvent event) {
-
-    }
-
-    @FXML
-    void getDateOfBirth(ActionEvent event) {
 
     }
 
@@ -1313,6 +1727,8 @@ public class EmployeePortal1 {
 
         genderChooserRegisterProfessor.getItems().clear();
         genderChooserRegisterProfessor.getItems().addAll("Gender", String.valueOf(Gender.Male), String.valueOf(Gender.Female));
+        genderChooserRegisterProfessor.setVisibleRowCount(3);
+        genderChooserRegisterProfessor.getSelectionModel().selectFirst();
 
         facultyChooserRegisterProfessor.getItems().clear();
         facultyChooserRegisterProfessor.getItems().add("Faculty");
@@ -1417,6 +1833,8 @@ public class EmployeePortal1 {
 
         genderChooserRegisterProfessor.getItems().clear();
         genderChooserRegisterProfessor.getItems().addAll("Gender", String.valueOf(Gender.Male), String.valueOf(Gender.Female));
+        genderChooserRegisterProfessor.setVisibleRowCount(3);
+        genderChooserRegisterProfessor.getSelectionModel().selectFirst();
 
         facultyChooserRegisterProfessor.getItems().clear();
         facultyChooserRegisterProfessor.getItems().add("Faculty");

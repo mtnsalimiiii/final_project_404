@@ -182,13 +182,13 @@ public class AddCourseGroupEmployeePortalController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         University.loadFaculties();
         University.loadAllSemester();
-        for (Semester semester:University.allSemesters){
+        for (Semester semester : University.allSemesters){
             if(semester.getStatus()==Status.Active){
                 semesterChooser.getItems().add(semester.getName());
             }
         }
         University.saveAllSemester();
-        if (LoginPanelController.employeePerson == null) return;
+//        if (LoginPanelController.employeePerson == null) return;
 
         String facultyName = LoginPanelController.employeePerson.getFaculty();
         String departmentName = LoginPanelController.employeePerson.getDepartment();

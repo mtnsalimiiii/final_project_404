@@ -182,7 +182,7 @@ public class LoginPanelController{
                     if (employee.getId().equals(username) && employee.getNationalId().equals(password) && employee.getStatus().equals(Status.Active)) {
                         employeePerson = employee;
                         System.out.println("Successfull login " + employee.getFirst_name());
-                        Parent root = FXMLLoader.load(getClass().getResource("EmployeePortal.fxml"));
+                        Parent root = FXMLLoader.load(getClass().getResource("EmployeePortal1.fxml"));
                         Scene scene = new Scene(root);
                         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                         stage.setTitle("Employee Portal");
