@@ -251,8 +251,6 @@
                   <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
                         <TextField fx:id="firstNameRegisterProfessor" prefWidth="370.0" promptText="First Name" stylesheets="@EmployeePortal.css" />
@@ -261,24 +259,20 @@
                   <Label fx:id="errorLabelLastNameRegisterProfessor" alignment="CENTER_RIGHT" layoutX="396.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
                         <TextField fx:id="nationalIdRegisterProfessor" prefWidth="370.0" promptText="National ID" stylesheets="@EmployeePortal.css" GridPane.rowIndex="2" />
                   <Label fx:id="errorLabelNationalIdRegisterProfessor" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                        <ComboBox fx:id="genderChooserRegisterProfessor" prefWidth="370.0" promptText="Gender" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="3" />
-                  <Label fx:id="errorLabelGenderRegisterProfessor" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                        <TextField fx:id="phoneNumberRegisterProfessor" prefWidth="370.0" promptText="Phone Number" stylesheets="@EmployeePortal.css" GridPane.rowIndex="4" />
-                  <Label fx:id="errorLabelPhoneRegisterProfessor" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+                        <TextField fx:id="phoneNumberRegisterProfessor" prefWidth="370.0" promptText="Phone Number" stylesheets="@EmployeePortal.css" GridPane.rowIndex="3" />
+                  <Label fx:id="errorLabelPhoneRegisterProfessor" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                        <ComboBox fx:id="genderChooserRegisterProfessor" prefWidth="370.0" promptText="Gender" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="4" />
+                  <Label fx:id="errorLabelGenderRegisterProfessor" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
                         <DatePicker fx:id="dateOfBirthRegisterProfessor" prefWidth="370.0" promptText="Date of Birth" stylesheets="@EmployeePortal.css" GridPane.rowIndex="5" />
                   <Label fx:id="errorLabelDateOfBirthRegisterProfessor" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
-                        <ComboBox fx:id="facultyChooserRegisterProfessor" prefWidth="370.0" promptText="Faculty" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="6" />
-                  <Label fx:id="errorLabelFacultyRegisterProfessor" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
-                        <ComboBox fx:id="departmentChooserRegisterProfessor" prefWidth="370.0" promptText="Department" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="7" />
-                  <Label fx:id="errorLabelDepartmentRegisterProfessor" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
-                        <ComboBox fx:id="majorChooserRegisterProfessor" prefWidth="370.0" promptText="Major" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="8" />
-                  <Label fx:id="errorLabelMajorRegisterProfessor" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
+                        <ComboBox fx:id="majorChooserRegisterProfessor" prefWidth="370.0" promptText="Major" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="6" />
+                  <Label fx:id="errorLabelMajorRegisterProfessor" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
                </children>
                <padding>
                   <Insets left="15.0" right="15.0" top="15.0" />
                </padding>
             </GridPane>
-            <Group layoutX="15.0" layoutY="400.0">
+            <Group layoutX="15.0" layoutY="320.0">
                <children>
                         <Button fx:id="addProfessorButton" mnemonicParsing="false" onAction="#addProfessor" stylesheets="@EmployeePortal.css" text="Register" />
                   <Label fx:id="errorLabelRegisterProfessor" alignment="CENTER_RIGHT" layoutX="100.0" layoutY="3.0" prefHeight="30.0" prefWidth="495.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" />
