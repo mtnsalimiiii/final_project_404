@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.layout.RowConstraints?>
 <AnchorPane minHeight="550.0" minWidth="800.0"
             xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
@@ -52,11 +52,7 @@
                         <ColumnConstraints hgrow="SOMETIMES" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints prefHeight="50.0" vgrow="SOMETIMES" />
-                        <RowConstraints prefHeight="50.0" vgrow="SOMETIMES" />
-                        <RowConstraints prefHeight="50.0" vgrow="SOMETIMES" />
-                        <RowConstraints prefHeight="50.0" vgrow="SOMETIMES" />
-                        <RowConstraints prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints prefHeight="20.0" vgrow="SOMETIMES" />
                         <RowConstraints prefHeight="50.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
@@ -64,27 +60,24 @@
                         <Button minHeight="40.0" minWidth="280.0"
                                 onAction="#profileProfessorPortal"
                                 styleClass="button-dashboard" stylesheets="@DashboardButton.css"
-                                text="Profile" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-
+                                text="Profile" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
                         <!-- Reports -->
                         <Button minHeight="40.0" minWidth="280.0"
                                 onAction="#reportsProfessorPortal"
                                 styleClass="button-dashboard" stylesheets="@DashboardButton.css"
                                 text="Reports" GridPane.columnIndex="1"
-                                GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-
+                                GridPane.halignment="CENTER" GridPane.rowIndex="0" />
                         <!-- Grade Submission -->
                         <Button minHeight="40.0" minWidth="280.0"
                                 onAction="#showGradeSubmissionPanel"
                                 styleClass="button-dashboard" stylesheets="@DashboardButton.css"
-                                text="Grade Submission" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-
+                                text="Grade Submission" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                         <!-- Sign out -->
                         <Button minHeight="40.0" minWidth="280.0"
                                 onAction="#signOutProfessorPortal"
                                 styleClass="button-dashboard" stylesheets="@DashboardButton.css"
                                 text="Sign out" GridPane.columnIndex="1"
-                                GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                     </children>
                 </GridPane>
 
@@ -110,8 +103,8 @@
                                 <columns>
                                     <TableColumn fx:id="studentIdCol" text="Student ID" prefWidth="120"/>
                                     <TableColumn fx:id="studentNameCol" text="Student Name" prefWidth="200"/>
-                                    <TableColumn fx:id="scoreCol" text="Score" prefWidth="120"/>
-                                    <TableColumn fx:id="statusCol" text="Status" prefWidth="150"/>
+                                    <TableColumn fx:id="scoreCol" text="Score" prefWidth="120" editable="false"/>
+                                    <TableColumn fx:id="editCol" text="Edit" prefWidth="100"/>
                                 </columns>
                             </TableView>
 

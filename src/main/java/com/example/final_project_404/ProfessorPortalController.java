@@ -1,5 +1,6 @@
 package com.example.final_project_404;
 
+import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -9,19 +10,18 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
-import javafx.util.converter.DoubleStringConverter;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class ProfessorPortalController {
 
-    @FXML private TableView<StudentGradeRow> studentsTable;
-    @FXML private TableColumn<StudentGradeRow, String> studentIdCol;
-    @FXML private TableColumn<StudentGradeRow, String> studentNameCol;
-    @FXML private TableColumn<StudentGradeRow, Double> scoreCol;
-    @FXML private TableColumn<StudentGradeRow, String> statusCol;
+    @FXML private TableView<Student> studentsTable;
+    @FXML private TableColumn<Student, String> studentIdCol;
+    @FXML private TableColumn<Student, String> studentNameCol;
+    @FXML private TableColumn<Student, Double> scoreCol;
+    @FXML private TableColumn<Student, Void> editCol;
 
     @FXML private ComboBox<String> semesterComboBox;
     @FXML private ComboBox<String> courseGroupComboBox;
@@ -29,35 +29,103 @@ public class ProfessorPortalController {
     @FXML private Node mainMenuPane;
     @FXML private Node gradeSubmissionPane;
 
-    private final ObservableList<StudentGradeRow> gradeRows = FXCollections.observableArrayList();
+    private final ObservableList<Student> studentRows = FXCollections.observableArrayList();
+    private CourseGroup currentGroup;
 
     @FXML
     public void initialize() {
-        // پر کردن لیست ترم‌ها
-        University.loadAllSemester();
-        semesterComboBox.getItems().clear();
-        for (Semester sem : University.allSemesters) {
-            semesterComboBox.getItems().add(sem.getName());
-        }
+        // پر کردن لیست ترم‌ها فقط برای همین استاد
+        loadSemestersForProfessor();
 
-        // وقتی ترم انتخاب شد، لیست درس‌ها آپدیت شود
         semesterComboBox.setOnAction(e -> loadCourseGroupsForSemester());
 
-        // ستون‌ها
-        studentIdCol.setCellValueFactory(data -> data.getValue().studentIdProperty());
-        studentNameCol.setCellValueFactory(data -> data.getValue().studentNameProperty());
-        scoreCol.setCellValueFactory(data -> data.getValue().scoreProperty().asObject());
-        statusCol.setCellValueFactory(data -> data.getValue().statusProperty());
+        // تنظیم ستون‌ها
+        studentIdCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getId()));
+        studentNameCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(
+                cellData.getValue().getFirst_name() + " " + cellData.getValue().getLast_name()
+        ));
 
-        studentsTable.setItems(gradeRows);
-        studentsTable.setEditable(true);
-
-        // ستون نمره قابل ویرایش
-        scoreCol.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
-        scoreCol.setOnEditCommit(event -> {
-            StudentGradeRow row = event.getRowValue();
-            row.setScore(event.getNewValue());
+        // ستون نمره غیرقابل ویرایش مستقیم
+        scoreCol.setCellValueFactory(data -> {
+            if (currentGroup != null) {
+                Double score = currentGroup.getGrades().get(data.getValue().getId());
+                return new javafx.beans.property.SimpleDoubleProperty(score != null ? score : 0.0).asObject();
+            }
+            return new javafx.beans.property.SimpleDoubleProperty(0.0).asObject();
         });
+
+        // تنظیم ستون ویرایش با دکمه
+        editCol.setCellFactory(col -> new TableCell<>() {
+            private final Button editButton = new Button("Edit");
+
+            {
+                editButton.setOnAction(event -> {
+                    Student student = getTableView().getItems().get(getIndex());
+                    editGrade(student);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(editButton);
+                }
+            }
+        });
+
+        studentsTable.setItems(studentRows);
+    }
+
+    // متد برای ویرایش نمره با استفاده از Dialog
+    private void editGrade(Student student) {
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Edit Grade");
+        dialog.setHeaderText("وارد کردن نمره جدید برای " + student.getFirst_name() + " " + student.getLast_name());
+        dialog.setContentText("نمره:");
+
+        Optional<String> result = dialog.showAndWait();
+        result.ifPresent(grade -> {
+            try {
+                double newScore = Double.parseDouble(grade);
+                if (newScore < 0 || newScore > 20) {
+                    showAlert("نمره باید بین 0 تا 20 باشد.");
+                    return;
+                }
+                if (currentGroup != null) {
+                    currentGroup.getGrades().put(student.getId(), newScore);
+                    studentsTable.refresh();
+                }
+            } catch (NumberFormatException e) {
+                showAlert("لطفاً یک عدد معتبر وارد کنید.");
+            }
+        });
+    }
+
+    private void loadSemestersForProfessor() {
+        semesterComboBox.getItems().clear();
+        University.loadFaculties();
+
+        for (Faculty faculty : University.allFaculties) {
+            for (Department dept : faculty.departments) {
+                for (Major major : dept.majors) {
+                    for (Degree degree : major.degrees) {
+                        for (Course course : degree.courses) {
+                            for (CourseGroup group : course.courseGroups) {
+                                if (group.getProfessor().equals(LoginPanelController.professorPerson.getFullName())) {
+                                    String semCode = group.getSemasterCode();
+                                    if (!semesterComboBox.getItems().contains(semCode)) {
+                                        semesterComboBox.getItems().add(semCode);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private void loadCourseGroupsForSemester() {
@@ -74,7 +142,9 @@ public class ProfessorPortalController {
                             for (CourseGroup group : course.courseGroups) {
                                 if (group.getProfessor().equals(LoginPanelController.professorPerson.getFullName()) &&
                                         group.getSemasterCode().equals(selectedSemester)) {
-                                    courseGroupComboBox.getItems().add(group.getCourse().getName());
+                                    if (!courseGroupComboBox.getItems().contains(group.getCourse().getName())) {
+                                        courseGroupComboBox.getItems().add(group.getCourse().getName());
+                                    }
                                 }
                             }
                         }
@@ -94,14 +164,16 @@ public class ProfessorPortalController {
 
     @FXML
     void loadStudents(ActionEvent event) {
-        gradeRows.clear();
+        studentRows.clear();
         String selectedSemester = semesterComboBox.getValue();
         String selectedCourse = courseGroupComboBox.getValue();
 
         if (selectedSemester == null || selectedCourse == null) {
-            showAlert("Please select semester and course.");
+            showAlert("لطفاً ترم و درس را انتخاب کنید.");
             return;
         }
+
+        currentGroup = null;
 
         for (Faculty faculty : University.allFaculties) {
             for (Department dept : faculty.departments) {
@@ -112,75 +184,30 @@ public class ProfessorPortalController {
                                 if (group.getProfessor().equals(LoginPanelController.professorPerson.getFullName()) &&
                                         group.getCourse().getName().equals(selectedCourse) &&
                                         group.getSemasterCode().equals(selectedSemester)) {
-                                    for (Student s : group.getRegisteredStudents()) {
-                                        Double score = group.getScores().get(s);
-                                        gradeRows.add(new StudentGradeRow(s.getId(), s.getFullName(), score, "Registered"));
-                                    }
+                                    currentGroup = group;
+                                    studentRows.addAll(group.getRegisteredStudents());
                                 }
                             }
                         }
                     }
                 }
             }
+        }
+
+        if (currentGroup == null) {
+            showAlert("گروه درسی یافت نشد.");
         }
     }
 
     @FXML
     void saveGrades(ActionEvent event) {
-        String selectedSemester = semesterComboBox.getValue();
-        String selectedCourse = courseGroupComboBox.getValue();
-
-        if (selectedSemester == null || selectedCourse == null) {
-            showAlert("Please select semester and course first.");
+        if (currentGroup == null) {
+            showAlert("لطفاً ابتدا یک درس را بارگذاری کنید.");
             return;
         }
 
-        for (Faculty faculty : University.allFaculties) {
-            for (Department dept : faculty.departments) {
-                for (Major major : dept.majors) {
-                    for (Degree degree : major.degrees) {
-                        for (Course course : degree.courses) {
-                            for (CourseGroup group : course.courseGroups) {
-                                if (group.getProfessor().equals(LoginPanelController.professorPerson.getFullName()) &&
-                                        group.getCourse().getName().equals(selectedCourse) &&
-                                        group.getSemasterCode().equals(selectedSemester)) {
-                                    for (StudentGradeRow row : gradeRows) {
-                                        Student student = findStudentById(row.getStudentId());
-                                        if (student != null) {
-                                            group.getScores().put(student, row.getScore());
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         University.saveFaculties();
-        showAlert("Grades saved successfully!");
-    }
-
-    private Student findStudentById(String id) {
-        for (Faculty faculty : University.allFaculties) {
-            for (Department dept : faculty.departments) {
-                for (Major major : dept.majors) {
-                    for (Degree degree : major.degrees) {
-                        for (Course course : degree.courses) {
-                            for (CourseGroup group : course.courseGroups) {
-                                for (Student s : group.getRegisteredStudents()) {
-                                    if (s.getId().equals(id)) {
-                                        return s;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return null;
+        showAlert("نمرات با موفقیت ذخیره شدند!");
     }
 
     private void showAlert(String msg) {
@@ -189,7 +216,6 @@ public class ProfessorPortalController {
         alert.showAndWait();
     }
 
-    // Navigation buttons
     @FXML
     void profileProfessorPortal(ActionEvent event) throws IOException {
         loadPage("ProfileProfessorPortal.fxml", event, "Profile");
