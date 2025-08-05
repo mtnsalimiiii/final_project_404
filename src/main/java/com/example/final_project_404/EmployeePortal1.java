@@ -593,6 +593,30 @@ public class EmployeePortal1 {
     private Button updateStudentScrollPane;
 
     @FXML
+    private Label errorLabelFirstNameRegisterStudent;
+    @FXML
+    private Label errorLabelLastNameRegisterStudent;
+    @FXML
+    private Label errorLabelPhoneRegisterStudent;
+    @FXML
+    private Label errorLabelNationalIdRegisterStudent;
+    @FXML
+    private Label errorLabelGenderRegisterStudent;
+    @FXML
+    private Label errorLabelFacultyRegisterStudent;
+    @FXML
+    private Label errorLabelDepartmentRegisterStudent;
+    @FXML
+    private Label errorLabelMajorRegisterStudent;
+    @FXML
+    private Label errorLabelDegreeRegisterStudent;
+    @FXML
+    private Label errorLabelDateOfBirthRegisterStudent;
+
+    @FXML
+    private Label successLabelRegisterStudent;
+
+    @FXML
     void addCourse(ActionEvent event) {
         String majorName = majorChooserAddCourse.getValue();
         String selectedDegree = degreeChooserAddCourse.getValue();
@@ -1217,10 +1241,15 @@ public class EmployeePortal1 {
                                     } else if ("Phd".equals(selectedDegree)) {
                                         degree = new Phd();
                                     }
-                                    if (major.degrees.contains(degree)){
+                                    // فرض کنیم degreeClassName اسم کلاسیه که می‌خواهید بررسی کنید (مثل "BachelorDegree")
+                                    String degreeClassName = degree.getClass().getSimpleName();
+                                    boolean degreeExists = major.degrees.stream()
+                                            .anyMatch(d -> d.getClass().getSimpleName().equals(degreeClassName));
+                                    if (!degreeExists) {
                                         major.degrees.add(degree);
                                         University.saveFaculties();
                                         successLabelAddDegree.setText("The Selected Degree Added Successfully");
+                                    }
                                     } else {
                                         errorLabelAddDegree.setText("The Selected Degree Has Already Been Added");
                                     }
@@ -1231,8 +1260,6 @@ public class EmployeePortal1 {
                 }
             }
         }
-
-    }
 
     @FXML
     void addDegreeDashboard(ActionEvent event) {
@@ -1496,8 +1523,213 @@ public class EmployeePortal1 {
     }
 
     @FXML
-    void addStudent(ActionEvent event) {
+    void addStudent(ActionEvent event) throws IOException {
+        University.loadFaculties();
+        Student.loadAllStudents();
+        boolean confirmation = true;
 
+        // اعتبارسنجی ورودی‌ها
+        if (firstNameRegisterStudent.getText().isEmpty()) {
+            errorLabelFirstNameRegisterStudent.setText("Enter First Name");
+            errorLabelRegisterStudent.setText("The Student Wasn't Registered");
+            confirmation = false;
+        } else {
+            errorLabelFirstNameRegisterStudent.setText(null);
+        }
+        if (lastNameRegisterStudent.getText().isEmpty()) {
+            errorLabelLastNameRegisterStudent.setText("Enter Last Name");
+            errorLabelRegisterStudent.setText("The Student Wasn't Registered");
+            confirmation = false;
+        } else {
+            errorLabelLastNameRegisterStudent.setText(null);
+        }
+        if (phoneNumberRegisterStudent.getText().isEmpty()) {
+            errorLabelPhoneRegisterStudent.setText("Enter Phone Number");
+            errorLabelRegisterStudent.setText("The Student Wasn't Registered");
+            confirmation = false;
+        } else {
+            errorLabelPhoneRegisterStudent.setText(null);
+            try {
+                long phone = Long.parseLong(phoneNumberRegisterStudent.getText());
+                if (phoneNumberRegisterStudent.getText().length() != 11) {
+                    errorLabelPhoneRegisterStudent.setText("Enter 11 digit");
+                    confirmation = false;
+                } else if (!phoneNumberRegisterStudent.getText().startsWith("09")) {
+                    errorLabelPhoneRegisterStudent.setText("Wrong Format (09....)");
+                    confirmation = false;
+                }
+            } catch (NumberFormatException e) {
+                errorLabelPhoneRegisterStudent.setText("Enter Just Number");
+                confirmation = false;
+            }
+        }
+        if (nationalIdRegisterStudent.getText().isEmpty()) {
+            errorLabelNationalIdRegisterStudent.setText("Enter National ID");
+            errorLabelRegisterStudent.setText("The Student Wasn't Registered");
+            confirmation = false;
+        } else {
+            errorLabelNationalIdRegisterStudent.setText(null);
+            try {
+                long nationalId = Long.parseLong(nationalIdRegisterStudent.getText());
+                if (nationalIdRegisterStudent.getText().length() != 10) {
+                    errorLabelNationalIdRegisterStudent.setText("Enter 10 digit");
+                    confirmation = false;
+                }
+            } catch (NumberFormatException e) {
+                errorLabelNationalIdRegisterStudent.setText("Enter Just Number");
+                confirmation = false;
+            }
+        }
+        if (genderChooserRegisterStudent.getValue() == null || genderChooserRegisterStudent.getValue().equals("Gender")) {
+            errorLabelGenderRegisterStudent.setText("Choose Gender");
+            errorLabelRegisterStudent.setText("The Student Wasn't Registered");
+            confirmation = false;
+        } else {
+            errorLabelGenderRegisterStudent.setText(null);
+        }
+        if (facultyChooserRegisterStudent.getValue() == null || facultyChooserRegisterStudent.getValue().equals("Faculty")) {
+            errorLabelFacultyRegisterStudent.setText("Choose Faculty");
+            errorLabelRegisterStudent.setText("The Student Wasn't Registered");
+            confirmation = false;
+        } else {
+            errorLabelFacultyRegisterStudent.setText(null);
+        }
+        if (departmentChooserRegisterStudent.getValue() == null || departmentChooserRegisterStudent.getValue().equals("Department")) {
+            errorLabelDepartmentRegisterStudent.setText("Choose Department");
+            errorLabelRegisterStudent.setText("The Student Wasn't Registered");
+            confirmation = false;
+        } else {
+            errorLabelDepartmentRegisterStudent.setText(null);
+        }
+        if (majorChooserRegisterStudent.getValue() == null || majorChooserRegisterStudent.getValue().equals("Major")) {
+            errorLabelMajorRegisterStudent.setText("Choose Major");
+            errorLabelRegisterStudent.setText("The Student Wasn't Registered");
+            confirmation = false;
+        } else {
+            errorLabelMajorRegisterStudent.setText(null);
+        }
+        if (degreeChooserRegisterStudent.getValue() == null || degreeChooserRegisterStudent.getValue().equals("Degree")) {
+            errorLabelDegreeRegisterStudent.setText("Choose Degree");
+            errorLabelRegisterStudent.setText("The Student Wasn't Registered");
+            confirmation = false;
+        } else {
+            errorLabelDegreeRegisterStudent.setText(null);
+        }
+        if (dateOfBirthRegisterStudent.getValue() == null) {
+            errorLabelDateOfBirthRegisterStudent.setText("Choose Date Of Birth");
+            errorLabelRegisterStudent.setText("The Student Wasn't Registered");
+            confirmation = false;
+        } else {
+            errorLabelDateOfBirthRegisterStudent.setText(null);
+        }
+
+        if (confirmation) {
+            String firstName = firstNameRegisterStudent.getText().trim();
+            String lastName = lastNameRegisterStudent.getText().trim();
+            String phoneNumber = phoneNumberRegisterStudent.getText().trim();
+            String nationalId = nationalIdRegisterStudent.getText().trim();
+            String gender = genderChooserRegisterStudent.getValue();
+            String faculty = facultyChooserRegisterStudent.getValue();
+            String department = departmentChooserRegisterStudent.getValue();
+            String majorName = majorChooserRegisterStudent.getValue();
+            String selectedDegree = degreeChooserRegisterStudent.getValue();
+            Date dateOfBirth = getDateOfBirthRegisterStudent();
+            Date dateOfJoin = getDateOfJoinRegisterStudent();
+            String studentId = "STU" + (University.allStudents.size() + 1);
+
+            // نگاشت مقطع
+            Degree degree = null;
+            String degreeClassName;
+            if (selectedDegree.equalsIgnoreCase("Bachelor")) {
+                degree = new Bachelor();
+                degreeClassName = "BachelorDegree";
+            } else if (selectedDegree.equalsIgnoreCase("Master")) {
+                degree = new Master();
+                degreeClassName = "MasterDegree";
+            } else if (selectedDegree.equalsIgnoreCase("PHD")) {
+                degree = new Phd();
+                degreeClassName = "PhDDegree";
+            } else {
+                degreeClassName = "";
+            }
+
+            // ایجاد شیء دانشجو
+            Student student = new Student(firstName, lastName, dateOfBirth, nationalId, Gender.valueOf(gender),
+                    phoneNumber, studentId, dateOfJoin, faculty, department, majorName, Status.Active,degree.getClass().getSimpleName());
+
+            // بررسی وجود دانشجو بر اساس nationalId
+            boolean studentExists = University.allStudents.stream()
+                    .anyMatch(s -> s.getNationalId().equals(nationalId) && s.getStatus().equals(Status.Active));
+
+            if (studentExists) {
+                errorLabelRegisterStudent.setText("The Student Has Been Registered");
+                System.out.println("The Student Has Registered Earlier.");
+                return;
+            }
+
+            // یافتن Major و افزودن دانشجو و مقطع
+            for (Faculty faculty1 : University.allFaculties) {
+                if (faculty1.getFacultyName().equals(faculty) && faculty1.getStatus().equals(Status.Active)) {
+                    for (Department department1 : faculty1.departments) {
+                        if (department1.getName().equals(department) && department1.getStatus().equals(Status.Active)) {
+                            for (Major major1 : department1.majors) {
+                                if (major1.getName().equals(majorName) && major1.getStatus().equals(Status.Active)) {
+                                    // بررسی وجود مقطع
+                                    boolean degreeExists = major1.degrees.stream()
+                                            .anyMatch(d -> d.getClass().getSimpleName().equals(degreeClassName));
+                                    if (!degreeExists) {
+                                        major1.degrees.add(degree);
+                                    }
+                                    // افزودن دانشجو به major
+                                    if (!major1.students.contains(student)) {
+                                        major1.students.add(student);
+                                        University.allStudents.add(student);
+                                        University.saveFaculties();
+                                        Student.saveAllStudent();
+                                        errorLabelRegisterStudent.setText(null);
+                                        successLabelRegisterStudent.setText("The Student Registered Successfully");
+                                        System.out.println("Successful\nID: " + studentId);
+                                        System.out.println("Password: " + nationalId);
+                                        System.out.println(firstName + " " + lastName);
+                                        System.out.println(phoneNumber);
+                                        System.out.println(nationalId);
+                                        System.out.println(gender);
+                                        System.out.println(faculty);
+                                        System.out.println(department);
+                                        System.out.println(majorName);
+                                        System.out.println(selectedDegree);
+                                    } else {
+                                        errorLabelRegisterStudent.setText("The Student Has Been Registered");
+                                        System.out.println("The Student Has Registered Earlier.");
+                                    }
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            errorLabelRegisterStudent.setText("Major Not Found");
+        } else {
+            errorLabelRegisterStudent.setText("Fill All Fields");
+            System.out.println("Please Fill All Fields!");
+        }
+    }
+
+    private Date getDateOfBirthRegisterStudent() {
+        Date dateOfBirth = new Date();
+        dateOfBirth.setYear(dateOfBirthRegisterStudent.getValue().getYear());
+        dateOfBirth.setMonth(dateOfBirthRegisterStudent.getValue().getMonthValue());
+        dateOfBirth.setDay(dateOfBirthRegisterStudent.getValue().getDayOfMonth());
+        return dateOfBirth;
+    }
+
+    private Date getDateOfJoinRegisterStudent() {
+        Date date = new Date();
+        date.setYear(LocalDate.now().getYear());
+        date.setMonth(LocalDate.now().getMonthValue());
+        date.setDay(LocalDate.now().getDayOfMonth());
+        return date;
     }
 
     @FXML

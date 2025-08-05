@@ -4,14 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Degree implements CheckCondition,CheckPass, Serializable {
+public abstract class Degree implements  Serializable,IsPass {
     public List<Course> courses = new ArrayList<>();
     @Override
-    public boolean isPass(double passingScore,double grade) {
-        return grade >= passingScore;
-    }
-    @Override
-    public boolean isOnprobation(double conditionalScore, double gpa){
-        return gpa<conditionalScore;
-    }
+    public abstract CourseStatus getPassStatus(double score);
 }

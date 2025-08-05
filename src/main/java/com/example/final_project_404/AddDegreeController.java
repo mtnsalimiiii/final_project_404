@@ -201,7 +201,6 @@ public class AddDegreeController implements Initializable {
                                 } else if ("Phd".equals(selectedDegree)) {
                                     degree = new Phd();
                                 }
-
                                 major.degrees.add(degree);
                                 University.saveFaculties();
                             }

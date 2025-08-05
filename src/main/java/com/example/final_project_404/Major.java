@@ -2,6 +2,7 @@ package com.example.final_project_404;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Major implements Serializable{
@@ -97,4 +98,5 @@ public class Major implements Serializable{
             }
         }
     }
+
 }

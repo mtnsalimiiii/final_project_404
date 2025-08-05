@@ -10,34 +10,26 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<?import javafx.scene.layout.RowConstraints?>
-<AnchorPane minHeight="550.0" minWidth="800.0"
-            xmlns="http://javafx.com/javafx/23.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.final_project_404.ProfessorPortalController">
+<AnchorPane minHeight="550.0" minWidth="800.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.ProfessorPortalController">
 
     <children>
-
         <!-- ======= Header ======= -->
-        <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0"
-              styleClass="header" stylesheets="@EmployeePortal.css">
+        <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0" styleClass="header" stylesheets="@EmployeePortal.css">
             <children>
                 <Label styleClass="header-title" text="Professor Portal" />
             </children>
         </HBox>
 
         <!-- ======= Main Container ======= -->
-        <VBox fx:id="containerBarVBox" layoutY="80.0" prefHeight="470.0" prefWidth="800.0"
-              style="-fx-background-color: linear-gradient(from 100% 100% to 0% 0%, #00a1ffb1 0%, #ffffff 100%);"
-              stylesheets="@EmployeePortal.css">
+        <VBox fx:id="containerBarVBox" layoutY="80.0" prefHeight="470.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(from 100% 100% to 0% 0%, #00a1ffb1 0%, #ffffff 100%);" stylesheets="@EmployeePortal.css">
             <padding>
                 <Insets bottom="20" left="20" right="20" top="20" />
             </padding>
 
             <children>
-
                 <!-- ======= Welcome ======= -->
                 <Label maxWidth="Infinity" styleClass="label-title" text="Welcome Professor!!">
                     <VBox.margin>
@@ -52,72 +44,54 @@
                         <ColumnConstraints hgrow="SOMETIMES" />
                     </columnConstraints>
                     <rowConstraints>
-                        <RowConstraints prefHeight="20.0" vgrow="SOMETIMES" />
+                        <RowConstraints prefHeight="50.0" vgrow="SOMETIMES" />
                         <RowConstraints prefHeight="50.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
                         <!-- Profile -->
-                        <Button minHeight="40.0" minWidth="280.0"
-                                onAction="#profileProfessorPortal"
-                                styleClass="button-dashboard" stylesheets="@DashboardButton.css"
-                                text="Profile" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+                        <Button minHeight="40.0" minWidth="280.0" onAction="#profileProfessorPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Profile" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
                         <!-- Reports -->
-                        <Button minHeight="40.0" minWidth="280.0"
-                                onAction="#reportsProfessorPortal"
-                                styleClass="button-dashboard" stylesheets="@DashboardButton.css"
-                                text="Reports" GridPane.columnIndex="1"
-                                GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+                        <Button minHeight="40.0" minWidth="280.0" onAction="#reportsProfessorPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Reports" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
                         <!-- Grade Submission -->
-                        <Button minHeight="40.0" minWidth="280.0"
-                                onAction="#showGradeSubmissionPanel"
-                                styleClass="button-dashboard" stylesheets="@DashboardButton.css"
-                                text="Grade Submission" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Button minHeight="40.0" minWidth="280.0" onAction="#showGradeSubmissionPanel" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Grade Submission" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                         <!-- Sign out -->
-                        <Button minHeight="40.0" minWidth="280.0"
-                                onAction="#signOutProfessorPortal"
-                                styleClass="button-dashboard" stylesheets="@DashboardButton.css"
-                                text="Sign out" GridPane.columnIndex="1"
-                                GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Button minHeight="40.0" minWidth="280.0" onAction="#signOutProfessorPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Sign out" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                     </children>
                 </GridPane>
 
                 <!-- ======= Grade Submission Panel (Hidden by Default) ======= -->
-                <AnchorPane fx:id="gradeSubmissionPane" managed="false" visible="false"
-                            prefHeight="430" prefWidth="760">
+                <AnchorPane fx:id="gradeSubmissionPane" managed="false" prefHeight="430" prefWidth="760" visible="false">
                     <children>
-                        <VBox spacing="15" prefWidth="760" prefHeight="430"
-                              style="-fx-background-color: #f7f9fc;">
+                        <VBox prefHeight="430" prefWidth="760" spacing="15" style="-fx-background-color: #f7f9fc;">
                             <padding>
-                                <Insets top="15" left="15" right="15" bottom="15" />
+                                <Insets bottom="15" left="15" right="15" top="15" />
                             </padding>
 
                             <!-- ======= Filters ======= -->
                             <HBox spacing="10">
-                                <ComboBox fx:id="semesterComboBox" prefWidth="200" promptText="Select Semester" />
-                                <ComboBox fx:id="courseGroupComboBox" prefWidth="250" promptText="Select Course" />
-                                <Button text="Load Students" onAction="#loadStudents" />
+                                <ComboBox fx:id="semesterComboBox" prefWidth="200" promptText="Select Semester" stylesheets="@comboBoxStyle.css" />
+                                <ComboBox fx:id="courseGroupComboBox" prefWidth="250" promptText="Select Course" stylesheets="@comboBoxStyle.css" />
+                                <Button onAction="#loadStudents" text="Load Students" />
                             </HBox>
 
                             <!-- ======= Students Table ======= -->
-                            <TableView fx:id="studentsTable" prefHeight="300" editable="true">
+                            <TableView fx:id="studentsTable" editable="true" prefHeight="300" stylesheets="@TableViewStyle.css">
                                 <columns>
-                                    <TableColumn fx:id="studentIdCol" text="Student ID" prefWidth="120"/>
-                                    <TableColumn fx:id="studentNameCol" text="Student Name" prefWidth="200"/>
-                                    <TableColumn fx:id="scoreCol" text="Score" prefWidth="120" editable="false"/>
-                                    <TableColumn fx:id="editCol" text="Edit" prefWidth="100"/>
+                                    <TableColumn fx:id="studentIdCol" prefWidth="120" text="Student ID" />
+                                    <TableColumn fx:id="studentNameCol" prefWidth="200" text="Student Name" />
+                                    <TableColumn fx:id="scoreCol" editable="false" prefWidth="120" text="Score" />
+                                    <TableColumn fx:id="statusCol" prefWidth="100" text="Status" />
+                                    <TableColumn fx:id="editCol" prefWidth="100" text="Edit" />
                                 </columns>
                             </TableView>
 
                             <!-- ======= Save Button ======= -->
                             <HBox alignment="CENTER_RIGHT">
-                                <Button text="Save Grades"
-                                        style="-fx-background-color: #4CAF50; -fx-text-fill: white;"
-                                        onAction="#saveGrades"/>
+                                <Button onAction="#saveGrades" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Save Grades" />
                             </HBox>
                         </VBox>
                     </children>
                 </AnchorPane>
-
             </children>
         </VBox>
     </children>

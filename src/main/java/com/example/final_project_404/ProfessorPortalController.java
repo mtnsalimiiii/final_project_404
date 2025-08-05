@@ -21,6 +21,7 @@ public class ProfessorPortalController {
     @FXML private TableColumn<Student, String> studentIdCol;
     @FXML private TableColumn<Student, String> studentNameCol;
     @FXML private TableColumn<Student, Double> scoreCol;
+    @FXML private TableColumn<Student, String> statusCol;
     @FXML private TableColumn<Student, Void> editCol;
 
     @FXML private ComboBox<String> semesterComboBox;
@@ -34,18 +35,14 @@ public class ProfessorPortalController {
 
     @FXML
     public void initialize() {
-        // پر کردن لیست ترم‌ها فقط برای همین استاد
         loadSemestersForProfessor();
-
         semesterComboBox.setOnAction(e -> loadCourseGroupsForSemester());
 
-        // تنظیم ستون‌ها
         studentIdCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getId()));
         studentNameCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(
                 cellData.getValue().getFirst_name() + " " + cellData.getValue().getLast_name()
         ));
 
-        // ستون نمره غیرقابل ویرایش مستقیم
         scoreCol.setCellValueFactory(data -> {
             if (currentGroup != null) {
                 Double score = currentGroup.getGrades().get(data.getValue().getId());
@@ -54,9 +51,38 @@ public class ProfessorPortalController {
             return new javafx.beans.property.SimpleDoubleProperty(0.0).asObject();
         });
 
-        // تنظیم ستون ویرایش با دکمه
+        statusCol.setCellValueFactory(data -> {
+            if (currentGroup != null) {
+                Double score = currentGroup.getGrades().get(data.getValue().getId());
+                Degree degree = findDegreeForCourseGroup(currentGroup);
+                if (degree != null && score != null) {
+                    return new ReadOnlyStringWrapper(degree.getPassStatus(score).name());
+                    // برای متن فارسی:
+                    // return new ReadOnlyStringWrapper(degree.getPassStatus(score) == CourseStatus.Pass ? "قبول" : "مردود");
+                }
+                return new ReadOnlyStringWrapper(CourseStatus.Fail.name());
+            }
+            return new ReadOnlyStringWrapper(CourseStatus.Fail.name());
+        });
+
+        statusCol.setCellFactory(col -> new TableCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item);
+                    setStyle(item.equals("Pass") ? "-fx-text-fill: green;" : "-fx-text-fill: red;");
+                    // برای متن فارسی:
+                    // setStyle(item.equals("قبول") ? "-fx-text-fill: green;" : "-fx-text-fill: red;");
+                }
+            }
+        });
+
         editCol.setCellFactory(col -> new TableCell<>() {
-            private final Button editButton = new Button("Edit");
+            private final Button editButton = new Button("ویرایش");
 
             {
                 editButton.setOnAction(event -> {
@@ -79,10 +105,30 @@ public class ProfessorPortalController {
         studentsTable.setItems(studentRows);
     }
 
-    // متد برای ویرایش نمره با استفاده از Dialog
+    private Degree findDegreeForCourseGroup(CourseGroup group) {
+        if (group == null || group.getCourse() == null) {
+            System.out.println("CourseGroup or Course is null");
+            return null;
+        }
+        for (Faculty faculty : University.allFaculties) {
+            for (Department dept : faculty.departments) {
+                for (Major major : dept.majors) {
+                    for (Degree degree : major.degrees) {
+                        if (degree.courses.contains(group.getCourse())) {
+                            System.out.println("Found Degree: " + degree.getClass().getSimpleName());
+                            return degree;
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println("No Degree found for CourseGroup");
+        return null;
+    }
+
     private void editGrade(Student student) {
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Edit Grade");
+        dialog.setTitle("ویرایش نمره");
         dialog.setHeaderText("وارد کردن نمره جدید برای " + student.getFirst_name() + " " + student.getLast_name());
         dialog.setContentText("نمره:");
 

@@ -95,8 +95,4 @@ public class CourseGroup implements Serializable {
     public Map<String, Double> getGrades() {
         return grades;
     }
-
-
-
-
 }
