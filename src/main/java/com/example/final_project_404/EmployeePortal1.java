@@ -203,6 +203,9 @@ public class EmployeePortal1 {
     private Label errorLabelCreditAddCourse;
 
     @FXML
+    private Label errorLabelDateOfBirthEditProfessor;
+
+    @FXML
     private Label errorLabelDateOfBirthRegisterProfessor;
 
     @FXML
@@ -227,16 +230,25 @@ public class EmployeePortal1 {
     private Label errorLabelEditStudent;
 
     @FXML
+    private Label errorLabelFirstNameEditProfessor;
+
+    @FXML
     private Label errorLabelFirstNameRegisterProfessor;
 
     @FXML
     private Label errorLabelFirstnameProfile;
 
     @FXML
+    private Label errorLabelGenderEditProfessor;
+
+    @FXML
     private Label errorLabelGenderProfile;
 
     @FXML
     private Label errorLabelGenderRegisterProfessor;
+
+    @FXML
+    private Label errorLabelLastNameEditProfessor;
 
     @FXML
     private Label errorLabelLastNameRegisterProfessor;
@@ -254,16 +266,28 @@ public class EmployeePortal1 {
     private Label errorLabelMajorAddDegree;
 
     @FXML
+    private Label errorLabelMajorDeactiveProfessor;
+
+    @FXML
+    private Label errorLabelMajorEditProfessor;
+
+    @FXML
     private Label errorLabelMajorRegisterProfessor;
 
     @FXML
     private Label errorLabelNameAddCourse;
 
     @FXML
+    private Label errorLabelNationalIdEditProfessor;
+
+    @FXML
     private Label errorLabelNationalIdProfile;
 
     @FXML
     private Label errorLabelNationalIdRegisterProfessor;
+
+    @FXML
+    private Label errorLabelPhoneEditProfessor;
 
     @FXML
     private Label errorLabelPhoneProfile;
@@ -275,6 +299,12 @@ public class EmployeePortal1 {
     private Label errorLabelProfessorAddCourseGroup;
 
     @FXML
+    private Label errorLabelProfessorDeactiveProfessor;
+
+    @FXML
+    private Label errorLabelProfessorEditProfessor;
+
+    @FXML
     private Label errorLabelRegisterProfessor;
 
     @FXML
@@ -282,18 +312,6 @@ public class EmployeePortal1 {
 
     @FXML
     private Label errorLabelSemasterAddCourseGroup;
-
-    @FXML
-    private ComboBox<String> facultyChooserDeactiveProfessor;
-
-    @FXML
-    private ComboBox<String> facultyChooserDeactiveStudents;
-
-    @FXML
-    private ComboBox<String> facultyChooserEditProfessor;
-
-    @FXML
-    private ComboBox<String> facultyChooserEditStudents;
 
     @FXML
     private ComboBox<String> facultyChooserRegisterStudent;
@@ -569,10 +587,17 @@ public class EmployeePortal1 {
     private Label successLabelAddDegree;
 
     @FXML
+    private Label successLabelDeactiveProfessor;
+
+    @FXML
+    private Label successLabelEditProfessor;
+
+    @FXML
     private Label successLabelRegisterProfessor;
 
     @FXML
     private Label successfulLabelAddCourse;
+
 
     @FXML
     private ComboBox<String> topicChooserProfessors;
@@ -591,30 +616,6 @@ public class EmployeePortal1 {
 
     @FXML
     private Button updateStudentScrollPane;
-
-    @FXML
-    private Label errorLabelFirstNameRegisterStudent;
-    @FXML
-    private Label errorLabelLastNameRegisterStudent;
-    @FXML
-    private Label errorLabelPhoneRegisterStudent;
-    @FXML
-    private Label errorLabelNationalIdRegisterStudent;
-    @FXML
-    private Label errorLabelGenderRegisterStudent;
-    @FXML
-    private Label errorLabelFacultyRegisterStudent;
-    @FXML
-    private Label errorLabelDepartmentRegisterStudent;
-    @FXML
-    private Label errorLabelMajorRegisterStudent;
-    @FXML
-    private Label errorLabelDegreeRegisterStudent;
-    @FXML
-    private Label errorLabelDateOfBirthRegisterStudent;
-
-    @FXML
-    private Label successLabelRegisterStudent;
 
     @FXML
     void addCourse(ActionEvent event) {
@@ -855,119 +856,126 @@ public class EmployeePortal1 {
         String selectedDegree = degreeChooserAddCourseGroup.getValue();
         String capacityGroupStr = capacityAddCourseGroup.getText().trim();
         String courseTarget = courseChooserAddCourseGroup.getValue();
+        boolean confirmation = true;
 
         if (majorName.equals("Major")) {
             errorLabelMajorAddCourseGroup.setText("Choose Major");
-            errorLabelAddCourseGroup.setText("The CourseGroup Wasn't Added");
+            confirmation = false;
         } else {
             errorLabelMajorAddCourseGroup.setText(null);
         }
         if (selectedDegree.equals("Degree")) {
             errorLabelDegreeAddCourseGroup.setText("Choose Degree");
-            errorLabelAddCourseGroup.setText("The CourseGroup Wasn't Added");
+            confirmation = false;
         } else {
             errorLabelDegreeAddCourseGroup.setText(null);
         }
         if (courseTarget == null) {
             errorLabelCourseAddCourseGroup.setText("Choose Course");
-            errorLabelAddCourseGroup.setText("The CourseGroup Wasn't Added");
+            confirmation = false;
         } else if (courseTarget.equals("Course")) {
             errorLabelCourseAddCourseGroup.setText("Choose Course");
-            errorLabelAddCourseGroup.setText("The CourseGroup Wasn't Added");
+            confirmation = false;
         }else {
             errorLabelCourseAddCourseGroup.setText(null);
         }
         if (semasterChooserAddCourseGroup.getValue().equals("Semaster") || semasterChooserAddCourseGroup.getValue() == null) {
             errorLabelSemasterAddCourseGroup.setText("Choose Semaster");
-            errorLabelAddCourseGroup.setText("The CourseGroup Wasn't Added");
+            confirmation = false;
         } else {
             errorLabelAddCourseGroup.setText(null);
         }
         if (professorChooserAddCourseGroup.getValue() == null) {
-            errorLabelProfessorAddCourseGroup.setText("Choose Professsor");
-            errorLabelAddCourseGroup.setText("The CourseGroup Wasn't Added");
+            errorLabelProfessorAddCourseGroup.setText("Choose Professor");
+            confirmation = false;
         } else if (professorChooserAddCourseGroup.getValue().equals("Professor")) {
-            errorLabelProfessorAddCourseGroup.setText("Choose Professsor");
-            errorLabelAddCourseGroup.setText("The CourseGroup Wasn't Added");
+            errorLabelProfessorAddCourseGroup.setText("Choose Professor");
+            confirmation = false;
         }else {
             errorLabelAddCourseGroup.setText(null);
         }
         if (capacityGroupStr.isEmpty()) {
             errorLabelCapacityAddCourseGroup.setText("Enter Capacity");
-            errorLabelAddCourseGroup.setText("The CourseGroup Wasn't Added");
+            confirmation = false;
         } else {
             errorLabelCapacityAddCourseGroup.setText(null);
             try {
                 Integer.parseInt(capacityGroupStr);
             } catch (NumberFormatException e) {
                 errorLabelCapacityAddCourseGroup.setText("Just Enter Number");
-                return;
+                confirmation = false;
             }
         }
-        if (majorName != "Major" && selectedDegree != "Degree" && courseChooserAddCourseGroup.getValue() != "Course" && professorChooserAddCourseGroup.getValue() != "Professor" && semasterChooserAddCourseGroup.getValue().equals("Semaster") && !capacityGroupStr.isEmpty()) {
-            int capacityGroup;
-            try {
-                capacityGroup = Integer.parseInt(capacityGroupStr);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid credit value.");
-                errorLabelCapacityAddCourseGroup.setText("Just Enter Number");
-                return;
-            }
+        if (confirmation) {
+            if (majorName != "Major" && selectedDegree != "Degree" && courseChooserAddCourseGroup.getValue() != "Course" && professorChooserAddCourseGroup.getValue() != "Professor" && semasterChooserAddCourseGroup.getValue().equals("Semaster") && !capacityGroupStr.isEmpty()) {
+                int capacityGroup;
+                try {
+                    capacityGroup = Integer.parseInt(capacityGroupStr);
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid credit value.");
+                    errorLabelCapacityAddCourseGroup.setText("Just Enter Number");
+                    return;
+                }
 
-            University.loadFaculties();
+                University.loadFaculties();
 
-            for (Faculty faculty : University.allFaculties) {
-                if (faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
-                    for (Department department : faculty.departments) {
-                        if (department.getName().equals(LoginPanelController.employeePerson.getDepartment()) && department.getStatus().equals(Status.Active)) {
-                            for (Major major : department.majors) {
-                                if (major.getName().equals(majorName) && major.getStatus().equals(Status.Active)) {
+                for (Faculty faculty : University.allFaculties) {
+                    if (faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
+                        for (Department department : faculty.departments) {
+                            if (department.getName().equals(LoginPanelController.employeePerson.getDepartment()) && department.getStatus().equals(Status.Active)) {
+                                for (Major major : department.majors) {
+                                    if (major.getName().equals(majorName) && major.getStatus().equals(Status.Active)) {
 
-                                    String degreeCode;
-                                    if (selectedDegree.equalsIgnoreCase("Bachelor")) {
-                                        degreeCode = "0";
-                                    } else if (selectedDegree.equalsIgnoreCase("Master")) {
-                                        degreeCode = "1";
-                                    } else if (selectedDegree.equalsIgnoreCase("Phd")) {
-                                        degreeCode = "2";
-                                    }
-                                    try {
-                                        for (Degree degree : major.degrees) {
-                                            if (degree.getClass().getSimpleName().equalsIgnoreCase(selectedDegree)) {
-                                                try {
-                                                    for(Course course1:degree.courses){
-                                                        if(courseTarget.equals(course1.getName())){
-                                                            String id=course1.getId()+(course1.courseGroups.size()+1);
-                                                            CourseGroup newGroup = new CourseGroup(
-                                                                    professorChooserAddCourseGroup.getValue(),
-                                                                    semasterChooserAddCourseGroup.getValue(),
-                                                                    capacityGroup,
-                                                                    id,
-                                                                    Status.Active,
-                                                                    new Course(course1.getName(), course1.getCredit(), course1.getId(), Status.Active)
-                                                            );
-                                                            course1.courseGroups.add(newGroup);
-                                                            University.saveFaculties();
-                                                            successLabelAddCourseGroup.setText("The CourseGroup Added Successfully");
-                                                            return;
-                                                        }
-                                                    }
-                                                }catch (Exception e){
-                                                    errorLabelCourseAddCourseGroup.setText("The Selected Course Not Found In Degree");
-                                                }
-
-                                            }
+                                        String degreeCode;
+                                        if (selectedDegree.equalsIgnoreCase("Bachelor")) {
+                                            degreeCode = "0";
+                                        } else if (selectedDegree.equalsIgnoreCase("Master")) {
+                                            degreeCode = "1";
+                                        } else if (selectedDegree.equalsIgnoreCase("Phd")) {
+                                            degreeCode = "2";
                                         }
+                                        try {
+                                            for (Degree degree : major.degrees) {
+                                                if (degree.getClass().getSimpleName().equalsIgnoreCase(selectedDegree)) {
+                                                    try {
+                                                        for(Course course1:degree.courses){
+                                                            if(courseTarget.equals(course1.getName())){
+                                                                String id=course1.getId()+(course1.courseGroups.size()+1);
+                                                                CourseGroup newGroup = new CourseGroup(
+                                                                        professorChooserAddCourseGroup.getValue(),
+                                                                        semasterChooserAddCourseGroup.getValue(),
+                                                                        capacityGroup,
+                                                                        id,
+                                                                        Status.Active,
+                                                                        new Course(course1.getName(), course1.getCredit(), course1.getId(), Status.Active)
+                                                                );
+                                                                course1.courseGroups.add(newGroup);
+                                                                University.saveFaculties();
+                                                                successLabelAddCourseGroup.setText("The CourseGroup Added Successfully");
+                                                                return;
+                                                            }
+                                                        }
+                                                    }catch (Exception e){
+                                                        errorLabelCourseAddCourseGroup.setText("The Selected Course Not Found In Degree");
+                                                    }
 
-                                    }catch (Exception exception){
-                                        errorLabelDegreeAddCourseGroup.setText("The Selected Degree Not Found In Major");
+                                                }
+                                            }
+
+                                        }catch (Exception exception){
+                                            errorLabelDegreeAddCourseGroup.setText("The Selected Degree Not Found In Major");
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
+            } else {
+                errorLabelAddCourseGroup.setText("Fill In All Fields");
             }
+        } else {
+            errorLabelAddCourseGroup.setText("Fill In All Fields");
         }
     }
 
@@ -1241,15 +1249,10 @@ public class EmployeePortal1 {
                                     } else if ("Phd".equals(selectedDegree)) {
                                         degree = new Phd();
                                     }
-                                    // فرض کنیم degreeClassName اسم کلاسیه که می‌خواهید بررسی کنید (مثل "BachelorDegree")
-                                    String degreeClassName = degree.getClass().getSimpleName();
-                                    boolean degreeExists = major.degrees.stream()
-                                            .anyMatch(d -> d.getClass().getSimpleName().equals(degreeClassName));
-                                    if (!degreeExists) {
+                                    if (!major.degrees.contains(degree)){
                                         major.degrees.add(degree);
                                         University.saveFaculties();
                                         successLabelAddDegree.setText("The Selected Degree Added Successfully");
-                                    }
                                     } else {
                                         errorLabelAddDegree.setText("The Selected Degree Has Already Been Added");
                                     }
@@ -1260,6 +1263,8 @@ public class EmployeePortal1 {
                 }
             }
         }
+
+    }
 
     @FXML
     void addDegreeDashboard(ActionEvent event) {
@@ -1376,6 +1381,7 @@ public class EmployeePortal1 {
 
     @FXML
     void addProfessor(ActionEvent event) throws Exception {
+        successLabelRegisterProfessor.setText(null);
         University.loadFaculties();
         Professor.loadAllProfessor();
         boolean confirmation = true;
@@ -1383,41 +1389,37 @@ public class EmployeePortal1 {
 
         if (firstNameRegisterProfessor.getText().isEmpty()) {
             errorLabelFirstNameRegisterProfessor.setText("Enter First Name");
-            errorLabelRegisterProfessor.setText("The Professor Wasn't Registered");
             confirmation = false;
         } else {
             errorLabelFirstNameRegisterProfessor.setText(null);
         }
         if (lastNameRegisterProfessor.getText().isEmpty()) {
             errorLabelLastNameRegisterProfessor.setText("Enter Last Name");
-            errorLabelRegisterProfessor.setText("The Professor Wasn't Registered");
             confirmation = false;
         } else {
             errorLabelLastNameRegisterProfessor.setText(null);
         }
         if (phoneNumberRegisterProfessor.getText().isEmpty()) {
             errorLabelPhoneRegisterProfessor.setText("Enter Phone Number");
-            errorLabelRegisterProfessor.setText("The Professor Wasn't Registered");
             confirmation = false;
         } else {
             errorLabelPhoneRegisterProfessor.setText(null);
             try{
                 long phone = Long.parseLong(phoneNumberRegisterProfessor.getText());
                 if (phoneNumberRegisterProfessor.getText().length() != 11) {
-                    errorLabelPhoneRegisterProfessor.setText("Enter 11 digit");
+                    errorLabelPhoneRegisterProfessor.setText("Only 11 digit");
                     confirmation = false;
                 } else if (!phoneNumberRegisterProfessor.getText().startsWith("09")) {
                     errorLabelPhoneRegisterProfessor.setText("Wrong Format (09....)");
                     confirmation = false;
                 }
             } catch (NumberFormatException e) {
-                errorLabelPhoneRegisterProfessor.setText("Enter Just Number");
+                errorLabelPhoneRegisterProfessor.setText("Only Number");
                 confirmation = false;
             }
         }
         if (nationalIdRegisterProfessor.getText().isEmpty()) {
             errorLabelNationalIdRegisterProfessor.setText("Enter National ID");
-            errorLabelRegisterProfessor.setText("The Professor Wasn't Registered");
             confirmation = false;
         } else {
             errorLabelNationalIdRegisterProfessor.setText(null);
@@ -1434,21 +1436,18 @@ public class EmployeePortal1 {
         }
         if (genderChooserRegisterProfessor.getValue().equals("Gender") || genderChooserRegisterProfessor.getValue().isEmpty()) {
             errorLabelGenderRegisterProfessor.setText("Choose Gender");
-            errorLabelRegisterProfessor.setText("The Professor Wasn't Registered");
             confirmation = false;
         } else {
             errorLabelGenderRegisterProfessor.setText(null);
         }
         if (majorChooserRegisterProfessor.getValue().equals("Major") || majorChooserRegisterProfessor.getValue().isEmpty()) {
             errorLabelMajorRegisterProfessor.setText("Choose Major");
-            errorLabelRegisterProfessor.setText("The Professor Wasn't Registered");
             confirmation = false;
         } else {
             errorLabelMajorRegisterProfessor.setText(null);
         }
-        if (dateOfBirthRegisterProfessor == null) {
+        if (dateOfBirthRegisterProfessor.getValue() == null) {
             errorLabelDateOfBirthRegisterProfessor.setText("Choose Date Of Birth");
-            errorLabelRegisterProfessor.setText("The Professor Wasn't Registered");
             confirmation = false;
         } else {
             errorLabelDateOfBirthRegisterProfessor.setText(null);
@@ -1480,8 +1479,7 @@ public class EmployeePortal1 {
                                         errorLabelRegisterProfessor.setText(null);
                                         successLabelRegisterProfessor.setText("The Professor Registered Successfully");
                                     } else {
-                                        System.out.println("The Professor Has Registered Earlier.");
-                                        errorLabelRegisterProfessor.setText("The Professor Has Been Registered");
+                                        errorLabelRegisterProfessor.setText("The Professor Has Been Registered Earlier");
                                     }
                                     break;
                                 }
@@ -1502,7 +1500,6 @@ public class EmployeePortal1 {
                 System.out.println(major);
             }
         } else {
-            System.out.println("Please Fill All Fields!");
             errorLabelRegisterProfessor.setText("Fill All Fields");
         }
     }
@@ -1523,213 +1520,8 @@ public class EmployeePortal1 {
     }
 
     @FXML
-    void addStudent(ActionEvent event) throws IOException {
-        University.loadFaculties();
-        Student.loadAllStudents();
-        boolean confirmation = true;
+    void addStudent(ActionEvent event) {
 
-        // اعتبارسنجی ورودی‌ها
-        if (firstNameRegisterStudent.getText().isEmpty()) {
-            errorLabelFirstNameRegisterStudent.setText("Enter First Name");
-            errorLabelRegisterStudent.setText("The Student Wasn't Registered");
-            confirmation = false;
-        } else {
-            errorLabelFirstNameRegisterStudent.setText(null);
-        }
-        if (lastNameRegisterStudent.getText().isEmpty()) {
-            errorLabelLastNameRegisterStudent.setText("Enter Last Name");
-            errorLabelRegisterStudent.setText("The Student Wasn't Registered");
-            confirmation = false;
-        } else {
-            errorLabelLastNameRegisterStudent.setText(null);
-        }
-        if (phoneNumberRegisterStudent.getText().isEmpty()) {
-            errorLabelPhoneRegisterStudent.setText("Enter Phone Number");
-            errorLabelRegisterStudent.setText("The Student Wasn't Registered");
-            confirmation = false;
-        } else {
-            errorLabelPhoneRegisterStudent.setText(null);
-            try {
-                long phone = Long.parseLong(phoneNumberRegisterStudent.getText());
-                if (phoneNumberRegisterStudent.getText().length() != 11) {
-                    errorLabelPhoneRegisterStudent.setText("Enter 11 digit");
-                    confirmation = false;
-                } else if (!phoneNumberRegisterStudent.getText().startsWith("09")) {
-                    errorLabelPhoneRegisterStudent.setText("Wrong Format (09....)");
-                    confirmation = false;
-                }
-            } catch (NumberFormatException e) {
-                errorLabelPhoneRegisterStudent.setText("Enter Just Number");
-                confirmation = false;
-            }
-        }
-        if (nationalIdRegisterStudent.getText().isEmpty()) {
-            errorLabelNationalIdRegisterStudent.setText("Enter National ID");
-            errorLabelRegisterStudent.setText("The Student Wasn't Registered");
-            confirmation = false;
-        } else {
-            errorLabelNationalIdRegisterStudent.setText(null);
-            try {
-                long nationalId = Long.parseLong(nationalIdRegisterStudent.getText());
-                if (nationalIdRegisterStudent.getText().length() != 10) {
-                    errorLabelNationalIdRegisterStudent.setText("Enter 10 digit");
-                    confirmation = false;
-                }
-            } catch (NumberFormatException e) {
-                errorLabelNationalIdRegisterStudent.setText("Enter Just Number");
-                confirmation = false;
-            }
-        }
-        if (genderChooserRegisterStudent.getValue() == null || genderChooserRegisterStudent.getValue().equals("Gender")) {
-            errorLabelGenderRegisterStudent.setText("Choose Gender");
-            errorLabelRegisterStudent.setText("The Student Wasn't Registered");
-            confirmation = false;
-        } else {
-            errorLabelGenderRegisterStudent.setText(null);
-        }
-        if (facultyChooserRegisterStudent.getValue() == null || facultyChooserRegisterStudent.getValue().equals("Faculty")) {
-            errorLabelFacultyRegisterStudent.setText("Choose Faculty");
-            errorLabelRegisterStudent.setText("The Student Wasn't Registered");
-            confirmation = false;
-        } else {
-            errorLabelFacultyRegisterStudent.setText(null);
-        }
-        if (departmentChooserRegisterStudent.getValue() == null || departmentChooserRegisterStudent.getValue().equals("Department")) {
-            errorLabelDepartmentRegisterStudent.setText("Choose Department");
-            errorLabelRegisterStudent.setText("The Student Wasn't Registered");
-            confirmation = false;
-        } else {
-            errorLabelDepartmentRegisterStudent.setText(null);
-        }
-        if (majorChooserRegisterStudent.getValue() == null || majorChooserRegisterStudent.getValue().equals("Major")) {
-            errorLabelMajorRegisterStudent.setText("Choose Major");
-            errorLabelRegisterStudent.setText("The Student Wasn't Registered");
-            confirmation = false;
-        } else {
-            errorLabelMajorRegisterStudent.setText(null);
-        }
-        if (degreeChooserRegisterStudent.getValue() == null || degreeChooserRegisterStudent.getValue().equals("Degree")) {
-            errorLabelDegreeRegisterStudent.setText("Choose Degree");
-            errorLabelRegisterStudent.setText("The Student Wasn't Registered");
-            confirmation = false;
-        } else {
-            errorLabelDegreeRegisterStudent.setText(null);
-        }
-        if (dateOfBirthRegisterStudent.getValue() == null) {
-            errorLabelDateOfBirthRegisterStudent.setText("Choose Date Of Birth");
-            errorLabelRegisterStudent.setText("The Student Wasn't Registered");
-            confirmation = false;
-        } else {
-            errorLabelDateOfBirthRegisterStudent.setText(null);
-        }
-
-        if (confirmation) {
-            String firstName = firstNameRegisterStudent.getText().trim();
-            String lastName = lastNameRegisterStudent.getText().trim();
-            String phoneNumber = phoneNumberRegisterStudent.getText().trim();
-            String nationalId = nationalIdRegisterStudent.getText().trim();
-            String gender = genderChooserRegisterStudent.getValue();
-            String faculty = facultyChooserRegisterStudent.getValue();
-            String department = departmentChooserRegisterStudent.getValue();
-            String majorName = majorChooserRegisterStudent.getValue();
-            String selectedDegree = degreeChooserRegisterStudent.getValue();
-            Date dateOfBirth = getDateOfBirthRegisterStudent();
-            Date dateOfJoin = getDateOfJoinRegisterStudent();
-            String studentId = "STU" + (University.allStudents.size() + 1);
-
-            // نگاشت مقطع
-            Degree degree = null;
-            String degreeClassName;
-            if (selectedDegree.equalsIgnoreCase("Bachelor")) {
-                degree = new Bachelor();
-                degreeClassName = "BachelorDegree";
-            } else if (selectedDegree.equalsIgnoreCase("Master")) {
-                degree = new Master();
-                degreeClassName = "MasterDegree";
-            } else if (selectedDegree.equalsIgnoreCase("PHD")) {
-                degree = new Phd();
-                degreeClassName = "PhDDegree";
-            } else {
-                degreeClassName = "";
-            }
-
-            // ایجاد شیء دانشجو
-            Student student = new Student(firstName, lastName, dateOfBirth, nationalId, Gender.valueOf(gender),
-                    phoneNumber, studentId, dateOfJoin, faculty, department, majorName, Status.Active,degree.getClass().getSimpleName());
-
-            // بررسی وجود دانشجو بر اساس nationalId
-            boolean studentExists = University.allStudents.stream()
-                    .anyMatch(s -> s.getNationalId().equals(nationalId) && s.getStatus().equals(Status.Active));
-
-            if (studentExists) {
-                errorLabelRegisterStudent.setText("The Student Has Been Registered");
-                System.out.println("The Student Has Registered Earlier.");
-                return;
-            }
-
-            // یافتن Major و افزودن دانشجو و مقطع
-            for (Faculty faculty1 : University.allFaculties) {
-                if (faculty1.getFacultyName().equals(faculty) && faculty1.getStatus().equals(Status.Active)) {
-                    for (Department department1 : faculty1.departments) {
-                        if (department1.getName().equals(department) && department1.getStatus().equals(Status.Active)) {
-                            for (Major major1 : department1.majors) {
-                                if (major1.getName().equals(majorName) && major1.getStatus().equals(Status.Active)) {
-                                    // بررسی وجود مقطع
-                                    boolean degreeExists = major1.degrees.stream()
-                                            .anyMatch(d -> d.getClass().getSimpleName().equals(degreeClassName));
-                                    if (!degreeExists) {
-                                        major1.degrees.add(degree);
-                                    }
-                                    // افزودن دانشجو به major
-                                    if (!major1.students.contains(student)) {
-                                        major1.students.add(student);
-                                        University.allStudents.add(student);
-                                        University.saveFaculties();
-                                        Student.saveAllStudent();
-                                        errorLabelRegisterStudent.setText(null);
-                                        successLabelRegisterStudent.setText("The Student Registered Successfully");
-                                        System.out.println("Successful\nID: " + studentId);
-                                        System.out.println("Password: " + nationalId);
-                                        System.out.println(firstName + " " + lastName);
-                                        System.out.println(phoneNumber);
-                                        System.out.println(nationalId);
-                                        System.out.println(gender);
-                                        System.out.println(faculty);
-                                        System.out.println(department);
-                                        System.out.println(majorName);
-                                        System.out.println(selectedDegree);
-                                    } else {
-                                        errorLabelRegisterStudent.setText("The Student Has Been Registered");
-                                        System.out.println("The Student Has Registered Earlier.");
-                                    }
-                                    return;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            errorLabelRegisterStudent.setText("Major Not Found");
-        } else {
-            errorLabelRegisterStudent.setText("Fill All Fields");
-            System.out.println("Please Fill All Fields!");
-        }
-    }
-
-    private Date getDateOfBirthRegisterStudent() {
-        Date dateOfBirth = new Date();
-        dateOfBirth.setYear(dateOfBirthRegisterStudent.getValue().getYear());
-        dateOfBirth.setMonth(dateOfBirthRegisterStudent.getValue().getMonthValue());
-        dateOfBirth.setDay(dateOfBirthRegisterStudent.getValue().getDayOfMonth());
-        return dateOfBirth;
-    }
-
-    private Date getDateOfJoinRegisterStudent() {
-        Date date = new Date();
-        date.setYear(LocalDate.now().getYear());
-        date.setMonth(LocalDate.now().getMonthValue());
-        date.setDay(LocalDate.now().getDayOfMonth());
-        return date;
     }
 
     @FXML
@@ -1778,7 +1570,63 @@ public class EmployeePortal1 {
     }
 
     @FXML
-    void deactiveProfessor(ActionEvent event) {
+    void deactiveProfessor(ActionEvent event) throws Exception {
+        successLabelDeactiveProfessor.setText(null);
+        University.loadFaculties();
+        Professor.loadAllProfessor();
+
+        if (majorChooserDeactiveProfessor.getValue() == null || majorChooserDeactiveProfessor.getValue().equals("Major")) {
+            errorLabelMajorDeactiveProfessor.setText("Choose Major");
+            errorLabelDeactiveProfessor.setText("The Professor Was Not Deactivated");
+        } else {
+            errorLabelMajorDeactiveProfessor.setText(null);
+        }
+        if (professorChooserDeactiveProfessor.getValue() == null || professorChooserDeactiveProfessor.getValue().equals("Professor")) {
+            errorLabelProfessorDeactiveProfessor.setText("Choose Professor");
+            errorLabelDeactiveProfessor.setText("The Professor Was Not Deactivated");
+        } else {
+            errorLabelProfessorDeactiveProfessor.setText(null);
+        }
+
+        if (professorChooserDeactiveProfessor.getValue() != "Professor" && majorChooserDeactiveProfessor.getValue() != "Major") {
+            Employee employee = LoginPanelController.employeePerson;
+
+            for (Faculty faculty : University.allFaculties) {
+                if (faculty.getFacultyName().equals(employee.getFaculty())) {
+                    for (Department department : faculty.departments) {
+                        if (department.getName().equals(employee.getDepartment())) {
+                            for (Major major : department.majors) {
+                                if (major.getName().equals(majorChooserDeactiveProfessor.getValue())) {
+                                    for (Professor professor : major.professors){
+                                        if (professor.getFullName().equals(professorChooserDeactiveProfessor.getValue())){
+                                            professor.setStatus(Status.Inactive);
+                                            University.saveFaculties();
+                                            errorLabelDeactiveProfessor.setText(null);
+                                            successLabelDeactiveProfessor.setText("The Professor Deactivated Successfully");
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+
+            for (Professor professor : University.allProfessors) {
+                if (professor.getFullName().equals(professorChooserDeactiveProfessor.getValue())) {
+                    professor.setStatus(Status.Inactive);
+                    Professor.saveAllProfessor();
+                    break;
+                }
+            }
+        } else {
+            errorLabelDeactiveProfessor.setText("Fill All Fields");
+        }
+
 
     }
 
@@ -1788,8 +1636,196 @@ public class EmployeePortal1 {
     }
 
     @FXML
-    void editProfessor(ActionEvent event) {
+    void editProfessor(ActionEvent event) throws Exception {
+        successLabelEditProfessor.setText(null);
+        Professor.loadAllProfessor();
+        University.loadFaculties();
+        boolean confirmation = true;
 
+        if (majorChooserEditProfessor.getValue().equals("Major")) {
+            errorLabelMajorEditProfessor.setText("Choose Major");
+            confirmation = false;
+        } else {
+            errorLabelMajorEditProfessor.setText(null);
+        }
+        if (professorChooserEditProfessor.getValue() == null || professorChooserEditProfessor.getValue().equals("Professor")) {
+            errorLabelProfessorEditProfessor.setText("Choose Professor");
+            confirmation = false;
+        } else {
+            errorLabelProfessorEditProfessor.setText(null);
+        }
+//        if (firstNameEditProfessor.getText().isEmpty()) {
+//            errorLabelFirstNameEditProfessor.setText("Enter First Name");
+//            confirmation = false;
+//        } else {
+//            errorLabelFirstNameEditProfessor.setText(null);
+//        }
+//        if (lastNameEditProfessor.getText().isEmpty()) {
+//            errorLabelLastNameEditProfessor.setText("Enter Last Name");
+//            confirmation = false;
+//        } else {
+//            errorLabelLastNameEditProfessor.setText(null);
+//        }
+//        if (nationalIdEditProfessor.getText().isEmpty()) {
+//            errorLabelNationalIdEditProfessor.setText("Enter National ID");
+//            confirmation = false;
+//        } else {
+//            errorLabelNationalIdEditProfessor.setText(null);
+//        }
+//        if (phoneNumberEditProfessor.getText().isEmpty()) {
+//            errorLabelPhoneEditProfessor.setText("Enter Phone Number");
+//            confirmation = false;
+//        } else {
+//            errorLabelPhoneEditProfessor.setText(null);
+//        }
+//        if (genderChooserEditProfessor.getValue().equals("Gender")) {
+//            errorLabelGenderEditProfessor.setText("Choose Gender");
+//            confirmation = false;
+//        } else {
+//            errorLabelGenderEditProfessor.setText(null);
+//        }
+//        if (dateOfBirthEditProfessor == null) {
+//            errorLabelDateOfBirthEditProfessor.setText("Choose Date Of Birth");
+//            confirmation = false;
+//        } else {
+//            errorLabelDateOfBirthEditProfessor.setText(null);
+//        }
+        if (confirmation) {
+            System.out.println(111111);
+            Employee employee = LoginPanelController.employeePerson;
+            for (Faculty faculty : University.allFaculties) {
+                if (faculty.getFacultyName().equals(employee.getFaculty())) {
+                    for (Department department : faculty.departments) {
+                        if (department.getName().equals(employee.getDepartment())) {
+                            for (Major major : department.majors) {
+                                if (major.getName().equals(majorChooserEditProfessor.getValue())) {
+                                    for (Professor professor : major.professors) {
+                                        if (professor.getFullName().equals(professorChooserEditProfessor.getValue())) {
+                                            boolean edited = false;
+                                            if (!firstNameEditProfessor.getText().isBlank()) {
+                                                professor.setFirst_name(firstNameEditProfessor.getText());
+                                                edited = true;
+                                            }
+                                            if (!lastNameEditProfessor.getText().isBlank()) {
+                                                professor.setLast_name(lastNameEditProfessor.getText());
+                                                edited = true;
+                                            }
+                                            if (!nationalIdEditProfessor.getText().isBlank()) {
+                                                try {
+                                                    long nationalid = Long.parseLong(nationalIdEditProfessor.getText());
+                                                    if (nationalIdEditProfessor.getText().length() != 10) {
+                                                        errorLabelNationalIdEditProfessor.setText("Only 10 digit");
+                                                    } else {
+                                                        errorLabelNationalIdEditProfessor.setText(null);
+                                                        professor.setNationalId(nationalIdEditProfessor.getText());
+                                                        edited = true;
+                                                    }
+                                                } catch (NumberFormatException e) {
+                                                    errorLabelNationalIdEditProfessor.setText("Only Number");
+                                                }
+                                            }
+                                            if (!phoneNumberEditProfessor.getText().isBlank()) {
+                                                try {
+                                                    long phone = Long.parseLong(phoneNumberEditProfessor.getText());
+                                                    if (phoneNumberEditProfessor.getText().length() != 11) {
+                                                        errorLabelPhoneEditProfessor.setText("Only 11 digit");
+                                                    } else if (phoneNumberEditProfessor.getText().startsWith("09")) {
+                                                        errorLabelPhoneEditProfessor.setText("Wrong Format(09..)");
+                                                    } else {
+                                                        errorLabelPhoneEditProfessor.setText(null);
+                                                        professor.setPhoneNumber(phoneNumberEditProfessor.getText());
+                                                        edited = true;
+                                                    }
+                                                } catch (NumberFormatException e) {
+                                                    errorLabelPhoneEditProfessor.setText("Only Number");
+                                                }
+                                            }
+                                            if (dateOfBirthEditProfessor.getValue() != null) {
+                                                Date date = new Date();
+                                                date.setYear(dateOfBirthEditProfessor.getValue().getYear());
+                                                date.setMonth(dateOfBirthEditProfessor.getValue().getMonthValue());
+                                                date.setDay(dateOfBirthEditProfessor.getValue().getDayOfMonth());
+                                                professor.setDateOfBirth(date);
+                                                edited = true;
+                                            }
+                                            if (genderChooserEditProfessor.getValue() != null) {
+                                                professor.setGender(Gender.valueOf(genderChooserEditProfessor.getValue()));
+                                                edited = true;
+                                            }
+                                            if (edited) {
+                                                University.saveFaculties();
+                                                errorLabelEditProfessor.setText(null);
+                                                successLabelEditProfessor.setText("The Professor Edited Successfully");
+                                            } else {
+                                                errorLabelEditProfessor.setText("Error");
+                                            }
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+
+            Professor.loadAllProfessor();
+            for (Professor professor : University.allProfessors) {
+                if (professor.getFullName().equals(professorChooserEditProfessor.getValue())) {
+                    if (!firstNameEditProfessor.getText().isBlank()) {
+                        professor.setFirst_name(firstNameEditProfessor.getText());
+                    }
+                    if (!lastNameEditProfessor.getText().isBlank()) {
+                        professor.setLast_name(lastNameEditProfessor.getText());
+                    }
+                    if (!nationalIdEditProfessor.getText().isBlank()) {
+                        try {
+                            long nationalid = Long.parseLong(nationalIdEditProfessor.getText());
+                            if (nationalIdEditProfessor.getText().length() != 10) {
+                                errorLabelNationalIdEditProfessor.setText("Only 10 digit");
+                            } else {
+                                errorLabelNationalIdEditProfessor.setText(null);
+                                professor.setNationalId(nationalIdEditProfessor.getText());
+                            }
+                        } catch (NumberFormatException e) {
+                            errorLabelNationalIdEditProfessor.setText("Only Number");
+                        }
+                    }
+                    if (!phoneNumberEditProfessor.getText().isBlank()) {
+                        try {
+                            long phone = Long.parseLong(phoneNumberEditProfessor.getText());
+                            if (phoneNumberEditProfessor.getText().length() != 11) {
+                                errorLabelPhoneEditProfessor.setText("Only 11 digit");
+                            } else if (phoneNumberEditProfessor.getText().startsWith("09")) {
+                                errorLabelPhoneEditProfessor.setText("Wrong Format(09..)");
+                            } else {
+                                errorLabelPhoneEditProfessor.setText(null);
+                                professor.setPhoneNumber(phoneNumberEditProfessor.getText());
+                            }
+                        } catch (NumberFormatException e) {
+                            errorLabelPhoneEditProfessor.setText("Only Number");
+                        }
+                    }
+                    if (dateOfBirthEditProfessor.getValue() != null) {
+                        Date date = new Date();
+                        date.setYear(dateOfBirthEditProfessor.getValue().getYear());
+                        date.setMonth(dateOfBirthEditProfessor.getValue().getMonthValue());
+                        date.setDay(dateOfBirthEditProfessor.getValue().getDayOfMonth());
+                        professor.setDateOfBirth(date);
+                    }
+                    if (genderChooserEditProfessor.getValue() != null) {
+                        professor.setGender(Gender.valueOf(genderChooserEditProfessor.getValue()));
+                    }
+                    break;
+                }
+            }
+            Professor.saveAllProfessor();
+        } else {
+            errorLabelEditProfessor.setText("Fill In Major and Professor");
+        }
     }
 
     @FXML
@@ -2332,6 +2368,8 @@ public class EmployeePortal1 {
     void setOperationChooserUpdateProfessor(ActionEvent event) throws Exception {
         University.loadFaculties();
         Professor.loadAllProfessor();
+        Employee employee = LoginPanelController.employeePerson;
+
         if (operationChooserUpdateProfessor.getValue() != null) {
             if (operationChooserUpdateProfessor.getValue().equals("Edit")) {
                 editProfessorVbox.setVisible(true);
@@ -2343,54 +2381,25 @@ public class EmployeePortal1 {
                 nationalIdEditProfessor.clear();
                 dateOfBirthEditProfessor.setValue(null);
 
-                facultyChooserEditProfessor.getItems().clear();
-                facultyChooserEditProfessor.getItems().add("Faculty");
+                majorChooserEditProfessor.getItems().clear();
+                majorChooserEditProfessor.getItems().add("Major");
                 for (Faculty faculty : University.allFaculties) {
-                    if (faculty.getStatus().equals(Status.Active)) {
-                        facultyChooserEditProfessor.getItems().add(faculty.getFacultyName());
+                    if (faculty.getStatus().equals(Status.Active) && faculty.getFacultyName().equals(employee.getFaculty())) {
+                        for (Department department : faculty.departments) {
+                            if (department.getStatus().equals(Status.Active) && department.getName().equals(employee.getDepartment())) {
+                                for (Major major : department.majors) {
+                                    if (major.getStatus().equals(Status.Active)) {
+                                        majorChooserEditProfessor.getItems().add(major.getName());
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
                     }
                 }
-                facultyChooserEditProfessor.setVisibleRowCount(5);
-                facultyChooserEditProfessor.getSelectionModel().selectFirst();
-
-                facultyChooserEditProfessor.setOnAction(event1 -> {
-                    departmentChooserEditProfessor.getItems().clear();
-                    departmentChooserEditProfessor.getItems().add("Department");
-                    for (Faculty faculty : University.allFaculties) {
-                        if (faculty.getStatus().equals(Status.Active) && faculty.getFacultyName().equals(facultyChooserEditProfessor.getValue())) {
-                            for (Department department : faculty.departments) {
-                                if (department.getStatus().equals(Status.Active)) {
-                                    departmentChooserEditProfessor.getItems().add(department.getName());
-                                }
-                            }
-                            break;
-                        }
-                    }
-                    departmentChooserEditProfessor.setVisibleRowCount(5);
-                    departmentChooserEditProfessor.getSelectionModel().selectFirst();
-                });
-
-                departmentChooserEditProfessor.setOnAction(event1 -> {
-                    majorChooserEditProfessor.getItems().clear();
-                    majorChooserEditProfessor.getItems().add("Major");
-                    for (Faculty faculty : University.allFaculties) {
-                        if (faculty.getStatus().equals(Status.Active) && faculty.getFacultyName().equals(facultyChooserEditProfessor.getValue())) {
-                            for (Department department : faculty.departments) {
-                                if (department.getStatus().equals(Status.Active) && department.getName().equals(departmentChooserEditProfessor.getValue())) {
-                                    for (Major major : department.majors) {
-                                        if (major.getStatus().equals(Status.Active)) {
-                                            majorChooserEditProfessor.getItems().add(major.getName());
-                                        }
-                                    }
-                                    break;
-                                }
-                            }
-                            break;
-                        }
-                    }
-                    majorChooserEditProfessor.setVisibleRowCount(5);
-                    majorChooserEditProfessor.getSelectionModel().selectFirst();
-                });
+                majorChooserEditProfessor.setVisibleRowCount(5);
+                majorChooserEditProfessor.getSelectionModel().selectFirst();
 
                 majorChooserEditProfessor.setOnAction(event1 -> {
                     professorChooserEditProfessor.getItems().clear();
@@ -2409,62 +2418,29 @@ public class EmployeePortal1 {
                 genderChooserEditProfessor.setVisibleRowCount(3);
                 genderChooserEditProfessor.getSelectionModel().selectFirst();
 
-
             } else if (operationChooserUpdateProfessor.getValue().equals("Deactive")) {
-
-
                 editProfessorVbox.setVisible(false);
                 deactiveProfessorVbox.setVisible(true);
 
-
-                facultyChooserDeactiveProfessor.getItems().clear();
-                facultyChooserDeactiveProfessor.getItems().add("Faculty");
+                majorChooserDeactiveProfessor.getItems().clear();
+                majorChooserDeactiveProfessor.getItems().add("Major");
                 for (Faculty faculty : University.allFaculties) {
-                    if (faculty.getStatus().equals(Status.Active)) {
-                        facultyChooserDeactiveProfessor.getItems().add(faculty.getFacultyName());
+                    if (faculty.getStatus().equals(Status.Active) && faculty.getFacultyName().equals(employee.getFaculty())) {
+                        for (Department department : faculty.departments) {
+                            if (department.getStatus().equals(Status.Active) && department.getName().equals(employee.getDepartment())) {
+                                for (Major major : department.majors) {
+                                    if (major.getStatus().equals(Status.Active)) {
+                                        majorChooserDeactiveProfessor.getItems().add(major.getName());
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
                     }
                 }
-                facultyChooserDeactiveProfessor.setVisibleRowCount(5);
-                facultyChooserDeactiveProfessor.getSelectionModel().selectFirst();
-
-                facultyChooserDeactiveProfessor.setOnAction(event1 -> {
-                    departmentChooserDeactiveProfessor.getItems().clear();
-                    departmentChooserDeactiveProfessor.getItems().add("Department");
-                    for (Faculty faculty : University.allFaculties) {
-                        if (faculty.getStatus().equals(Status.Active) && faculty.getFacultyName().equals(facultyChooserDeactiveProfessor.getValue())) {
-                            for (Department department : faculty.departments) {
-                                if (department.getStatus().equals(Status.Active)) {
-                                    departmentChooserDeactiveProfessor.getItems().add(department.getName());
-                                }
-                            }
-                            break;
-                        }
-                    }
-                    departmentChooserDeactiveProfessor.setVisibleRowCount(5);
-                    departmentChooserDeactiveProfessor.getSelectionModel().selectFirst();
-                });
-
-                departmentChooserDeactiveProfessor.setOnAction(event1 -> {
-                    majorChooserDeactiveProfessor.getItems().clear();
-                    majorChooserDeactiveProfessor.getItems().add("Major");
-                    for (Faculty faculty : University.allFaculties) {
-                        if (faculty.getStatus().equals(Status.Active) && faculty.getFacultyName().equals(facultyChooserDeactiveProfessor.getValue())) {
-                            for (Department department : faculty.departments) {
-                                if (department.getStatus().equals(Status.Active) && department.getName().equals(departmentChooserDeactiveProfessor.getValue())) {
-                                    for (Major major : department.majors) {
-                                        if (major.getStatus().equals(Status.Active)) {
-                                            majorChooserDeactiveProfessor.getItems().add(major.getName());
-                                        }
-                                    }
-                                    break;
-                                }
-                            }
-                            break;
-                        }
-                    }
-                    majorChooserDeactiveProfessor.setVisibleRowCount(5);
-                    majorChooserDeactiveProfessor.getSelectionModel().selectFirst();
-                });
+                majorChooserDeactiveProfessor.setVisibleRowCount(5);
+                majorChooserDeactiveProfessor.getSelectionModel().selectFirst();
 
                 majorChooserDeactiveProfessor.setOnAction(event1 -> {
                     professorChooserDeactiveProfessor.getItems().clear();
@@ -2487,6 +2463,7 @@ public class EmployeePortal1 {
         University.loadFaculties();
         Student.loadAllStudents();
         if (operationChooserUpdateStudent.getValue() != null) {
+            Employee employee = LoginPanelController.employeePerson;
             if (operationChooserUpdateStudent.getValue().equals("Edit")) {
                 editStudentVbox.setVisible(true);
                 deactiveStudentsVbox.setVisible(false);
@@ -2497,60 +2474,33 @@ public class EmployeePortal1 {
                 nationalIdEditStudents.clear();
                 dateOfBirthEditStudents.setValue(null);
 
-                facultyChooserEditStudents.getItems().clear();
-                facultyChooserEditStudents.getItems().add("Faculty");
+
+                majorChooserEditStudents.getItems().clear();
+                majorChooserEditStudents.getItems().add("Major");
                 for (Faculty faculty : University.allFaculties) {
-                    if (faculty.getStatus().equals(Status.Active)) {
-                        facultyChooserEditStudents.getItems().add(faculty.getFacultyName());
+                    if (faculty.getStatus().equals(Status.Active) && faculty.getFacultyName().equals(employee.getFaculty())) {
+                        for (Department department : faculty.departments) {
+                            if (department.getStatus().equals(Status.Active) && department.getName().equals(employee.getDepartment())) {
+                                for (Major major : department.majors) {
+                                    if (major.getStatus().equals(Status.Active)) {
+                                        majorChooserEditStudents.getItems().add(major.getName());
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
                     }
                 }
-                facultyChooserEditStudents.setVisibleRowCount(5);
-                facultyChooserEditStudents.getSelectionModel().selectFirst();
-
-                facultyChooserEditStudents.setOnAction(event1 -> {
-                    departmentChooserEditStudents.getItems().clear();
-                    departmentChooserEditStudents.getItems().add("Department");
-                    for (Faculty faculty : University.allFaculties) {
-                        if (faculty.getStatus().equals(Status.Active) && faculty.getFacultyName().equals(facultyChooserEditStudents.getValue())) {
-                            for (Department department : faculty.departments) {
-                                if (department.getStatus().equals(Status.Active)) {
-                                    departmentChooserEditStudents.getItems().add(department.getName());
-                                }
-                            }
-                            break;
-                        }
-                    }
-                    departmentChooserEditStudents.setVisibleRowCount(5);
-                    departmentChooserEditStudents.getSelectionModel().selectFirst();
-                });
-
-                departmentChooserEditStudents.setOnAction(event1 -> {
-                    majorChooserEditStudents.getItems().clear();
-                    majorChooserEditStudents.getItems().add("Major");
-                    for (Faculty faculty : University.allFaculties) {
-                        if (faculty.getStatus().equals(Status.Active) && faculty.getFacultyName().equals(facultyChooserEditStudents.getValue())) {
-                            for (Department department : faculty.departments) {
-                                if (department.getStatus().equals(Status.Active) && department.getName().equals(departmentChooserEditStudents.getValue())) {
-                                    for (Major major : department.majors) {
-                                        if (major.getStatus().equals(Status.Active)) {
-                                            majorChooserEditStudents.getItems().add(major.getName());
-                                        }
-                                    }
-                                    break;
-                                }
-                            }
-                            break;
-                        }
-                    }
-                    majorChooserEditStudents.setVisibleRowCount(5);
-                    majorChooserEditStudents.getSelectionModel().selectFirst();
-                });
+                majorChooserEditStudents.setVisibleRowCount(5);
+                majorChooserEditStudents.getSelectionModel().selectFirst();
 
                 majorChooserEditStudents.setOnAction(event1 -> {
                     studentChooserEditStudents.getItems().clear();
                     studentChooserEditStudents.getItems().add("Professor");
                     for (Student student : University.allStudents) {
-                        if (student.getStatus().equals(Status.Active) && majorChooserEditStudents.getValue().equals(student.getMajor())) {
+                        if (student.getStatus().equals(Status.Active) && majorChooserEditStudents.getValue().equals(student.getMajor())
+                                && student.getFaculty().equals(employee.getFaculty()) && student.getDepartment().equals(employee.getDepartment())) {
                             studentChooserEditStudents.getItems().add(student.getFullName());
                         }
                     }
@@ -2565,66 +2515,35 @@ public class EmployeePortal1 {
 
 
             } else if (operationChooserUpdateStudent.getValue().equals("Deactive")) {
-
-
                 editStudentVbox.setVisible(false);
                 deactiveStudentsVbox.setVisible(true);
 
-
-                facultyChooserDeactiveStudents.getItems().clear();
-                facultyChooserDeactiveStudents.getItems().add("Faculty");
+                majorChooserDeactiveStudents.getItems().clear();
+                majorChooserDeactiveStudents.getItems().add("Major");
                 for (Faculty faculty : University.allFaculties) {
-                    if (faculty.getStatus().equals(Status.Active)) {
-                        facultyChooserDeactiveStudents.getItems().add(faculty.getFacultyName());
+                    if (faculty.getStatus().equals(Status.Active) && faculty.getFacultyName().equals(employee.getFaculty())) {
+                        for (Department department : faculty.departments) {
+                            if (department.getStatus().equals(Status.Active) && department.getName().equals(employee.getDepartment())) {
+                                for (Major major : department.majors) {
+                                    if (major.getStatus().equals(Status.Active)) {
+                                        majorChooserDeactiveStudents.getItems().add(major.getName());
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
                     }
                 }
-                facultyChooserDeactiveStudents.setVisibleRowCount(5);
-                facultyChooserDeactiveStudents.getSelectionModel().selectFirst();
-
-                facultyChooserDeactiveStudents.setOnAction(event1 -> {
-                    departmentChooserDeactiveStudents.getItems().clear();
-                    departmentChooserDeactiveStudents.getItems().add("Department");
-                    for (Faculty faculty : University.allFaculties) {
-                        if (faculty.getStatus().equals(Status.Active) && faculty.getFacultyName().equals(facultyChooserDeactiveStudents.getValue())) {
-                            for (Department department : faculty.departments) {
-                                if (department.getStatus().equals(Status.Active)) {
-                                    departmentChooserDeactiveStudents.getItems().add(department.getName());
-                                }
-                            }
-                            break;
-                        }
-                    }
-                    departmentChooserDeactiveStudents.setVisibleRowCount(5);
-                    departmentChooserDeactiveStudents.getSelectionModel().selectFirst();
-                });
-
-                departmentChooserDeactiveStudents.setOnAction(event1 -> {
-                    majorChooserDeactiveStudents.getItems().clear();
-                    majorChooserDeactiveStudents.getItems().add("Major");
-                    for (Faculty faculty : University.allFaculties) {
-                        if (faculty.getStatus().equals(Status.Active) && faculty.getFacultyName().equals(facultyChooserDeactiveStudents.getValue())) {
-                            for (Department department : faculty.departments) {
-                                if (department.getStatus().equals(Status.Active) && department.getName().equals(departmentChooserDeactiveStudents.getValue())) {
-                                    for (Major major : department.majors) {
-                                        if (major.getStatus().equals(Status.Active)) {
-                                            majorChooserDeactiveStudents.getItems().add(major.getName());
-                                        }
-                                    }
-                                    break;
-                                }
-                            }
-                            break;
-                        }
-                    }
-                    majorChooserDeactiveStudents.setVisibleRowCount(5);
-                    majorChooserDeactiveStudents.getSelectionModel().selectFirst();
-                });
+                majorChooserDeactiveStudents.setVisibleRowCount(5);
+                majorChooserDeactiveStudents.getSelectionModel().selectFirst();
 
                 majorChooserDeactiveStudents.setOnAction(event1 -> {
                     studentChooserDeactiveStudents.getItems().clear();
                     studentChooserDeactiveStudents.getItems().add("Professor");
                     for (Student student : University.allStudents) {
-                        if (student.getStatus().equals(Status.Active) && majorChooserDeactiveStudents.getValue().equals(student.getMajor())) {
+                        if (student.getStatus().equals(Status.Active) && majorChooserDeactiveStudents.getValue().equals(student.getMajor())
+                                && student.getFaculty().equals(employee.getFaculty()) && student.getDepartment().equals(employee.getDepartment())) {
                             studentChooserDeactiveStudents.getItems().add(student.getFullName());
                         }
                     }
@@ -2642,8 +2561,18 @@ public class EmployeePortal1 {
     }
 
     @FXML
-    void setProfessorEdit(ActionEvent event) {
-
+    void setProfessorChooserEdit(ActionEvent event) throws Exception {
+        Professor.loadAllProfessor();
+        for (Professor professor : University.allProfessors) {
+            if (professor.getFullName().equals(professorChooserEditProfessor.getValue())) {
+                firstNameEditProfessor.setPromptText(professor.getFirst_name());
+                lastNameEditProfessor.setPromptText(professor.getLast_name());
+                nationalIdEditProfessor.setPromptText(professor.getNationalId());
+                phoneNumberEditProfessor.setPromptText(professor.getPhoneNumber());
+                genderChooserEditProfessor.getSelectionModel().select("Male");
+                dateOfBirthEditProfessor.setPromptText(professor.getDateOfBirth().getDay() + " " + Month.of(professor.getDateOfBirth().getMonth()) + " " + professor.getDateOfBirth().getYear());
+            }
+        }
     }
 
     @FXML
@@ -2652,8 +2581,18 @@ public class EmployeePortal1 {
     }
 
     @FXML
-    void setStudentEdit(ActionEvent event) {
-
+    void setStudentChooserEdit(ActionEvent event) {
+        Student.loadAllStudents();
+        for (Student student : University.allStudents) {
+            if (student.getFullName().equals(studentChooserEditStudents.getValue())) {
+                firstNameEditStudents.setPromptText(student.getFirst_name());
+                lastNameEditStudents.setPromptText(student.getLast_name());
+                phoneNumberEditStudents.setPromptText(student.getPhoneNumber());
+                nationalIdEditStudents.setPromptText(student.getNationalId());
+                dateOfBirthEditStudents.setPromptText(student.getDateOfBirth().getDay() + " " + Month.of(student.getDateOfBirth().getMonth()) + " " + student.getDateOfBirth().getYear());
+                genderChooserEditStudents.getSelectionModel().select("Male");
+            }
+        }
     }
 
     @FXML
@@ -3107,7 +3046,7 @@ public class EmployeePortal1 {
 
         primaryDateStudents.setVisible(false);
         secondaryDateStudents.setVisible(false);
-        
+
     }
 
     @FXML
@@ -3222,7 +3161,6 @@ public class EmployeePortal1 {
             updateProfessorAnchorPane.setVisible(true);
             updateProfessorScrollPane.getStyleClass().add("pressed");
         }
-
 
         editProfessorVbox.setVisible(false);
         deactiveProfessorVbox.setVisible(false);
