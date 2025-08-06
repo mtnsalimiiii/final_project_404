@@ -5,7 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Degree implements  Serializable,IsPass {
-    public List<Course> courses = new ArrayList<>();
+    public  List<Course> courses = new ArrayList<>();
+    //private List<Student> students=new ArrayList<>();
     @Override
     public abstract CourseStatus getPassStatus(double score);
 }
