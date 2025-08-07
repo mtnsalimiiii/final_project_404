@@ -877,6 +877,7 @@ public class EmployeePortal1 {
 
     @FXML
     void addCourseGroup(ActionEvent event) {
+        successLabelAddCourseGroup.setText(null);
         String majorName = majorChooserAddCourseGroup.getValue();
         String selectedDegree = degreeChooserAddCourseGroup.getValue();
         String capacityGroupStr = capacityAddCourseGroup.getText().trim();
@@ -901,7 +902,7 @@ public class EmployeePortal1 {
         } else if (courseTarget.equals("Course")) {
             errorLabelCourseAddCourseGroup.setText("Choose Course");
             confirmation = false;
-        }else {
+        } else {
             errorLabelCourseAddCourseGroup.setText(null);
         }
         if (semasterChooserAddCourseGroup.getValue().equals("Semaster") || semasterChooserAddCourseGroup.getValue() == null) {
@@ -916,7 +917,7 @@ public class EmployeePortal1 {
         } else if (professorChooserAddCourseGroup.getValue().equals("Professor")) {
             errorLabelProfessorAddCourseGroup.setText("Choose Professor");
             confirmation = false;
-        }else {
+        } else {
             errorLabelAddCourseGroup.setText(null);
         }
         if (capacityGroupStr.isEmpty()) {
@@ -932,22 +933,15 @@ public class EmployeePortal1 {
             }
         }
         if (confirmation) {
-            if (majorName != "Major" && selectedDegree != "Degree" && courseChooserAddCourseGroup.getValue() != "Course" && professorChooserAddCourseGroup.getValue() != "Professor" && semasterChooserAddCourseGroup.getValue().equals("Semaster") && !capacityGroupStr.isEmpty()) {
-                int capacityGroup;
-                try {
-                    capacityGroup = Integer.parseInt(capacityGroupStr);
-                } catch (NumberFormatException e) {
-                    System.out.println("Invalid credit value.");
-                    errorLabelCapacityAddCourseGroup.setText("Just Enter Number");
-                    return;
-                }
-
+            if (!courseChooserAddCourseGroup.getValue().equals("Course") && !professorChooserAddCourseGroup.getValue().equals("Professor") && !semasterChooserAddCourseGroup.getValue().equals("Semaster")) {
+                int capacityGroup = Integer.parseInt(capacityGroupStr);
                 University.loadFaculties();
+                Employee employee = LoginPanelController.employeePerson;
 
                 for (Faculty faculty : University.allFaculties) {
-                    if (faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
+                    if (faculty.getFacultyName().equals(employee.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
                         for (Department department : faculty.departments) {
-                            if (department.getName().equals(LoginPanelController.employeePerson.getDepartment()) && department.getStatus().equals(Status.Active)) {
+                            if (department.getName().equals(employee.getDepartment()) && department.getStatus().equals(Status.Active)) {
                                 for (Major major : department.majors) {
                                     if (major.getName().equals(majorName) && major.getStatus().equals(Status.Active)) {
 
@@ -976,6 +970,7 @@ public class EmployeePortal1 {
                                                                 );
                                                                 course1.courseGroups.add(newGroup);
                                                                 University.saveFaculties();
+                                                                errorLabelAddCourseGroup.setText(null);
                                                                 successLabelAddCourseGroup.setText("The CourseGroup Added Successfully");
                                                                 return;
                                                             }

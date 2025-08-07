@@ -52,17 +52,23 @@ public class ProfessorPortalController {
         });
 
         statusCol.setCellValueFactory(data -> {
-            if (currentGroup != null) {
-                Double score = currentGroup.getGrades().get(data.getValue().getId());
-                Degree degree = findDegreeForCourseGroup(currentGroup);
-                if (degree != null && score != null) {
-                    return new ReadOnlyStringWrapper(degree.getPassStatus(score).name());
-                    // برای متن فارسی:
-                    // return new ReadOnlyStringWrapper(degree.getPassStatus(score) == CourseStatus.Pass ? "قبول" : "مردود");
-                }
+            if (currentGroup == null) {
+                System.out.println("currentGroup is null");
                 return new ReadOnlyStringWrapper(CourseStatus.Fail.name());
             }
-            return new ReadOnlyStringWrapper(CourseStatus.Fail.name());
+            Double score = currentGroup.getGrades().get(data.getValue().getId());
+            if (score == null) {
+                System.out.println("No score for student: " + data.getValue().getId());
+                return new ReadOnlyStringWrapper(CourseStatus.Fail.name());
+            }
+            Degree degree = findDegreeForCourseGroup(currentGroup);
+            if (degree == null) {
+                System.out.println("No Degree found for CourseGroup: " + currentGroup.getCourse().getName());
+                return new ReadOnlyStringWrapper(CourseStatus.Fail.name());
+            }
+            CourseStatus status = degree.getPassStatus(score);
+            System.out.println("Student: " + data.getValue().getId() + ", Score: " + score + ", Status: " + status);
+            return new ReadOnlyStringWrapper(status.name());
         });
 
         statusCol.setCellFactory(col -> new TableCell<>() {
@@ -106,26 +112,36 @@ public class ProfessorPortalController {
     }
 
     private Degree findDegreeForCourseGroup(CourseGroup group) {
-        if (group == null || group.getCourse() == null) {
-            System.out.println("CourseGroup or Course is null");
+        if (group == null || group.getCourse() == null || group.getCourse().getName() == null) {
+            System.out.println("CourseGroup, Course, or Course name is null: group=" + group + ", course=" + (group != null ? group.getCourse() : null));
             return null;
         }
+        String targetCourseName = group.getCourse().getName();
+        System.out.println("Searching for Course by name: " + targetCourseName);
+        System.out.println("Total Faculties: " + University.allFaculties.size());
+
         for (Faculty faculty : University.allFaculties) {
+            System.out.println("Faculty: " + faculty.getFacultyName() + ", Departments: " + faculty.departments.size());
             for (Department dept : faculty.departments) {
+                System.out.println("Department: " + dept.getName() + ", Majors: " + dept.majors.size());
                 for (Major major : dept.majors) {
+                    System.out.println("Major: " + major.getName() + ", Degrees: " + major.degrees.size());
                     for (Degree degree : major.degrees) {
-                        if (degree.courses.contains(group.getCourse())) {
-                            System.out.println("Found Degree: " + degree.getClass().getSimpleName());
-                            return degree;
+                        System.out.println("Degree: " + degree.getClass().getSimpleName() + ", Courses: " + degree.courses.size());
+                        for (Course course : degree.courses) {
+                            System.out.println("Course in Degree: " + course.getName());
+                            if (course.getName() != null && course.getName().equals(targetCourseName)) {
+                                System.out.println("Found Degree: " + degree.getClass().getSimpleName() + " for Course: " + targetCourseName);
+                                return degree;
+                            }
                         }
                     }
                 }
             }
         }
-        System.out.println("No Degree found for CourseGroup");
+        System.out.println("No Degree found for CourseGroup with course name: " + targetCourseName);
         return null;
     }
-
     private void editGrade(Student student) {
         TextInputDialog dialog = new TextInputDialog();
         dialog.setTitle("ویرایش نمره");
@@ -142,7 +158,8 @@ public class ProfessorPortalController {
                 }
                 if (currentGroup != null) {
                     currentGroup.getGrades().put(student.getId(), newScore);
-                    studentsTable.refresh();
+                    // به‌روزرسانی وضعیت
+                    studentsTable.refresh(); // این خط باعث می‌شود CellValueFactory دوباره اجرا شود
                 }
             } catch (NumberFormatException e) {
                 showAlert("لطفاً یک عدد معتبر وارد کنید.");
