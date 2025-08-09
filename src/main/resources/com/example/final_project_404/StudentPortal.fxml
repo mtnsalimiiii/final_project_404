@@ -13,32 +13,23 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane minHeight="550.0" minWidth="800.0"
-            xmlns="http://javafx.com/javafx/24.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.example.final_project_404.StudentPortalController">
-
+<AnchorPane minHeight="550.4" minWidth="800.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.StudentPortalController">
     <children>
         <!-- ===== Header ===== -->
-        <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0"
-              styleClass="header" stylesheets="@EmployeePortal.css">
+        <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0" styleClass="header" stylesheets="@EmployeePortal.css">
             <children>
                 <Label styleClass="header-title" text="Student Portal" />
             </children>
         </HBox>
 
         <!-- ===== Main Container ===== -->
-        <VBox fx:id="containerBarVBox" layoutY="80.0"
-              prefHeight="470.0" prefWidth="800.0"
-              style="-fx-background-color: linear-gradient(from 100% 100% to 0% 0%, #00a1ffb1 0%, #ffffff 100%);"
-              stylesheets="@EmployeePortal.css">
+        <VBox fx:id="containerBarVBox" layoutY="80.0" prefHeight="470.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(from 100% 100% to 0% 0%, #00a1ffb1 0%, #ffffff 100%);" stylesheets="@EmployeePortal.css">
             <padding>
                 <Insets bottom="20" left="20" right="20" top="20" />
             </padding>
-
             <children>
                 <!-- ===== Welcome Label ===== -->
-                <Label maxWidth="Infinity" styleClass="label-title" text="Welcome Student!!">
+                <Label maxWidth="Infinity" styleClass="label-title" text="Welcome, Student!">
                     <VBox.margin>
                         <Insets bottom="20" />
                     </VBox.margin>
@@ -57,48 +48,75 @@
                     </rowConstraints>
                     <children>
                         <!-- Buttons -->
-                        <Button text="Enrollment" onAction="#EnrollmentStudentPortal" GridPane.halignment="CENTER"
-                                styleClass="button-dashboard" stylesheets="@DashboardButton.css" minHeight="40.0" minWidth="280.0" />
-                        <Button text="Profile" onAction="#profileStudentPortal" GridPane.columnIndex="1" GridPane.rowIndex="0"
-                                styleClass="button-dashboard" stylesheets="@DashboardButton.css" minHeight="40.0" minWidth="280.0" />
-                        <Button text="Reports" onAction="#reportsStudentPortal" GridPane.rowIndex="1"
-                                styleClass="button-dashboard" stylesheets="@DashboardButton.css" minHeight="40.0" minWidth="280.0" />
-                        <Button text="See Report Card" onAction="#showReportCardPane" GridPane.columnIndex="1" GridPane.rowIndex="1"
-                                styleClass="button-dashboard" stylesheets="@DashboardButton.css" minHeight="40.0" minWidth="280.0" />
-                        <Button text="Sign out" onAction="#signOutStudentPortal" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.columnSpan="2"
-                                styleClass="button-dashboard" stylesheets="@DashboardButton.css" minHeight="40.0" minWidth="280.0" />
+                        <Button minHeight="40.0" minWidth="280.0" onAction="#EnrollmentStudentPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Enrollment" GridPane.halignment="CENTER" />
+                        <Button minHeight="40.0" minWidth="280.0" onAction="#profileStudentPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Profile" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+                        <Button minHeight="40.0" minWidth="280.0" onAction="#reportsStudentPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Reports" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Button minHeight="40.0" minWidth="280.0" onAction="#showReportCardPane" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="See Report Card" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Button minHeight="40.0" minWidth="280.0" onAction="#signOutStudentPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Sign out" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                     </children>
                 </GridPane>
 
                 <!-- ===== Report Card Panel (Hidden by default) ===== -->
-                <AnchorPane fx:id="reportCardPane" managed="false" visible="false" prefHeight="430.0" prefWidth="760.0">
+                <AnchorPane fx:id="reportCardPane" managed="false" prefHeight="370.0" prefWidth="760.0" visible="false">
                     <children>
-                        <VBox prefHeight="430" prefWidth="760" spacing="15" style="-fx-background-color: #f7f9fc;">
+                        <VBox prefHeight="370.0" prefWidth="760.0" spacing="10" style="-fx-background-color: #f7f9fc;">
                             <padding>
                                 <Insets bottom="15" left="15" right="15" top="15" />
                             </padding>
-
-                            <!-- ComboBoxes & Search -->
-                            <HBox spacing="10">
-                                <ComboBox fx:id="semesterComboBox" prefWidth="200" promptText="Select Semester" />
-                                <Button onAction="#loadReportCard" text="Load Report" />
-                            </HBox>
-
-                            <!-- Table -->
-                            <TableView fx:id="reportCardTable" prefHeight="300.0" stylesheets="@TableViewStyle.css">
-                                <columns>
-                                    <TableColumn fx:id="courseNameCol" prefWidth="250.0" text="Course Name" />
-                                    <TableColumn fx:id="scoreCol" prefWidth="100.0" text="Score" />
-                                    <TableColumn fx:id="statusCol" prefWidth="100.0" text="Status" />
-                                </columns>
-                            </TableView>
-
-                            <!-- Back Button -->
-                            <HBox alignment="CENTER_RIGHT">
-                                <Button onAction="#showMainMenuPane" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Back" />
-                            </HBox>
-
-                            <Label fx:id="messageLabel" style="-fx-text-fill: red;" />
+                            <children>
+                                <!-- Student Info Section -->
+                                <GridPane hgap="10" prefWidth="730.0" vgap="5">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" prefWidth="150.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" prefWidth="200.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" prefWidth="150.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" prefWidth="200.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints vgrow="SOMETIMES" />
+                                        <RowConstraints vgrow="SOMETIMES" />
+                              <RowConstraints vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label fx:id="studentNameLabel" disable="true" style="-fx-font-weight: bold;" text="Student Name:" />
+                                        <Label fx:id="semesterLabel" style="-fx-font-weight: bold;" text="Semester:" GridPane.columnIndex="2" />
+                                        <Label fx:id="gpaLabel" style="-fx-font-weight: bold;" text="GPA:" GridPane.rowIndex="1" />
+                                        <Label fx:id="probationStatusLabel" style="-fx-font-weight: bold;" text="Status:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                        <Label fx:id="passedUnitsLabel" style="-fx-font-weight: bold;" text="Passed Units:" GridPane.columnIndex="3" />
+                                        <Label fx:id="failedUnitsLabel" style="-fx-font-weight: bold;" text="Failed Units:" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets bottom="10" />
+                                    </VBox.margin>
+                                </GridPane>
+                                <!-- ComboBoxes & Search -->
+                                <HBox prefHeight="40.0" spacing="10">
+                                    <ComboBox fx:id="semesterComboBox" prefWidth="200.0" promptText="Select Semester" />
+                                    <Button onAction="#loadReportCard" text="Load Report" />
+                                    <VBox.margin>
+                                        <Insets bottom="10" />
+                                    </VBox.margin>
+                                </HBox>
+                                <!-- Table -->
+                                <TableView fx:id="reportCardTable" prefHeight="200.0" prefWidth="730.0" stylesheets="@TableViewStyle.css">
+                                    <columns>
+                                        <TableColumn fx:id="courseNameCol" prefWidth="250.0" text="Course Name" />
+                                        <TableColumn fx:id="scoreCol" prefWidth="100.0" text="Score" />
+                                        <TableColumn fx:id="statusCol" prefWidth="100.0" text="Status" />
+                                    </columns>
+                                    <VBox.margin>
+                                        <Insets bottom="10" />
+                                    </VBox.margin>
+                                </TableView>
+                                <!-- Back Button -->
+                                <HBox alignment="CENTER_RIGHT" prefHeight="40.0">
+                                    <Button onAction="#showMainMenuPane" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Back" />
+                                    <VBox.margin>
+                                        <Insets bottom="10" />
+                                    </VBox.margin>
+                                </HBox>
+                                <Label fx:id="messageLabel" style="-fx-text-fill: red;" />
+                            </children>
                         </VBox>
                     </children>
                 </AnchorPane>

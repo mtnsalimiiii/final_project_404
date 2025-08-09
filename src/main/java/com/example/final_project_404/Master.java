@@ -2,10 +2,15 @@ package com.example.final_project_404;
 
 import java.io.Serializable;
 
-public class Master extends Degree implements Serializable,IsPass {
+public class Master extends Degree implements Serializable,IsPass,SemesterStatusCheckable {
     public double conditionalScore = 14;
     @Override
     public CourseStatus getPassStatus(double score) {
         return score >= 12 ? CourseStatus.Pass : CourseStatus.Fail;
+    }
+
+    @Override
+    public SemesterStatus getProbationStatus(double gpa){
+        return gpa >= 14 ? SemesterStatus.Completed : SemesterStatus.Probation;
     }
 }

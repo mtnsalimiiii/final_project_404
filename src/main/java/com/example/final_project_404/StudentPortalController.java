@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 
 public class StudentPortalController {
 
@@ -30,16 +31,25 @@ public class StudentPortalController {
     @FXML private TableColumn<ReportCardEntry, String> courseNameCol;
     @FXML private TableColumn<ReportCardEntry, Double> scoreCol;
     @FXML private TableColumn<ReportCardEntry, String> statusCol;
+    @FXML private Label studentNameLabel;
     @FXML private Label messageLabel;
+    @FXML private Label semesterLabel;
+    @FXML private Label gpaLabel;
+    @FXML private Label probationStatusLabel;
+    @FXML private Label passedUnitsLabel;
+    @FXML private Label failedUnitsLabel;
 
     private final ObservableList<ReportCardEntry> reportCardRows = FXCollections.observableArrayList();
-    private static Student studentPerson; // فرض: از LoginPanelController مقداردهی می‌شود
+    private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
+    private double gpa;
 
     @FXML
     public void initialize() {
         if (semesterComboBox != null && reportCardTable != null) {
             loadSemestersForStudent();
             setupReportCardTable();
+        } else {
+            System.out.println("Initialization error: semesterComboBox or reportCardTable is null");
         }
     }
 
@@ -47,22 +57,26 @@ public class StudentPortalController {
         semesterComboBox.getItems().clear();
         University.loadFaculties();
 
-        if (studentPerson == null) {
-            System.out.println("studentPerson is null");
-            messageLabel.setText("خطا: اطلاعات دانشجو یافت نشد.");
+        if (LoginPanelController.studentPerson == null) {
+            System.out.println("StudentPerson is null");
+            messageLabel.setText("Error: Student information not found.");
             return;
         }
 
         for (Faculty faculty : University.allFaculties) {
-            for (Department dept : faculty.departments) {
-                for (Major major : dept.majors) {
-                    for (Degree degree : major.degrees) {
-                        for (Course course : degree.courses) {
-                            for (CourseGroup group : course.courseGroups) {
-                                if (group.getRegisteredStudents().contains(studentPerson)) {
-                                    String semCode = group.getSemasterCode();
-                                    if (!semesterComboBox.getItems().contains(semCode)) {
-                                        semesterComboBox.getItems().add(semCode);
+            if (faculty.getFacultyName().equals(LoginPanelController.studentPerson.getFaculty())) {
+                for (Department department : faculty.departments) {
+                    if (department.getName().equals(LoginPanelController.studentPerson.getDepartment())) {
+                        for (Major major : department.majors) {
+                            if (major.getName().equals(LoginPanelController.studentPerson.getMajor())) {
+                                for (Student student : major.students) {
+                                    if (student.getId().equals(LoginPanelController.studentPerson.getId())) {
+                                        for (Semester semester : student.getSemesters()) {
+                                            String semesterName = semester.getName();
+                                            if (!semesterComboBox.getItems().contains(semesterName)) {
+                                                semesterComboBox.getItems().add(semesterName);
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -73,7 +87,9 @@ public class StudentPortalController {
         }
 
         if (semesterComboBox.getItems().isEmpty()) {
-            messageLabel.setText("هیچ ترمی برای این دانشجو یافت نشد.");
+            messageLabel.setText("No semesters found for this student.");
+        } else {
+            System.out.println("Semesters loaded: " + semesterComboBox.getItems());
         }
     }
 
@@ -104,6 +120,7 @@ public class StudentPortalController {
         reportCardPane.setVisible(true);
         reportCardPane.setManaged(true);
         loadSemestersForStudent();
+        clearStudentInfoLabels();
         messageLabel.setText("");
     }
 
@@ -113,21 +130,28 @@ public class StudentPortalController {
         reportCardPane.setManaged(false);
         mainMenuPane.setVisible(true);
         mainMenuPane.setManaged(true);
+        clearStudentInfoLabels();
         messageLabel.setText("");
     }
 
     @FXML
     void loadReportCard(ActionEvent event) {
         reportCardRows.clear();
+        clearStudentInfoLabels();
         String selectedSemester = semesterComboBox.getValue();
 
         if (selectedSemester == null) {
-            messageLabel.setText("لطفاً ترم را انتخاب کنید.");
+            messageLabel.setText("Please select a semester.");
             return;
         }
 
         University.loadFaculties();
         boolean foundData = false;
+        double totalScore = 0.0;
+        int totalUnits = 0;
+        int passedUnits = 0;
+        int failedUnits = 0;
+
         for (Faculty faculty : University.allFaculties) {
             for (Department dept : faculty.departments) {
                 for (Major major : dept.majors) {
@@ -135,16 +159,27 @@ public class StudentPortalController {
                         for (Course course : degree.courses) {
                             for (CourseGroup group : course.courseGroups) {
                                 if (group.getSemasterCode().equals(selectedSemester) &&
-                                        group.getRegisteredStudents().contains(studentPerson)) {
-                                    Double score = group.getGrades().get(studentPerson.getId());
+                                        group.getRegisteredStudents().contains(LoginPanelController.studentPerson)) {
+                                    Double score = group.getGrades().get(LoginPanelController.studentPerson.getId());
                                     if (score != null) {
                                         Degree degreeForStatus = findDegreeForCourseGroup(group);
                                         CourseStatus status = (degreeForStatus != null) ? degreeForStatus.getPassStatus(score) : CourseStatus.Fail;
                                         reportCardRows.add(new ReportCardEntry(course.getName(), score, status.name()));
                                         foundData = true;
+
+                                        int units = course.getCredit();
+                                        totalScore += score * units;
+                                        totalUnits += units;
+                                        if (status == CourseStatus.Pass) {
+                                            passedUnits += units;
+                                        } else {
+                                            failedUnits += units;
+                                        }
                                     }
                                 }
                             }
+                            gpa = (totalUnits > 0) ? totalScore / totalUnits : 0.0;
+                            probationStatusLabel.setText(degree.getProbationStatus(gpa).toString());
                         }
                     }
                 }
@@ -152,10 +187,30 @@ public class StudentPortalController {
         }
 
         if (!foundData) {
-            messageLabel.setText("هیچ اطلاعاتی برای این ترم یافت نشد.");
+            messageLabel.setText("No data found for this semester.");
         } else {
+            // Set student information
+            studentNameLabel.setText("Student name:"+LoginPanelController.studentPerson.getFullName());
+            semesterLabel.setText("Semester:"+selectedSemester);
+            //double gpa = (totalUnits > 0) ? totalScore / totalUnits : 0.0;
+            gpaLabel.setText("gpa:"+DECIMAL_FORMAT.format(gpa));
+            passedUnitsLabel.setText("Cresits pass:"+String.valueOf(passedUnits));
+            failedUnitsLabel.setText("Credits fail"+String.valueOf(failedUnits));
             messageLabel.setText("");
+            System.out.println("Student info set: Name=" + LoginPanelController.studentPerson.getFullName() +
+                    ", Semester=" + selectedSemester + ", GPA=" + gpa +
+                    ", Probation=" + (gpa < 12.0 ? "On Probation" : "Normal") +
+                    ", Passed Units=" + passedUnits + ", Failed Units=" + failedUnits);
         }
+    }
+
+    private void clearStudentInfoLabels() {
+        studentNameLabel.setText("");
+        semesterLabel.setText("");
+        gpaLabel.setText("");
+        probationStatusLabel.setText("");
+        passedUnitsLabel.setText("");
+        failedUnitsLabel.setText("");
     }
 
     private Degree findDegreeForCourseGroup(CourseGroup group) {
@@ -200,8 +255,8 @@ public class StudentPortalController {
         if (file.exists()) {
             String content = java.nio.file.Files.readString(file.toPath()).trim();
             if ("Deactive".equalsIgnoreCase(content)) {
-                System.out.println("Enrollment is deactive.");
-                showAlert("ثبت‌نام غیرفعال است.");
+                System.out.println("Enrollment is disabled.");
+                showAlert("Enrollment is disabled.");
                 return;
             }
         }
@@ -251,10 +306,5 @@ public class StudentPortalController {
         public String getStatus() {
             return status;
         }
-    }
-
-    // متد برای تنظیم دانشجوی فعلی (باید از LoginPanelController فراخوانی شود)
-    public static void setStudentPerson(Student student) {
-        studentPerson = student;
     }
 }
