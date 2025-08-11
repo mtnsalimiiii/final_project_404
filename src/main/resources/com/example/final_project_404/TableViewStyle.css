@@ -56,3 +56,10 @@
     -fx-background-color: #5c5c8a;
     -fx-background-radius: 5px;
 }
+
+.context-menu {
+    -fx-background-color : #6e6f7b;
+}
+.menu-item {
+    -fx-background-color : white;
+}

@@ -191,21 +191,6 @@ public class RegisterProfessorController implements Initializable {
         stage.show();
     }
 
-    public Date getDateOfHire(){
-        Date date = new Date();
-        date.setYear(LocalDate.now().getYear());
-        date.setMonth(LocalDate.now().getMonthValue());
-        date.setDay(LocalDate.now().getDayOfMonth());
-        return date;
-    }
-
-    public Date getDateOfBirth(ActionEvent event) {
-        Date dateOfBirth = new Date();
-        dateOfBirth.setYear(dateOfBirthRegisterProfessorEmployee.getValue().getYear());
-        dateOfBirth.setMonth(dateOfBirthRegisterProfessorEmployee.getValue().getMonthValue());
-        dateOfBirth.setDay(dateOfBirthRegisterProfessorEmployee.getValue().getDayOfMonth());
-        return dateOfBirth;
-    }
 
     public String generateProfessorId(){
         return "PRO" + (University.allProfessors.size()+1);
@@ -215,7 +200,7 @@ public class RegisterProfessorController implements Initializable {
         University.loadFaculties();
         Professor.loadAllProfessor();
 
-        Date dateOfBirth = getDateOfBirth(event);
+        LocalDate dateOfBirth  = dateOfBirthRegisterProfessorEmployee.getValue();
         String firstName = firstnameRegisterProfessorEmployee.getText().trim();
         String lastName = lastnameRegisterProfessorEmployee.getText().trim();
         String phoneNumber = phoneNumberRegisterProfessorEmployee.getText().trim();
@@ -224,7 +209,7 @@ public class RegisterProfessorController implements Initializable {
         String faculty = facultyChooserRegisterProfessorEmployee.getValue();
         String department = departmentChooserRegisterProfessorEmployee.getValue();
         String major = majorChooserRegisterProfessorEmployee.getValue();
-        Date dateOfHire = getDateOfHire();
+        LocalDate dateOfHire = LocalDate.now();
         String professorId = generateProfessorId();
 
         if (!firstName.isBlank() && !lastName.isBlank() && !phoneNumber.isBlank() && !nationalId.isBlank() && gender!=null && faculty!=null && department!=null && major!=null){

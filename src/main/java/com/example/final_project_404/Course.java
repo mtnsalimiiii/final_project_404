@@ -1,10 +1,14 @@
 package com.example.final_project_404;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Course implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private String name;
     private int credit;
     private String id;

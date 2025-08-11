@@ -194,27 +194,11 @@ public class RegisterStudentController implements Initializable {
         stage.show();
     }
 
-
-    public Date getDateOfBirth(ActionEvent event) {
-        Date dateOfBirth = new Date();
-        dateOfBirth.setYear(dateOfBirthRegisterStudentEmployee.getValue().getYear());
-        dateOfBirth.setMonth(dateOfBirthRegisterStudentEmployee.getValue().getMonthValue());
-        dateOfBirth.setDay(dateOfBirthRegisterStudentEmployee.getValue().getDayOfMonth());
-        return dateOfBirth;
-    }
-
-    public Date getDateOfRegistration(){
-        Date date = new Date();
-        date.setYear(LocalDate.now().getYear());
-        date.setMonth(LocalDate.now().getMonthValue());
-        date.setDay(LocalDate.now().getDayOfMonth());
-        return date;
-    }
     public void addNewStudent(ActionEvent event) throws IOException {
         Student.loadAllStudents();
         University.loadFaculties();
 
-        Date dateOfBirth = getDateOfBirth(event);
+        LocalDate dateOfBirth = dateOfBirthRegisterStudentEmployee.getValue();
         String firstName = firstnameRegisterStudentEmployee.getText().trim();
         String lastName = lastnameRegisterStudentEmployee.getText().trim();
         String phoneNumber = phoneNumberRegisterStudentEmployee.getText().trim();
@@ -223,7 +207,7 @@ public class RegisterStudentController implements Initializable {
         String faculty = facultyChooserRegisterStudentEmployee.getValue();
         String department = departmentChooserRegisterStudentEmployee.getValue();
         String major = majorChooserRegisterStudentEmployee.getValue();
-        Date dateOfRegistration = getDateOfRegistration();
+        LocalDate dateOfRegistration = LocalDate.now();
         String studentId = generateStudentId();
 
         if (!firstName.isBlank() && !lastName.isBlank() && !phoneNumber.isBlank() && !nationalId.isBlank() && gender!=null && faculty!=null && department!=null && major!=null){

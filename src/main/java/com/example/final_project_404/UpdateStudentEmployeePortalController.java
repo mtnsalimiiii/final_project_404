@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.rmi.server.UID;
+import java.time.LocalDate;
 import java.time.Month;
 import java.util.ResourceBundle;
 
@@ -174,7 +175,7 @@ public class UpdateStudentEmployeePortalController implements Initializable {
                 genderChooserEdit.setPromptText(student.getGender().toString());
                 nationalIdEdit.setPromptText(student.getNationalId());
                 phoneNumberEdit.setPromptText(student.getPhoneNumber());
-                dateOfBirthEdit.setPromptText(student.getDateOfBirth().getDay() + " " + Month.of(student.getDateOfBirth().getMonth()) + " " + student.getDateOfBirth().getYear());
+                dateOfBirthEdit.setPromptText(student.getDateOfBirth().getDayOfMonth() + " " + Month.of(student.getDateOfBirth().getMonthValue()) + " " + student.getDateOfBirth().getYear());
                 break;
             }
         }
@@ -254,10 +255,7 @@ public class UpdateStudentEmployeePortalController implements Initializable {
                                             student.setPhoneNumber(phoneNumberEdit.getText());
                                         }
                                         if (dateOfBirthEdit.getValue() != null){
-                                            Date date = new Date();
-                                            date.setYear(dateOfBirthEdit.getValue().getYear());
-                                            date.setMonth(dateOfBirthEdit.getValue().getMonthValue());
-                                            date.setDay(dateOfBirthEdit.getValue().getDayOfMonth());
+                                            LocalDate date = dateOfBirthEdit.getValue();
                                             student.setDateOfBirth(date);
                                         }
                                         if (genderChooserEdit.getValue()!= null){
@@ -293,10 +291,7 @@ public class UpdateStudentEmployeePortalController implements Initializable {
                     student.setPhoneNumber(phoneNumberEdit.getText());
                 }
                 if (dateOfBirthEdit.getValue() != null){
-                    Date date = new Date();
-                    date.setYear(dateOfBirthEdit.getValue().getYear());
-                    date.setMonth(dateOfBirthEdit.getValue().getMonthValue());
-                    date.setDay(dateOfBirthEdit.getValue().getDayOfMonth());
+                    LocalDate date = dateOfBirthEdit.getValue();
                     student.setDateOfBirth(date);
                 }
                 if (genderChooserEdit.getValue()!= null){

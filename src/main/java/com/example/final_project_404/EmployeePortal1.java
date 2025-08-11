@@ -1,5 +1,6 @@
 package com.example.final_project_404;
 
+import com.sun.jdi.LocalVariable;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -32,6 +33,7 @@ import java.rmi.server.UID;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.Period;
 import java.util.GregorianCalendar;
 import java.util.ResourceBundle;
 
@@ -1473,14 +1475,14 @@ public class EmployeePortal1 {
             errorLabelDateOfBirthRegisterProfessor.setText(null);
         }
         if (confirmation) {
-            Date dateOfBirth = getDateOfBirthRegisterProfessor();
+            LocalDate dateOfBirth = dateOfBirthRegisterProfessor.getValue();
             String firstName = firstNameRegisterProfessor.getText().trim();
             String lastName = lastNameRegisterProfessor.getText().trim();
             String phoneNumber = phoneNumberRegisterProfessor.getText().trim();
             String nationalId = nationalIdRegisterProfessor.getText().trim();
             String gender = genderChooserRegisterProfessor.getValue();
             String major = majorChooserRegisterProfessor.getValue();
-            Date dateOfHire = getDateOfHireRegisterProfessor();
+            LocalDate dateOfHire = LocalDate.now();
             String professorId = "PRO"+(University.allProfessors.size()+1);
             if (!firstName.isBlank() && !lastName.isBlank() && !phoneNumber.isBlank() && !nationalId.isBlank() && gender!=null && major!=null) {
                 Employee employee = LoginPanelController.employeePerson;
@@ -1522,21 +1524,6 @@ public class EmployeePortal1 {
         } else {
             errorLabelRegisterProfessor.setText("Fill All Fields");
         }
-    }
-
-    private Date getDateOfHireRegisterProfessor(){
-        Date date = new Date();
-        date.setYear(LocalDate.now().getYear());
-        date.setMonth(LocalDate.now().getMonthValue());
-        date.setDay(LocalDate.now().getDayOfMonth());
-        return date;
-    }
-    private Date getDateOfBirthRegisterProfessor() {
-        Date dateOfBirth = new Date();
-        dateOfBirth.setYear(dateOfBirthRegisterProfessor.getValue().getYear());
-        dateOfBirth.setMonth(dateOfBirthRegisterProfessor.getValue().getMonthValue());
-        dateOfBirth.setDay(dateOfBirthRegisterProfessor.getValue().getDayOfMonth());
-        return dateOfBirth;
     }
 
     @FXML
@@ -1650,8 +1637,8 @@ public class EmployeePortal1 {
             String department = departmentChooserRegisterStudent.getValue();
             String majorName = majorChooserRegisterStudent.getValue();
             String selectedDegree = degreeChooserRegisterStudent.getValue();
-            Date dateOfBirth = getDateOfBirthRegisterStudent();
-            Date dateOfJoin = getDateOfJoinRegisterStudent();
+            LocalDate dateOfBirth = dateOfBirthRegisterStudent.getValue();
+            LocalDate dateOfJoin = LocalDate.now();
             String studentId = "STU" + (University.allStudents.size() + 1);
 
             // نگاشت مقطع
@@ -1731,22 +1718,6 @@ public class EmployeePortal1 {
             errorLabelRegisterStudent.setText("Fill All Fields");
             System.out.println("Please Fill All Fields!");
         }
-    }
-
-    private Date getDateOfBirthRegisterStudent() {
-        Date dateOfBirth = new Date();
-        dateOfBirth.setYear(dateOfBirthRegisterStudent.getValue().getYear());
-        dateOfBirth.setMonth(dateOfBirthRegisterStudent.getValue().getMonthValue());
-        dateOfBirth.setDay(dateOfBirthRegisterStudent.getValue().getDayOfMonth());
-        return dateOfBirth;
-    }
-
-    private Date getDateOfJoinRegisterStudent() {
-        Date date = new Date();
-        date.setYear(LocalDate.now().getYear());
-        date.setMonth(LocalDate.now().getMonthValue());
-        date.setDay(LocalDate.now().getDayOfMonth());
-        return date;
     }
 
     @FXML
@@ -1916,7 +1887,6 @@ public class EmployeePortal1 {
 //            errorLabelDateOfBirthEditProfessor.setText(null);
 //        }
         if (confirmation) {
-            System.out.println(111111);
             Employee employee = LoginPanelController.employeePerson;
             for (Faculty faculty : University.allFaculties) {
                 if (faculty.getFacultyName().equals(employee.getFaculty())) {
@@ -1966,10 +1936,7 @@ public class EmployeePortal1 {
                                                 }
                                             }
                                             if (dateOfBirthEditProfessor.getValue() != null) {
-                                                Date date = new Date();
-                                                date.setYear(dateOfBirthEditProfessor.getValue().getYear());
-                                                date.setMonth(dateOfBirthEditProfessor.getValue().getMonthValue());
-                                                date.setDay(dateOfBirthEditProfessor.getValue().getDayOfMonth());
+                                                LocalDate date = dateOfBirthEditProfessor.getValue();
                                                 professor.setDateOfBirth(date);
                                                 edited = true;
                                             }
@@ -2035,10 +2002,7 @@ public class EmployeePortal1 {
                         }
                     }
                     if (dateOfBirthEditProfessor.getValue() != null) {
-                        Date date = new Date();
-                        date.setYear(dateOfBirthEditProfessor.getValue().getYear());
-                        date.setMonth(dateOfBirthEditProfessor.getValue().getMonthValue());
-                        date.setDay(dateOfBirthEditProfessor.getValue().getDayOfMonth());
+                        LocalDate date = dateOfBirthEditProfessor.getValue();
                         professor.setDateOfBirth(date);
                     }
                     if (genderChooserEditProfessor.getValue() != null) {
@@ -2164,7 +2128,7 @@ public class EmployeePortal1 {
         newNationalIdProfile.clear();
         newNationalIdProfile.setPromptText(employee.getNationalId());
 
-        newDateOfBirthProfile.setPromptText(employee.getDateOfBirth().getDay() + " " + Month.of(employee.getDateOfBirth().getMonth()) + " " + employee.getDateOfBirth().getYear()); // must work on dates of Date
+        newDateOfBirthProfile.setPromptText(employee.getDateOfBirth().getDayOfMonth() + " " + Month.of(employee.getDateOfBirth().getMonthValue()) + " " + employee.getDateOfBirth().getYear()); // must work on dates of Date
 
     }
 
@@ -2227,7 +2191,7 @@ public class EmployeePortal1 {
         newNationalIdProfile.clear();
         newNationalIdProfile.setPromptText(employee.getNationalId());
 
-        newDateOfBirthProfile.setPromptText(employee.getDateOfBirth().getDay() + " " + Month.of(employee.getDateOfBirth().getMonth()) + " " + employee.getDateOfBirth().getYear()); // must work on dates of Date
+        newDateOfBirthProfile.setPromptText(employee.getDateOfBirth().getDayOfMonth() + " " + Month.of(employee.getDateOfBirth().getMonthValue()) + " " + employee.getDateOfBirth().getYear()); // must work on dates of Date
     }
 
     @FXML
@@ -2795,7 +2759,7 @@ public class EmployeePortal1 {
                 nationalIdEditProfessor.setPromptText(professor.getNationalId());
                 phoneNumberEditProfessor.setPromptText(professor.getPhoneNumber());
                 genderChooserEditProfessor.getSelectionModel().select("Male");
-                dateOfBirthEditProfessor.setPromptText(professor.getDateOfBirth().getDay() + " " + Month.of(professor.getDateOfBirth().getMonth()) + " " + professor.getDateOfBirth().getYear());
+                dateOfBirthEditProfessor.setPromptText(professor.getDateOfBirth().getDayOfMonth() + " " + Month.of(professor.getDateOfBirth().getMonthValue()) + " " + professor.getDateOfBirth().getYear());
             }
         }
     }
@@ -2814,7 +2778,7 @@ public class EmployeePortal1 {
                 lastNameEditStudents.setPromptText(student.getLast_name());
                 phoneNumberEditStudents.setPromptText(student.getPhoneNumber());
                 nationalIdEditStudents.setPromptText(student.getNationalId());
-                dateOfBirthEditStudents.setPromptText(student.getDateOfBirth().getDay() + " " + Month.of(student.getDateOfBirth().getMonth()) + " " + student.getDateOfBirth().getYear());
+                dateOfBirthEditStudents.setPromptText(student.getDateOfBirth().getDayOfMonth() + " " + Month.of(student.getDateOfBirth().getMonthValue()) + " " + student.getDateOfBirth().getYear());
                 genderChooserEditStudents.getSelectionModel().select("Male");
             }
         }
@@ -3079,7 +3043,7 @@ public class EmployeePortal1 {
             }
         } else if (topicChooserProfessors.getValue().equals("Age")){
             for (Professor professor : University.allProfessors){
-                if (professor.getStatus().equals(Status.Active) && professor.getDateOfBirth().getAge() == Integer.parseInt(searchBoxProfessors.getText())){
+                if (professor.getStatus().equals(Status.Active) && Period.between(professor.getDateOfBirth(), LocalDate.now()).getYears() == Integer.parseInt(searchBoxProfessors.getText())){
 
                 }
             }
@@ -3117,7 +3081,7 @@ public class EmployeePortal1 {
             }
         } else if (topicChooserStudents.getValue().equals("Age")){
             for (Student student : University.allStudents){
-                if (student.getStatus().equals(Status.Active) && student.getDateOfBirth().getAge() == Integer.parseInt(searchBoxStudents.getText())){
+                if (student.getStatus().equals(Status.Active) && Period.between(student.getDateOfBirth(), LocalDate.now()).getYears() == Integer.parseInt(searchBoxStudents.getText())){
 
                 }
             }
@@ -3157,37 +3121,42 @@ public class EmployeePortal1 {
         University.loadFaculties();
         Professor.loadAllProfessor();
 
-        Date primaryDate1 = new Date();
-        primaryDate1.setYear(primaryDateProfessors.getValue().getYear());
-        primaryDate1.setMonth(primaryDateProfessors.getValue().getMonthValue());
-        primaryDate1.setDay(primaryDateProfessors.getValue().getDayOfMonth());
+        LocalDate primaryDate = primaryDateProfessors.getValue();
+        LocalDate secondaryDate = secondaryDateProfessors.getValue();
 
-        Date secondaryDate1 = new Date();
-        secondaryDate1.setYear(secondaryDateProfessors.getValue().getYear());
-        secondaryDate1.setMonth(secondaryDateProfessors.getValue().getMonthValue());
-        secondaryDate1.setDay(secondaryDateProfessors.getValue().getDayOfMonth());
+        for (Professor professor : University.allProfessors) {
+            if (isDateInRange(professor.getDateOfJoin(), primaryDate, secondaryDate)) {
 
-        for (Professor professor : University.allProfessors){
-            if (professor.getDateOfJoin().getYear() > primaryDate1.getYear() && professor.getDateOfJoin().getYear() < secondaryDate1.getYear()){
+            } else {
 
-            } else if (professor.getDateOfJoin().getMonth() == primaryDate1.getMonth()) {
-                if (professor.getDateOfJoin().getMonth() > primaryDate1.getMonth()){
-
-                } else if (professor.getDateOfJoin().getMonth() == primaryDate1.getMonth()) {
-                    if (professor.getDateOfJoin().getDay() == primaryDate1.getDay()){
-
-                    }
-                }
-            } else if (professor.getDateOfJoin().getYear() == secondaryDate1.getYear()) {
-                if (professor.getDateOfJoin().getMonth() < secondaryDate1.getMonth()) {
-
-                } else if (professor.getDateOfJoin().getMonth() == secondaryDate1.getMonth()) {
-                    if (professor.getDateOfJoin().getDay() <= secondaryDate1.getDay()) {
-
-                    }
-                }
             }
         }
+
+//        for (Professor professor : University.allProfessors){
+//            if (professor.getDateOfJoin().getYear() > primaryDate.getYear() && professor.getDateOfJoin().getYear() < secondaryDate.getYear()){
+//
+//            } else if (professor.getDateOfJoin().getMonthValue() == primaryDate.getMonthValue()) {
+//                if (professor.getDateOfJoin().getMonthValue() > primaryDate.getMonthValue()){
+//
+//                } else if (professor.getDateOfJoin().getMonth() == primaryDate.getMonth()) {
+//                    if (professor.getDateOfJoin().getDayOfMonth() == primaryDate.getDayOfMonth()){
+//
+//                    }
+//                }
+//            } else if (professor.getDateOfJoin().getYear() == secondaryDate.getYear()) {
+//                if (professor.getDateOfJoin().getMonthValue() < secondaryDate.getMonthValue()) {
+//
+//                } else if (professor.getDateOfJoin().getMonth() == secondaryDate.getMonth()) {
+//                    if (professor.getDateOfJoin().getDayOfMonth() <= secondaryDate.getDayOfMonth()) {
+//
+//                    }
+//                }
+//            }
+//        }
+    }
+
+    public boolean isDateInRange(LocalDate date, LocalDate dateStart, LocalDate dateEnd) {
+        return (date.isAfter(dateStart) || date.isEqual(dateStart)) && (date.isBefore(dateEnd) || date.isEqual(dateEnd));
     }
 
     @FXML
@@ -3195,37 +3164,38 @@ public class EmployeePortal1 {
         University.loadFaculties();
         Student.loadAllStudents();
 
-        Date primaryDate1 = new Date();
-        primaryDate1.setYear(primaryDateStudents.getValue().getYear());
-        primaryDate1.setMonth(primaryDateStudents.getValue().getMonthValue());
-        primaryDate1.setDay(primaryDateStudents.getValue().getDayOfMonth());
+        LocalDate primaryDate = primaryDateStudents.getValue();
+        LocalDate secondaryDate = secondaryDateStudents.getValue();
 
-        Date secondaryDate1 = new Date();
-        secondaryDate1.setYear(secondaryDateStudents.getValue().getYear());
-        secondaryDate1.setMonth(secondaryDateStudents.getValue().getMonthValue());
-        secondaryDate1.setDay(secondaryDateStudents.getValue().getDayOfMonth());
+        for (Student student : University.allStudents) {
+            if (isDateInRange(student.getDateOfJoin(), primaryDate, secondaryDate)) {
 
-        for (Student student : University.allStudents){
-            if (student.getDateOfJoin().getYear() > primaryDate1.getYear() && student.getDateOfJoin().getYear() < secondaryDate1.getYear()){
+            } else {
 
-            } else if (student.getDateOfJoin().getMonth() == primaryDate1.getMonth()) {
-                if (student.getDateOfJoin().getMonth() > primaryDate1.getMonth()){
-
-                } else if (student.getDateOfJoin().getMonth() == primaryDate1.getMonth()) {
-                    if (student.getDateOfJoin().getDay() == primaryDate1.getDay()){
-
-                    }
-                }
-            } else if (student.getDateOfJoin().getYear() == secondaryDate1.getYear()) {
-                if (student.getDateOfJoin().getMonth() < secondaryDate1.getMonth()) {
-
-                } else if (student.getDateOfJoin().getMonth() == secondaryDate1.getMonth()) {
-                    if (student.getDateOfJoin().getDay() <= secondaryDate1.getDay()) {
-
-                    }
-                }
             }
         }
+
+//        for (Student student : University.allStudents){
+//            if (student.getDateOfJoin().getYear() > primaryDate.getYear() && student.getDateOfJoin().getYear() < secondaryDate.getYear()){
+//
+//            } else if (student.getDateOfJoin().getMonthValue() == primaryDate.getMonthValue()) {
+//                if (student.getDateOfJoin().getMonthValue() > primaryDate.getMonthValue()){
+//
+//                } else if (student.getDateOfJoin().getMonthValue() == primaryDate.getMonthValue()) {
+//                    if (student.getDateOfJoin().getDayOfMonth() == primaryDate.getDayOfMonth()){
+//
+//                    }
+//                }
+//            } else if (student.getDateOfJoin().getYear() == secondaryDate.getYear()) {
+//                if (student.getDateOfJoin().getMonthValue() < secondaryDate.getMonthValue()) {
+//
+//                } else if (student.getDateOfJoin().getMonthValue() == secondaryDate.getMonthValue()) {
+//                    if (student.getDateOfJoin().getDayOfMonth() <= secondaryDate.getDayOfMonth()) {
+//
+//                    }
+//                }
+//            }
+//        }
     }
 
     @FXML

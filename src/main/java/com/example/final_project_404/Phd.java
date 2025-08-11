@@ -1,8 +1,12 @@
 package com.example.final_project_404;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 public class Phd extends Degree implements Serializable,IsPass,SemesterStatusCheckable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     public double conditionalScore = 16;
     @Override
     public CourseStatus getPassStatus(double score) {

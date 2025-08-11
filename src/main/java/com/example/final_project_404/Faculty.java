@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Faculty implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private String facultyName;
     private String id;
     private int establishmentYear;

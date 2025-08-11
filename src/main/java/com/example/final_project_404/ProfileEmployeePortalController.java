@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.Month;
 import java.util.ResourceBundle;
 
@@ -206,12 +207,7 @@ public class ProfileEmployeePortalController implements Initializable {
                                     employee.setGender(newGender.getValue());
                                 }
                                 if (newDateOfBirth.getValue() != null){
-                                    com.example.final_project_404.Date date = new Date();
-
-                                    date.setYear(newDateOfBirth.getValue().getYear());
-                                    date.setMonth(newDateOfBirth.getValue().getMonthValue());
-                                    date.setDay(newDateOfBirth.getValue().getDayOfMonth());
-
+                                    LocalDate date = newDateOfBirth.getValue();
                                     LoginPanelController.employeePerson.setDateOfBirth(date);
                                 }
                                 break;
@@ -244,12 +240,7 @@ public class ProfileEmployeePortalController implements Initializable {
                     employee.setGender(newGender.getValue());
                 }
                 if (newDateOfBirth.getValue() != null){
-                    com.example.final_project_404.Date date = new Date();
-
-                    date.setYear(newDateOfBirth.getValue().getYear());
-                    date.setMonth(newDateOfBirth.getValue().getMonthValue());
-                    date.setDay(newDateOfBirth.getValue().getDayOfMonth());
-
+                    LocalDate date = newDateOfBirth.getValue();
                     LoginPanelController.employeePerson.setDateOfBirth(date);
                 }
                 break;
@@ -273,12 +264,7 @@ public class ProfileEmployeePortalController implements Initializable {
             LoginPanelController.employeePerson.setGender(newGender.getValue());
         }
         if (newDateOfBirth.getValue() != null){
-            com.example.final_project_404.Date date = new Date();
-
-            date.setYear(newDateOfBirth.getValue().getYear());
-            date.setMonth(newDateOfBirth.getValue().getMonthValue());
-            date.setDay(newDateOfBirth.getValue().getDayOfMonth());
-
+            LocalDate date = newDateOfBirth.getValue();
             LoginPanelController.employeePerson.setDateOfBirth(date);
         }
 
@@ -289,8 +275,8 @@ public class ProfileEmployeePortalController implements Initializable {
         System.out.println(LoginPanelController.employeePerson.getGender());
         System.out.println(LoginPanelController.employeePerson.getPhoneNumber());
         System.out.println(LoginPanelController.employeePerson.getNationalId());
-        System.out.println(LoginPanelController.employeePerson.getDateOfBirth().getDay() + " " + Month.of(LoginPanelController.employeePerson.getDateOfBirth().getMonth()) + " " + LoginPanelController.employeePerson.getDateOfBirth().getYear()); // must work on dates of Date
-        System.out.println(LoginPanelController.employeePerson.getDateOfJoin().getDay() + " " + Month.of(LoginPanelController.employeePerson.getDateOfJoin().getMonth()) + " " + LoginPanelController.employeePerson.getDateOfJoin().getYear()); // must work on dates of Date
+        System.out.println(LoginPanelController.employeePerson.getDateOfBirth().getDayOfMonth() + " " + Month.of(LoginPanelController.employeePerson.getDateOfBirth().getMonthValue()) + " " + LoginPanelController.employeePerson.getDateOfBirth().getYear()); // must work on dates of Date
+        System.out.println(LoginPanelController.employeePerson.getDateOfJoin().getDayOfMonth() + " " + Month.of(LoginPanelController.employeePerson.getDateOfJoin().getMonthValue()) + " " + LoginPanelController.employeePerson.getDateOfJoin().getYear()); // must work on dates of Date
 
         Parent root = FXMLLoader.load(getClass().getResource("ProfileEmployeePortal.fxml"));
         Scene scene = new Scene(root);
@@ -309,7 +295,7 @@ public class ProfileEmployeePortalController implements Initializable {
         newGender.setPromptText(employee.getGender().toString());
         newNationalId.setPromptText(employee.getNationalId());
         newPhoneNumber.setPromptText(employee.getPhoneNumber());
-        newDateOfBirth.setPromptText(employee.getDateOfBirth().getDay() + " " + Month.of(employee.getDateOfBirth().getMonth()) + " " + employee.getDateOfBirth().getYear()); // must work on dates of Date
+        newDateOfBirth.setPromptText(employee.getDateOfBirth().getDayOfMonth() + " " + Month.of(employee.getDateOfBirth().getMonthValue()) + " " + employee.getDateOfBirth().getYear()); // must work on dates of Date
 
         newGender.getItems().addAll(Gender.Male, Gender.Female);
     }

@@ -1,49 +1,58 @@
+
 package com.example.final_project_404;
 
+import java.io.Serial;
 import java.io.Serializable;
+import java.time.LocalDate;
 
-public abstract class  Person implements Serializable {
+public abstract class Person implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     private String fullName;
-    private String first_name;
-    private String last_name;
+    private String firstName;
+    private String lastName;
     private String nationalId;
     private String phoneNumber;
-    private com.example.final_project_404.Date dateOfBirth;
-    private com.example.final_project_404.Date dateOfJoin;
+    private LocalDate dateOfBirth;
+    private LocalDate dateOfJoin;
     private Gender gender;
     private Status status;
 
-    Person(String first_name, String last_name, Date dateOfBirth, String nationalId, Gender gender, String phoneNumber, Date dateOfJoin, Status status){
-        this.first_name = first_name;
-        this.last_name = last_name;
+    public Person(String firstName, String lastName, LocalDate dateOfBirth, String nationalId, Gender gender,
+                  String phoneNumber, LocalDate dateOfJoin, Status status) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.nationalId = nationalId;
         this.gender = gender;
         this.phoneNumber = phoneNumber;
         this.dateOfJoin = dateOfJoin;
         this.status = status;
+        updateFullName();
     }
 
-    public  String getFirst_name(){
-        return first_name;
+    public String getFirst_name() {
+        return firstName;
     }
-    public void setFirst_name(String first_name){
-        this.first_name = first_name;
-    }
-
-    public String getLast_name(){
-        return last_name;
-    }
-    public void setLast_name(String last_name){
-        this.last_name = last_name;
+    public void setFirst_name(String firstName) {
+        this.firstName = firstName;
+        updateFullName();
     }
 
-    public Date getDateOfBirth(){
+    public String getLast_name() {
+        return lastName;
+    }
+    public void setLast_name(String lastName) {
+        this.lastName = lastName;
+        updateFullName();
+    }
+
+    public LocalDate getDateOfBirth() {
         return dateOfBirth;
     }
-    public void setDateOfBirth(Date dateOfBirth){
-        this.dateOfBirth=dateOfBirth;
+    public void setDateOfBirth(LocalDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 
     public String getNationalId() {
@@ -60,10 +69,10 @@ public abstract class  Person implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public Date getDateOfJoin() {
+    public LocalDate getDateOfJoin() {
         return dateOfJoin;
     }
-    public void setDateOfJoin(Date dateOfJoin) {
+    public void setDateOfJoin(LocalDate dateOfJoin) {
         this.dateOfJoin = dateOfJoin;
     }
 
@@ -82,10 +91,9 @@ public abstract class  Person implements Serializable {
     }
 
     public String getFullName() {
-        setFullName();
         return fullName;
     }
-    public void setFullName() {
-        fullName = first_name.concat(" ".concat(last_name));
+    private void updateFullName() {
+        this.fullName = firstName + " " + lastName;
     }
 }

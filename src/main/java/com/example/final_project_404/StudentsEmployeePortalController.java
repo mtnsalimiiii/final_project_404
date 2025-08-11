@@ -14,6 +14,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class StudentsEmployeePortalController implements Initializable {
@@ -214,6 +217,9 @@ public class StudentsEmployeePortalController implements Initializable {
         stage.show();
     }
 
+    public boolean isDateInRange(LocalDate date, LocalDate dateStart, LocalDate dateEnd) {
+        return (date.isAfter(dateStart) || date.isEqual(dateStart)) && (date.isBefore(dateEnd) || date.isEqual(dateEnd));
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -331,7 +337,7 @@ public class StudentsEmployeePortalController implements Initializable {
                 }
             } else if (topicChooser.getValue().equals("Age")){
                 for (Student student : University.allStudents){
-                    if (student.getStatus().equals(Status.Active) && student.getDateOfBirth().getAge() == Integer.parseInt(searchBox.getText())){
+                    if (student.getStatus().equals(Status.Active) && Period.between(student.getDateOfBirth(), LocalDate.now()).getYears() == Integer.parseInt(searchBox.getText())){
 
                     }
                 }
@@ -395,37 +401,39 @@ public class StudentsEmployeePortalController implements Initializable {
         });
 
         secondaryDate.setOnAction(event -> {
-            Date primaryDate1 = new Date();
-            primaryDate1.setYear(primaryDate.getValue().getYear());
-            primaryDate1.setMonth(primaryDate.getValue().getMonthValue());
-            primaryDate1.setDay(primaryDate.getValue().getDayOfMonth());
 
-            Date secondaryDate1 = new Date();
-            secondaryDate1.setYear(secondaryDate.getValue().getYear());
-            secondaryDate1.setMonth(secondaryDate.getValue().getMonthValue());
-            secondaryDate1.setDay(secondaryDate.getValue().getDayOfMonth());
+            LocalDate primaryDate1 = primaryDate.getValue();
+            LocalDate secondaryDate1 = secondaryDate.getValue();
 
-            for (Student student : University.allStudents){
-                if (student.getDateOfJoin().getYear() > primaryDate1.getYear() && student.getDateOfJoin().getYear() < secondaryDate1.getYear()){
+            for (Student student : University.allStudents) {
+                if (isDateInRange(student.getDateOfJoin(), primaryDate1, secondaryDate1)){
 
-                } else if (student.getDateOfJoin().getMonth() == primaryDate1.getMonth()) {
-                    if (student.getDateOfJoin().getMonth() > primaryDate1.getMonth()){
+                } else  {
 
-                    } else if (student.getDateOfJoin().getMonth() == primaryDate1.getMonth()) {
-                        if (student.getDateOfJoin().getDay() == primaryDate1.getDay()){
-
-                        }
-                    }
-                } else if (student.getDateOfJoin().getYear() == secondaryDate1.getYear()) {
-                    if (student.getDateOfJoin().getMonth() < secondaryDate1.getMonth()) {
-
-                    } else if (student.getDateOfJoin().getMonth() == secondaryDate1.getMonth()) {
-                        if (student.getDateOfJoin().getDay() <= secondaryDate1.getDay()) {
-
-                        }
-                    }
                 }
             }
+
+//            for (Student student : University.allStudents){
+//                if (student.getDateOfJoin().getYear() > primaryDate1.getYear() && student.getDateOfJoin().getYear() < secondaryDate1.getYear()){
+//
+//                } else if (student.getDateOfJoin().getMonthValue() == primaryDate1.getMonthValue()) {
+//                    if (student.getDateOfJoin().getMonthValue() > primaryDate1.getMonthValue()){
+//
+//                    } else if (student.getDateOfJoin().getMonth() == primaryDate1.getMonth()) {
+//                        if (student.getDateOfJoin().getDayOfMonth() == primaryDate1.getDayOfMonth()){
+//
+//                        }
+//                    }
+//                } else if (student.getDateOfJoin().getYear() == secondaryDate1.getYear()) {
+//                    if (student.getDateOfJoin().getMonthValue() < secondaryDate1.getMonthValue()) {
+//
+//                    } else if (student.getDateOfJoin().getMonth() == secondaryDate1.getMonth()) {
+//                        if (student.getDateOfJoin().getDayOfMonth() <= secondaryDate1.getDayOfMonth()) {
+//
+//                        }
+//                    }
+//                }
+//            }
         });
 
     }

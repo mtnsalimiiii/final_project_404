@@ -6,6 +6,7 @@ module com.example.final_project_404 {
     requires java.rmi;
     requires jdk.security.auth;
     requires java.compiler;
+    requires jdk.jdi;
 
 
     opens com.example.final_project_404 to javafx.fxml;

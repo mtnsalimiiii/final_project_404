@@ -180,22 +180,6 @@ public class AddEmployeeAdminPortalController implements Initializable {
         stage.show();
     }
 
-    public Date getDateOfBirth(ActionEvent event) {
-        Date dateOfBirth = new Date();
-        dateOfBirth.setYear(dateOfBirthRegisterEmployeeAdmin.getValue().getYear());
-        dateOfBirth.setMonth(dateOfBirthRegisterEmployeeAdmin.getValue().getMonthValue());
-        dateOfBirth.setDay(dateOfBirthRegisterEmployeeAdmin.getValue().getDayOfMonth());
-        return dateOfBirth;
-    }
-
-    public Date getDateOfHire(){
-        Date date = new Date();
-        date.setYear(LocalDate.now().getYear());
-        date.setMonth(LocalDate.now().getMonthValue());
-        date.setDay(LocalDate.now().getDayOfMonth());
-        return date;
-    }
-
     public String getEmployeeId(){
         return "EMP"+(University.allEmployees.size()+1);
     }
@@ -204,7 +188,7 @@ public class AddEmployeeAdminPortalController implements Initializable {
         Employee.loadAllEmployee();
         University.loadFaculties();
 
-        Date dateOfBirth = getDateOfBirth(event);
+        LocalDate dateOfBirth = dateOfBirthRegisterEmployeeAdmin.getValue();
         String firstName = firstnameRegisterEmployeeAdmin.getText().trim();
         String lastName = lastnameRegisterEmployeeAdmin.getText().trim();
         String phoneNumber = phoneNumberRegisterEmployeeAdmin.getText().trim();
@@ -212,7 +196,7 @@ public class AddEmployeeAdminPortalController implements Initializable {
         Gender gender = genderChooserRegisterEmployeeAdmin.getValue();
         String faculty = facultyChooserRegisterEmployeeAdmin.getValue();
         String department = departmentChooserRegisterEmployeeAdmin.getValue();
-        Date dateOfHire = getDateOfHire();
+        LocalDate dateOfHire = LocalDate.now();
         String id = getEmployeeId();
 
         if (!firstName.isBlank() && !lastName.isBlank() && !phoneNumber.isBlank() && !nationalId.isBlank() && gender!=null && faculty!=null && department!=null) {

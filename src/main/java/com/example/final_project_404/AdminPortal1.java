@@ -1,5 +1,8 @@
 package com.example.final_project_404;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +20,7 @@ import javax.swing.*;
 import java.io.*;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ResourceBundle;
 
 public class AdminPortal1 implements Initializable {
@@ -184,6 +188,27 @@ public class AdminPortal1 implements Initializable {
     private ComboBox<String> employeeChooserEditEmployee;
 
     @FXML
+    private Label errorLabelAddFaculty;
+
+    @FXML
+    private Label errorLabelFacultyNameAddFaculty;
+
+    @FXML
+    private Label errorLabelFacultyNameEditFaculty;
+
+    @FXML
+    private Label errorLabelEditFaculty;
+
+    @FXML
+    private Label errorLabelEstablishmentYearAddFaculty;
+
+    @FXML
+    private Label errorLabelEstablishmentEditFaculty;
+
+    @FXML
+    private Label errorLabelFacultyChooserEditFaculty;
+
+    @FXML
     private TextField establishmentYearAddDepartment;
 
     @FXML
@@ -330,6 +355,30 @@ public class AdminPortal1 implements Initializable {
     @FXML
     private Button reportsScrollPane;
 
+//    Reports
+    // People
+    @FXML private TableView<People> tableViewReportPeople;
+
+    @FXML private TableColumn<People, String> colNameReportPeople;
+    @FXML private TableColumn<People, Integer> colAgeReportPeople;
+    @FXML private TableColumn<People, String> colGenderReportPeople;
+    @FXML private TableColumn<People, String> colPhoneReportPeople;
+    @FXML private TableColumn<People, String> colNationalIDReportPeople;
+    @FXML private TableColumn<People, String> colRoleReportPeople;
+    @FXML private TableColumn<People, String> colIDReportPeople;
+    @FXML private TableColumn<People, String> colDateOfRegisterReportPeople;
+    @FXML private TableColumn<People, String> colFacultyReportPeople;
+    @FXML private TableColumn<People, String> colDepartmentReportPeople;
+    @FXML private TableColumn<People, String> colMajorReportPeople;
+    @FXML private TableColumn<People, String> colDegreeReportPeople;
+    @FXML private TableColumn<People, String> colStatusReportPeople;
+    @FXML private TextField searchFieldPeople;
+
+    private ObservableList<People> peoplelist;
+    private FilteredList<People> filteredListReportPeople;
+
+//    Reports Done
+
     @FXML
     private VBox reportsVbox;
 
@@ -338,6 +387,12 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     private AnchorPane semestersReportsAnchorPane;
+
+    @FXML
+    private Label successLabelEditFaculty;
+
+    @FXML
+    private Label successLabelAddFaculty;
 
     @FXML
     private AnchorPane updateDepartmentAnchorPane;
@@ -529,24 +584,6 @@ public class AdminPortal1 implements Initializable {
 
     }
 
-    public Date getDateOfBirthAddEmployee(ActionEvent event) {
-        Date date = new Date();
-        date.setYear(dateOfBirthAddEmployee.getValue().getYear());
-        date.setMonth(dateOfBirthAddEmployee.getValue().getMonthValue());
-        date.setDay(dateOfBirthAddEmployee.getValue().getDayOfMonth());
-        date.setDate(dateOfBirthAddEmployee.getValue());
-        return date;
-    }
-
-    public Date getDateOfHireAddEmployee() {
-        Date date = new Date();
-        date.setYear(LocalDate.now().getYear());
-        date.setMonth(LocalDate.now().getMonthValue());
-        date.setDay(LocalDate.now().getDayOfMonth());
-        date.setDate(LocalDate.now());
-        return date;
-    }
-
     public String getEmployeeId(){
         return "EMP"+(University.allEmployees.size()+1);
     }
@@ -556,7 +593,7 @@ public class AdminPortal1 implements Initializable {
         Employee.loadAllEmployee();
         University.loadFaculties();
 
-        Date dateOfBirth = getDateOfBirthAddEmployee(event);
+        LocalDate dateOfBirth = dateOfBirthAddEmployee.getValue();
         String firstName = firstNameAddEmployee.getText().trim();
         String lastName = lastNameAddEmployee.getText().trim();
         String phoneNumber = phoneNumberAddEmployee.getText().trim();
@@ -564,7 +601,7 @@ public class AdminPortal1 implements Initializable {
         Gender gender = Gender.valueOf(genderChooserAddEmployee.getValue());
         String faculty = facultyChooserAddEmployee.getValue();
         String department = departmentChooserAddEmployee.getValue();
-        Date dateOfHire = getDateOfHireAddEmployee();
+        LocalDate dateOfHire = LocalDate.now();
         String id = getEmployeeId();
 
         if (!firstName.isBlank() && !lastName.isBlank() && !phoneNumber.isBlank() && !nationalId.isBlank() && gender!=null && faculty!=null && department!=null) {
@@ -1316,7 +1353,7 @@ public class AdminPortal1 implements Initializable {
                 for (Department department : faculty.departments){
                     if (department.getName().equals(departmentChooserEditEmployee.getValue())){
                         for (Employee employee : department.employees){
-                            if (employee.getId().equals(employeeChooserEditEmployee.getValue())){
+                            if (employee.getFullName().equals(employeeChooserEditEmployee.getValue())){
                                 if (!newFirstNameEditEmployee.getText().isBlank()){
                                     employee.setFirst_name(newFirstNameEditEmployee.getText());
                                 }
@@ -1327,10 +1364,7 @@ public class AdminPortal1 implements Initializable {
                                     employee.setGender(Gender.valueOf(genderChooserEditEmployee.getValue()));
                                 }
                                 if (dateOfBirthEditEmployee.getValue() != null){
-                                    Date date = new Date();
-                                    date.setYear(dateOfBirthEditEmployee.getValue().getYear());
-                                    date.setMonth(dateOfBirthEditEmployee.getValue().getMonthValue());
-                                    date.setDay(dateOfBirthEditEmployee.getValue().getDayOfMonth());
+                                    LocalDate date = dateOfBirthEditEmployee.getValue();
                                     employee.setDateOfBirth(date);
                                 }
                                 if (!nationalIdEditEmployee.getText().isBlank()){
@@ -1352,7 +1386,7 @@ public class AdminPortal1 implements Initializable {
 
         Employee.loadAllEmployee();
         for (Employee employee : University.allEmployees){
-            if (employee.getId().equals(employeeChooserEditEmployee.getValue())){
+            if (employee.getFullName().equals(employeeChooserEditEmployee.getValue())){
                 if (!newFirstNameEditEmployee.getText().isBlank()){
                     employee.setFirst_name(newFirstNameEditEmployee.getText());
                 }
@@ -1363,10 +1397,7 @@ public class AdminPortal1 implements Initializable {
                     employee.setGender(Gender.valueOf(genderChooserEditEmployee.getValue()));
                 }
                 if (dateOfBirthEditEmployee.getValue() != null){
-                    Date date = new Date();
-                    date.setYear(dateOfBirthEditEmployee.getValue().getYear());
-                    date.setMonth(dateOfBirthEditEmployee.getValue().getMonthValue());
-                    date.setDay(dateOfBirthEditEmployee.getValue().getDayOfMonth());
+                    LocalDate date = dateOfBirthEditEmployee.getValue();
                     employee.setDateOfBirth(date);
                 }
                 if (!nationalIdEditEmployee.getText().isBlank()){
@@ -1376,7 +1407,7 @@ public class AdminPortal1 implements Initializable {
                     employee.setPhoneNumber(phoneNumberEditEmployee.getText());
                 }
                 System.out.println("successful");
-                System.out.println(employee.getFirst_name()+" "+employee.getLast_name());
+                System.out.println(employee.getFullName());
                 System.out.println(employee.getDateOfBirth());
                 System.out.println(employee.getPhoneNumber());
                 System.out.println(employee.getNationalId());
@@ -1389,11 +1420,15 @@ public class AdminPortal1 implements Initializable {
                 employeeChooserEditEmployee.getSelectionModel().selectFirst();
                 genderChooserEditEmployee.getSelectionModel().selectFirst();
                 newFirstNameEditEmployee.clear();
+                newFirstNameEditEmployee.setPromptText(employee.getFirst_name());
                 newLastNameEditEmployee.clear();
+                newLastNameEditEmployee.setPromptText(employee.getLast_name());
                 phoneNumberEditEmployee.clear();
+                phoneNumberEditEmployee.setPromptText(employee.getPhoneNumber());
                 nationalIdEditEmployee.clear();
+                nationalIdEditEmployee.setPromptText(employee.getNationalId());
                 dateOfBirthEditEmployee.setValue(null);
-                dateOfBirthEditEmployee.setPromptText("Date of Birth");
+                dateOfBirthEditEmployee.setPromptText(employee.getDateOfBirth().getDayOfMonth()+" "+Month.of(employee.getDateOfBirth().getMonthValue())+" "+employee.getDateOfBirth().getYear());
 
                 break;
             }
@@ -1541,6 +1576,8 @@ public class AdminPortal1 implements Initializable {
     void peopleReports(ActionEvent event) {
         peopleReportsAnchorPane.setVisible(true);
 
+        searchFieldPeople.clear();
+
     }
 
     @FXML
@@ -1674,88 +1711,125 @@ public class AdminPortal1 implements Initializable {
     }
 
 //    Reports ------>>> People
-    private void setupGenderContextMenu() {
-//        ContextontextMenu(genderMenu);
+    private void setupGenderContextMenuPeople() {
+        ContextMenu genderMenu = new ContextMenu();
+
+        MenuItem male = new MenuItem("Male");
+        male.setOnAction(e -> filterByGenderPeople("Male"));
+
+        MenuItem female = new MenuItem("Female");
+        female.setOnAction(e -> filterByGenderPeople("Female"));
+
+        MenuItem allGender = new MenuItem("All");
+        allGender.setOnAction(e -> {
+            filteredListReportPeople.setPredicate(p -> true);
+            tableViewReportPeople.setItems(filteredListReportPeople);
+        });
+
+        genderMenu.getItems().addAll(male, female, allGender);
+        colGenderReportPeople.setContextMenu(genderMenu);
+    }
+    private void filterByGenderPeople(String gender) {
+        filteredListReportPeople.setPredicate(people -> people.getGender().equalsIgnoreCase(gender));
     }
 
-    private void filterByGender(String gender) {
-//        filteredList.setPredicate(student -> student.getGender().equalsIgnoreCase(gender));
+    private void setupStatusContextMenuPeople() {
+        ContextMenu statusMenu = new ContextMenu();
+
+        MenuItem active = new MenuItem("Active");
+        active.setOnAction(e -> filterByStatusPeople("Active"));
+        MenuItem inactive = new MenuItem("Inactive");
+        inactive.setOnAction(e -> filterByStatusPeople("Inactive"));
+
+        MenuItem allStatus = new MenuItem("All");
+        allStatus.setOnAction(e -> {
+            filteredListReportPeople.setPredicate(p -> true);
+            tableViewReportPeople.setItems(filteredListReportPeople);
+        });
+
+        statusMenu.getItems().addAll(active, inactive, allStatus);
+        colStatusReportPeople.setContextMenu(statusMenu);
+    }
+    private void filterByStatusPeople(String status) {
+        filteredListReportPeople.setPredicate(people -> people.getStatus().equalsIgnoreCase(status));
     }
 
-    private void setupStatusContextMenu() {
-//        ContextMenu statusMenu = new ContextMenu();
-//
-//        MenuItem active = new MenuItem("Active");
-//        active.setOnAction(e -> filterByStatus("Active"));
-//        MenuItem inactive = new MenuItem("Inactive");
-//        inactive.setOnAction(e -> filterByStatus("Inactive"));
-//
-//        MenuItem all = new MenuItem("All");
-//        all.setOnAction(e -> {
-//            filteredList.setPredicate(p -> true);
-//            tableView.setItems(filteredList);
-//        });
-//
-//        statusMenu.getItems().addAll(active, inactive, all);
-//        colStatus.setContextMenu(statusMenu);
+    private void setupRoleContextMenuPeople() {
+        ContextMenu roleMenu = new ContextMenu();
+
+        MenuItem employee = new MenuItem("Employee");
+        employee.setOnAction(e -> filterByRolePeople("Employee"));
+        MenuItem professor = new MenuItem("Professor");
+        professor.setOnAction(e -> filterByRolePeople("Professor"));
+        MenuItem student = new MenuItem("Student");
+        student.setOnAction(e -> filterByRolePeople("Student"));
+        MenuItem allRole = new MenuItem("All");
+        allRole.setOnAction(e -> {
+            filteredListReportPeople.setPredicate(p -> true);
+            tableViewReportPeople.setItems(filteredListReportPeople);
+        });
+
+        roleMenu.getItems().addAll(employee, professor, student, allRole);
+        colRoleReportPeople.setContextMenu(roleMenu);
     }
 
-    private void filterByStatus(String status) {
-//        filteredList.setPredicate(student -> student.getStatus().equalsIgnoreCase(status));
+    private void filterByRolePeople(String role) {
+        filteredListReportPeople.setPredicate(people -> people.getRole().equalsIgnoreCase(role));
     }
 
     private void updateSelectedStatus(String status) {
-//        Student selected = tableView.getSelectionModel().getSelectedItem();
+        People selected = tableViewReportPeople.getSelectionModel().getSelectedItem();
+        if (selected != null) {
+            selected.setStatus(Status.valueOf(status));
+            tableViewReportPeople.refresh();
+        }
+    }
+
+    @FXML
+    private void onSearchPeople() {
+        String keyword = searchFieldPeople.getText().toLowerCase().trim();
+        if (keyword.isEmpty()) {
+            filteredListReportPeople.setPredicate(p -> true);
+            return;
+        }
+        filteredListReportPeople.setPredicate(people ->
+                people.getFullName().toLowerCase().contains(keyword) ||
+                        String.valueOf(people.getAge()).contains(keyword) ||
+                        people.getGender().toLowerCase().contains(keyword) ||
+                        people.getPhoneNumber().toLowerCase().contains(keyword) ||
+                        people.getNationalId().toLowerCase().contains(keyword) ||
+                        people.getId().toLowerCase().contains(keyword) ||
+                        people.getDateOfJoin().toLowerCase().contains(keyword) ||
+                        people.getFaculty().toLowerCase().contains(keyword) ||
+                        people.getDepartment().toLowerCase().contains(keyword) ||
+                        people.getMajor().toLowerCase().contains(keyword) ||
+                        people.getDegree().toLowerCase().contains(keyword) ||
+                        people.getStatus().toLowerCase().contains(keyword)
+        );
+    }
+
+//    @FXML
+//    private void onSetActivePeople() {
+//        People selected = tableViewReportPeople.getSelectionModel().getSelectedItem();
 //        if (selected != null) {
-//            selected.setStatus(status);
-//            tableView.refresh();
+//            selected.setStatus(Status.valueOf("Active"));
+//            tableViewReportPeople.refresh();
 //        }
-    }
-
-    @FXML
-    private void onSearch() {
-//        String keyword = searchField.getText().toLowerCase().trim();
-//        if (keyword.isEmpty()) {
-//            filteredList.setPredicate(p -> true);
-//            return;
-//        }
-//        filteredList.setPredicate(student ->
-//                student.getName().toLowerCase().contains(keyword) ||
-//                        String.valueOf(student.getAge()).contains(keyword) ||
-//                        student.getGender().toLowerCase().contains(keyword) ||
-//                        student.getPhone().toLowerCase().contains(keyword) ||
-//                        student.getNationalID().toLowerCase().contains(keyword) ||
-//                        student.getId().toLowerCase().contains(keyword) ||
-//                        student.getDateOfRegistration().toLowerCase().contains(keyword) ||
-//                        student.getFaculty().toLowerCase().contains(keyword) ||
-//                        student.getDepartment().toLowerCase().contains(keyword) ||
-//                        student.getMajor().toLowerCase().contains(keyword) ||
-//                        student.getDegree().toLowerCase().contains(keyword) ||
-//                        student.getStatus().toLowerCase().contains(keyword)
-//        );
-    }
-
-    @FXML
-    private void onSetActive() {
-//        Student selected = tableView.getSelectionModel().getSelectedItem();
+//    }
+//
+//    @FXML
+//    private void onSetInactivePeople() {
+//        People selected = tableViewReportPeople.getSelectionModel().getSelectedItem();
 //        if (selected != null) {
-//            selected.setStatus("Active");
-//            tableView.refresh();
+//            selected.setStatus(Status.valueOf("Inactive"));
+//            tableViewReportPeople.refresh();
 //        }
-    }
+//    }
 
     @FXML
-    private void onSetInactive() {
-//        Student selected = tableView.getSelectionModel().getSelectedItem();
-//        if (selected != null) {
-//            selected.setStatus("Inactive");
-//            tableView.refresh();
-//        }
-    }
-
-    @FXML
-    private void onBack() {
-        // دکمه Back کاری انجام نمیده
+    private void onBackPeople() {
+        peopleReportsAnchorPane.setVisible(false);
+        reportsAnchorPane.setVisible(true);
     }
 
     @FXML
@@ -1765,80 +1839,94 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     void setDepartmentChooserDeactiveDepartment(ActionEvent event) {
-//        if (departmentChooserDeactiveDepartment.getValue().equals("Department")) {
-//            deactiveDepartmentButton.setDisable(true);
-//        } else {
-//            deactiveDepartmentButton.setDisable(false);
-//        }
+
     }
 
     @FXML
     void setDepartmentChooserEditDepartment(ActionEvent event) {
-
-//        if (departmentChooserEditDepartment.getValue().equals("Department")) {
-//            editDepartmentButton.setDisable(true);
-//        } else {
-//            editDepartmentButton.setDisable(false);
-//        }
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName().equals(facultyChooserEditDepartment.getValue())) {
+                for (Department department : faculty.departments) {
+                    if (department.getName().equals(departmentChooserEditDepartment.getValue())) {
+                        newDepartmentNameEditDepartment.setPromptText(department.getName());
+                        newEstablishmentYearEditDepartment.setPromptText(String.valueOf(department.getEstablishmentYear()));
+                        break;
+                    }
+                }
+                break;
+            }
+        }
     }
 
     @FXML
     void setEmployeeChooserDeactive(ActionEvent event) {
-//        if (employeeChooserDeactiveEmployee.getValue().equals("Employee ID")) {
-//            deactiveEmployeeButton.setDisable(true);
-//        } else {
-//            deactiveEmployeeButton.setDisable(false);
-//        }
+
     }
 
     @FXML
     void setEmployeeChooserEditEmployee(ActionEvent event) {
-//        if (employeeChooserEditEmployee.getValue().equals("Employee ID")) {
-//            editEmployeeButton.setDisable(true);
-//        } else {
-//            editEmployeeButton.setDisable(false);
-//        }
+        Employee.loadAllEmployee();
+        for (Employee employee : University.allEmployees) {
+            if (employee.getFullName().equals(employeeChooserEditEmployee.getValue())) {
+                newFirstNameEditEmployee.setPromptText(employee.getFirst_name());
+                newLastNameEditEmployee.setPromptText(employee.getLast_name());
+                genderChooserEditEmployee.getSelectionModel().select(String.valueOf(employee.getGender()));
+                phoneNumberEditEmployee.setPromptText(employee.getPhoneNumber());
+                nationalIdEditEmployee.setPromptText(employee.getNationalId());
+                dateOfBirthEditEmployee.setPromptText(employee.getDateOfBirth().getDayOfMonth() + " " + Month.of(employee.getDateOfBirth().getMonthValue()) + " " + employee.getDateOfBirth().getYear());
+            }
+        }
     }
 
     @FXML
     void setFacultyChooserDeactiveFaculty(ActionEvent event) {
-//        if (facultyChooserDeactiveFaculty.getValue().equals("Faculty")) {
-//            deactiveFacultyButton.setDisable(true);
-//        } else {
-//            deactiveFacultyButton.setDisable(false);
-//        }
+
     }
 
     @FXML
     void setFacultyChooserEditFaculty(ActionEvent event) {
-//        if (facultyChooserEditFaculty.getValue().equals("Faculty")) {
-//            editFacultyButton.setDisable(true);
-//        } else {
-//            editFacultyButton.setDisable(false);
-//        }
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName().equals(facultyChooserEditFaculty.getValue())) {
+                newFacultyNameEditFaculty.setPromptText(faculty.getFacultyName());
+                newEstablishmentYearEditFaculty.setPromptText(String.valueOf(faculty.getEstablishmentYear()));
+                break;
+            }
+        }
     }
 
     @FXML
     void setMajorChooserDeactiveMajor(ActionEvent event) {
-//        if (majorChooserDeactiveMajor.getValue().equals("Major")) {
-//            deactiveMajorButton.setDisable(true);
-//        } else {
-//            deactiveMajorButton.setDisable(false);
-//        }
+
     }
 
     @FXML
     void setMajorChooserEditMajor(ActionEvent event) {
-//        if (majorChooserEditMajor.getValue().equals("Major")) {
-//            editMajorButton.setDisable(true);
-//        } else {
-//            editMajorButton.setDisable(false);
-//        }
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName().equals(facultyChooserEditMajor.getValue())) {
+                for (Department department : faculty.departments) {
+                    if (department.getName().equals(departmentChooserEditMajor.getValue())) {
+                        for (Major major : department.majors) {
+                            if (major.getName().equals(majorChooserEditMajor.getValue())) {
+                                newMajorNameEditMajor.setPromptText(major.getName());
+                                newEstablishmentYearEditMajor.setPromptText(String.valueOf(major.getEstablishmentYear()));
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
     }
 
     @FXML
     void setOperationChooserUpdateDepartment(ActionEvent event) {
         if (operationChooserUpdateDepartment.getValue() != null) {
+            University.loadFaculties();
             if (operationChooserUpdateDepartment.getValue().equals("Edit")){
 //            activate the edit screen and deactivate the deactive screen
                 editDepartmentVbox.setVisible(true);
@@ -1909,6 +1997,7 @@ public class AdminPortal1 implements Initializable {
     @FXML
     void setOperationChooserUpdateEmployee(ActionEvent event) {
         if (operationChooserUpdateEmployee.getValue() != null) {
+            University.loadFaculties();
             if (operationChooserUpdateEmployee.getValue().equals("Edit")){
 //            activate the edit screen and deactivate the deactive screen
                 editEmployeeVbox.setVisible(true);
@@ -1943,10 +2032,10 @@ public class AdminPortal1 implements Initializable {
                 departmentChooserEditEmployee.setOnAction(event1 -> {
                     Employee.loadAllEmployee();
                     employeeChooserEditEmployee.getItems().clear();
-                    employeeChooserEditEmployee.getItems().add("Employee ID");
+                    employeeChooserEditEmployee.getItems().add("Employee");
                     for (Employee employee : University.allEmployees) {
                         if (employee.getStatus().equals(Status.Active) && employee.getDepartment().equals(departmentChooserEditEmployee.getValue())) {
-                            employeeChooserEditEmployee.getItems().add(employee.getId());
+                            employeeChooserEditEmployee.getItems().add(employee.getFullName());
                         }
                     }
                     employeeChooserEditEmployee.setVisibleRowCount(4);
@@ -1965,6 +2054,7 @@ public class AdminPortal1 implements Initializable {
                 nationalIdEditEmployee.clear();
                 dateOfBirthEditEmployee.setValue(null);
                 dateOfBirthEditEmployee.setPromptText("Date of Birth");
+
             } else if (operationChooserUpdateEmployee.getValue().equals("Deactive")){
 //            activate the deactive screen and deactivate the edit screen
                 editEmployeeVbox.setVisible(false);
@@ -1999,10 +2089,10 @@ public class AdminPortal1 implements Initializable {
                 departmentChooserDeactiveEmployee.setOnAction(event1 -> {
                     Employee.loadAllEmployee();
                     employeeChooserDeactiveEmployee.getItems().clear();
-                    employeeChooserDeactiveEmployee.getItems().add("Employee ID");
+                    employeeChooserDeactiveEmployee.getItems().add("Employee");
                     for (Employee employee : University.allEmployees) {
                         if (employee.getStatus().equals(Status.Active) && employee.getDepartment().equals(departmentChooserDeactiveEmployee.getValue())) {
-                            employeeChooserDeactiveEmployee.getItems().add(employee.getId());
+                            employeeChooserDeactiveEmployee.getItems().add(employee.getFullName());
                         }
                     }
                     employeeChooserDeactiveEmployee.setVisibleRowCount(4);
@@ -2017,8 +2107,8 @@ public class AdminPortal1 implements Initializable {
     @FXML
     void setOperationChooserUpdateFaculty(ActionEvent event) {
         if(operationChooserUpdateFaculty.getValue() != null) {
+            University.loadFaculties();
             if (operationChooserUpdateFaculty.getValue().equals("Edit")) {
-                University.loadFaculties();
     //                activate the edit screen and deactivate the deactive screen
                 editFacultyVbox.setVisible(true);
                 deactiveFacultyVbox.setVisible(false);
@@ -2056,8 +2146,8 @@ public class AdminPortal1 implements Initializable {
     @FXML
     void setOperationChooserUpdateMajor(ActionEvent event) {
         if (operationChooserUpdateMajor.getValue() != null) {
+            University.loadFaculties();
             if (operationChooserUpdateMajor.getValue().equals("Edit")){
-                University.loadFaculties();
 //            activate the edit screen and deactivate the deactive screen
                 editMajorVbox.setVisible(true);
                 deactiveMajorVbox.setVisible(false);
@@ -2481,304 +2571,65 @@ public class AdminPortal1 implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-//        University.loadFaculties();
-//
-//        //        ------------------------Operation Chooser-----------------------------
-//
-//        operationChooserUpdateFaculty.getItems().addAll("Choose Your Operation: ", "Edit", "Deactive");
-//        operationChooserUpdateFaculty.setVisibleRowCount(3);
-//
-//        operationChooserUpdateDepartment.getItems().addAll("Choose Your Operation: ", "Edit", "Deactive");
-//        operationChooserUpdateDepartment.setVisibleRowCount(3);
-//
-//        operationChooserUpdateMajor.getItems().addAll("Choose Your Operation: ", "Edit", "Deactive");
-//        operationChooserUpdateMajor.setVisibleRowCount(3);
-//
-//        operationChooserUpdateEmployee.getItems().addAll("Choose Your Operation: ", "Edit", "Deactive");
-//        operationChooserUpdateEmployee.setVisibleRowCount(3);
-//
-////        ------------------------Faculty Chooser-----------------------------
-//        facultyChooserEditFaculty.getItems().clear();
-//        facultyChooserEditFaculty.getItems().add("Faculty");
-//        facultyChooserDeactiveFaculty.getItems().clear();
-//        facultyChooserDeactiveFaculty.getItems().add("Faculty");
-//        facultyChooserAddDepartment.getItems().clear();
-//        facultyChooserAddDepartment.getItems().add("Faculty");
-//        facultyChooserEditDepartment.getItems().clear();
-//        facultyChooserEditDepartment.getItems().add("Faculty");
-//        facultyChooserDeactiveDepartment.getItems().clear();
-//        facultyChooserDeactiveDepartment.getItems().add("Faculty");
-//        facultyChooserAddMajor.getItems().clear();
-//        facultyChooserAddMajor.getItems().add("Faculty");
-//        facultyChooserEditMajor.getItems().clear();
-//        facultyChooserEditMajor.getItems().add("Faculty");
-//        facultyChooserDeactiveMajor.getItems().clear();
-//        facultyChooserDeactiveMajor.getItems().add("Faculty");
-//        facultyChooserAddEmployee.getItems().clear();
-//        facultyChooserAddEmployee.getItems().add("Faculty");
-//        facultyChooserEditEmployee.getItems().clear();
-//        facultyChooserEditEmployee.getItems().add("Faculty");
-//        facultyChooserDeactiveEmployee.getItems().clear();
-//        facultyChooserDeactiveEmployee.getItems().add("Faculty");
-//        for (Faculty faculty : University.allFaculties) {
-//            if (faculty.getStatus().equals(Status.Active)){
-//                facultyChooserEditFaculty.getItems().add(faculty.getFacultyName());
-//                facultyChooserDeactiveFaculty.getItems().add(faculty.getFacultyName());
-//                facultyChooserAddDepartment.getItems().add(faculty.getFacultyName());
-//                facultyChooserEditDepartment.getItems().add(faculty.getFacultyName());
-//                facultyChooserDeactiveDepartment.getItems().add(faculty.getFacultyName());
-//                facultyChooserAddMajor.getItems().add(faculty.getFacultyName());
-//                facultyChooserEditMajor.getItems().add(faculty.getFacultyName());
-//                facultyChooserDeactiveMajor.getItems().add(faculty.getFacultyName());
-//                facultyChooserAddEmployee.getItems().add(faculty.getFacultyName());
-//                facultyChooserEditEmployee.getItems().add(faculty.getFacultyName());
-//                facultyChooserDeactiveEmployee.getItems().add(faculty.getFacultyName());
-//            }
-//        }
-//        facultyChooserEditFaculty.setVisibleRowCount(4);
-//        facultyChooserDeactiveFaculty.setVisibleRowCount(4);
-//        facultyChooserAddDepartment.setVisibleRowCount(4);
-//        facultyChooserEditDepartment.setVisibleRowCount(4);
-//        facultyChooserDeactiveDepartment.setVisibleRowCount(4);
-//        facultyChooserAddMajor.setVisibleRowCount(4);
-//        facultyChooserEditMajor.setVisibleRowCount(4);
-//        facultyChooserDeactiveMajor.setVisibleRowCount(4);
-//        facultyChooserAddEmployee.setVisibleRowCount(4);
-//        facultyChooserEditEmployee.setVisibleRowCount(4);
-//        facultyChooserDeactiveEmployee.setVisibleRowCount(4);
-//
-//        facultyChooserEditFaculty.getSelectionModel().selectFirst();
-//        facultyChooserDeactiveFaculty.getSelectionModel().selectFirst();
-//        facultyChooserEditDepartment.getSelectionModel().selectFirst();
-//        facultyChooserDeactiveDepartment.getSelectionModel().selectFirst();
-//        facultyChooserAddMajor.getSelectionModel().selectFirst();
-//        facultyChooserEditMajor.getSelectionModel().selectFirst();
-//        facultyChooserDeactiveMajor.getSelectionModel().selectFirst();
-//        facultyChooserAddEmployee.getSelectionModel().selectFirst();
-//        facultyChooserEditEmployee.getSelectionModel().selectFirst();
-//        facultyChooserDeactiveEmployee.getSelectionModel().selectFirst();
-//
-////        ------------------------Department Chooser-----------------------------
-//
-//        facultyChooserAddMajor.setOnAction(e -> {
-//            departmentChooserAddMajor.getItems().clear();
-//            departmentChooserAddMajor.getItems().add("Department");
-//
-//            for (Faculty faculty : University.allFaculties){
-//                if (faculty.getFacultyName().equals(facultyChooserAddMajor.getValue()) && faculty.getStatus().equals(Status.Active)){
-//                    for (Department department : faculty.departments){
-//                        if (department.getStatus().equals(Status.Active)){
-//                            departmentChooserAddMajor.getItems().add(department.getName());
-//                        }
-//                    }
-//                    departmentChooserAddMajor.setVisibleRowCount(4);
-//                }
-//            }
-//            departmentChooserAddMajor.getSelectionModel().selectFirst();
-//        });
-//
-//        facultyChooserAddEmployee.setOnAction(e -> {
-//            departmentChooserAddEmployee.getItems().clear();
-//            departmentChooserAddEmployee.getItems().add("Department");
-//
-//            for (Faculty faculty : University.allFaculties){
-//                if (faculty.getFacultyName().equals(facultyChooserAddEmployee.getValue()) && faculty.getStatus().equals(Status.Active)){
-//                    for (Department department : faculty.departments){
-//                        if (department.getStatus().equals(Status.Active)){
-//                            departmentChooserAddEmployee.getItems().add(department.getName());
-//                        }
-//                    }
-//                    departmentChooserAddEmployee.setVisibleRowCount(4);
-//                }
-//            }
-//            departmentChooserAddEmployee.getSelectionModel().selectFirst();
-//        });
-//
-//        facultyChooserEditDepartment.setOnAction(e -> {
-//            departmentChooserEditDepartment.getItems().clear();
-//            departmentChooserEditDepartment.getItems().add("Department");
-//
-//            for (Faculty faculty : University.allFaculties){
-//                if (faculty.getFacultyName().equals(facultyChooserEditDepartment.getValue()) && faculty.getStatus().equals(Status.Active)){
-//                    for (Department department : faculty.departments){
-//                        if (department.getStatus().equals(Status.Active)){
-//                            departmentChooserEditDepartment.getItems().add(department.getName());
-//                        }
-//                    }
-//                    departmentChooserEditDepartment.setVisibleRowCount(4);
-//                }
-//            }
-//            departmentChooserEditDepartment.getSelectionModel().selectFirst();
-//        });
-//
-//        facultyChooserEditMajor.setOnAction(e -> {
-//            departmentChooserEditMajor.getItems().clear();
-//            departmentChooserEditMajor.getItems().add("Department");
-//
-//            for (Faculty faculty : University.allFaculties){
-//                if (faculty.getFacultyName().equals(facultyChooserEditMajor.getValue()) && faculty.getStatus().equals(Status.Active)){
-//                    for (Department department : faculty.departments){
-//                        if (department.getStatus().equals(Status.Active)){
-//                            departmentChooserEditMajor.getItems().add(department.getName());
-//                        }
-//                    }
-//                    departmentChooserEditMajor.setVisibleRowCount(4);
-//                }
-//            }
-//            departmentChooserEditMajor.getSelectionModel().selectFirst();
-//        });
-//
-//        facultyChooserEditEmployee.setOnAction(e -> {
-//            departmentChooserEditEmployee.getItems().clear();
-//            departmentChooserEditEmployee.getItems().add("Department");
-//
-//            for (Faculty faculty : University.allFaculties){
-//                if (faculty.getFacultyName().equals(facultyChooserEditEmployee.getValue()) && faculty.getStatus().equals(Status.Active)){
-//                    for (Department department : faculty.departments){
-//                        if (department.getStatus().equals(Status.Active)){
-//                            departmentChooserEditEmployee.getItems().add(department.getName());
-//                        }
-//                    }
-//                    departmentChooserEditEmployee.setVisibleRowCount(4);
-//                }
-//            }
-//            departmentChooserEditEmployee.getSelectionModel().selectFirst();
-//        });
-//
-//        facultyChooserDeactiveDepartment.setOnAction(e -> {
-//            departmentChooserDeactiveDepartment.getItems().clear();
-//            departmentChooserDeactiveDepartment.getItems().add("Department");
-//
-//            for (Faculty faculty : University.allFaculties){
-//                if (faculty.getFacultyName().equals(facultyChooserDeactiveDepartment.getValue()) && faculty.getStatus().equals(Status.Active)){
-//                    for (Department department : faculty.departments){
-//                        if (department.getStatus().equals(Status.Active)){
-//                            departmentChooserDeactiveDepartment.getItems().add(department.getName());
-//                        }
-//                    }
-//                    departmentChooserDeactiveDepartment.setVisibleRowCount(4);
-//                }
-//            }
-//            departmentChooserDeactiveDepartment.getSelectionModel().selectFirst();
-//        });
-//
-//        facultyChooserDeactiveMajor.setOnAction(e -> {
-//            departmentChooserDeactiveMajor.getItems().clear();
-//            departmentChooserDeactiveMajor.getItems().add("Department");
-//
-//            for (Faculty faculty : University.allFaculties){
-//                if (faculty.getFacultyName().equals(facultyChooserDeactiveMajor.getValue()) && faculty.getStatus().equals(Status.Active)){
-//                    for (Department department : faculty.departments){
-//                        if (department.getStatus().equals(Status.Active)){
-//                            departmentChooserDeactiveMajor.getItems().add(department.getName());
-//                        }
-//                    }
-//                    departmentChooserDeactiveMajor.setVisibleRowCount(4);
-//                }
-//            }
-//            departmentChooserDeactiveMajor.getSelectionModel().selectFirst();
-//        });
-//
-//        facultyChooserDeactiveEmployee.setOnAction(e -> {
-//            departmentChooserDeactiveEmployee.getItems().clear();
-//            departmentChooserDeactiveEmployee.getItems().add("Department");
-//
-//            for (Faculty faculty : University.allFaculties){
-//                if (faculty.getFacultyName().equals(facultyChooserDeactiveEmployee.getValue()) && faculty.getStatus().equals(Status.Active)){
-//                    for (Department department : faculty.departments){
-//                        if (department.getStatus().equals(Status.Active)){
-//                            departmentChooserDeactiveEmployee.getItems().add(department.getName());
-//                        }
-//                    }
-//                    departmentChooserDeactiveEmployee.setVisibleRowCount(4);
-//                }
-//            }
-//        });
-//        //        ------------------------Major Chooser-----------------------------
-//
-//        departmentChooserEditMajor.setOnAction(e -> {
-//            majorChooserEditMajor.getItems().clear();
-//            majorChooserEditMajor.getItems().add("Major");
-//
-//            for (Faculty faculty : University.allFaculties){
-//                if (faculty.getFacultyName().equals(facultyChooserEditMajor.getValue()) && faculty.getStatus().equals(Status.Active)){
-//                    for (Department department : faculty.departments){
-//                        if (department.getName().equals(departmentChooserEditMajor.getValue()) && department.getStatus().equals(Status.Active)){
-//                            for (Major major : department.majors) {
-//                                majorChooserEditMajor.getItems().add(major.getName());
-//                            }
-//                        }
-//                    }
-//                    majorChooserEditMajor.setVisibleRowCount(4);
-//                }
-//            }
-//        });
-//
-//        departmentChooserDeactiveMajor.setOnAction(e -> {
-//            majorChooserDeactiveMajor.getItems().clear();
-//            majorChooserDeactiveMajor.getItems().add("Major");
-//
-//            for (Faculty faculty : University.allFaculties){
-//                if (faculty.getFacultyName().equals(facultyChooserDeactiveMajor.getValue()) && faculty.getStatus().equals(Status.Active)){
-//                    for (Department department : faculty.departments){
-//                        if (department.getName().equals(departmentChooserDeactiveMajor.getValue()) && department.getStatus().equals(Status.Active)){
-//                            for (Major major : department.majors) {
-//                                majorChooserDeactiveMajor.getItems().add(major.getName());
-//                            }
-//                        }
-//                    }
-//                    majorChooserDeactiveMajor.setVisibleRowCount(4);
-//                }
-//            }
-//            departmentChooserDeactiveEmployee.getSelectionModel().selectFirst();
-//        });
-//
-//        //        ------------------------Employee Chooser-----------------------------
-//
-//        departmentChooserEditEmployee.setOnAction(e -> {
-//            employeeChooserEditEmployee.getItems().clear();
-//            employeeChooserEditEmployee.getItems().add("Employee ID");
-//            for (Faculty faculty : University.allFaculties){
-//                if (faculty.getFacultyName().equals(facultyChooserEditEmployee.getValue()) && faculty.getStatus().equals(Status.Active)){
-//                    for (Department department : faculty.departments){
-//                        if (department.getName().equals(departmentChooserEditEmployee.getValue()) && department.getStatus().equals(Status.Active)){
-//                            for (Major major : department.majors) {
-//                                employeeChooserEditEmployee.getItems().add(major.getName());
-//                            }
-//                        }
-//                    }
-//                    employeeChooserEditEmployee.setVisibleRowCount(4);
-//                }
-//            }
-//            employeeChooserEditEmployee.getSelectionModel().selectFirst();
-//        });
-//
-//        departmentChooserDeactiveEmployee.setOnAction(e -> {
-//            employeeChooserDeactiveEmployee.getItems().clear();
-//            employeeChooserDeactiveEmployee.getItems().add("Employee ID");
-//
-//            for (Faculty faculty : University.allFaculties){
-//                if (faculty.getFacultyName().equals(facultyChooserDeactiveEmployee.getValue()) && faculty.getStatus().equals(Status.Active)){
-//                    for (Department department : faculty.departments){
-//                        if (department.getName().equals(departmentChooserDeactiveEmployee.getValue()) && department.getStatus().equals(Status.Active)){
-//                            for (Major major : department.majors) {
-//                                employeeChooserDeactiveEmployee.getItems().add(major.getName());
-//                            }
-//                        }
-//                    }
-//                    employeeChooserDeactiveEmployee.setVisibleRowCount(4);
-//                }
-//            }
-//            employeeChooserDeactiveEmployee.getSelectionModel().selectFirst();
-//        });
-//
-//        //        ------------------------Gender Chooser-----------------------------
-//
-//        genderChooserAddEmployee.getItems().addAll("Gender", Gender.Male.toString(), Gender.Female.toString());
-//        genderChooserAddEmployee.setVisibleRowCount(3);
-//
-//        genderChooserEditEmployee.getItems().addAll("Gender", Gender.Male.toString(), Gender.Female.toString());
-//        genderChooserEditEmployee.setVisibleRowCount(3);
+
+
+//        Reports
+        // People
+        colNameReportPeople.setCellValueFactory(data -> data.getValue().fullNameProperty());
+        colAgeReportPeople.setCellValueFactory(data -> data.getValue().ageProperty().asObject());
+        colGenderReportPeople.setCellValueFactory(data -> data.getValue().genderProperty());
+        colPhoneReportPeople.setCellValueFactory(data -> data.getValue().phoneNumberProperty());
+        colNationalIDReportPeople.setCellValueFactory(data -> data.getValue().nationalIdProperty());
+        colRoleReportPeople.setCellValueFactory(data -> data.getValue().roleProperty());
+        colIDReportPeople.setCellValueFactory(data -> data.getValue().idProperty());
+        colDateOfRegisterReportPeople.setCellValueFactory(data -> data.getValue().dateOfRegistrationProperty());
+        colFacultyReportPeople.setCellValueFactory(data -> data.getValue().facultyProperty());
+        colDepartmentReportPeople.setCellValueFactory(data -> data.getValue().departmentProperty());
+        colMajorReportPeople.setCellValueFactory(data -> data.getValue().majorProperty());
+        colDegreeReportPeople.setCellValueFactory(data -> data.getValue().degreeProperty());
+        colStatusReportPeople.setCellValueFactory(data -> data.getValue().statusProperty());
+
+
+        Employee.loadAllEmployee();
+        try {
+            Professor.loadAllProfessor();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Student.loadAllStudents();
+
+        peoplelist = FXCollections.observableArrayList();
+        for (Employee employee : University.allEmployees) {
+            peoplelist.add(new People(employee.getFirst_name(), employee.getLast_name(), employee.getDateOfBirth(), employee.getNationalId(),
+                    employee.getGender(), employee.getPhoneNumber(), employee.getDateOfJoin(),"Employee", employee.getId(),
+                    employee.getFaculty(), employee.getDepartment(), "----", "----", employee.getStatus()));
+        }
+
+        for (Professor professor : University.allProfessors) {
+            peoplelist.add(new People(professor.getFirst_name(), professor.getLast_name(), professor.getDateOfBirth(), professor.getNationalId(),
+                    professor.getGender(), professor.getPhoneNumber(), professor.getDateOfJoin(), "Professor", professor.getId(),
+                    professor.getFaculty(), professor.getDepartment(), professor.getMajor(), "----", professor.getStatus()));
+        }
+
+        for (Student student : University.allStudents) {
+            peoplelist.add(new People(student.getFirst_name(), student.getLast_name(), student.getDateOfBirth(), student.getNationalId(),
+                    student.getGender(), student.getPhoneNumber(), student.getDateOfJoin(), "Student", student.getId(),
+                    student.getFaculty(), student.getDepartment(), student.getMajor(), "----", student.getStatus()));
+        }
+
+
+
+        filteredListReportPeople = new FilteredList<>(peoplelist, people -> true);
+        tableViewReportPeople.setItems(filteredListReportPeople);
+
+        setupGenderContextMenuPeople();
+        setupStatusContextMenuPeople();
+        setupRoleContextMenuPeople();
+
+
+
+
+
 
 
     }

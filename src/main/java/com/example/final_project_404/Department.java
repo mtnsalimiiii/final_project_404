@@ -8,6 +8,9 @@ import java.util.Collection;
 import java.util.List;
 
 public class Department implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private String name;
     private int establishmentYear;
     private String id;

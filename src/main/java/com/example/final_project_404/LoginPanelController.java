@@ -165,7 +165,7 @@ public class LoginPanelController{
                 break;
             case "admin":
                 if ("admin".equals(username) && "admin404".equals(password)){
-                    Parent root = FXMLLoader.load(getClass().getResource("AdminPortal.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("AdminPortal1.fxml"));
                     Scene scene = new Scene(root);
                     Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
                     stage.setTitle("Admin Portal");

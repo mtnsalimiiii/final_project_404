@@ -6,14 +6,18 @@ import javax.swing.*;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 
 public class Professor extends Person implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     private final String id;
     private String faculty;
     private String department;
     private String major;
 
-    public Professor(String first_name, String last_name, Date dateOfBirth, String nationalId, Gender gender, String phoneNumber, String id, Date dateOfHire, String faculty, String department, String major,Status status){
+    public Professor(String first_name, String last_name, LocalDate dateOfBirth, String nationalId, Gender gender, String phoneNumber, String id, LocalDate dateOfHire, String faculty, String department, String major, Status status){
         super(first_name,last_name,dateOfBirth,nationalId,gender,phoneNumber,dateOfHire,status);
         this.id = id;
         this.faculty = faculty;

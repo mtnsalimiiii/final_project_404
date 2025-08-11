@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.Month;
 import java.util.ResourceBundle;
 
@@ -231,10 +232,7 @@ public class UpdateProfessorEmployeePortalController implements Initializable {
                                             professor.setPhoneNumber(phoneNumberEdit.getText());
                                         }
                                         if (dateOfBirthEdit.getValue() != null){
-                                            Date date = new Date();
-                                            date.setYear(dateOfBirthEdit.getValue().getYear());
-                                            date.setMonth(dateOfBirthEdit.getValue().getMonthValue());
-                                            date.setDay(dateOfBirthEdit.getValue().getDayOfMonth());
+                                            LocalDate date = dateOfBirthEdit.getValue();
                                             professor.setDateOfBirth(date);
                                         }
                                         if (genderChooserEdit.getValue()!= null){
@@ -270,10 +268,7 @@ public class UpdateProfessorEmployeePortalController implements Initializable {
                     professor.setPhoneNumber(phoneNumberEdit.getText());
                 }
                 if (dateOfBirthEdit.getValue() != null){
-                    Date date = new Date();
-                    date.setYear(dateOfBirthEdit.getValue().getYear());
-                    date.setMonth(dateOfBirthEdit.getValue().getMonthValue());
-                    date.setDay(dateOfBirthEdit.getValue().getDayOfMonth());
+                    LocalDate date = dateOfBirthEdit.getValue();
                     professor.setDateOfBirth(date);
                 }
                 if (genderChooserEdit.getValue()!= null){
@@ -345,7 +340,7 @@ public class UpdateProfessorEmployeePortalController implements Initializable {
                 firstNameEdit.setPromptText(professor.getFirst_name());
                 lastNameEdit.setPromptText(professor.getLast_name());
                 genderChooserEdit.setPromptText(professor.getGender().toString());
-                dateOfBirthEdit.setPromptText(professor.getDateOfBirth().getDay() + " " + Month.of(professor.getDateOfBirth().getMonth()) + " " + professor.getDateOfBirth().getYear());
+                dateOfBirthEdit.setPromptText(professor.getDateOfBirth().getDayOfMonth() + " " + Month.of(professor.getDateOfBirth().getMonthValue()) + " " + professor.getDateOfBirth().getYear());
                 nationalIdEdit.setPromptText(professor.getNationalId());
                 phoneNumberEdit.setPromptText(professor.getPhoneNumber());
                 break;

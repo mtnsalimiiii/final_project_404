@@ -16,6 +16,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.ResourceBundle;
 
 public class ProfessorsEmployeePortalController implements Initializable {
@@ -338,7 +340,7 @@ public class ProfessorsEmployeePortalController implements Initializable {
                 }
             } else if (topicChooser.getValue().equals("Age")){
                 for (Professor professor : University.allProfessors){
-                    if (professor.getStatus().equals(Status.Active) && professor.getDateOfBirth().getAge() == Integer.parseInt(searchBox.getText())){
+                    if (professor.getStatus().equals(Status.Active) && Period.between(professor.getDateOfBirth(),LocalDate.now()).getYears() == Integer.parseInt(searchBox.getText())){
 
                     }
                 }
@@ -401,37 +403,44 @@ public class ProfessorsEmployeePortalController implements Initializable {
         });
 
         secondaryDate.setOnAction(event -> {
-            Date primaryDate1 = new Date();
-            primaryDate1.setYear(primaryDate.getValue().getYear());
-            primaryDate1.setMonth(primaryDate.getValue().getMonthValue());
-            primaryDate1.setDay(primaryDate.getValue().getDayOfMonth());
 
-            Date secondaryDate1 = new Date();
-            secondaryDate1.setYear(secondaryDate.getValue().getYear());
-            secondaryDate1.setMonth(secondaryDate.getValue().getMonthValue());
-            secondaryDate1.setDay(secondaryDate.getValue().getDayOfMonth());
+            LocalDate primaryDate1 = primaryDate.getValue();
+            LocalDate secondaryDate1 = secondaryDate.getValue();
 
-            for (Professor professor : University.allProfessors){
-                if (professor.getDateOfJoin().getYear() > primaryDate1.getYear() && professor.getDateOfJoin().getYear() < secondaryDate1.getYear()){
+            for (Professor professor : University.allProfessors) {
+                if (isDateInRange(professor.getDateOfJoin(), primaryDate1, secondaryDate1)){
 
-                } else if (professor.getDateOfJoin().getMonth() == primaryDate1.getMonth()) {
-                    if (professor.getDateOfJoin().getMonth() > primaryDate1.getMonth()){
+                } else {
 
-                    } else if (professor.getDateOfJoin().getMonth() == primaryDate1.getMonth()) {
-                        if (professor.getDateOfJoin().getDay() == primaryDate1.getDay()){
-
-                        }
-                    }
-                } else if (professor.getDateOfJoin().getYear() == secondaryDate1.getYear()) {
-                    if (professor.getDateOfJoin().getMonth() < secondaryDate1.getMonth()) {
-
-                    } else if (professor.getDateOfJoin().getMonth() == secondaryDate1.getMonth()) {
-                        if (professor.getDateOfJoin().getDay() <= secondaryDate1.getDay()) {
-
-                        }
-                    }
                 }
             }
+
+
+//            for (Professor professor : University.allProfessors){
+//                if (professor.getDateOfJoin().getYear() > primaryDate1.getYear() && professor.getDateOfJoin().getYear() < secondaryDate1.getYear()){
+//
+//                } else if (professor.getDateOfJoin().getMonthValue() == primaryDate1.getMonthValue()) {
+//                    if (professor.getDateOfJoin().getMonthValue() > primaryDate1.getMonthValue()){
+//
+//                    } else if (professor.getDateOfJoin().getMonthValue() == primaryDate1.getMonthValue()) {
+//                        if (professor.getDateOfJoin().getDayOfMonth() == primaryDate1.getDayOfMonth()){
+//
+//                        }
+//                    }
+//                } else if (professor.getDateOfJoin().getYear() == secondaryDate1.getYear()) {
+//                    if (professor.getDateOfJoin().getMonthValue() < secondaryDate1.getMonthValue()) {
+//
+//                    } else if (professor.getDateOfJoin().getMonthValue() == secondaryDate1.getMonthValue()) {
+//                        if (professor.getDateOfJoin().getDayOfMonth() <= secondaryDate1.getDayOfMonth()) {
+//
+//                        }
+//                    }
+//                }
+//            }
         });
+    }
+
+    public boolean isDateInRange(LocalDate date, LocalDate dateStart, LocalDate dateEnd) {
+        return (date.isAfter(dateStart) || date.isEqual(dateStart)) && (date.isBefore(dateEnd) || date.isEqual(dateEnd));
     }
 }

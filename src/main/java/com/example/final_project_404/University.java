@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class University implements Serializable{
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     public static List<Professor> allProfessors = new ArrayList<>();
     public static List<Employee> allEmployees = new ArrayList<>();
     public static List<Student> allStudents = new ArrayList<>();

@@ -17,6 +17,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.Month;
 import java.util.ResourceBundle;
 
@@ -193,10 +194,7 @@ public class UpdateEmployeeAdminPortalController implements Initializable {
                                     employee.setGender(genderChooserUpdateEmployee.getValue());
                                 }
                                 if (dateOfBirthUpdateEmployee.getValue() != null){
-                                    Date date = new Date();
-                                    date.setYear(dateOfBirthUpdateEmployee.getValue().getYear());
-                                    date.setMonth(dateOfBirthUpdateEmployee.getValue().getMonthValue());
-                                    date.setDay(dateOfBirthUpdateEmployee.getValue().getDayOfMonth());
+                                    LocalDate date = dateOfBirthUpdateEmployee.getValue();
                                     employee.setDateOfBirth(date);
                                 }
                                 if (!nationalIdUpdateEmployee.getText().isBlank()){
@@ -229,10 +227,7 @@ public class UpdateEmployeeAdminPortalController implements Initializable {
                     employee.setGender(genderChooserUpdateEmployee.getValue());
                 }
                 if (dateOfBirthUpdateEmployee.getValue() != null){
-                    Date date = new Date();
-                    date.setYear(dateOfBirthUpdateEmployee.getValue().getYear());
-                    date.setMonth(dateOfBirthUpdateEmployee.getValue().getMonthValue());
-                    date.setDay(dateOfBirthUpdateEmployee.getValue().getDayOfMonth());
+                    LocalDate date = dateOfBirthUpdateEmployee.getValue();
                     employee.setDateOfBirth(date);
                 }
                 if (!nationalIdUpdateEmployee.getText().isBlank()){
@@ -279,7 +274,7 @@ public class UpdateEmployeeAdminPortalController implements Initializable {
                 genderChooserUpdateEmployee.setPromptText(String.valueOf(employee.getGender()));
                 nationalIdUpdateEmployee.setPromptText(employee.getNationalId());
                 phoneNumberUpdateEmployee.setPromptText(employee.getPhoneNumber());
-                dateOfBirthUpdateEmployee.setPromptText(employee.getDateOfBirth().getDay() + " " + Month.of(employee.getDateOfBirth().getMonth()) + " " + employee.getDateOfBirth().getYear());
+                dateOfBirthUpdateEmployee.setPromptText(employee.getDateOfBirth().getDayOfMonth() + " " + Month.of(employee.getDateOfBirth().getMonthValue()) + " " + employee.getDateOfBirth().getYear());
                 break;
             }
         }
