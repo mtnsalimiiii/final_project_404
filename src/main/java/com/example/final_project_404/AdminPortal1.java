@@ -7,17 +7,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.URL;
 import java.time.LocalDate;
@@ -36,9 +32,6 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     private VBox addDepartmentVbox;
-
-    @FXML
-    private AnchorPane enrollmentAnchorPane;
 
     @FXML
     private AnchorPane addEmployeeAnchorPane;
@@ -68,7 +61,19 @@ public class AdminPortal1 implements Initializable {
     private VBox addMajorVbox;
 
     @FXML
+    private AnchorPane addSemesterAnchorPane;
+
+    @FXML
+    private Button addSemesterScrollPane;
+
+    @FXML
     private ScrollPane buttonsScrollPane;
+
+    @FXML
+    private AnchorPane coursesReportsAnchorPane;
+
+    @FXML
+    private AnchorPane courseGroupsReportsAnchorPane;
 
     @FXML
     private AnchorPane dashboardAnchorPane;
@@ -108,6 +113,12 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     private VBox deactiveMajorVbox;
+
+    @FXML
+    private AnchorPane degreesReportsAnchorPane;
+
+    @FXML
+    private AnchorPane departmentsReportsAnchorPane;
 
     @FXML
     private ComboBox<String> departmentChooserAddEmployee;
@@ -161,6 +172,12 @@ public class AdminPortal1 implements Initializable {
     private VBox editMajorVbox;
 
     @FXML
+    private AnchorPane enrollmentAnchorPane;
+
+    @FXML
+    private Button enrollmentScrollPane;
+
+    @FXML
     private ComboBox<String> employeeChooserDeactiveEmployee;
 
     @FXML
@@ -209,6 +226,9 @@ public class AdminPortal1 implements Initializable {
     private ComboBox<String> facultyChooserEditMajor;
 
     @FXML
+    private AnchorPane facultiesReportsAnchorPane;
+
+    @FXML
     private TextField facultyNameAddFaculty;
 
     @FXML
@@ -237,6 +257,9 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     private TextField majorNameAddMajor;
+
+    @FXML
+    private AnchorPane majorsReportsAnchorPane;
 
     @FXML
     private TextField nationalIdAddEmployee;
@@ -284,6 +307,9 @@ public class AdminPortal1 implements Initializable {
     private ComboBox<String> operationChooserUpdateMajor;
 
     @FXML
+    private AnchorPane peopleReportsAnchorPane;
+
+    @FXML
     private TextField phoneNumberAddEmployee;
 
     @FXML
@@ -306,6 +332,12 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     private VBox reportsVbox;
+
+    @FXML
+    private TextField semesterCodeAddSemester;
+
+    @FXML
+    private AnchorPane semestersReportsAnchorPane;
 
     @FXML
     private AnchorPane updateDepartmentAnchorPane;
@@ -341,10 +373,30 @@ public class AdminPortal1 implements Initializable {
     private Button deactiveButton;
 
 
+    @FXML
+    void activeEnrollment(ActionEvent event){
+        File file = new File("Enrollment.txt");
+        try {
+            if (file.exists()) {
+                if (!file.delete()) {
+                    System.out.println("Error in delete file!!");
+                    return;
+                }
+            }
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer.write("Active");
+                System.out.println("Enrollment is active now!");
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error in Active Enrollment!! " + e.getMessage());
+        }
+    }
+
 //      public int getEstablishmentYear(){
 //        return LocalDate.now().getYear();
 //    }
-
 
     public String getDepartmentId() throws FileNotFoundException {
         University.loadFaculties();
@@ -437,15 +489,18 @@ public class AdminPortal1 implements Initializable {
         } else if (updateMajorAnchorPane.isVisible()) {
             updateMajorAnchorPane.setVisible(false);
             updateMajorScrollPane.getStyleClass().remove("pressed");
-        } else if (updateMajorAnchorPane.isVisible()) {
-            updateMajorAnchorPane.setVisible(false);
-            updateMajorScrollPane.getStyleClass().remove("pressed");
         } else if (addEmployeeAnchorPane.isVisible()) {
             addEmployeeAnchorPane.setVisible(false);
             addEmployeeScrollPane.getStyleClass().remove("pressed");
         } else if (updateEmployeeAnchorPane.isVisible()) {
             updateEmployeeAnchorPane.setVisible(false);
             updateEmployeeScrollPane.getStyleClass().remove("pressed");
+        } else if (addSemesterAnchorPane.isVisible()) {
+            addSemesterAnchorPane.setVisible(false);
+            addSemesterScrollPane.getStyleClass().remove("pressed");
+        } else if (enrollmentAnchorPane.isVisible()) {
+            enrollmentAnchorPane.setVisible(false);
+            enrollmentScrollPane.getStyleClass().remove("pressed");
         } else if (profileAnchorPane.isVisible()) {
             profileAnchorPane.setVisible(false);
             profileScrollPane.getStyleClass().remove("pressed");
@@ -457,20 +512,20 @@ public class AdminPortal1 implements Initializable {
         if (!addDepartmentAnchorPane.isVisible()) {
             addDepartmentAnchorPane.setVisible(true);
             addDepartmentScrollPane.getStyleClass().add("pressed");
-        }
 //        faculty chooser combo box
-        facultyChooserAddDepartment.getItems().clear();
-        facultyChooserAddDepartment.getItems().add("Faculty");
-        for (Faculty faculty : University.allFaculties) {
-            if (faculty.getStatus().equals(Status.Active)) {
-                facultyChooserAddDepartment.getItems().add(faculty.getFacultyName());
+            facultyChooserAddDepartment.getItems().clear();
+            facultyChooserAddDepartment.getItems().add("Faculty");
+            for (Faculty faculty : University.allFaculties) {
+                if (faculty.getStatus().equals(Status.Active)) {
+                    facultyChooserAddDepartment.getItems().add(faculty.getFacultyName());
+                }
             }
-        }
-        facultyChooserAddDepartment.setVisibleRowCount(4);
-        facultyChooserAddDepartment.getSelectionModel().selectFirst();
+            facultyChooserAddDepartment.setVisibleRowCount(4);
+            facultyChooserAddDepartment.getSelectionModel().selectFirst();
 //        clear the textfield for department name and establishment year
-        departmentNameAddDepartment.clear();
-        establishmentYearAddDepartment.clear();
+            departmentNameAddDepartment.clear();
+            establishmentYearAddDepartment.clear();
+        }
 
     }
 
@@ -635,12 +690,15 @@ public class AdminPortal1 implements Initializable {
         } else if (updateMajorAnchorPane.isVisible()) {
             updateMajorAnchorPane.setVisible(false);
             updateMajorScrollPane.getStyleClass().remove("pressed");
-        } else if (updateMajorAnchorPane.isVisible()) {
-            updateMajorAnchorPane.setVisible(false);
-            updateMajorScrollPane.getStyleClass().remove("pressed");
         } else if (updateEmployeeAnchorPane.isVisible()) {
             updateEmployeeAnchorPane.setVisible(false);
             updateEmployeeScrollPane.getStyleClass().remove("pressed");
+        } else if (addSemesterAnchorPane.isVisible()) {
+            addSemesterAnchorPane.setVisible(false);
+            addSemesterScrollPane.getStyleClass().remove("pressed");
+        } else if (enrollmentAnchorPane.isVisible()) {
+            enrollmentAnchorPane.setVisible(false);
+            enrollmentScrollPane.getStyleClass().remove("pressed");
         } else if (profileAnchorPane.isVisible()) {
             profileAnchorPane.setVisible(false);
             profileScrollPane.getStyleClass().remove("pressed");
@@ -651,47 +709,47 @@ public class AdminPortal1 implements Initializable {
         if (!addEmployeeAnchorPane.isVisible()) {
             addEmployeeAnchorPane.setVisible(true);
             addEmployeeScrollPane.getStyleClass().add("pressed");
-        }
 //        clear the textfields and date picker and
-        firstNameAddEmployee.clear();
-        lastNameAddEmployee.clear();
-        nationalIdAddEmployee.clear();
-        phoneNumberAddEmployee.clear();
-        genderChooserAddEmployee.getSelectionModel().selectFirst();
-        dateOfBirthAddEmployee.setValue(null);
-        dateOfBirthAddEmployee.setPromptText("Date of Birth");
+            firstNameAddEmployee.clear();
+            lastNameAddEmployee.clear();
+            nationalIdAddEmployee.clear();
+            phoneNumberAddEmployee.clear();
+            genderChooserAddEmployee.getSelectionModel().selectFirst();
+            dateOfBirthAddEmployee.setValue(null);
+            dateOfBirthAddEmployee.setPromptText("Date of Birth");
 //        faculty chooser combo box
-        facultyChooserAddEmployee.getItems().clear();
-        facultyChooserAddEmployee.getItems().add("Faculty");
-        for (Faculty faculty : University.allFaculties) {
-            if (faculty.getStatus().equals(Status.Active)) {
-                facultyChooserAddEmployee.getItems().add(faculty.getFacultyName());
-            }
-        }
-        facultyChooserAddEmployee.setVisibleRowCount(4);
-        facultyChooserAddEmployee.getSelectionModel().selectFirst();
-//        department chooser combo box
-        facultyChooserAddEmployee.setOnAction(event1 -> {
-            departmentChooserAddEmployee.getItems().clear();
-            departmentChooserAddEmployee.getItems().add("Department");
+            facultyChooserAddEmployee.getItems().clear();
+            facultyChooserAddEmployee.getItems().add("Faculty");
             for (Faculty faculty : University.allFaculties) {
-                if (facultyChooserAddEmployee.getValue().equals(faculty.getFacultyName()) && faculty.getStatus().equals(Status.Active)){
-                    for (Department department : faculty.departments) {
-                        if (department.getStatus().equals(Status.Active)) {
-                            departmentChooserAddEmployee.getItems().add(department.getName());
+                if (faculty.getStatus().equals(Status.Active)) {
+                    facultyChooserAddEmployee.getItems().add(faculty.getFacultyName());
+                }
+            }
+            facultyChooserAddEmployee.setVisibleRowCount(4);
+            facultyChooserAddEmployee.getSelectionModel().selectFirst();
+//        department chooser combo box
+            facultyChooserAddEmployee.setOnAction(event1 -> {
+                departmentChooserAddEmployee.getItems().clear();
+                departmentChooserAddEmployee.getItems().add("Department");
+                for (Faculty faculty : University.allFaculties) {
+                    if (facultyChooserAddEmployee.getValue().equals(faculty.getFacultyName()) && faculty.getStatus().equals(Status.Active)){
+                        for (Department department : faculty.departments) {
+                            if (department.getStatus().equals(Status.Active)) {
+                                departmentChooserAddEmployee.getItems().add(department.getName());
+                            }
                         }
                     }
                 }
-            }
-            departmentChooserAddEmployee.setVisibleRowCount(4);
-            departmentChooserAddEmployee.getSelectionModel().selectFirst();
+                departmentChooserAddEmployee.setVisibleRowCount(4);
+                departmentChooserAddEmployee.getSelectionModel().selectFirst();
 
-        });
+            });
 
-        genderChooserAddEmployee.getItems().clear();
-        genderChooserAddEmployee.getItems().addAll("Gender", Gender.Male.toString(), Gender.Female.toString());
-        genderChooserAddEmployee.setVisibleRowCount(3);
-        genderChooserAddEmployee.getSelectionModel().selectFirst();
+            genderChooserAddEmployee.getItems().clear();
+            genderChooserAddEmployee.getItems().addAll("Gender", Gender.Male.toString(), Gender.Female.toString());
+            genderChooserAddEmployee.setVisibleRowCount(3);
+            genderChooserAddEmployee.getSelectionModel().selectFirst();
+        }
     }
 
     public String getFacultyId(){
@@ -758,15 +816,18 @@ public class AdminPortal1 implements Initializable {
         } else if (updateMajorAnchorPane.isVisible()) {
             updateMajorAnchorPane.setVisible(false);
             updateMajorScrollPane.getStyleClass().remove("pressed");
-        } else if (updateMajorAnchorPane.isVisible()) {
-            updateMajorAnchorPane.setVisible(false);
-            updateMajorScrollPane.getStyleClass().remove("pressed");
         } else if (addEmployeeAnchorPane.isVisible()) {
             addEmployeeAnchorPane.setVisible(false);
             addEmployeeScrollPane.getStyleClass().remove("pressed");
         } else if (updateEmployeeAnchorPane.isVisible()) {
             updateEmployeeAnchorPane.setVisible(false);
             updateEmployeeScrollPane.getStyleClass().remove("pressed");
+        } else if (addSemesterAnchorPane.isVisible()) {
+            addSemesterAnchorPane.setVisible(false);
+            addSemesterScrollPane.getStyleClass().remove("pressed");
+        } else if (enrollmentAnchorPane.isVisible()) {
+            enrollmentAnchorPane.setVisible(false);
+            enrollmentScrollPane.getStyleClass().remove("pressed");
         } else if (profileAnchorPane.isVisible()) {
             profileAnchorPane.setVisible(false);
             profileScrollPane.getStyleClass().remove("pressed");
@@ -777,10 +838,10 @@ public class AdminPortal1 implements Initializable {
         if (!addFacultyAnchorPane.isVisible()){
             addFacultyAnchorPane.setVisible(true);
             addFacultyScrollPane.getStyleClass().add("pressed");
-        }
 //        clear the textfields
-        facultyNameAddFaculty.clear();
-        establishmentYearAddFaculty.clear();
+            facultyNameAddFaculty.clear();
+            establishmentYearAddFaculty.clear();
+        }
     }
 
     public String getMajorId() throws FileNotFoundException {
@@ -900,15 +961,18 @@ public class AdminPortal1 implements Initializable {
         } else if (updateMajorAnchorPane.isVisible()) {
             updateMajorAnchorPane.setVisible(false);
             updateMajorScrollPane.getStyleClass().remove("pressed");
-        } else if (updateMajorAnchorPane.isVisible()) {
-            updateMajorAnchorPane.setVisible(false);
-            updateMajorScrollPane.getStyleClass().remove("pressed");
         } else if (addEmployeeAnchorPane.isVisible()) {
             addEmployeeAnchorPane.setVisible(false);
             addEmployeeScrollPane.getStyleClass().remove("pressed");
         } else if (updateEmployeeAnchorPane.isVisible()) {
             updateEmployeeAnchorPane.setVisible(false);
             updateEmployeeScrollPane.getStyleClass().remove("pressed");
+        } else if (addSemesterAnchorPane.isVisible()) {
+            addSemesterAnchorPane.setVisible(false);
+            addSemesterScrollPane.getStyleClass().remove("pressed");
+        } else if (enrollmentAnchorPane.isVisible()) {
+            enrollmentAnchorPane.setVisible(false);
+            enrollmentScrollPane.getStyleClass().remove("pressed");
         } else if (profileAnchorPane.isVisible()) {
             profileAnchorPane.setVisible(false);
             profileScrollPane.getStyleClass().remove("pressed");
@@ -919,36 +983,112 @@ public class AdminPortal1 implements Initializable {
         if (!addMajorAnchorPane.isVisible()) {
             addMajorAnchorPane.setVisible(true);
             addMajorScrollPane.getStyleClass().add("pressed");
-        }
 //        clear the textfields
-        majorNameAddMajor.clear();
-        establishmentYearAddMajor.clear();
+            majorNameAddMajor.clear();
+            establishmentYearAddMajor.clear();
 //        faculty chooser combo box
-        facultyChooserAddMajor.getItems().clear();
-        facultyChooserAddMajor.getItems().add("Faculty");
-        for (Faculty faculty : University.allFaculties) {
-            if (faculty.getStatus().equals(Status.Active)){
-                facultyChooserAddMajor.getItems().add(faculty.getFacultyName());
-            }
-        }
-        facultyChooserAddMajor.setVisibleRowCount(4);
-        facultyChooserAddMajor.getSelectionModel().selectFirst();
-//        department chooser combo box
-        facultyChooserAddMajor.setOnAction(event1 -> {
-            departmentChooserAddMajor.getItems().clear();
-            departmentChooserAddMajor.getItems().add("Department");
+            facultyChooserAddMajor.getItems().clear();
+            facultyChooserAddMajor.getItems().add("Faculty");
             for (Faculty faculty : University.allFaculties) {
-                if (facultyChooserAddMajor.getValue().equals(faculty.getFacultyName()) && faculty.getStatus().equals(Status.Active)) {
-                    for (Department department : faculty.departments) {
-                        if (department.getStatus().equals(Status.Active)) {
-                            departmentChooserAddMajor.getItems().add(department.getName());
+                if (faculty.getStatus().equals(Status.Active)){
+                    facultyChooserAddMajor.getItems().add(faculty.getFacultyName());
+                }
+            }
+            facultyChooserAddMajor.setVisibleRowCount(4);
+            facultyChooserAddMajor.getSelectionModel().selectFirst();
+//        department chooser combo box
+            facultyChooserAddMajor.setOnAction(event1 -> {
+                departmentChooserAddMajor.getItems().clear();
+                departmentChooserAddMajor.getItems().add("Department");
+                for (Faculty faculty : University.allFaculties) {
+                    if (facultyChooserAddMajor.getValue().equals(faculty.getFacultyName()) && faculty.getStatus().equals(Status.Active)) {
+                        for (Department department : faculty.departments) {
+                            if (department.getStatus().equals(Status.Active)) {
+                                departmentChooserAddMajor.getItems().add(department.getName());
+                            }
                         }
                     }
                 }
-            }
-            departmentChooserAddMajor.setVisibleRowCount(4);
-            departmentChooserAddMajor.getSelectionModel().selectFirst();
-        });
+                departmentChooserAddMajor.setVisibleRowCount(4);
+                departmentChooserAddMajor.getSelectionModel().selectFirst();
+            });
+        }
+    }
+
+    @FXML
+    void addSemester(ActionEvent event) {
+        University.loadAllSemester();
+        University.allSemesters.add(new Semester(semesterCodeAddSemester.getText().trim()));
+        University.saveAllSemester();
+        System.out.println("Semester with code:"+ semesterCodeAddSemester.getText().trim()+"add successfull.");
+    }
+
+    @FXML
+    void addSemesterDashboard(ActionEvent event) {
+        headerTitle.setText(" --> Add Semester");
+
+        dashboardAnchorPane.setVisible(false);
+        buttonsScrollPane.setVisible(true);
+        addSemesterAnchorPane.setVisible(true);
+        addSemesterScrollPane.getStyleClass().add("pressed");
+
+        semesterCodeAddSemester.clear();
+    }
+
+    @FXML
+    void addSemesterScrollPane(ActionEvent event) {
+        headerTitle.setText(" --> Add Semester");
+        if (addFacultyAnchorPane.isVisible()){
+            addFacultyAnchorPane.setVisible(false);
+            addFacultyScrollPane.getStyleClass().remove("pressed");
+        } else if (updateFacultyAnchorPane.isVisible()) {
+            updateFacultyAnchorPane.setVisible(false);
+            updateFacultyScrollPane.getStyleClass().remove("pressed");
+        } else if (addDepartmentAnchorPane.isVisible()) {
+            addDepartmentAnchorPane.setVisible(false);
+            addDepartmentScrollPane.getStyleClass().remove("pressed");
+        } else if (updateDepartmentAnchorPane.isVisible()) {
+            updateDepartmentAnchorPane.setVisible(false);
+            updateDepartmentScrollPane.getStyleClass().remove("pressed");
+        } else if (addMajorAnchorPane.isVisible()) {
+            addMajorAnchorPane.setVisible(false);
+            addMajorScrollPane.getStyleClass().remove("pressed");
+        } else if (updateMajorAnchorPane.isVisible()) {
+            updateMajorAnchorPane.setVisible(false);
+            updateMajorScrollPane.getStyleClass().remove("pressed");
+        } else if (addEmployeeAnchorPane.isVisible()) {
+            addEmployeeAnchorPane.setVisible(false);
+            addEmployeeScrollPane.getStyleClass().remove("pressed");
+        } else if (updateEmployeeAnchorPane.isVisible()) {
+            updateEmployeeAnchorPane.setVisible(false);
+            updateEmployeeScrollPane.getStyleClass().remove("pressed");
+        } else if (enrollmentAnchorPane.isVisible()) {
+            enrollmentAnchorPane.setVisible(false);
+            enrollmentScrollPane.getStyleClass().remove("pressed");
+        } else if (profileAnchorPane.isVisible()) {
+            profileAnchorPane.setVisible(false);
+            profileScrollPane.getStyleClass().remove("pressed");
+        } else if (reportsAnchorPane.isVisible()) {
+            reportsAnchorPane.setVisible(false);
+            reportsScrollPane.getStyleClass().remove("pressed");
+        }
+
+        if (!addSemesterAnchorPane.isVisible()) {
+            addSemesterAnchorPane.setVisible(true);
+            addSemesterScrollPane.getStyleClass().add("pressed");
+
+            semesterCodeAddSemester.clear();
+        }
+    }
+
+    @FXML
+    void courseGroupsReports(ActionEvent event) {
+        courseGroupsReportsAnchorPane.setVisible(true);
+    }
+
+    @FXML
+    void coursesReports(ActionEvent event) {
+        coursesReportsAnchorPane.setVisible(true);
     }
 
     @FXML
@@ -973,15 +1113,18 @@ public class AdminPortal1 implements Initializable {
         } else if (updateMajorAnchorPane.isVisible()) {
             updateMajorAnchorPane.setVisible(false);
             updateMajorScrollPane.getStyleClass().remove("pressed");
-        } else if (updateMajorAnchorPane.isVisible()) {
-            updateMajorAnchorPane.setVisible(false);
-            updateMajorScrollPane.getStyleClass().remove("pressed");
         } else if (addEmployeeAnchorPane.isVisible()) {
             addEmployeeAnchorPane.setVisible(false);
             addEmployeeScrollPane.getStyleClass().remove("pressed");
         } else if (updateEmployeeAnchorPane.isVisible()) {
             updateEmployeeAnchorPane.setVisible(false);
             updateEmployeeScrollPane.getStyleClass().remove("pressed");
+        } else if (addSemesterAnchorPane.isVisible()) {
+            addSemesterAnchorPane.setVisible(false);
+            addSemesterScrollPane.getStyleClass().remove("pressed");
+        } else if (enrollmentAnchorPane.isVisible()) {
+            enrollmentAnchorPane.setVisible(false);
+            enrollmentScrollPane.getStyleClass().remove("pressed");
         } else if (profileAnchorPane.isVisible()) {
             profileAnchorPane.setVisible(false);
             profileScrollPane.getStyleClass().remove("pressed");
@@ -1015,6 +1158,27 @@ public class AdminPortal1 implements Initializable {
         facultyChooserDeactiveDepartment.getSelectionModel().selectFirst();
         departmentChooserDeactiveDepartment.getSelectionModel().selectFirst();
 
+    }
+
+    @FXML
+    void deactiveEnrollment(ActionEvent event){
+        File file = new File("Enrollment.txt");
+        try {
+            if (file.exists()) {
+                if (!file.delete()) {
+                    System.out.println("Error in delete file!!");
+                    return;
+                }
+            }
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer.write("Deactive");
+                System.out.println("Enrollment is Deactive now!");
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error in Deactive Enrollment!! " + e.getMessage());
+        }
     }
 
     @FXML
@@ -1099,6 +1263,16 @@ public class AdminPortal1 implements Initializable {
         facultyChooserDeactiveMajor.getSelectionModel().selectFirst();
         departmentChooserDeactiveMajor.getSelectionModel().selectFirst();
         majorChooserDeactiveMajor.getSelectionModel().selectFirst();
+    }
+
+    @FXML
+    void degreesReports(ActionEvent event) {
+
+    }
+
+    @FXML
+    void departmentsReports(ActionEvent event) {
+
     }
 
     @FXML
@@ -1295,6 +1469,79 @@ public class AdminPortal1 implements Initializable {
         University.saveFaculties();
     }
 
+    @FXML
+    void enrollmentDashboard(ActionEvent event) {
+        // Set the header title
+        headerTitle.setText(" --> Enrollment");
+
+        // Hide all anchor panes
+        dashboardAnchorPane.setVisible(false);
+        buttonsScrollPane.setVisible(true);
+        enrollmentAnchorPane.setVisible(true);
+        enrollmentScrollPane.getStyleClass().add("pressed");
+
+    }
+
+    @FXML
+    void enrollmentScrollPane(ActionEvent event) {
+        headerTitle.setText(" --> Enrollment");
+
+        if (addFacultyAnchorPane.isVisible()){
+            addFacultyAnchorPane.setVisible(false);
+            addFacultyScrollPane.getStyleClass().remove("pressed");
+        } else if (updateFacultyAnchorPane.isVisible()) {
+            updateFacultyAnchorPane.setVisible(false);
+            updateFacultyScrollPane.getStyleClass().remove("pressed");
+        } else if (addDepartmentAnchorPane.isVisible()) {
+            addDepartmentAnchorPane.setVisible(false);
+            addDepartmentScrollPane.getStyleClass().remove("pressed");
+        } else if (updateDepartmentAnchorPane.isVisible()) {
+            updateDepartmentAnchorPane.setVisible(false);
+            updateDepartmentScrollPane.getStyleClass().remove("pressed");
+        } else if (addMajorAnchorPane.isVisible()) {
+            addMajorAnchorPane.setVisible(false);
+            addMajorScrollPane.getStyleClass().remove("pressed");
+        } else if (updateMajorAnchorPane.isVisible()) {
+            updateMajorAnchorPane.setVisible(false);
+            updateMajorScrollPane.getStyleClass().remove("pressed");
+        } else if (addEmployeeAnchorPane.isVisible()) {
+            addEmployeeAnchorPane.setVisible(false);
+            addEmployeeScrollPane.getStyleClass().remove("pressed");
+        } else if (updateEmployeeAnchorPane.isVisible()) {
+            updateEmployeeAnchorPane.setVisible(false);
+            updateEmployeeScrollPane.getStyleClass().remove("pressed");
+        } else if (addSemesterAnchorPane.isVisible()) {
+            addSemesterAnchorPane.setVisible(false);
+            addSemesterScrollPane.getStyleClass().remove("pressed");
+        } else if (profileAnchorPane.isVisible()) {
+            profileAnchorPane.setVisible(false);
+            profileScrollPane.getStyleClass().remove("pressed");
+        }else if (reportsAnchorPane.isVisible()) {
+            reportsAnchorPane.setVisible(false);
+            reportsScrollPane.getStyleClass().remove("pressed");
+        }
+
+        if (!enrollmentAnchorPane.isVisible()) {
+            enrollmentAnchorPane.setVisible(true);
+            enrollmentScrollPane.getStyleClass().add("pressed");
+        }
+    }
+
+    @FXML
+    void facultiesReports(ActionEvent event) {
+
+    }
+
+    @FXML
+    void majorsReports(ActionEvent event) {
+
+    }
+
+    @FXML
+    void peopleReports(ActionEvent event) {
+        peopleReportsAnchorPane.setVisible(true);
+
+    }
 
     @FXML
     void profileDashboard(ActionEvent event) {
@@ -1328,15 +1575,18 @@ public class AdminPortal1 implements Initializable {
         } else if (updateMajorAnchorPane.isVisible()) {
             updateMajorAnchorPane.setVisible(false);
             updateMajorScrollPane.getStyleClass().remove("pressed");
-        } else if (updateMajorAnchorPane.isVisible()) {
-            updateMajorAnchorPane.setVisible(false);
-            updateMajorScrollPane.getStyleClass().remove("pressed");
         } else if (addEmployeeAnchorPane.isVisible()) {
             addEmployeeAnchorPane.setVisible(false);
             addEmployeeScrollPane.getStyleClass().remove("pressed");
         } else if (updateEmployeeAnchorPane.isVisible()) {
             updateEmployeeAnchorPane.setVisible(false);
             updateEmployeeScrollPane.getStyleClass().remove("pressed");
+        } else if (addSemesterAnchorPane.isVisible()) {
+            addSemesterAnchorPane.setVisible(false);
+            addSemesterScrollPane.getStyleClass().remove("pressed");
+        } else if (enrollmentAnchorPane.isVisible()) {
+            enrollmentAnchorPane.setVisible(false);
+            enrollmentScrollPane.getStyleClass().remove("pressed");
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
@@ -1358,6 +1608,15 @@ public class AdminPortal1 implements Initializable {
         buttonsScrollPane.setVisible(true);
         reportsAnchorPane.setVisible(true);
         reportsScrollPane.getStyleClass().add("pressed");
+
+        facultiesReportsAnchorPane.setVisible(false);
+        departmentsReportsAnchorPane.setVisible(false);
+        majorsReportsAnchorPane.setVisible(false);
+        peopleReportsAnchorPane.setVisible(false);
+        coursesReportsAnchorPane.setVisible(false);
+        courseGroupsReportsAnchorPane.setVisible(false);
+        degreesReportsAnchorPane.setVisible(false);
+        semestersReportsAnchorPane.setVisible(false);
     }
 
     @FXML
@@ -1382,15 +1641,18 @@ public class AdminPortal1 implements Initializable {
         } else if (updateMajorAnchorPane.isVisible()) {
             updateMajorAnchorPane.setVisible(false);
             updateMajorScrollPane.getStyleClass().remove("pressed");
-        } else if (updateMajorAnchorPane.isVisible()) {
-            updateMajorAnchorPane.setVisible(false);
-            updateMajorScrollPane.getStyleClass().remove("pressed");
         } else if (addEmployeeAnchorPane.isVisible()) {
             addEmployeeAnchorPane.setVisible(false);
             addEmployeeScrollPane.getStyleClass().remove("pressed");
         } else if (updateEmployeeAnchorPane.isVisible()) {
             updateEmployeeAnchorPane.setVisible(false);
             updateEmployeeScrollPane.getStyleClass().remove("pressed");
+        } else if (addSemesterAnchorPane.isVisible()) {
+            addSemesterAnchorPane.setVisible(false);
+            addSemesterScrollPane.getStyleClass().remove("pressed");
+        } else if (enrollmentAnchorPane.isVisible()) {
+            enrollmentAnchorPane.setVisible(false);
+            enrollmentScrollPane.getStyleClass().remove("pressed");
         } else if (profileAnchorPane.isVisible()) {
             profileAnchorPane.setVisible(false);
             profileScrollPane.getStyleClass().remove("pressed");
@@ -1399,7 +1661,106 @@ public class AdminPortal1 implements Initializable {
         if (!reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(true);
             reportsScrollPane.getStyleClass().add("pressed");
+
+            facultiesReportsAnchorPane.setVisible(false);
+            departmentsReportsAnchorPane.setVisible(false);
+            majorsReportsAnchorPane.setVisible(false);
+            peopleReportsAnchorPane.setVisible(false);
+            coursesReportsAnchorPane.setVisible(false);
+            courseGroupsReportsAnchorPane.setVisible(false);
+            degreesReportsAnchorPane.setVisible(false);
+            semestersReportsAnchorPane.setVisible(false);
         }
+    }
+
+//    Reports ------>>> People
+    private void setupGenderContextMenu() {
+//        ContextontextMenu(genderMenu);
+    }
+
+    private void filterByGender(String gender) {
+//        filteredList.setPredicate(student -> student.getGender().equalsIgnoreCase(gender));
+    }
+
+    private void setupStatusContextMenu() {
+//        ContextMenu statusMenu = new ContextMenu();
+//
+//        MenuItem active = new MenuItem("Active");
+//        active.setOnAction(e -> filterByStatus("Active"));
+//        MenuItem inactive = new MenuItem("Inactive");
+//        inactive.setOnAction(e -> filterByStatus("Inactive"));
+//
+//        MenuItem all = new MenuItem("All");
+//        all.setOnAction(e -> {
+//            filteredList.setPredicate(p -> true);
+//            tableView.setItems(filteredList);
+//        });
+//
+//        statusMenu.getItems().addAll(active, inactive, all);
+//        colStatus.setContextMenu(statusMenu);
+    }
+
+    private void filterByStatus(String status) {
+//        filteredList.setPredicate(student -> student.getStatus().equalsIgnoreCase(status));
+    }
+
+    private void updateSelectedStatus(String status) {
+//        Student selected = tableView.getSelectionModel().getSelectedItem();
+//        if (selected != null) {
+//            selected.setStatus(status);
+//            tableView.refresh();
+//        }
+    }
+
+    @FXML
+    private void onSearch() {
+//        String keyword = searchField.getText().toLowerCase().trim();
+//        if (keyword.isEmpty()) {
+//            filteredList.setPredicate(p -> true);
+//            return;
+//        }
+//        filteredList.setPredicate(student ->
+//                student.getName().toLowerCase().contains(keyword) ||
+//                        String.valueOf(student.getAge()).contains(keyword) ||
+//                        student.getGender().toLowerCase().contains(keyword) ||
+//                        student.getPhone().toLowerCase().contains(keyword) ||
+//                        student.getNationalID().toLowerCase().contains(keyword) ||
+//                        student.getId().toLowerCase().contains(keyword) ||
+//                        student.getDateOfRegistration().toLowerCase().contains(keyword) ||
+//                        student.getFaculty().toLowerCase().contains(keyword) ||
+//                        student.getDepartment().toLowerCase().contains(keyword) ||
+//                        student.getMajor().toLowerCase().contains(keyword) ||
+//                        student.getDegree().toLowerCase().contains(keyword) ||
+//                        student.getStatus().toLowerCase().contains(keyword)
+//        );
+    }
+
+    @FXML
+    private void onSetActive() {
+//        Student selected = tableView.getSelectionModel().getSelectedItem();
+//        if (selected != null) {
+//            selected.setStatus("Active");
+//            tableView.refresh();
+//        }
+    }
+
+    @FXML
+    private void onSetInactive() {
+//        Student selected = tableView.getSelectionModel().getSelectedItem();
+//        if (selected != null) {
+//            selected.setStatus("Inactive");
+//            tableView.refresh();
+//        }
+    }
+
+    @FXML
+    private void onBack() {
+        // دکمه Back کاری انجام نمیده
+    }
+
+    @FXML
+    void semestersReports(ActionEvent event) {
+
     }
 
     @FXML
@@ -1867,15 +2228,18 @@ public class AdminPortal1 implements Initializable {
         } else if (updateMajorAnchorPane.isVisible()) {
             updateMajorAnchorPane.setVisible(false);
             updateMajorScrollPane.getStyleClass().remove("pressed");
-        } else if (updateMajorAnchorPane.isVisible()) {
-            updateMajorAnchorPane.setVisible(false);
-            updateMajorScrollPane.getStyleClass().remove("pressed");
         } else if (addEmployeeAnchorPane.isVisible()) {
             addEmployeeAnchorPane.setVisible(false);
             addEmployeeScrollPane.getStyleClass().remove("pressed");
         } else if (updateEmployeeAnchorPane.isVisible()) {
             updateEmployeeAnchorPane.setVisible(false);
             updateEmployeeScrollPane.getStyleClass().remove("pressed");
+        } else if (addSemesterAnchorPane.isVisible()) {
+            addSemesterAnchorPane.setVisible(false);
+            addSemesterScrollPane.getStyleClass().remove("pressed");
+        } else if (enrollmentAnchorPane.isVisible()) {
+            enrollmentAnchorPane.setVisible(false);
+            enrollmentScrollPane.getStyleClass().remove("pressed");
         } else if (profileAnchorPane.isVisible()) {
             profileAnchorPane.setVisible(false);
             profileScrollPane.getStyleClass().remove("pressed");
@@ -1886,15 +2250,15 @@ public class AdminPortal1 implements Initializable {
         if (!updateDepartmentAnchorPane.isVisible()) {
             updateDepartmentAnchorPane.setVisible(true);
             updateDepartmentScrollPane.getStyleClass().add("pressed");
-        }
 //        initialize the operation chooser combo box
-        operationChooserUpdateDepartment.getItems().clear();
-        operationChooserUpdateDepartment.getItems().addAll("Choose Your Operation: ", "Edit", "Deactive");
-        operationChooserUpdateDepartment.setVisibleRowCount(3);
-        operationChooserUpdateDepartment.getSelectionModel().selectFirst();
+            operationChooserUpdateDepartment.getItems().clear();
+            operationChooserUpdateDepartment.getItems().addAll("Choose Your Operation: ", "Edit", "Deactive");
+            operationChooserUpdateDepartment.setVisibleRowCount(3);
+            operationChooserUpdateDepartment.getSelectionModel().selectFirst();
 //        deactivate the edit and deactive vboxs
-        editDepartmentVbox.setVisible(false);
-        deactiveDepartmentVbox.setVisible(false);
+            editDepartmentVbox.setVisible(false);
+            deactiveDepartmentVbox.setVisible(false);
+        }
     }
 
     @FXML
@@ -1914,59 +2278,6 @@ public class AdminPortal1 implements Initializable {
 //        deactivate the edit and deactive vboxs
         editEmployeeVbox.setVisible(false);
         deactiveEmployeeVbox.setVisible(false);
-    }
-
-    @FXML
-    void enrollmentDashboard(ActionEvent event) {
-        // Set the header title
-        headerTitle.setText(" --> Update Employee");
-
-        // Hide all anchor panes
-        dashboardAnchorPane.setVisible(false);
-        buttonsScrollPane.setVisible(true);
-        enrollmentAnchorPane.setVisible(true);
-    }
-
-    @FXML
-    void activeEnrollment(ActionEvent event){
-        File file = new File("Enrollment.txt");
-        try {
-            if (file.exists()) {
-                if (!file.delete()) {
-                    System.out.println("Error in delete file!!");
-                    return;
-                }
-            }
-
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-                writer.write("Active");
-                System.out.println("Enrollment is active now!");
-            }
-
-        } catch (IOException e) {
-            System.out.println("Error in Active Enrollment!! " + e.getMessage());
-        }
-    }
-
-    @FXML
-    void deactiveEnrollment(ActionEvent event){
-        File file = new File("Enrollment.txt");
-        try {
-            if (file.exists()) {
-                if (!file.delete()) {
-                    System.out.println("Error in delete file!!");
-                    return;
-                }
-            }
-
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-                writer.write("Deactive");
-                System.out.println("Enrollment is Deactive now!");
-            }
-
-        } catch (IOException e) {
-            System.out.println("Error in Deactive Enrollment!! " + e.getMessage());
-        }
     }
 
     @FXML
@@ -1992,12 +2303,15 @@ public class AdminPortal1 implements Initializable {
         } else if (updateMajorAnchorPane.isVisible()) {
             updateMajorAnchorPane.setVisible(false);
             updateMajorScrollPane.getStyleClass().remove("pressed");
-        } else if (updateMajorAnchorPane.isVisible()) {
-            updateMajorAnchorPane.setVisible(false);
-            updateMajorScrollPane.getStyleClass().remove("pressed");
         } else if (addEmployeeAnchorPane.isVisible()) {
             addEmployeeAnchorPane.setVisible(false);
             addEmployeeScrollPane.getStyleClass().remove("pressed");
+        } else if (addSemesterAnchorPane.isVisible()) {
+            addSemesterAnchorPane.setVisible(false);
+            addSemesterScrollPane.getStyleClass().remove("pressed");
+        } else if (enrollmentAnchorPane.isVisible()) {
+            enrollmentAnchorPane.setVisible(false);
+            enrollmentScrollPane.getStyleClass().remove("pressed");
         } else if (profileAnchorPane.isVisible()) {
             profileAnchorPane.setVisible(false);
             profileScrollPane.getStyleClass().remove("pressed");
@@ -2009,16 +2323,16 @@ public class AdminPortal1 implements Initializable {
         if (!updateEmployeeAnchorPane.isVisible()) {
             updateEmployeeAnchorPane.setVisible(true);
             updateEmployeeScrollPane.getStyleClass().add("pressed");
+//        initialize the operation chooser combo box
+            operationChooserUpdateEmployee.getItems().clear();
+            operationChooserUpdateEmployee.getItems().addAll("Choose Your Operation: ", "Edit", "Deactive");
+            operationChooserUpdateEmployee.setVisibleRowCount(3);
+            operationChooserUpdateEmployee.getSelectionModel().selectFirst();
+//        deactivate the edit and deactive vboxs
+            editEmployeeVbox.setVisible(false);
+            deactiveEmployeeVbox.setVisible(false);
         }
 
-//        initialize the operation chooser combo box
-        operationChooserUpdateEmployee.getItems().clear();
-        operationChooserUpdateEmployee.getItems().addAll("Choose Your Operation: ", "Edit", "Deactive");
-        operationChooserUpdateEmployee.setVisibleRowCount(3);
-        operationChooserUpdateEmployee.getSelectionModel().selectFirst();
-//        deactivate the edit and deactive vboxs
-        editEmployeeVbox.setVisible(false);
-        deactiveEmployeeVbox.setVisible(false);
     }
 
     @FXML
@@ -2060,15 +2374,18 @@ public class AdminPortal1 implements Initializable {
         } else if (updateMajorAnchorPane.isVisible()) {
             updateMajorAnchorPane.setVisible(false);
             updateMajorScrollPane.getStyleClass().remove("pressed");
-        } else if (updateMajorAnchorPane.isVisible()) {
-            updateMajorAnchorPane.setVisible(false);
-            updateMajorScrollPane.getStyleClass().remove("pressed");
         } else if (addEmployeeAnchorPane.isVisible()) {
             addEmployeeAnchorPane.setVisible(false);
             addEmployeeScrollPane.getStyleClass().remove("pressed");
         } else if (updateEmployeeAnchorPane.isVisible()) {
             updateEmployeeAnchorPane.setVisible(false);
             updateEmployeeScrollPane.getStyleClass().remove("pressed");
+        } else if (addSemesterAnchorPane.isVisible()) {
+            addSemesterAnchorPane.setVisible(false);
+            addSemesterScrollPane.getStyleClass().remove("pressed");
+        } else if (enrollmentAnchorPane.isVisible()) {
+            enrollmentAnchorPane.setVisible(false);
+            enrollmentScrollPane.getStyleClass().remove("pressed");
         } else if (profileAnchorPane.isVisible()) {
             profileAnchorPane.setVisible(false);
             profileScrollPane.getStyleClass().remove("pressed");
@@ -2079,15 +2396,15 @@ public class AdminPortal1 implements Initializable {
         if (!updateFacultyAnchorPane.isVisible()) {
             updateFacultyAnchorPane.setVisible(true);
             updateFacultyScrollPane.getStyleClass().add("pressed");
-        }
 //        initialize the operation chooser combo box
-        operationChooserUpdateFaculty.getItems().clear();
-        operationChooserUpdateFaculty.getItems().addAll("Choose Your Operation: ", "Edit", "Deactive");
-        operationChooserUpdateFaculty.setVisibleRowCount(3);
-        operationChooserUpdateFaculty.getSelectionModel().selectFirst();
+            operationChooserUpdateFaculty.getItems().clear();
+            operationChooserUpdateFaculty.getItems().addAll("Choose Your Operation: ", "Edit", "Deactive");
+            operationChooserUpdateFaculty.setVisibleRowCount(3);
+            operationChooserUpdateFaculty.getSelectionModel().selectFirst();
 //        deactivate the edit and deactive vboxs
-        editFacultyVbox.setVisible(false);
-        deactiveFacultyVbox.setVisible(false);
+            editFacultyVbox.setVisible(false);
+            deactiveFacultyVbox.setVisible(false);
+        }
     }
 
     @FXML
@@ -2129,15 +2446,18 @@ public class AdminPortal1 implements Initializable {
         } else if (addMajorAnchorPane.isVisible()) {
             addMajorAnchorPane.setVisible(false);
             addMajorScrollPane.getStyleClass().remove("pressed");
-        } else if (updateMajorAnchorPane.isVisible()) {
-            updateMajorAnchorPane.setVisible(false);
-            updateMajorScrollPane.getStyleClass().remove("pressed");
         } else if (addEmployeeAnchorPane.isVisible()) {
             addEmployeeAnchorPane.setVisible(false);
             addEmployeeScrollPane.getStyleClass().remove("pressed");
         } else if (updateEmployeeAnchorPane.isVisible()) {
             updateEmployeeAnchorPane.setVisible(false);
             updateEmployeeScrollPane.getStyleClass().remove("pressed");
+        } else if (addSemesterAnchorPane.isVisible()) {
+            addSemesterAnchorPane.setVisible(false);
+            addSemesterScrollPane.getStyleClass().remove("pressed");
+        } else if (enrollmentAnchorPane.isVisible()) {
+            enrollmentAnchorPane.setVisible(false);
+            enrollmentScrollPane.getStyleClass().remove("pressed");
         } else if (profileAnchorPane.isVisible()) {
             profileAnchorPane.setVisible(false);
             profileScrollPane.getStyleClass().remove("pressed");
@@ -2148,15 +2468,15 @@ public class AdminPortal1 implements Initializable {
         if (!updateMajorAnchorPane.isVisible()) {
             updateMajorAnchorPane.setVisible(true);
             updateMajorScrollPane.getStyleClass().add("pressed");
-        }
 //        initialize the operation chooser combo box
-        operationChooserUpdateMajor.getItems().clear();
-        operationChooserUpdateMajor.getItems().addAll("Choose Your Operation: ", "Edit", "Deactive");
-        operationChooserUpdateMajor.setVisibleRowCount(3);
-        operationChooserUpdateMajor.getSelectionModel().selectFirst();
+            operationChooserUpdateMajor.getItems().clear();
+            operationChooserUpdateMajor.getItems().addAll("Choose Your Operation: ", "Edit", "Deactive");
+            operationChooserUpdateMajor.setVisibleRowCount(3);
+            operationChooserUpdateMajor.getSelectionModel().selectFirst();
 //        deactivate the edit and deactive vboxs
-        editMajorVbox.setVisible(false);
-        deactiveMajorVbox.setVisible(false);
+            editMajorVbox.setVisible(false);
+            deactiveMajorVbox.setVisible(false);
+        }
     }
 
     @Override
