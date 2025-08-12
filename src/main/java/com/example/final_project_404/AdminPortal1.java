@@ -356,6 +356,29 @@ public class AdminPortal1 implements Initializable {
     private Button reportsScrollPane;
 
 //    Reports
+    //Faculties
+@FXML private TableView<FacultyReport> tableViewReportFaculty;
+    @FXML private TableColumn<FacultyReport, String> colNameReportFaculty;
+    @FXML private TableColumn<FacultyReport, String> colIDReportFaculty;
+    @FXML private TableColumn<FacultyReport, Integer> colEstablishmentReportFaculty;
+    @FXML private TableColumn<FacultyReport, String> colStatusReportFaculty;
+    @FXML private TextField searchFieldFaculties;
+
+    private ObservableList<FacultyReport> facultyList;
+    private FilteredList<FacultyReport> filteredListReportFaculty;
+    //Majors
+    @FXML private TableView<MajorReport> tableViewReportMajors;
+    @FXML private TableColumn<MajorReport, String> colNameReportMajors;
+    @FXML private TableColumn<MajorReport, String> colIdReportMajors;
+    @FXML private TableColumn<MajorReport, String> colFacultyReportMajors;
+    @FXML private TableColumn<MajorReport, String> colDepartmentReportMajors;
+    @FXML private TableColumn<MajorReport, Integer> colEstablishmentYearReportMajors;
+    @FXML private TableColumn<MajorReport, String> colStatusReportMajors;
+    @FXML private TextField searchFieldReportMajors;
+
+    private ObservableList<MajorReport> majorList;
+    private FilteredList<MajorReport> filteredListReportMajor;
+
     // People
     @FXML private TableView<People> tableViewReportPeople;
 
@@ -376,6 +399,7 @@ public class AdminPortal1 implements Initializable {
 
     private ObservableList<People> peoplelist;
     private FilteredList<People> filteredListReportPeople;
+
 
 //    Reports Done
 
@@ -1313,18 +1337,41 @@ public class AdminPortal1 implements Initializable {
     }
 
     @FXML
-    void editDepartment(ActionEvent event) {
+    void editDepartment(ActionEvent event) throws Exception {
         University.loadFaculties();
+        Professor.loadAllProfessor();
+        Employee.loadAllEmployee();
+        Student.loadAllStudents();
         for (Faculty faculty : University.allFaculties){
             if (faculty.getFacultyName().equals(facultyChooserEditDepartment.getValue())){
                 for (Department department : faculty.departments){
                     if (department.getName().equals(departmentChooserEditDepartment.getValue())){
                         if (!newDepartmentNameEditDepartment.getText().isBlank()){
                             department.setName(newDepartmentNameEditDepartment.getText());
+                            for (Employee employee : University.allEmployees) {
+                                if (employee.getDepartment().equals(departmentChooserEditDepartment.getValue())) {
+                                    employee.setDepartment(newDepartmentNameEditDepartment.getText());
+                                }
+                            }
+                            for (Professor professor : University.allProfessors) {
+                                if (professor.getDepartment().equals(departmentChooserEditDepartment.getValue())) {
+                                    professor.setDepartment(newDepartmentNameEditDepartment.getText());
+                                }
+                            }
+                            for (Student student : University.allStudents) {
+                                if (student.getDepartment().equals(departmentChooserEditDepartment.getValue())) {
+                                    student.setDepartment(newDepartmentNameEditDepartment.getText());
+                                }
+                            }
                         }
                         if (!newEstablishmentYearEditDepartment.getText().isBlank()){
                             department.setEstablishmentYear(Integer.parseInt(newEstablishmentYearEditDepartment.getText()));
                         }
+                        University.saveFaculties();
+                        Professor.saveAllProfessor();
+                        Employee.saveAllEmployee();
+                        Student.saveAllStudent();
+
                         System.out.println("Successful");
                         System.out.println(department.getName());
                         System.out.println(department.getEstablishmentYear());
@@ -1336,13 +1383,15 @@ public class AdminPortal1 implements Initializable {
                 break;
             }
         }
-        University.saveFaculties();
+
         System.out.println("successful");
 
         facultyChooserEditDepartment.getSelectionModel().selectFirst();
         departmentChooserEditDepartment.getSelectionModel().selectFirst();
         newDepartmentNameEditDepartment.clear();
+        newDepartmentNameEditDepartment.setPromptText("Department Name");
         newEstablishmentYearEditDepartment.clear();
+        newEstablishmentYearEditDepartment.setPromptText("Establishment Year");
     }
 
     @FXML
@@ -1373,6 +1422,8 @@ public class AdminPortal1 implements Initializable {
                                 if (!phoneNumberEditEmployee.getText().isBlank()){
                                     employee.setPhoneNumber(phoneNumberEditEmployee.getText());
                                 }
+                                University.saveFaculties();
+
                                 break;
                             }
                         }
@@ -1382,7 +1433,6 @@ public class AdminPortal1 implements Initializable {
                 break;
             }
         }
-        University.saveFaculties();
 
         Employee.loadAllEmployee();
         for (Employee employee : University.allEmployees){
@@ -1406,6 +1456,8 @@ public class AdminPortal1 implements Initializable {
                 if (!phoneNumberEditEmployee.getText().isBlank()){
                     employee.setPhoneNumber(phoneNumberEditEmployee.getText());
                 }
+                Employee.saveAllEmployee();
+
                 System.out.println("successful");
                 System.out.println(employee.getFullName());
                 System.out.println(employee.getDateOfBirth());
@@ -1420,44 +1472,67 @@ public class AdminPortal1 implements Initializable {
                 employeeChooserEditEmployee.getSelectionModel().selectFirst();
                 genderChooserEditEmployee.getSelectionModel().selectFirst();
                 newFirstNameEditEmployee.clear();
-                newFirstNameEditEmployee.setPromptText(employee.getFirst_name());
+                newFirstNameEditEmployee.setPromptText("First Name");
                 newLastNameEditEmployee.clear();
-                newLastNameEditEmployee.setPromptText(employee.getLast_name());
+                newLastNameEditEmployee.setPromptText("Last Name");
                 phoneNumberEditEmployee.clear();
-                phoneNumberEditEmployee.setPromptText(employee.getPhoneNumber());
+                phoneNumberEditEmployee.setPromptText("Phone Number");
                 nationalIdEditEmployee.clear();
-                nationalIdEditEmployee.setPromptText(employee.getNationalId());
+                nationalIdEditEmployee.setPromptText("National ID");
                 dateOfBirthEditEmployee.setValue(null);
-                dateOfBirthEditEmployee.setPromptText(employee.getDateOfBirth().getDayOfMonth()+" "+Month.of(employee.getDateOfBirth().getMonthValue())+" "+employee.getDateOfBirth().getYear());
+                dateOfBirthEditEmployee.setPromptText("Date Of Birth");
 
                 break;
             }
         }
-        Employee.saveAllEmployee();
     }
 
     @FXML
-    void editFaculty(ActionEvent event) {
+    void editFaculty(ActionEvent event) throws Exception {
         University.loadFaculties();
+        Employee.loadAllEmployee();
+        Professor.loadAllProfessor();
+        Student.loadAllStudents();
         for(Faculty faculty : University.allFaculties){
             if (faculty.getFacultyName().equals(facultyChooserEditFaculty.getValue())){
                 if (!newFacultyNameEditFaculty.getText().isBlank()){
                     faculty.setFacultyName(newFacultyNameEditFaculty.getText());
+                    for (Employee employee : University.allEmployees) {
+                        if (employee.getFaculty().equals(facultyChooserEditFaculty.getValue())) {
+                            employee.setFaculty(newFacultyNameEditFaculty.getText());
+                        }
+                    }
+                    for (Professor professor : University.allProfessors) {
+                        if (professor.getFaculty().equals(facultyChooserEditFaculty.getValue())) {
+                            professor.setFaculty(newFacultyNameEditFaculty.getText());
+                        }
+                    }
+                    for (Student student : University.allStudents) {
+                        if (student.getFaculty().equals(facultyChooserEditFaculty.getValue())) {
+                            student.setFaculty(newFacultyNameEditFaculty.getText());
+                        }
+                    }
                 }
                 if (!newEstablishmentYearEditFaculty.getText().isBlank()){
                     faculty.setEstablishmentYear(Integer.parseInt(newEstablishmentYearEditFaculty.getText()));
                 }
+                University.saveFaculties();
+                Employee.saveAllEmployee();
+                Professor.saveAllProfessor();
+                Student.saveAllStudent();
+
                 System.out.println("successful");
                 System.out.println(faculty.getFacultyName());
                 System.out.println(faculty.getEstablishmentYear());
 
                 facultyChooserEditFaculty.getSelectionModel().selectFirst();
                 newFacultyNameEditFaculty.clear();
+                newFacultyNameEditFaculty.setPromptText("Faculty Name");
                 newEstablishmentYearEditFaculty.clear();
+                newEstablishmentYearEditFaculty.setPromptText("Establishment Year");
                 break;
             }
         }
-        University.saveFaculties();
 
         facultyChooserEditFaculty.getItems().clear();
         facultyChooserEditFaculty.getItems().add("Faculty");
@@ -1469,8 +1544,10 @@ public class AdminPortal1 implements Initializable {
     }
 
     @FXML
-    void editMajor(ActionEvent event) {
+    void editMajor(ActionEvent event) throws Exception {
         University.loadFaculties();
+        Professor.loadAllProfessor();
+        Student.loadAllStudents();
         for (Faculty faculty : University.allFaculties){
             if (faculty.getFacultyName().equals(facultyChooserEditMajor.getValue())){
                 for (Department department : faculty.departments){
@@ -1479,10 +1556,24 @@ public class AdminPortal1 implements Initializable {
                             if (major.getName().equals(majorChooserEditMajor.getValue())){
                                 if (!newMajorNameEditMajor.getText().isBlank()){
                                     major.setName(newMajorNameEditMajor.getText());
+                                    for (Professor professor : University.allProfessors) {
+                                        if (professor.getMajor().equals(majorChooserEditMajor.getValue())) {
+                                            professor.setMajor(newMajorNameEditMajor.getText());
+                                        }
+                                    }
+                                    for (Student student : University.allStudents) {
+                                        if (student.getMajor().equals(majorChooserEditMajor.getValue())) {
+                                            student.setMajor(newMajorNameEditMajor.getText());
+                                        }
+                                    }
                                 }
                                 if (!newEstablishmentYearEditMajor.getText().isBlank()){
                                     major.setEstablishmentYear(Integer.parseInt(newEstablishmentYearEditMajor.getText()));
                                 }
+                                University.saveFaculties();
+                                Professor.saveAllProfessor();
+                                Student.saveAllStudent();
+
                                 System.out.println("successful");
                                 System.out.println(major.getName());
                                 System.out.println(major.getEstablishmentYear());
@@ -1491,7 +1582,9 @@ public class AdminPortal1 implements Initializable {
                                 departmentChooserEditMajor.getSelectionModel().selectFirst();
                                 majorChooserEditMajor.getSelectionModel().selectFirst();
                                 newMajorNameEditMajor.clear();
+                                newMajorNameEditMajor.setPromptText("Major Name");
                                 newEstablishmentYearEditMajor.clear();
+                                newEstablishmentYearEditMajor.setPromptText("Establishment Year");
                                 break;
                             }
                         }
@@ -1501,7 +1594,6 @@ public class AdminPortal1 implements Initializable {
                 break;
             }
         }
-        University.saveFaculties();
     }
 
     @FXML
@@ -1564,7 +1656,25 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     void facultiesReports(ActionEvent event) {
+        facultiesReportsAnchorPane.setVisible(true);
 
+        searchFieldFaculties.clear();
+        searchFieldFaculties.setPromptText("Search ...");
+
+        colNameReportFaculty.setCellValueFactory(data -> data.getValue().facultyNameProperty());
+        colIDReportFaculty.setCellValueFactory(data -> data.getValue().facultyIdProperty());
+        colEstablishmentReportFaculty.setCellValueFactory(data -> data.getValue().establishmentYearProperty().asObject());
+        colStatusReportFaculty.setCellValueFactory(data -> data.getValue().statusProperty());
+        University.loadFaculties();
+        facultyList = FXCollections.observableArrayList();
+        for (Faculty faculty : University.allFaculties) {
+            facultyList.add(new FacultyReport(faculty.getFacultyName(), faculty.getId(), faculty.getEstablishmentYear(), String.valueOf(faculty.getStatus())));
+        }
+
+        filteredListReportFaculty = new FilteredList<>(facultyList, facultyReport -> true);
+        tableViewReportFaculty.setItems(filteredListReportFaculty);
+
+        setupStatusContextMenuFaculty();
     }
 
     @FXML
@@ -1577,7 +1687,60 @@ public class AdminPortal1 implements Initializable {
         peopleReportsAnchorPane.setVisible(true);
 
         searchFieldPeople.clear();
+        searchFieldPeople.setPromptText("Search ...");
 
+        // People
+        colNameReportPeople.setCellValueFactory(data -> data.getValue().fullNameProperty());
+        colAgeReportPeople.setCellValueFactory(data -> data.getValue().ageProperty().asObject());
+        colGenderReportPeople.setCellValueFactory(data -> data.getValue().genderProperty());
+        colPhoneReportPeople.setCellValueFactory(data -> data.getValue().phoneNumberProperty());
+        colNationalIDReportPeople.setCellValueFactory(data -> data.getValue().nationalIdProperty());
+        colRoleReportPeople.setCellValueFactory(data -> data.getValue().roleProperty());
+        colIDReportPeople.setCellValueFactory(data -> data.getValue().idProperty());
+        colDateOfRegisterReportPeople.setCellValueFactory(data -> data.getValue().dateOfRegistrationProperty());
+        colFacultyReportPeople.setCellValueFactory(data -> data.getValue().facultyProperty());
+        colDepartmentReportPeople.setCellValueFactory(data -> data.getValue().departmentProperty());
+        colMajorReportPeople.setCellValueFactory(data -> data.getValue().majorProperty());
+        colDegreeReportPeople.setCellValueFactory(data -> data.getValue().degreeProperty());
+        colStatusReportPeople.setCellValueFactory(data -> data.getValue().statusProperty());
+
+
+        Employee.loadAllEmployee();
+        try {
+            Professor.loadAllProfessor();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Student.loadAllStudents();
+
+
+        peoplelist = FXCollections.observableArrayList();
+        for (Employee employee : University.allEmployees) {
+            peoplelist.add(new People(employee.getFirst_name(), employee.getLast_name(), employee.getDateOfBirth(), employee.getNationalId(),
+                    employee.getGender(), employee.getPhoneNumber(), employee.getDateOfJoin(),"Employee", employee.getId(),
+                    employee.getFaculty(), employee.getDepartment(), "----", "----", employee.getStatus()));
+        }
+
+        for (Professor professor : University.allProfessors) {
+            peoplelist.add(new People(professor.getFirst_name(), professor.getLast_name(), professor.getDateOfBirth(), professor.getNationalId(),
+                    professor.getGender(), professor.getPhoneNumber(), professor.getDateOfJoin(), "Professor", professor.getId(),
+                    professor.getFaculty(), professor.getDepartment(), professor.getMajor(), "----", professor.getStatus()));
+        }
+
+        for (Student student : University.allStudents) {
+            peoplelist.add(new People(student.getFirst_name(), student.getLast_name(), student.getDateOfBirth(), student.getNationalId(),
+                    student.getGender(), student.getPhoneNumber(), student.getDateOfJoin(), "Student", student.getId(),
+                    student.getFaculty(), student.getDepartment(), student.getMajor(), "----", student.getStatus()));
+        }
+
+
+
+        filteredListReportPeople = new FilteredList<>(peoplelist, people -> true);
+        tableViewReportPeople.setItems(filteredListReportPeople);
+
+        setupGenderContextMenuPeople();
+        setupStatusContextMenuPeople();
+        setupRoleContextMenuPeople();
     }
 
     @FXML
@@ -1709,6 +1872,53 @@ public class AdminPortal1 implements Initializable {
             semestersReportsAnchorPane.setVisible(false);
         }
     }
+//    Reports ------>>> Faculties
+    private void setupStatusContextMenuFaculty() {
+        ContextMenu statusMenu = new ContextMenu();
+
+        MenuItem active = new MenuItem("Active");
+        active.setOnAction(e -> filterByStatusFaculty("Active"));
+        MenuItem inactive = new MenuItem("Inactive");
+        inactive.setOnAction(e -> filterByStatusFaculty("Inactive"));
+
+        MenuItem allStatus = new MenuItem("All");
+        allStatus.setOnAction(e -> {
+            filteredListReportFaculty.setPredicate(p -> true);
+            tableViewReportFaculty.setItems(filteredListReportFaculty);
+        });
+
+        statusMenu.getItems().addAll(active, inactive, allStatus);
+        colStatusReportFaculty.setContextMenu(statusMenu);
+    }
+    private void filterByStatusFaculty(String status) {
+        ObservableList<FacultyReport> filtered = FXCollections.observableArrayList();
+        for (FacultyReport faculty : facultyList) {
+            if (faculty.getStatus().equalsIgnoreCase(status)) {
+                filtered.add(faculty);
+            }
+        }
+        tableViewReportFaculty.setItems(filtered);
+    }
+
+    @FXML
+    private void onBackFaculties() {
+        facultiesReportsAnchorPane.setVisible(false);
+    }
+
+    @FXML
+    private void onSearchFaculties() {
+        String keyword = searchFieldFaculties.getText().toLowerCase().trim();
+        if (keyword.isEmpty()) {
+            filteredListReportFaculty.setPredicate(p -> true);
+            return;
+        }
+        filteredListReportFaculty.setPredicate(facultyReport ->
+                facultyReport.getFacultyName().toLowerCase().contains(keyword) ||
+                        String.valueOf(facultyReport.getEstablishmentYear()).contains(keyword) ||
+                        facultyReport.getFacultyId().contains(keyword) ||
+                        facultyReport.getStatus().toLowerCase().contains(keyword)
+        );
+    }
 
 //    Reports ------>>> People
     private void setupGenderContextMenuPeople() {
@@ -1737,9 +1947,9 @@ public class AdminPortal1 implements Initializable {
         ContextMenu statusMenu = new ContextMenu();
 
         MenuItem active = new MenuItem("Active");
-        active.setOnAction(e -> filterByStatusPeople("Active"));
+        active.setOnAction(e -> updateSelectedStatus("Active"));
         MenuItem inactive = new MenuItem("Inactive");
-        inactive.setOnAction(e -> filterByStatusPeople("Inactive"));
+        inactive.setOnAction(e -> updateSelectedStatus("Inactive"));
 
         MenuItem allStatus = new MenuItem("All");
         allStatus.setOnAction(e -> {
@@ -1749,9 +1959,6 @@ public class AdminPortal1 implements Initializable {
 
         statusMenu.getItems().addAll(active, inactive, allStatus);
         colStatusReportPeople.setContextMenu(statusMenu);
-    }
-    private void filterByStatusPeople(String status) {
-        filteredListReportPeople.setPredicate(people -> people.getStatus().equalsIgnoreCase(status));
     }
 
     private void setupRoleContextMenuPeople() {
@@ -1808,29 +2015,12 @@ public class AdminPortal1 implements Initializable {
         );
     }
 
-//    @FXML
-//    private void onSetActivePeople() {
-//        People selected = tableViewReportPeople.getSelectionModel().getSelectedItem();
-//        if (selected != null) {
-//            selected.setStatus(Status.valueOf("Active"));
-//            tableViewReportPeople.refresh();
-//        }
-//    }
-//
-//    @FXML
-//    private void onSetInactivePeople() {
-//        People selected = tableViewReportPeople.getSelectionModel().getSelectedItem();
-//        if (selected != null) {
-//            selected.setStatus(Status.valueOf("Inactive"));
-//            tableViewReportPeople.refresh();
-//        }
-//    }
-
     @FXML
     private void onBackPeople() {
         peopleReportsAnchorPane.setVisible(false);
-        reportsAnchorPane.setVisible(true);
     }
+
+//    Reports ----->>> Done
 
     @FXML
     void semestersReports(ActionEvent event) {
@@ -1959,7 +2149,9 @@ public class AdminPortal1 implements Initializable {
                 });
 //        clear the textfields
                 newDepartmentNameEditDepartment.clear();
+                newDepartmentNameEditDepartment.setPromptText("Department Name");
                 newEstablishmentYearEditDepartment.clear();
+                newEstablishmentYearEditDepartment.setPromptText("Establishment Year");
             } else if (operationChooserUpdateDepartment.getValue().equals("Deactive")){
 //            activate the deactive screen and deactivate the edit screen
                 editDepartmentVbox.setVisible(false);
@@ -2049,9 +2241,13 @@ public class AdminPortal1 implements Initializable {
                 genderChooserEditEmployee.getSelectionModel().selectFirst();
 //        clear the textfields and datepicker
                 newFirstNameEditEmployee.clear();
+                newFirstNameEditEmployee.setPromptText("First Name");
                 newLastNameEditEmployee.clear();
+                newLastNameEditEmployee.setPromptText("Last Name");
                 phoneNumberEditEmployee.clear();
+                phoneNumberEditEmployee.setPromptText("Phone Number");
                 nationalIdEditEmployee.clear();
+                nationalIdEditEmployee.setPromptText("National ID");
                 dateOfBirthEditEmployee.setValue(null);
                 dateOfBirthEditEmployee.setPromptText("Date of Birth");
 
@@ -2124,7 +2320,9 @@ public class AdminPortal1 implements Initializable {
                 facultyChooserEditFaculty.getSelectionModel().selectFirst();
     //                clear the textfields
                 newFacultyNameEditFaculty.clear();
+                newFacultyNameEditFaculty.setPromptText("Faculty Name");
                 newEstablishmentYearEditFaculty.clear();
+                newEstablishmentYearEditFaculty.setPromptText("Establishment Year");
             } else if (operationChooserUpdateFaculty.getValue().equals("Deactive")) {
     //                activate the deactive screen and deactivate the edit screen
                 editFacultyVbox.setVisible(false);
@@ -2201,7 +2399,9 @@ public class AdminPortal1 implements Initializable {
                 });
 //        clear the textfields
                 newMajorNameEditMajor.clear();
+                newMajorNameEditMajor.setPromptText("Major Name");
                 newEstablishmentYearEditMajor.clear();
+                newEstablishmentYearEditMajor.setPromptText("Establishment Year");
             } else if (operationChooserUpdateMajor.getValue().equals("Deactive")){
 //            activate the deactive screen and deactivate the edit screen
                 editMajorVbox.setVisible(false);
@@ -2574,57 +2774,7 @@ public class AdminPortal1 implements Initializable {
 
 
 //        Reports
-        // People
-        colNameReportPeople.setCellValueFactory(data -> data.getValue().fullNameProperty());
-        colAgeReportPeople.setCellValueFactory(data -> data.getValue().ageProperty().asObject());
-        colGenderReportPeople.setCellValueFactory(data -> data.getValue().genderProperty());
-        colPhoneReportPeople.setCellValueFactory(data -> data.getValue().phoneNumberProperty());
-        colNationalIDReportPeople.setCellValueFactory(data -> data.getValue().nationalIdProperty());
-        colRoleReportPeople.setCellValueFactory(data -> data.getValue().roleProperty());
-        colIDReportPeople.setCellValueFactory(data -> data.getValue().idProperty());
-        colDateOfRegisterReportPeople.setCellValueFactory(data -> data.getValue().dateOfRegistrationProperty());
-        colFacultyReportPeople.setCellValueFactory(data -> data.getValue().facultyProperty());
-        colDepartmentReportPeople.setCellValueFactory(data -> data.getValue().departmentProperty());
-        colMajorReportPeople.setCellValueFactory(data -> data.getValue().majorProperty());
-        colDegreeReportPeople.setCellValueFactory(data -> data.getValue().degreeProperty());
-        colStatusReportPeople.setCellValueFactory(data -> data.getValue().statusProperty());
 
-
-        Employee.loadAllEmployee();
-        try {
-            Professor.loadAllProfessor();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Student.loadAllStudents();
-
-        peoplelist = FXCollections.observableArrayList();
-        for (Employee employee : University.allEmployees) {
-            peoplelist.add(new People(employee.getFirst_name(), employee.getLast_name(), employee.getDateOfBirth(), employee.getNationalId(),
-                    employee.getGender(), employee.getPhoneNumber(), employee.getDateOfJoin(),"Employee", employee.getId(),
-                    employee.getFaculty(), employee.getDepartment(), "----", "----", employee.getStatus()));
-        }
-
-        for (Professor professor : University.allProfessors) {
-            peoplelist.add(new People(professor.getFirst_name(), professor.getLast_name(), professor.getDateOfBirth(), professor.getNationalId(),
-                    professor.getGender(), professor.getPhoneNumber(), professor.getDateOfJoin(), "Professor", professor.getId(),
-                    professor.getFaculty(), professor.getDepartment(), professor.getMajor(), "----", professor.getStatus()));
-        }
-
-        for (Student student : University.allStudents) {
-            peoplelist.add(new People(student.getFirst_name(), student.getLast_name(), student.getDateOfBirth(), student.getNationalId(),
-                    student.getGender(), student.getPhoneNumber(), student.getDateOfJoin(), "Student", student.getId(),
-                    student.getFaculty(), student.getDepartment(), student.getMajor(), "----", student.getStatus()));
-        }
-
-
-
-        filteredListReportPeople = new FilteredList<>(peoplelist, people -> true);
-        tableViewReportPeople.setItems(filteredListReportPeople);
-
-        setupGenderContextMenuPeople();
-        setupStatusContextMenuPeople();
-        setupRoleContextMenuPeople();
 
 
 
