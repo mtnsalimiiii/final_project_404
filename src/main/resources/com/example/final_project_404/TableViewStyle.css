@@ -2,15 +2,15 @@
     -fx-background-color: #1e1e2f;
     -fx-border-color: #3e3e5e;
     -fx-table-cell-border-color: transparent;
-    -fx-padding: 10;
-/*    -fx-background-radius: 8;*/
+    -fx-padding: 2;
+    -fx-background-radius: 4;
     -fx-border-radius: 8;
 }
 
 .table-view .column-header-background {
     -fx-background-color: #3e3e5e;
-    -fx-padding: 8 0 8 0;
-/*    -fx-background-radius: 8 8 0 0;*/
+    -fx-padding: 8 4 8 4;
+    -fx-background-radius: 4 4 0 0;
 }
 
 .table-view .column-header,

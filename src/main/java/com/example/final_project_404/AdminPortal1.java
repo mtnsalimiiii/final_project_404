@@ -356,8 +356,19 @@ public class AdminPortal1 implements Initializable {
     private Button reportsScrollPane;
 
 //    Reports
+    //Departments
+    @FXML private TableView<DepartmentReport> tableViewReportDepartment;
+    @FXML private TableColumn<DepartmentReport, String> colDepartmentNameReportDepartment;
+    @FXML private TableColumn<DepartmentReport, String> colDepartmentIDReportDepartment;
+    @FXML private TableColumn<DepartmentReport, String> colFacultyReportDepartment;
+    @FXML private TableColumn<DepartmentReport, String> colEstYearReportDepartment;
+    @FXML private TableColumn<DepartmentReport, String> colStatusReportDepartment;
+    @FXML private TextField searchFieldReportDepartment;
+
+    private ObservableList<DepartmentReport> departmentList;
+    private FilteredList<DepartmentReport> filteredListReportDepartment;
     //Faculties
-@FXML private TableView<FacultyReport> tableViewReportFaculty;
+    @FXML private TableView<FacultyReport> tableViewReportFaculty;
     @FXML private TableColumn<FacultyReport, String> colNameReportFaculty;
     @FXML private TableColumn<FacultyReport, String> colIDReportFaculty;
     @FXML private TableColumn<FacultyReport, Integer> colEstablishmentReportFaculty;
@@ -378,7 +389,6 @@ public class AdminPortal1 implements Initializable {
 
     private ObservableList<MajorReport> majorList;
     private FilteredList<MajorReport> filteredListReportMajor;
-
     // People
     @FXML private TableView<People> tableViewReportPeople;
 
@@ -933,7 +943,7 @@ public class AdminPortal1 implements Initializable {
             for (Faculty faculty : University.allFaculties) {
                 if (faculty.getFacultyName().equals(facultyChooserAddMajor.getValue()) && faculty.getStatus().equals(Status.Active)) {
                     for (Department department : faculty.departments) {
-                        if (department.getName().equals(departmentChooserAddMajor) && department.getStatus().equals(Status.Active)) {
+                        if (department.getName().equals(departmentChooserAddMajor.getValue()) && department.getStatus().equals(Status.Active)) {
                             if (!department.majors.contains(newMajor)) {
                                 department.majors.add(newMajor);
                             } else {
@@ -1333,6 +1343,28 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     void departmentsReports(ActionEvent event) {
+        departmentsReportsAnchorPane.setVisible(true);
+
+        searchFieldReportDepartment.clear();
+        searchFieldReportDepartment.setPromptText("Search ...");
+        colDepartmentNameReportDepartment.setCellValueFactory(data -> data.getValue().departmentNameProperty());
+        colDepartmentIDReportDepartment.setCellValueFactory(data -> data.getValue().departmentIDProperty());
+        colFacultyReportDepartment.setCellValueFactory(data -> data.getValue().facultyProperty());
+        colEstYearReportDepartment.setCellValueFactory(data -> data.getValue().estYearProperty());
+        colStatusReportDepartment.setCellValueFactory(data -> data.getValue().statusProperty());
+
+        University.loadFaculties();
+        departmentList = FXCollections.observableArrayList();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                departmentList.add(new DepartmentReport(department.getName(), department.getId(), faculty.getFacultyName(), String.valueOf(department.getEstablishmentYear()), String.valueOf(department.getStatus())));
+            }
+        }
+
+        filteredListReportDepartment = new FilteredList<>(departmentList, p -> true);
+        tableViewReportDepartment.setItems(filteredListReportDepartment);
+
+        setupStatusContextMenuReportDepartment();
 
     }
 
@@ -1660,11 +1692,11 @@ public class AdminPortal1 implements Initializable {
 
         searchFieldFaculties.clear();
         searchFieldFaculties.setPromptText("Search ...");
-
         colNameReportFaculty.setCellValueFactory(data -> data.getValue().facultyNameProperty());
         colIDReportFaculty.setCellValueFactory(data -> data.getValue().facultyIdProperty());
         colEstablishmentReportFaculty.setCellValueFactory(data -> data.getValue().establishmentYearProperty().asObject());
         colStatusReportFaculty.setCellValueFactory(data -> data.getValue().statusProperty());
+
         University.loadFaculties();
         facultyList = FXCollections.observableArrayList();
         for (Faculty faculty : University.allFaculties) {
@@ -1679,6 +1711,32 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     void majorsReports(ActionEvent event) {
+        majorsReportsAnchorPane.setVisible(true);
+
+        searchFieldReportMajors.clear();
+        searchFieldReportMajors.setPromptText("Search ...");
+
+        colNameReportMajors.setCellValueFactory(cellData -> cellData.getValue().majorNameProperty());
+        colIdReportMajors.setCellValueFactory(cellData -> cellData.getValue().majorIdProperty());
+        colFacultyReportMajors.setCellValueFactory(cellData -> cellData.getValue().facultyProperty());
+        colDepartmentReportMajors.setCellValueFactory(cellData -> cellData.getValue().departmentProperty());
+        colEstablishmentYearReportMajors.setCellValueFactory(cellData -> cellData.getValue().establishmentYearProperty().asObject());
+        colStatusReportMajors.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
+
+        University.loadFaculties();
+        majorList = FXCollections.observableArrayList();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Major major : department.majors) {
+                    majorList.add(new MajorReport(major.getName(), major.getId(), faculty.getFacultyName(), department.getName(), major.getEstablishmentYear(), major.getStatus().toString()));
+                }
+            }
+        }
+
+        filteredListReportMajor = new FilteredList<>(majorList, majorReport -> true);
+        tableViewReportMajors.setItems(filteredListReportMajor);
+
+        setupStatusContextMenuReportMajor();
 
     }
 
@@ -1872,6 +1930,57 @@ public class AdminPortal1 implements Initializable {
             semestersReportsAnchorPane.setVisible(false);
         }
     }
+//    Reports ------>>> Departments
+    private void setupStatusContextMenuReportDepartment() {
+        ContextMenu statusMenu = new ContextMenu();
+
+        MenuItem active = new MenuItem("Active");
+        active.setOnAction(e -> {
+            DepartmentReport selected = tableViewReportDepartment.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                selected.setStatus("Active");
+                tableViewReportDepartment.refresh();
+            }
+        });
+
+        MenuItem inactive = new MenuItem("Inactive");
+        inactive.setOnAction(e -> {
+            DepartmentReport selected = tableViewReportDepartment.getSelectionModel().getSelectedItem();
+            if (selected != null) {
+                selected.setStatus("Inactive");
+                tableViewReportDepartment.refresh();
+            }
+        });
+
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(e -> {
+            filteredListReportDepartment.setPredicate(p -> true);
+            tableViewReportDepartment.setItems(filteredListReportDepartment);
+        });
+
+        statusMenu.getItems().addAll(active, inactive, allItem);
+        colStatusReportDepartment.setContextMenu(statusMenu);
+    }
+
+    @FXML
+    private void onSearchReportDepartment() {
+        String keyword = searchFieldReportDepartment.getText().toLowerCase().trim();
+        if (keyword.isEmpty()) {
+            filteredListReportDepartment.setPredicate(p -> true);
+            return;
+        }
+        filteredListReportDepartment.setPredicate(dept ->
+                dept.getDepartmentName().toLowerCase().contains(keyword) ||
+                        dept.getDepartmentID().toLowerCase().contains(keyword) ||
+                        dept.getFaculty().toLowerCase().contains(keyword) ||
+                        dept.getEstYear().toLowerCase().contains(keyword) ||
+                        dept.getStatus().toLowerCase().contains(keyword)
+        );
+    }
+
+    public void onBackReportDepartment(ActionEvent event) {
+        departmentsReportsAnchorPane.setVisible(false);
+    }
 //    Reports ------>>> Faculties
     private void setupStatusContextMenuFaculty() {
         ContextMenu statusMenu = new ContextMenu();
@@ -1919,7 +2028,51 @@ public class AdminPortal1 implements Initializable {
                         facultyReport.getStatus().toLowerCase().contains(keyword)
         );
     }
+//    Reports ------>>> Major
+    private void setupStatusContextMenuReportMajor() {
+        ContextMenu statusMenu = new ContextMenu();
+        MenuItem activeItem = new MenuItem("Active");
+        activeItem.setOnAction(e -> filterStatus("Active"));
+        MenuItem inactiveItem = new MenuItem("Inactive");
+        inactiveItem.setOnAction(e -> filterStatus("Inactive"));
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(e -> tableViewReportMajors.setItems(majorList));
 
+        statusMenu.getItems().addAll(activeItem, inactiveItem, allItem);
+        colStatusReportMajors.setContextMenu(statusMenu);
+
+    }
+
+    @FXML
+    private void filterStatus(String status) {
+        for (MajorReport major : majorList) {
+            if (major.getStatus().equalsIgnoreCase(status)) {
+                filteredListReportMajor.add(major);
+            }
+        }
+        tableViewReportMajors.setItems(filteredListReportMajor);
+    }
+
+    @FXML
+    private void onSearchReportMajor() {
+        String keyword = searchFieldReportMajors.getText().toLowerCase().trim();
+        if (keyword.isEmpty()) {
+            filteredListReportMajor.setPredicate(p -> true);
+            return;
+        }
+        filteredListReportMajor.setPredicate(majorReport ->
+                majorReport.getMajorName().toLowerCase().contains(keyword) ||
+                        String.valueOf(majorReport.getEstablishmentYear()).contains(keyword) ||
+                        majorReport.getFaculty().contains(keyword) ||
+                        majorReport.getDepartment().contains(keyword) ||
+                        majorReport.getMajorId().contains(keyword) ||
+                        majorReport.getStatus().toLowerCase().contains(keyword)
+        );
+    }
+
+    public void onBackReportMajor(ActionEvent event) {
+        majorsReportsAnchorPane.setVisible(false);
+    }
 //    Reports ------>>> People
     private void setupGenderContextMenuPeople() {
         ContextMenu genderMenu = new ContextMenu();
@@ -2771,15 +2924,6 @@ public class AdminPortal1 implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
-
-//        Reports
-
-
-
-
-
-
 
 
     }

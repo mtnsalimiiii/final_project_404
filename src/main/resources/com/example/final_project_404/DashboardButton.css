@@ -22,8 +22,8 @@
     -fx-font-size: 12px;
     -fx-font-family: "Roboto", "Arial";
     -fx-padding: 10 20 10 20;
-    -fx-background-radius: 12;
-    -fx-border-radius: 12;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 4);
     -fx-cursor: hand;
     -fx-transition: all 0.3s ease;
@@ -38,4 +38,21 @@
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 4, 0, 0, 2);
+}
+.report-button {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #007BFF, #0056b3);
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+    -fx-font-family: "Roboto", "Arial";
+    -fx-padding: 7 15 7 15;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 8, 0, 0, 4);
+    -fx-cursor: hand;
+    -fx-transition: all 0.3s ease;
+}
+.report-button:hover {
+    -fx-background-color: linear-gradient(from 0% 0% to 100% 100%, #0056b3, #004080);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
 }
