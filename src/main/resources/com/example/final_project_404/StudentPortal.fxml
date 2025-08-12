@@ -31,7 +31,7 @@
                 <!-- ===== Welcome Label ===== -->
                 <Label maxWidth="Infinity" styleClass="label-title" text="Welcome, Student!">
                     <VBox.margin>
-                        <Insets bottom="20" />
+                        <Insets bottom="20" left="0" right="0" top="0" />
                     </VBox.margin>
                 </Label>
 
@@ -52,6 +52,7 @@
                         <Button minHeight="40.0" minWidth="280.0" onAction="#profileStudentPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Profile" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
                         <Button minHeight="40.0" minWidth="280.0" onAction="#reportsStudentPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Reports" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                         <Button minHeight="40.0" minWidth="280.0" onAction="#showReportCardPane" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="See Report Card" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Button minHeight="40.0" minWidth="280.0" onAction="#showOverallReportCardPane" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Overall Report Card" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                         <Button minHeight="40.0" minWidth="280.0" onAction="#signOutStudentPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Sign out" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                     </children>
                 </GridPane>
@@ -75,18 +76,24 @@
                                     <rowConstraints>
                                         <RowConstraints vgrow="SOMETIMES" />
                                         <RowConstraints vgrow="SOMETIMES" />
-                              <RowConstraints vgrow="SOMETIMES" />
+                                        <RowConstraints vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <Label fx:id="studentNameLabel" disable="true" style="-fx-font-weight: bold;" text="Student Name:" />
-                                        <Label fx:id="semesterLabel" style="-fx-font-weight: bold;" text="Semester:" GridPane.columnIndex="2" />
-                                        <Label fx:id="gpaLabel" style="-fx-font-weight: bold;" text="GPA:" GridPane.rowIndex="1" />
-                                        <Label fx:id="probationStatusLabel" style="-fx-font-weight: bold;" text="Status:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                        <Label fx:id="passedUnitsLabel" style="-fx-font-weight: bold;" text="Passed Units:" GridPane.columnIndex="3" />
-                                        <Label fx:id="failedUnitsLabel" style="-fx-font-weight: bold;" text="Failed Units:" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                        <Label style="-fx-font-weight: bold;" text="Student Name:" />
+                                        <Label fx:id="studentNameLabel" GridPane.columnIndex="1" />
+                                        <Label style="-fx-font-weight: bold;" text="Semester:" GridPane.columnIndex="2" />
+                                        <Label fx:id="semesterLabel" GridPane.columnIndex="3" />
+                                        <Label style="-fx-font-weight: bold;" text="GPA:" GridPane.rowIndex="1" />
+                                        <Label fx:id="gpaLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                        <Label style="-fx-font-weight: bold;" text="Status:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                        <Label fx:id="probationStatusLabel" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                        <Label style="-fx-font-weight: bold;" text="Passed Units:" GridPane.rowIndex="2" />
+                                        <Label fx:id="passedUnitsLabel" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                        <Label style="-fx-font-weight: bold;" text="Failed Units:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                        <Label fx:id="failedUnitsLabel" GridPane.columnIndex="3" GridPane.rowIndex="2" />
                                     </children>
                                     <VBox.margin>
-                                        <Insets bottom="10" />
+                                        <Insets bottom="10" left="0" right="0" top="0" />
                                     </VBox.margin>
                                 </GridPane>
                                 <!-- ComboBoxes & Search -->
@@ -94,7 +101,7 @@
                                     <ComboBox fx:id="semesterComboBox" prefWidth="200.0" promptText="Select Semester" />
                                     <Button onAction="#loadReportCard" text="Load Report" />
                                     <VBox.margin>
-                                        <Insets bottom="10" />
+                                        <Insets bottom="10" left="0" right="0" top="0" />
                                     </VBox.margin>
                                 </HBox>
                                 <!-- Table -->
@@ -105,17 +112,82 @@
                                         <TableColumn fx:id="statusCol" prefWidth="100.0" text="Status" />
                                     </columns>
                                     <VBox.margin>
-                                        <Insets bottom="10" />
+                                        <Insets bottom="10" left="0" right="0" top="0" />
                                     </VBox.margin>
                                 </TableView>
                                 <!-- Back Button -->
                                 <HBox alignment="CENTER_RIGHT" prefHeight="40.0">
                                     <Button onAction="#showMainMenuPane" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Back" />
                                     <VBox.margin>
-                                        <Insets bottom="10" />
+                                        <Insets bottom="10" left="0" right="0" top="0" />
                                     </VBox.margin>
                                 </HBox>
                                 <Label fx:id="messageLabel" style="-fx-text-fill: red;" />
+                            </children>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+
+                <!-- ===== Overall Report Card Panel (Hidden by default) ===== -->
+                <AnchorPane fx:id="overallReportCardPane" managed="false" prefHeight="370.0" prefWidth="760.0" visible="false">
+                    <children>
+                        <VBox prefHeight="370.0" prefWidth="760.0" spacing="10" style="-fx-background-color: #f7f9fc;">
+                            <padding>
+                                <Insets bottom="15" left="15" right="15" top="15" />
+                            </padding>
+                            <children>
+                                <!-- Title -->
+                                <Label styleClass="label-title" text="Overall Report Card">
+                                    <VBox.margin>
+                                        <Insets bottom="10" left="0" right="0" top="0" />
+                                    </VBox.margin>
+                                </Label>
+                                <!-- Student Info Section -->
+                                <GridPane hgap="10" prefWidth="730.0" vgap="5">
+                                    <columnConstraints>
+                                        <ColumnConstraints hgrow="SOMETIMES" prefWidth="150.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" prefWidth="200.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" prefWidth="150.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" prefWidth="200.0" />
+                                    </columnConstraints>
+                                    <rowConstraints>
+                                        <RowConstraints vgrow="SOMETIMES" />
+                                        <RowConstraints vgrow="SOMETIMES" />
+                                        <RowConstraints vgrow="SOMETIMES" />
+                                    </rowConstraints>
+                                    <children>
+                                        <Label fx:id="overallStudentNameLabel" style="-fx-font-weight: bold;" text="Student Name:" />
+                                        <Label fx:id="overallGpaLabel" style="-fx-font-weight: bold;" text="GPA:" GridPane.columnIndex="2" />
+                                        <Label fx:id="overallProbationCountLabel" style="-fx-font-weight: bold;" text="Probation Terms:" GridPane.rowIndex="1" />
+                                        <Label fx:id="overallTotalTermsLabel" style="-fx-font-weight: bold;" text="Total Terms:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                        <Label fx:id="overallPassedUnitsLabel" style="-fx-font-weight: bold;" text="Passed Units:" GridPane.rowIndex="2" />
+                                        <Label fx:id="overallFailedUnitsLabel" style="-fx-font-weight: bold;" text="Failed Units:" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+                                    </children>
+                                    <VBox.margin>
+                                        <Insets bottom="10" left="0" right="0" top="0" />
+                                    </VBox.margin>
+                                </GridPane>
+                                <!-- Table -->
+                                <TableView fx:id="overallReportTable" prefHeight="200.0" prefWidth="730.0" stylesheets="@TableViewStyle.css">
+                                    <columns>
+                                        <TableColumn fx:id="overallSemesterCol" prefWidth="150.0" text="Semester" />
+                                        <TableColumn fx:id="overallCourseCol" prefWidth="250.0" text="Course Name" />
+                                        <TableColumn fx:id="overallScoreCol" prefWidth="100.0" text="Score" />
+                                        <TableColumn fx:id="overallStatusCol" prefWidth="100.0" text="Status" />
+                                    </columns>
+                                    <VBox.margin>
+                                        <Insets bottom="10" left="0" right="0" top="0" />
+                                    </VBox.margin>
+                                </TableView>
+                                <!-- Back Button -->
+                                <HBox alignment="CENTER_RIGHT" prefHeight="40.0">
+                                    <Button onAction="#showMainMenuPane" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Back" />
+                                    <VBox.margin>
+                                        <Insets bottom="10" left="0" right="0" top="0" />
+                                    </VBox.margin>
+                                </HBox>
+                                <!-- Message -->
+                                <Label fx:id="overallMessageLabel" style="-fx-text-fill: red;" />
                             </children>
                         </VBox>
                     </children>
