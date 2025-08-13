@@ -1343,7 +1343,9 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     void departmentsReports(ActionEvent event) {
+        headerTitle.setText(" --> Reports --> Departments");
         departmentsReportsAnchorPane.setVisible(true);
+        reportsVbox.setVisible(false);
 
         searchFieldReportDepartment.clear();
         searchFieldReportDepartment.setPromptText("Search ...");
@@ -1688,7 +1690,10 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     void facultiesReports(ActionEvent event) {
+        headerTitle.setText(" --> Reports --> Faculties");
         facultiesReportsAnchorPane.setVisible(true);
+        reportsVbox.setVisible(false);
+
 
         searchFieldFaculties.clear();
         searchFieldFaculties.setPromptText("Search ...");
@@ -1711,7 +1716,10 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     void majorsReports(ActionEvent event) {
+        headerTitle.setText(" --> Reports --> Majors");
         majorsReportsAnchorPane.setVisible(true);
+        reportsVbox.setVisible(false);
+
 
         searchFieldReportMajors.clear();
         searchFieldReportMajors.setPromptText("Search ...");
@@ -1742,7 +1750,10 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     void peopleReports(ActionEvent event) {
+        headerTitle.setText(" --> Reports --> People");
         peopleReportsAnchorPane.setVisible(true);
+        reportsVbox.setVisible(false);
+
 
         searchFieldPeople.clear();
         searchFieldPeople.setPromptText("Search ...");
@@ -1979,7 +1990,9 @@ public class AdminPortal1 implements Initializable {
     }
 
     public void onBackReportDepartment(ActionEvent event) {
+        headerTitle.setText(" --> Reports");
         departmentsReportsAnchorPane.setVisible(false);
+        reportsVbox.setVisible(true);
     }
 //    Reports ------>>> Faculties
     private void setupStatusContextMenuFaculty() {
@@ -2011,7 +2024,9 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     private void onBackFaculties() {
+        headerTitle.setText(" --> Reports");
         facultiesReportsAnchorPane.setVisible(false);
+        reportsVbox.setVisible(true);
     }
 
     @FXML
@@ -2071,7 +2086,9 @@ public class AdminPortal1 implements Initializable {
     }
 
     public void onBackReportMajor(ActionEvent event) {
+        headerTitle.setText(" --> Reports");
         majorsReportsAnchorPane.setVisible(false);
+        reportsVbox.setVisible(true);
     }
 //    Reports ------>>> People
     private void setupGenderContextMenuPeople() {
@@ -2170,7 +2187,9 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     private void onBackPeople() {
+        headerTitle.setText(" --> Reports");
         peopleReportsAnchorPane.setVisible(false);
+        reportsVbox.setVisible(true);
     }
 
 //    Reports ----->>> Done

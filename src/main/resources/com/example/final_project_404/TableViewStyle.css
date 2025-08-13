@@ -44,7 +44,7 @@
 .table-cell {
     -fx-text-fill: white;
     -fx-font-size: 12px;
-    -fx-alignment: CENTER-LEFT;
+    -fx-alignment: CENTER;
     -fx-padding: 0 10 0 10;
 }
 

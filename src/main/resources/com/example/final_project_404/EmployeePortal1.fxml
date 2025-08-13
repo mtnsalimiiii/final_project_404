@@ -12,15 +12,17 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.effect.ColorInput?>
 <AnchorPane minHeight="550.0" minWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.EmployeePortal1">
     <children>
-        <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="801.0" styleClass="header" stylesheets="@EmployeePortal.css">
+        <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0" styleClass="header" stylesheets="@EmployeePortal.css">
             <children>
                 <Label styleClass="header-title" stylesheets="@EmployeePortal.css" text="Employee Portal" />
                 <Label fx:id="headerTitle" styleClass="header-title" stylesheets="@EmployeePortal.css" />
@@ -82,8 +84,8 @@
                                 <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#studentsDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Students" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                                 <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#registerStudentDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Register New Student" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                                 <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#updateStudentDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Update Student" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-                                <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#reportsDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Reports" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-                                <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#profileDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Profile" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                                <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#profileDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Profile" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                                <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#reportsDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Reports" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
                                 <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#signOutDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Sign out" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
                             </children>
                         </GridPane>
@@ -95,8 +97,8 @@
             <children>
                 <GridPane>
                     <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="583.9999267578125" minWidth="10.0" prefWidth="370.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="313.60003662109375" minWidth="10.0" prefWidth="230.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="583.9999267578125" minWidth="10.0" percentWidth="0.0" prefWidth="370.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="313.60003662109375" minWidth="10.0" percentWidth="0.0" prefWidth="229.0" />
                     </columnConstraints>
                     <rowConstraints>
                         <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
@@ -149,12 +151,12 @@
         </AnchorPane>
         <AnchorPane fx:id="addCourseGroupAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false">
             <children>
-                <VBox>
+                <VBox maxWidth="630.0" minWidth="630.0">
                     <children>
-                        <GridPane alignment="CENTER">
+                        <GridPane alignment="CENTER" maxWidth="630.0">
                             <columnConstraints>
                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="370.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="230.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="0.0" prefWidth="228.0" />
                             </columnConstraints>
                             <rowConstraints>
                                 <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
@@ -189,8 +191,8 @@
                                         <Insets left="15.0" right="15.0" />
                                     </padding>
                                 </Button>
-                                <Label fx:id="errorLabelAddCourseGroup" alignment="CENTER_RIGHT" layoutX="300.0" prefHeight="30.0" prefWidth="300.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" />
-                                <Label fx:id="successLabelAddCourseGroup" alignment="CENTER_RIGHT" layoutX="300.0" prefHeight="30.0" prefWidth="300.0" styleClass="success-label" stylesheets="@ErrorAndSuccessfulLabel.css" />
+                                <Label fx:id="errorLabelAddCourseGroup" alignment="CENTER_RIGHT" layoutX="85.0" prefHeight="30.0" prefWidth="500.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" />
+                                <Label fx:id="successLabelAddCourseGroup" alignment="CENTER_RIGHT" layoutX="85.0" prefHeight="36.0" prefWidth="500.0" styleClass="success-label" stylesheets="@ErrorAndSuccessfulLabel.css" />
                             </children>
                             <VBox.margin>
                                 <Insets left="15.0" right="15.0" top="20.0" />
@@ -627,11 +629,117 @@
         </AnchorPane>
         <AnchorPane fx:id="reportsAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" visible="false">
             <children>
-                <VBox prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" stylesheets="@EmployeePortal.css">
+                <VBox fx:id="reportsVbox" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" stylesheets="@EmployeePortal.css">
                     <padding>
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                     </padding>
+                    <GridPane>
+                        <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        </columnConstraints>
+                        <rowConstraints>
+                            <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                        </rowConstraints>
+                        <children>
+                            <Button alignment="CENTER" layoutX="10.0" layoutY="17.0" mnemonicParsing="false" onAction="#majorsReports" prefWidth="280.0" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Majors" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                            <Button alignment="CENTER" layoutX="10.0" layoutY="17.0" mnemonicParsing="false" onAction="#peopleReports" prefWidth="280.0" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="People" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                            <Button alignment="CENTER" layoutX="10.0" layoutY="17.0" mnemonicParsing="false" onAction="#coursesReports" prefWidth="280.0" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Courses" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                            <Button alignment="CENTER" layoutX="10.0" layoutY="17.0" mnemonicParsing="false" onAction="#courseGroupsReports" prefWidth="280.0" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Course Groups" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                            <Button alignment="CENTER" layoutX="10.0" layoutY="17.0" mnemonicParsing="false" onAction="#degreesReports" prefWidth="280.0" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Degrees" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                            <Button alignment="CENTER" layoutX="10.0" layoutY="17.0" mnemonicParsing="false" onAction="#semestersReports" prefWidth="280.0" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Semesters" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                        </children>
+                        <VBox.margin>
+                            <Insets top="10.0" />
+                        </VBox.margin>
+                    </GridPane>
                 </VBox>
+                <AnchorPane fx:id="majorReportAnchorPane" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false">
+                    <BorderPane prefHeight="470.0" prefWidth="630.0">
+
+
+                        <!-- بالای جدول -->
+                        <top>
+                            <HBox spacing="10">
+                                <Button onAction="#onBackReportMajor" styleClass="report-button" stylesheets="@DashboardButton.css" text="Back" />
+                                <TextField fx:id="searchFieldReportMajor" promptText="Search..." HBox.hgrow="ALWAYS">
+                                    <HBox.margin>
+                                        <Insets top="3.0" />
+                                    </HBox.margin></TextField>
+                                <Button onAction="#onSearchReportMajor" styleClass="report-button" stylesheets="@DashboardButton.css" text="Search" />
+                                <padding>
+                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                </padding>
+                            </HBox>
+                        </top>
+
+                        <!-- مرکز جدول -->
+                        <center>
+                            <TableView fx:id="tableViewReportMajor" stylesheets="@TableViewStyle.css">
+                                <columns>
+                                    <TableColumn fx:id="colNameReportMajor" prefWidth="200" text="Major Name" />
+                                    <TableColumn fx:id="colIdReportMajor" prefWidth="100" text="Major ID" />
+                                    <TableColumn fx:id="colFacultyReportMajor" prefWidth="200" text="Faculty" />
+                                    <TableColumn fx:id="colDepartmentReportMajor" prefWidth="200" text="Department" />
+                                    <TableColumn fx:id="colEstYearReportMajor" prefWidth="100" text="Establishment Year" />
+                                    <TableColumn fx:id="colStatusReportMajor" prefWidth="100" text="Status" />
+                                </columns>
+                                <BorderPane.margin>
+                                    <Insets bottom="10.0" left="5.0" right="5.0" />
+                                </BorderPane.margin>
+                            </TableView>
+                        </center>
+
+                    </BorderPane>
+                </AnchorPane>
+                <AnchorPane fx:id="peopleReportAnchorPane" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false" >
+                    <BorderPane prefHeight="470" prefWidth="630">
+
+                        <top>
+                            <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 10;">
+                                <Button onAction="#onBackPeople" styleClass="report-button" stylesheets="@DashboardButton.css" text="Back"/>
+                                <TextField fx:id="searchFieldPeople" promptText="Search..." HBox.hgrow="ALWAYS">
+                                    <HBox.margin>
+                                        <Insets top="3.0" />
+                                    </HBox.margin></TextField>
+                                <Button onAction="#onSearchPeople" styleClass="report-button" stylesheets="@DashboardButton.css" text="Search" />
+                            </HBox>
+                        </top>
+
+                        <center>
+                            <TableView fx:id="tableViewReportPeople" prefWidth="630.0" stylesheets="@TableViewStyle.css" BorderPane.alignment="CENTER">
+                                <columns>
+                                    <TableColumn fx:id="colNameReportPeople" prefWidth="120" text="Name" />
+                                    <TableColumn fx:id="colAgeReportPeople" prefWidth="60" text="Age" />
+                                    <TableColumn fx:id="colGenderReportPeople" prefWidth="90" text="Gender" />
+                                    <TableColumn fx:id="colPhoneReportPeople" prefWidth="130" text="Phone Number" />
+                                    <TableColumn fx:id="colNationalIDReportPeople" prefWidth="120" text="National ID" />
+                                    <TableColumn fx:id="colRoleReportPeople" prefWidth="90" text="Role" />
+                                    <TableColumn fx:id="colIDReportPeople" prefWidth="90" text="ID" />
+                                    <TableColumn fx:id="colDateOfRegisterReportPeople" prefWidth="140" text="Date of Registration" />
+                                    <TableColumn fx:id="colFacultyReportPeople" prefWidth="120" text="Faculty" />
+                                    <TableColumn fx:id="colDepartmentReportPeople" prefWidth="120" text="Department" />
+                                    <TableColumn fx:id="colMajorReportPeople" prefWidth="120" text="Major" />
+                                    <TableColumn fx:id="colDegreeReportPeople" prefWidth="100" text="Degree" />
+                                    <TableColumn fx:id="colStatusReportPeople" prefWidth="90" text="Status" />
+                                </columns>
+                                <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                </padding>
+                                <BorderPane.margin>
+                                    <Insets bottom="10.0" left="5.0" right="5.0" />
+                                </BorderPane.margin>
+                            </TableView>
+                        </center>
+
+                    </BorderPane>
+                </AnchorPane>
+            <AnchorPane fx:id="courseReportAnchorPane" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false" />
+            <AnchorPane fx:id="courseGroupReportAnchorPane" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false" />
+            <AnchorPane fx:id="degreeReportAnchorPane" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false" />
+            <AnchorPane fx:id="semesterReportAnchorPane" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false" />
             </children>
         </AnchorPane>
     </children>

@@ -12,7 +12,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.ColorInput?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -742,10 +741,7 @@
 
                         <top>
                             <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 10;">
-                                <Button onAction="#onBackPeople" styleClass="report-button" stylesheets="@DashboardButton.css" text="Back">
-                           <effect>
-                              <ColorInput paint="#6e6f7b" />
-                           </effect></Button>
+                                <Button onAction="#onBackPeople" styleClass="report-button" stylesheets="@DashboardButton.css" text="Back" />
                                 <TextField fx:id="searchFieldPeople" promptText="Search..." HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets top="3.0" />
