@@ -15,7 +15,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -27,6 +26,9 @@ import org.xml.sax.helpers.LocatorImpl;
 
 import javax.lang.model.type.UnionType;
 import java.awt.*;
+
+import javafx.scene.control.MenuItem;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.net.URL;
@@ -35,10 +37,25 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.Period;
-import java.util.GregorianCalendar;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.List;
 
 public class EmployeePortal1 {
+
+    @FXML
+    private AnchorPane courseGroupReportAnchorPane;
+
+    @FXML
+    private AnchorPane courseReportAnchorPane;
+
+    @FXML
+    private AnchorPane degreeReportAnchorPane;
+
+    @FXML
+    private AnchorPane majorReportAnchorPane;
+
+    @FXML
+    private AnchorPane peopleReportAnchorPane;
 
     @FXML
     private Button AddCourseGroupButton;
@@ -54,6 +71,11 @@ public class EmployeePortal1 {
 
     @FXML
     private AnchorPane addCourseGroupAnchorPane;
+
+
+    @FXML
+    private AnchorPane addRandomStudentsAnchorPane;
+
 
     @FXML
     private Button addCourseGroupScrollPane;
@@ -101,10 +123,7 @@ public class EmployeePortal1 {
     private TextField courseNameAddCourse;
 
     @FXML
-    private AnchorPane courseGroupReportAnchorPane;
-
-    @FXML
-    private AnchorPane courseReportAnchorPane;
+    private TextField numberOfStudents;
 
     @FXML
     private AnchorPane dashboardAnchorPane;
@@ -156,9 +175,6 @@ public class EmployeePortal1 {
 
     @FXML
     private ComboBox<String> degreeChooserRegisterStudent;
-
-    @FXML
-    private AnchorPane degreeReportAnchorPane;
 
     @FXML
     private ComboBox<String> departmentChooserDeactiveProfessor;
@@ -221,9 +237,6 @@ public class EmployeePortal1 {
     private Label errorLabelDateOfBirthRegisterProfessor;
 
     @FXML
-    private Label errorLabelDateOfBirthRegisterStudent;
-
-    @FXML
     private Label errorLabelDeactiveProfessor;
 
     @FXML
@@ -239,28 +252,16 @@ public class EmployeePortal1 {
     private Label errorLabelDegreeAddDegree;
 
     @FXML
-    private Label errorLabelDegreeRegisterStudent;
-
-    @FXML
-    private Label errorLabelDepartmentRegisterStudent;
-
-    @FXML
     private Label errorLabelEditProfessor;
 
     @FXML
     private Label errorLabelEditStudent;
 
     @FXML
-    private Label errorLabelFacultyRegisterStudent;
-
-    @FXML
     private Label errorLabelFirstNameEditProfessor;
 
     @FXML
     private Label errorLabelFirstNameRegisterProfessor;
-
-    @FXML
-    private Label errorLabelFirstNameRegisterStudent;
 
     @FXML
     private Label errorLabelFirstnameProfile;
@@ -275,9 +276,6 @@ public class EmployeePortal1 {
     private Label errorLabelGenderRegisterProfessor;
 
     @FXML
-    private Label errorLabelGenderRegisterStudent;
-
-    @FXML
     private Label errorLabelLastNameEditProfessor;
 
     @FXML
@@ -285,9 +283,6 @@ public class EmployeePortal1 {
 
     @FXML
     private Label errorLabelLastnameProfile;
-
-    @FXML
-    private Label errorLabelLastNameRegisterStudent;
 
     @FXML
     private Label errorLabelMajorAddCourse;
@@ -308,9 +303,6 @@ public class EmployeePortal1 {
     private Label errorLabelMajorRegisterProfessor;
 
     @FXML
-    private Label errorLabelMajorRegisterStudent;
-
-    @FXML
     private Label errorLabelNameAddCourse;
 
     @FXML
@@ -323,16 +315,10 @@ public class EmployeePortal1 {
     private Label errorLabelNationalIdRegisterProfessor;
 
     @FXML
-    private Label errorLabelNationalIdRegisterStudent;
-
-    @FXML
     private Label errorLabelPhoneEditProfessor;
 
     @FXML
     private Label errorLabelPhoneProfile;
-
-    @FXML
-    private Label errorLabelPhoneRegisterStudent;
 
     @FXML
     private Label errorLabelPhoneRegisterProfessor;
@@ -354,6 +340,9 @@ public class EmployeePortal1 {
 
     @FXML
     private Label errorLabelSemasterAddCourseGroup;
+
+    @FXML
+    private Label errorLabelNumberOfStudents;
 
     @FXML
     private ComboBox<String> facultyChooserRegisterStudent;
@@ -458,9 +447,6 @@ public class EmployeePortal1 {
     private ComboBox<String> majorChooserRegisterStudent;
 
     @FXML
-    private AnchorPane majorReportAnchorPane;
-
-    @FXML
     private TableColumn<?, ?> majorTableviewProfessors;
 
     @FXML
@@ -516,9 +502,6 @@ public class EmployeePortal1 {
 
     @FXML
     private ComboBox<String> operationChooserUpdateStudent;
-
-    @FXML
-    private AnchorPane peopleReportAnchorPane;
 
     @FXML
     private TextField phoneNumberEditProfessor;
@@ -590,9 +573,112 @@ public class EmployeePortal1 {
     private Button reportsScrollPane;
 
     @FXML
+    private TableColumn<?, ?> rowNumberTableviewProfessors;
+
+    @FXML
+    private TableColumn<?, ?> rowNumberTableviewStudents;
+
+    @FXML
+    private TextField searchBoxProfessors;
+
+    @FXML
+    private TextField searchBoxStudents;
+
+    @FXML
+    private DatePicker secondaryDateProfessors;
+
+    @FXML
+    private DatePicker secondaryDateStudents;
+
+    @FXML
+    private ComboBox<String> semasterChooserAddCourseGroup;
+
+    @FXML
+    private ComboBox<String> studentChooserDeactiveStudents;
+
+    @FXML
+    private ComboBox<String> studentChooserEditStudents;
+
+    @FXML
+    private TableColumn<?, ?> studentIdTableviewStudents;
+
+    @FXML
+    private AnchorPane studentsAnchorPane;
+
+    @FXML
+    private Button studentsScrollPane;
+
+    @FXML
+    private TableView<?> studetnsTableview;
+
+    @FXML
+    private Label successLabelAddCourseGroup;
+
+    @FXML
+    private Label successLabelAddDegree;
+
+    @FXML
+    private Label successLabelDeactiveProfessor;
+
+    @FXML
+    private Label successLabelEditProfessor;
+
+    @FXML
+    private Label successLabelRegisterProfessor;
+
+    @FXML
+    private Label successfulLabelAddCourse;
+
+
+    @FXML
+    private ComboBox<String> topicChooserProfessors;
+
+    @FXML
+    private ComboBox<String> topicChooserStudents;
+
+    @FXML
+    private AnchorPane updateProfessorAnchorPane;
+
+    @FXML
+    private Button updateProfessorScrollPane;
+
+    @FXML
+    private AnchorPane updateStudentAnchorPane;
+
+    @FXML
+    private Button updateStudentScrollPane;
+    @FXML
+    private Label errorLabelFirstNameRegisterStudent;
+    @FXML
+    private Label errorLabelLastNameRegisterStudent;
+    @FXML
+    private Label errorLabelPhoneRegisterStudent;
+    @FXML
+    private Label errorLabelNationalIdRegisterStudent;
+    @FXML
+    private Label errorLabelGenderRegisterStudent;
+    @FXML
+    private Label errorLabelFacultyRegisterStudent;
+    @FXML
+    private Label errorLabelDepartmentRegisterStudent;
+    @FXML
+    private Label errorLabelMajorRegisterStudent;
+    @FXML
+    private Label errorLabelDegreeRegisterStudent;
+    @FXML
+    private Label errorLabelDateOfBirthRegisterStudent;
+
+    @FXML
+    private Label successLabelRegisterStudent;
+
+
+    private static final java.util.List<String> FIRST_NAMES = java.util.List.of("Ali", "Hossein ", "Nima ", "Farhad ", "Parsa ");
+    private static final java.util.List<String> LAST_NAMES = List.of("Rezaei", "Ahmadi", "Yousefi", "Kamrani", "Tavakoli");
+
+    @FXML
     private VBox reportsVbox;
 
-//    REPORTS
+    //    REPORTS
     // Major Report
     @FXML private TableView<MajorReport> tableViewReportMajor;
     @FXML private TableColumn<MajorReport, String> colNameReportMajor;
@@ -630,85 +716,7 @@ public class EmployeePortal1 {
 //    Reports
 
     @FXML
-    private TableColumn<?, ?> rowNumberTableviewProfessors;
-
-    @FXML
-    private TableColumn<?, ?> rowNumberTableviewStudents;
-
-    @FXML
-    private TextField searchBoxProfessors;
-
-    @FXML
-    private TextField searchBoxStudents;
-
-    @FXML
-    private DatePicker secondaryDateProfessors;
-
-    @FXML
-    private DatePicker secondaryDateStudents;
-
-    @FXML
-    private ComboBox<String> semasterChooserAddCourseGroup;
-
-    @FXML
     private AnchorPane semesterReportAnchorPane;
-
-    @FXML
-    private ComboBox<String> studentChooserDeactiveStudents;
-
-    @FXML
-    private ComboBox<String> studentChooserEditStudents;
-
-    @FXML
-    private TableColumn<?, ?> studentIdTableviewStudents;
-
-    @FXML
-    private AnchorPane studentsAnchorPane;
-
-    @FXML
-    private Button studentsScrollPane;
-
-    @FXML
-    private TableView<?> studetnsTableview;
-
-    @FXML
-    private Label successLabelAddCourseGroup;
-
-    @FXML
-    private Label successLabelAddDegree;
-
-    @FXML
-    private Label successLabelDeactiveProfessor;
-
-    @FXML
-    private Label successLabelEditProfessor;
-
-    @FXML
-    private Label successLabelRegisterProfessor;
-
-    @FXML
-    private Label successLabelRegisterStudent;
-
-    @FXML
-    private Label successfulLabelAddCourse;
-
-    @FXML
-    private ComboBox<String> topicChooserProfessors;
-
-    @FXML
-    private ComboBox<String> topicChooserStudents;
-
-    @FXML
-    private AnchorPane updateProfessorAnchorPane;
-
-    @FXML
-    private Button updateProfessorScrollPane;
-
-    @FXML
-    private AnchorPane updateStudentAnchorPane;
-
-    @FXML
-    private Button updateStudentScrollPane;
 
     @FXML
     void addCourse(ActionEvent event) {
@@ -1792,19 +1800,6 @@ public class EmployeePortal1 {
     }
 
     @FXML
-    void courseGroupsReports() {
-        courseGroupReportAnchorPane.setVisible(true);
-        reportsVbox.setVisible(false);
-
-    }
-
-    @FXML
-    void coursesReports() {
-        courseReportAnchorPane.setVisible(true);
-        reportsVbox.setVisible(false);
-    }
-
-    @FXML
     void dashboardScrollPane(ActionEvent event) {
         dashboardAnchorPane.setVisible(true);
         buttonsScrollPane.setVisible(false);
@@ -1908,12 +1903,6 @@ public class EmployeePortal1 {
     @FXML
     void deactiveStudent(ActionEvent event) {
 
-    }
-
-    @FXML
-    void degreesReports() {
-        degreeReportAnchorPane.setVisible(true);
-        reportsVbox.setVisible(false);
     }
 
     @FXML
@@ -2105,93 +2094,6 @@ public class EmployeePortal1 {
     @FXML
     void editStudent(ActionEvent event) {
 
-    }
-
-    @FXML
-    void majorsReports() {
-        headerTitle.setText(" --> Reports --> Majors");
-        majorReportAnchorPane.setVisible(true);
-        reportsVbox.setVisible(false);
-
-        searchFieldReportMajor.clear();
-        searchFieldReportMajor.setPromptText("Search ...");
-
-        colNameReportMajor.setCellValueFactory(cellData -> cellData.getValue().majorNameProperty());
-        colIdReportMajor.setCellValueFactory(cellData -> cellData.getValue().majorIdProperty());
-        colFacultyReportMajor.setCellValueFactory(cellData -> cellData.getValue().facultyProperty());
-        colDepartmentReportMajor.setCellValueFactory(cellData -> cellData.getValue().departmentProperty());
-        colEstYearReportMajor.setCellValueFactory(cellData -> cellData.getValue().establishmentYearProperty().asObject());
-        colStatusReportMajor.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
-        majorList = FXCollections.observableArrayList();
-        University.loadFaculties();
-        for (Faculty faculty : University.allFaculties) {
-            for (Department department : faculty.departments) {
-                for (Major major : department.majors) {
-                    majorList.add(new MajorReport(major.getName(), major.getId(), faculty.getFacultyName(), department.getName(), major.getEstablishmentYear(), major.getStatus().toString()));
-                }
-            }
-        }
-        filteredListReportMajor = new FilteredList<>(majorList, majorReport -> true);
-        tableViewReportMajor.setItems(filteredListReportMajor);
-
-        setupStatusContextMenuReportMajor();
-    }
-
-    @FXML
-    void peopleReports() {
-        headerTitle.setText(" --> Reports --> People");
-        peopleReportAnchorPane.setVisible(true);
-        reportsVbox.setVisible(false);
-
-        searchFieldPeople.clear();
-        searchFieldPeople.setPromptText("Search ...");
-
-        // People
-        colNameReportPeople.setCellValueFactory(data -> data.getValue().fullNameProperty());
-        colAgeReportPeople.setCellValueFactory(data -> data.getValue().ageProperty().asObject());
-        colGenderReportPeople.setCellValueFactory(data -> data.getValue().genderProperty());
-        colPhoneReportPeople.setCellValueFactory(data -> data.getValue().phoneNumberProperty());
-        colNationalIDReportPeople.setCellValueFactory(data -> data.getValue().nationalIdProperty());
-        colRoleReportPeople.setCellValueFactory(data -> data.getValue().roleProperty());
-        colIDReportPeople.setCellValueFactory(data -> data.getValue().idProperty());
-        colDateOfRegisterReportPeople.setCellValueFactory(data -> data.getValue().dateOfRegistrationProperty());
-        colFacultyReportPeople.setCellValueFactory(data -> data.getValue().facultyProperty());
-        colDepartmentReportPeople.setCellValueFactory(data -> data.getValue().departmentProperty());
-        colMajorReportPeople.setCellValueFactory(data -> data.getValue().majorProperty());
-        colDegreeReportPeople.setCellValueFactory(data -> data.getValue().degreeProperty());
-        colStatusReportPeople.setCellValueFactory(data -> data.getValue().statusProperty());
-
-
-        try {
-            Professor.loadAllProfessor();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Student.loadAllStudents();
-
-
-        peopleList = FXCollections.observableArrayList();
-
-        for (Professor professor : University.allProfessors) {
-            peopleList.add(new People(professor.getFirst_name(), professor.getLast_name(), professor.getDateOfBirth(), professor.getNationalId(),
-                    professor.getGender(), professor.getPhoneNumber(), professor.getDateOfJoin(), "Professor", professor.getId(),
-                    professor.getFaculty(), professor.getDepartment(), professor.getMajor(), "----", professor.getStatus()));
-        }
-
-        for (Student student : University.allStudents) {
-            peopleList.add(new People(student.getFirst_name(), student.getLast_name(), student.getDateOfBirth(), student.getNationalId(),
-                    student.getGender(), student.getPhoneNumber(), student.getDateOfJoin(), "Student", student.getId(),
-                    student.getFaculty(), student.getDepartment(), student.getMajor(), "----", student.getStatus()));
-        }
-
-
-
-        filteredListReportPeople = new FilteredList<>(peopleList, people -> true);
-        tableViewReportPeople.setItems(filteredListReportPeople);
-
-        setupGenderContextMenuPeople();
-        setupStatusContextMenuPeople();
-        setupRoleContextMenuPeople();
     }
 
     @FXML
@@ -2723,153 +2625,6 @@ public class EmployeePortal1 {
             reportsAnchorPane.setVisible(true);
             reportsScrollPane.getStyleClass().add("pressed");
         }
-    }
-
-//    Reports ----->>> Majors
-    private void setupStatusContextMenuReportMajor() {
-        ContextMenu statusMenu = new ContextMenu();
-        MenuItem active = new MenuItem("Active");
-        active.setOnAction(e -> filterStatus("Active"));
-        MenuItem inactive = new MenuItem("Inactive");
-        inactive.setOnAction(e -> filterStatus("Inactive"));
-        MenuItem allItem = new MenuItem("All");
-        allItem.setOnAction(e -> tableViewReportMajor.setItems(majorList));
-
-        statusMenu.getItems().addAll(active, inactive, allItem);
-        colStatusReportMajor.setContextMenu(statusMenu);
-    }
-
-    @FXML
-    private void filterStatus(String status) {
-        filteredListReportMajor.setPredicate(majorReport -> majorReport.getStatus().equalsIgnoreCase(status));
-        tableViewReportMajor.setItems(filteredListReportMajor);
-    }
-
-    @FXML
-    private void onSearchReportMajor() {
-        String keyword = searchFieldReportMajor.getText().toLowerCase().trim();
-        if (keyword.isEmpty()) {
-            filteredListReportMajor.setPredicate(p -> true);
-            return;
-        }
-        filteredListReportMajor.setPredicate(majorReport ->
-                majorReport.getMajorName().toLowerCase().contains(keyword) ||
-                        String.valueOf(majorReport.getEstablishmentYear()).contains(keyword) ||
-                        majorReport.getFaculty().contains(keyword) ||
-                        majorReport.getDepartment().contains(keyword) ||
-                        majorReport.getMajorId().contains(keyword) ||
-                        majorReport.getStatus().toLowerCase().contains(keyword)
-        );
-    }
-
-    public void onBackReportMajor(ActionEvent event) {
-        headerTitle.setText(" --> Reports");
-        majorReportAnchorPane.setVisible(false);
-        reportsVbox.setVisible(true);
-    }
-//    Reports ----->>> People
-    private void setupGenderContextMenuPeople() {
-        ContextMenu genderMenu = new ContextMenu();
-
-        MenuItem male = new MenuItem("Male");
-        male.setOnAction(e -> filterByGenderPeople("Male"));
-
-        MenuItem female = new MenuItem("Female");
-        female.setOnAction(e -> filterByGenderPeople("Female"));
-
-        MenuItem allGender = new MenuItem("All");
-        allGender.setOnAction(e -> {
-            filteredListReportPeople.setPredicate(p -> true);
-            tableViewReportPeople.setItems(filteredListReportPeople);
-        });
-
-        genderMenu.getItems().addAll(male, female, allGender);
-        colGenderReportPeople.setContextMenu(genderMenu);
-    }
-    private void filterByGenderPeople(String gender) {
-        filteredListReportPeople.setPredicate(people -> people.getGender().equalsIgnoreCase(gender));
-    }
-
-    private void setupStatusContextMenuPeople() {
-        ContextMenu statusMenu = new ContextMenu();
-
-        MenuItem active = new MenuItem("Active");
-        active.setOnAction(e -> filterByStatus("Active"));
-        MenuItem inactive = new MenuItem("Inactive");
-        inactive.setOnAction(e -> filterByStatus("Inactive"));
-
-        MenuItem allStatus = new MenuItem("All");
-        allStatus.setOnAction(e -> {
-            filteredListReportPeople.setPredicate(p -> true);
-            tableViewReportPeople.setItems(filteredListReportPeople);
-        });
-
-        statusMenu.getItems().addAll(active, inactive, allStatus);
-        colStatusReportPeople.setContextMenu(statusMenu);
-    }
-    private void filterByStatus(String status) {
-        filteredListReportPeople.setPredicate(people -> people.getStatus().equalsIgnoreCase(status));
-
-    }
-
-    private void setupRoleContextMenuPeople() {
-        ContextMenu roleMenu = new ContextMenu();
-
-        MenuItem professor = new MenuItem("Professor");
-        professor.setOnAction(e -> filterByRolePeople("Professor"));
-        MenuItem student = new MenuItem("Student");
-        student.setOnAction(e -> filterByRolePeople("Student"));
-        MenuItem allRole = new MenuItem("All");
-        allRole.setOnAction(e -> {
-            filteredListReportPeople.setPredicate(p -> true);
-            tableViewReportPeople.setItems(filteredListReportPeople);
-        });
-
-        roleMenu.getItems().addAll(professor, student, allRole);
-        colRoleReportPeople.setContextMenu(roleMenu);
-    }
-
-    private void filterByRolePeople(String role) {
-        filteredListReportPeople.setPredicate(people -> people.getRole().equalsIgnoreCase(role));
-    }
-
-    @FXML
-    private void onSearchPeople() {
-        String keyword = searchFieldPeople.getText().toLowerCase().trim();
-        if (keyword.isEmpty()) {
-            filteredListReportPeople.setPredicate(p -> true);
-            return;
-        }
-        filteredListReportPeople.setPredicate(people ->
-                people.getFullName().toLowerCase().contains(keyword) ||
-                        String.valueOf(people.getAge()).contains(keyword) ||
-                        people.getGender().toLowerCase().contains(keyword) ||
-                        people.getPhoneNumber().toLowerCase().contains(keyword) ||
-                        people.getNationalId().toLowerCase().contains(keyword) ||
-                        people.getId().toLowerCase().contains(keyword) ||
-                        people.getDateOfJoin().toLowerCase().contains(keyword) ||
-                        people.getFaculty().toLowerCase().contains(keyword) ||
-                        people.getDepartment().toLowerCase().contains(keyword) ||
-                        people.getMajor().toLowerCase().contains(keyword) ||
-                        people.getDegree().toLowerCase().contains(keyword) ||
-                        people.getStatus().toLowerCase().contains(keyword)
-        );
-    }
-
-    @FXML
-    private void onBackPeople() {
-        headerTitle.setText(" --> Reports");
-        peopleReportAnchorPane.setVisible(false);
-        reportsVbox.setVisible(true);
-    }
-
-//    Reports ----->>> Done
-
-    @FXML
-    void semestersReports() {
-        headerTitle.setText(" --> Reports --> Semesters");
-        semesterReportAnchorPane.setVisible(true);
-        reportsVbox.setVisible(false);
     }
 
     @FXML
@@ -3450,6 +3205,28 @@ public class EmployeePortal1 {
 
             }
         }
+
+//        for (Professor professor : University.allProfessors){
+//            if (professor.getDateOfJoin().getYear() > primaryDate.getYear() && professor.getDateOfJoin().getYear() < secondaryDate.getYear()){
+//
+//            } else if (professor.getDateOfJoin().getMonthValue() == primaryDate.getMonthValue()) {
+//                if (professor.getDateOfJoin().getMonthValue() > primaryDate.getMonthValue()){
+//
+//                } else if (professor.getDateOfJoin().getMonth() == primaryDate.getMonth()) {
+//                    if (professor.getDateOfJoin().getDayOfMonth() == primaryDate.getDayOfMonth()){
+//
+//                    }
+//                }
+//            } else if (professor.getDateOfJoin().getYear() == secondaryDate.getYear()) {
+//                if (professor.getDateOfJoin().getMonthValue() < secondaryDate.getMonthValue()) {
+//
+//                } else if (professor.getDateOfJoin().getMonth() == secondaryDate.getMonth()) {
+//                    if (professor.getDateOfJoin().getDayOfMonth() <= secondaryDate.getDayOfMonth()) {
+//
+//                    }
+//                }
+//            }
+//        }
     }
 
     public boolean isDateInRange(LocalDate date, LocalDate dateStart, LocalDate dateEnd) {
@@ -3471,6 +3248,28 @@ public class EmployeePortal1 {
 
             }
         }
+
+//        for (Student student : University.allStudents){
+//            if (student.getDateOfJoin().getYear() > primaryDate.getYear() && student.getDateOfJoin().getYear() < secondaryDate.getYear()){
+//
+//            } else if (student.getDateOfJoin().getMonthValue() == primaryDate.getMonthValue()) {
+//                if (student.getDateOfJoin().getMonthValue() > primaryDate.getMonthValue()){
+//
+//                } else if (student.getDateOfJoin().getMonthValue() == primaryDate.getMonthValue()) {
+//                    if (student.getDateOfJoin().getDayOfMonth() == primaryDate.getDayOfMonth()){
+//
+//                    }
+//                }
+//            } else if (student.getDateOfJoin().getYear() == secondaryDate.getYear()) {
+//                if (student.getDateOfJoin().getMonthValue() < secondaryDate.getMonthValue()) {
+//
+//                } else if (student.getDateOfJoin().getMonthValue() == secondaryDate.getMonthValue()) {
+//                    if (student.getDateOfJoin().getDayOfMonth() <= secondaryDate.getDayOfMonth()) {
+//
+//                    }
+//                }
+//            }
+//        }
     }
 
     @FXML
@@ -3709,4 +3508,324 @@ public class EmployeePortal1 {
         operationChooserUpdateStudent.getSelectionModel().selectFirst();
     }
 
+    @FXML
+    void courseGroupsReports() {
+        courseGroupReportAnchorPane.setVisible(true);
+        reportsVbox.setVisible(false);
+
+    }
+
+    @FXML
+    void coursesReports() {
+        courseReportAnchorPane.setVisible(true);
+        reportsVbox.setVisible(false);
+    }
+
+    @FXML
+    void degreesReports() {
+        degreeReportAnchorPane.setVisible(true);
+        reportsVbox.setVisible(false);
+    }
+
+    @FXML
+    void majorsReports() {
+        headerTitle.setText(" --> Reports --> Majors");
+        majorReportAnchorPane.setVisible(true);
+        reportsVbox.setVisible(false);
+
+        searchFieldReportMajor.clear();
+        searchFieldReportMajor.setPromptText("Search ...");
+
+        colNameReportMajor.setCellValueFactory(cellData -> cellData.getValue().majorNameProperty());
+        colIdReportMajor.setCellValueFactory(cellData -> cellData.getValue().majorIdProperty());
+        colFacultyReportMajor.setCellValueFactory(cellData -> cellData.getValue().facultyProperty());
+        colDepartmentReportMajor.setCellValueFactory(cellData -> cellData.getValue().departmentProperty());
+        colEstYearReportMajor.setCellValueFactory(cellData -> cellData.getValue().establishmentYearProperty().asObject());
+        colStatusReportMajor.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
+        majorList = FXCollections.observableArrayList();
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Major major : department.majors) {
+                    majorList.add(new MajorReport(major.getName(), major.getId(), faculty.getFacultyName(), department.getName(), major.getEstablishmentYear(), major.getStatus().toString()));
+                }
+            }
+        }
+        filteredListReportMajor = new FilteredList<>(majorList, majorReport -> true);
+        tableViewReportMajor.setItems(filteredListReportMajor);
+
+        setupStatusContextMenuReportMajor();
+    }
+
+    @FXML
+    void peopleReports() {
+        headerTitle.setText(" --> Reports --> People");
+        peopleReportAnchorPane.setVisible(true);
+        reportsVbox.setVisible(false);
+
+        searchFieldPeople.clear();
+        searchFieldPeople.setPromptText("Search ...");
+
+        // People
+        colNameReportPeople.setCellValueFactory(data -> data.getValue().fullNameProperty());
+        colAgeReportPeople.setCellValueFactory(data -> data.getValue().ageProperty().asObject());
+        colGenderReportPeople.setCellValueFactory(data -> data.getValue().genderProperty());
+        colPhoneReportPeople.setCellValueFactory(data -> data.getValue().phoneNumberProperty());
+        colNationalIDReportPeople.setCellValueFactory(data -> data.getValue().nationalIdProperty());
+        colRoleReportPeople.setCellValueFactory(data -> data.getValue().roleProperty());
+        colIDReportPeople.setCellValueFactory(data -> data.getValue().idProperty());
+        colDateOfRegisterReportPeople.setCellValueFactory(data -> data.getValue().dateOfRegistrationProperty());
+        colFacultyReportPeople.setCellValueFactory(data -> data.getValue().facultyProperty());
+        colDepartmentReportPeople.setCellValueFactory(data -> data.getValue().departmentProperty());
+        colMajorReportPeople.setCellValueFactory(data -> data.getValue().majorProperty());
+        colDegreeReportPeople.setCellValueFactory(data -> data.getValue().degreeProperty());
+        colStatusReportPeople.setCellValueFactory(data -> data.getValue().statusProperty());
+
+
+        try {
+            Professor.loadAllProfessor();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Student.loadAllStudents();
+
+
+        peopleList = FXCollections.observableArrayList();
+
+        for (Professor professor : University.allProfessors) {
+            peopleList.add(new People(professor.getFirst_name(), professor.getLast_name(), professor.getDateOfBirth(), professor.getNationalId(),
+                    professor.getGender(), professor.getPhoneNumber(), professor.getDateOfJoin(), "Professor", professor.getId(),
+                    professor.getFaculty(), professor.getDepartment(), professor.getMajor(), "----", professor.getStatus()));
+        }
+
+        for (Student student : University.allStudents) {
+            peopleList.add(new People(student.getFirst_name(), student.getLast_name(), student.getDateOfBirth(), student.getNationalId(),
+                    student.getGender(), student.getPhoneNumber(), student.getDateOfJoin(), "Student", student.getId(),
+                    student.getFaculty(), student.getDepartment(), student.getMajor(), "----", student.getStatus()));
+        }
+
+
+
+        filteredListReportPeople = new FilteredList<>(peopleList, people -> true);
+        tableViewReportPeople.setItems(filteredListReportPeople);
+
+        setupGenderContextMenuPeople();
+        setupStatusContextMenuPeople();
+        setupRoleContextMenuPeople();
+    }
+
+    //    Reports ----->>> Majors
+    private void setupStatusContextMenuReportMajor() {
+        ContextMenu statusMenu = new ContextMenu();
+        MenuItem active = new MenuItem("Active");
+        active.setOnAction(e -> filterStatus("Active"));
+        MenuItem inactive = new MenuItem("Inactive");
+        inactive.setOnAction(e -> filterStatus("Inactive"));
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(e -> tableViewReportMajor.setItems(majorList));
+
+        statusMenu.getItems().addAll(active, inactive, allItem);
+        colStatusReportMajor.setContextMenu(statusMenu);
+    }
+
+    @FXML
+    private void filterStatus(String status) {
+        filteredListReportMajor.setPredicate(majorReport -> majorReport.getStatus().equalsIgnoreCase(status));
+        tableViewReportMajor.setItems(filteredListReportMajor);
+    }
+
+    @FXML
+    private void onSearchReportMajor() {
+        String keyword = searchFieldReportMajor.getText().toLowerCase().trim();
+        if (keyword.isEmpty()) {
+            filteredListReportMajor.setPredicate(p -> true);
+            return;
+        }
+        filteredListReportMajor.setPredicate(majorReport ->
+                majorReport.getMajorName().toLowerCase().contains(keyword) ||
+                        String.valueOf(majorReport.getEstablishmentYear()).contains(keyword) ||
+                        majorReport.getFaculty().contains(keyword) ||
+                        majorReport.getDepartment().contains(keyword) ||
+                        majorReport.getMajorId().contains(keyword) ||
+                        majorReport.getStatus().toLowerCase().contains(keyword)
+        );
+    }
+
+    public void onBackReportMajor(ActionEvent event) {
+        headerTitle.setText(" --> Reports");
+        majorReportAnchorPane.setVisible(false);
+        reportsVbox.setVisible(true);
+    }
+    //    Reports ----->>> People
+    private void setupGenderContextMenuPeople() {
+        ContextMenu genderMenu = new ContextMenu();
+
+        MenuItem male = new MenuItem("Male");
+        male.setOnAction(e -> filterByGenderPeople("Male"));
+
+        MenuItem female = new MenuItem("Female");
+        female.setOnAction(e -> filterByGenderPeople("Female"));
+
+        MenuItem allGender = new MenuItem("All");
+        allGender.setOnAction(e -> {
+            filteredListReportPeople.setPredicate(p -> true);
+            tableViewReportPeople.setItems(filteredListReportPeople);
+        });
+
+        genderMenu.getItems().addAll(male, female, allGender);
+        colGenderReportPeople.setContextMenu(genderMenu);
+    }
+    private void filterByGenderPeople(String gender) {
+        filteredListReportPeople.setPredicate(people -> people.getGender().equalsIgnoreCase(gender));
+    }
+
+    private void setupStatusContextMenuPeople() {
+        ContextMenu statusMenu = new ContextMenu();
+
+        MenuItem active = new MenuItem("Active");
+        active.setOnAction(e -> filterByStatus("Active"));
+        MenuItem inactive = new MenuItem("Inactive");
+        inactive.setOnAction(e -> filterByStatus("Inactive"));
+
+        MenuItem allStatus = new MenuItem("All");
+        allStatus.setOnAction(e -> {
+            filteredListReportPeople.setPredicate(p -> true);
+            tableViewReportPeople.setItems(filteredListReportPeople);
+        });
+
+        statusMenu.getItems().addAll(active, inactive, allStatus);
+        colStatusReportPeople.setContextMenu(statusMenu);
+    }
+    private void filterByStatus(String status) {
+        filteredListReportPeople.setPredicate(people -> people.getStatus().equalsIgnoreCase(status));
+
+    }
+
+    private void setupRoleContextMenuPeople() {
+        ContextMenu roleMenu = new ContextMenu();
+
+        MenuItem professor = new MenuItem("Professor");
+        professor.setOnAction(e -> filterByRolePeople("Professor"));
+        MenuItem student = new MenuItem("Student");
+        student.setOnAction(e -> filterByRolePeople("Student"));
+        MenuItem allRole = new MenuItem("All");
+        allRole.setOnAction(e -> {
+            filteredListReportPeople.setPredicate(p -> true);
+            tableViewReportPeople.setItems(filteredListReportPeople);
+        });
+
+        roleMenu.getItems().addAll(professor, student, allRole);
+        colRoleReportPeople.setContextMenu(roleMenu);
+    }
+
+    private void filterByRolePeople(String role) {
+        filteredListReportPeople.setPredicate(people -> people.getRole().equalsIgnoreCase(role));
+    }
+
+    @FXML
+    private void onSearchPeople() {
+        String keyword = searchFieldPeople.getText().toLowerCase().trim();
+        if (keyword.isEmpty()) {
+            filteredListReportPeople.setPredicate(p -> true);
+            return;
+        }
+        filteredListReportPeople.setPredicate(people ->
+                people.getFullName().toLowerCase().contains(keyword) ||
+                        String.valueOf(people.getAge()).contains(keyword) ||
+                        people.getGender().toLowerCase().contains(keyword) ||
+                        people.getPhoneNumber().toLowerCase().contains(keyword) ||
+                        people.getNationalId().toLowerCase().contains(keyword) ||
+                        people.getId().toLowerCase().contains(keyword) ||
+                        people.getDateOfJoin().toLowerCase().contains(keyword) ||
+                        people.getFaculty().toLowerCase().contains(keyword) ||
+                        people.getDepartment().toLowerCase().contains(keyword) ||
+                        people.getMajor().toLowerCase().contains(keyword) ||
+                        people.getDegree().toLowerCase().contains(keyword) ||
+                        people.getStatus().toLowerCase().contains(keyword)
+        );
+    }
+
+    @FXML
+    private void onBackPeople() {
+        headerTitle.setText(" --> Reports");
+        peopleReportAnchorPane.setVisible(false);
+        reportsVbox.setVisible(true);
+    }
+
+//    Reports ----->>> Done
+
+    @FXML
+    void semestersReports() {
+        headerTitle.setText(" --> Reports --> Semesters");
+        semesterReportAnchorPane.setVisible(true);
+        reportsVbox.setVisible(false);
+    }
+
+    private static final Random RANDOM = new Random();
+    @FXML
+    public void addRandomStudentsDashboard(ActionEvent event) {
+        /*University.loadFaculties();
+        headerTitle.setText(" --> Register New Professor");
+        addRandomStudentsAnchorPane.setVisible(true);
+        //registerProfessorScrollPane.getStyleClass().add("pressed");
+        buttonsScrollPane.setVisible(true);
+        dashboardAnchorPane.setVisible(false);
+        String countText = studentCountField.getText();
+        try {
+            // تبدیل محتوای TextField به عدد
+            int studentCount = Integer.parseInt(countText);
+
+            // بررسی اینکه عدد مثبت باشد
+            if (studentCount <= 0) {
+                if (errorLabelNumberOfStudents != null) {
+                    errorLabelNumberOfStudents.setText("لطفاً یک عدد مثبت وارد کنید!");
+                } else {
+                    System.out.println("خطا: لطفاً یک عدد مثبت وارد کنید!");
+                }
+                return;
+            }
+
+            // تولید دانشجویان تصادفی به تعداد مشخص‌شده
+            for (int i = 0; i < studentCount; i++) {
+                String firstName = FIRST_NAMES.get(RANDOM.nextInt(FIRST_NAMES.size()));
+
+
+                String lastName = LAST_NAMES.get(RANDOM.nextInt(LAST_NAMES.size()));
+
+                int age = 18 + RANDOM.nextInt(70);
+
+                // تولید جنسیت تصادفی
+                Gender gender = RANDOM.nextBoolean() ? Gender.Male : Gender.Female;
+
+                // چاپ اطلاعات دانشجوی تصادفی
+                System.out.println("دانشجوی " + (i + 1) + ":");
+                System.out.println("نام: " + firstName);
+                System.out.println("فامیلی: " + lastName);
+                System.out.println("رشته: " + major);
+                System.out.println("کد دانشجویی: " + studentId);
+                System.out.println("سن: " + age);
+                System.out.println("جنسیت: " + gender);
+                System.out.println("---------------");
+
+                // اینجا می‌توانید کد ذخیره‌سازی در پایگاه داده را اضافه کنید
+                // مثال: saveStudentToDatabase(firstName, lastName, major, studentId, age, gender);
+            }
+
+            // نمایش پیام موفقیت (اختیاری)
+            if (errorLabelNumberOfStudents != null) {
+                errorLabelNumberOfStudents.setText("با موفقیت " + studentCount + " دانشجو تولید شد!");
+            }
+
+        } catch (NumberFormatException e) {
+            // مدیریت خطا در صورت وارد شدن مقدار غیرعددی
+            if (errorLabelNumberOfStudents != null) {
+                errorLabelNumberOfStudents.setText("لطفاً یک عدد معتبر وارد کنید!");
+            } else {
+                System.out.println("خطا: لطفاً یک عدد معتبر وارد کنید!");
+            }
+        }*/
+    }
+
+    public void addRandomStudents(ActionEvent event) {
+    }
 }
