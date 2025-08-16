@@ -3764,68 +3764,98 @@ public class EmployeePortal1 {
     private static final Random RANDOM = new Random();
     @FXML
     public void addRandomStudentsDashboard(ActionEvent event) {
-        /*University.loadFaculties();
-        headerTitle.setText(" --> Register New Professor");
+        headerTitle.setText(" --> Register New Student");
         addRandomStudentsAnchorPane.setVisible(true);
-        //registerProfessorScrollPane.getStyleClass().add("pressed");
         buttonsScrollPane.setVisible(true);
         dashboardAnchorPane.setVisible(false);
-        String countText = studentCountField.getText();
+
+        String countText = numberOfStudents.getText();
         try {
-            // تبدیل محتوای TextField به عدد
             int studentCount = Integer.parseInt(countText);
 
-            // بررسی اینکه عدد مثبت باشد
             if (studentCount <= 0) {
                 if (errorLabelNumberOfStudents != null) {
                     errorLabelNumberOfStudents.setText("لطفاً یک عدد مثبت وارد کنید!");
-                } else {
-                    System.out.println("خطا: لطفاً یک عدد مثبت وارد کنید!");
                 }
                 return;
             }
 
-            // تولید دانشجویان تصادفی به تعداد مشخص‌شده
-            for (int i = 0; i < studentCount; i++) {
-                String firstName = FIRST_NAMES.get(RANDOM.nextInt(FIRST_NAMES.size()));
 
-
-                String lastName = LAST_NAMES.get(RANDOM.nextInt(LAST_NAMES.size()));
-
-                int age = 18 + RANDOM.nextInt(70);
-
-                // تولید جنسیت تصادفی
-                Gender gender = RANDOM.nextBoolean() ? Gender.Male : Gender.Female;
-
-                // چاپ اطلاعات دانشجوی تصادفی
-                System.out.println("دانشجوی " + (i + 1) + ":");
-                System.out.println("نام: " + firstName);
-                System.out.println("فامیلی: " + lastName);
-                System.out.println("رشته: " + major);
-                System.out.println("کد دانشجویی: " + studentId);
-                System.out.println("سن: " + age);
-                System.out.println("جنسیت: " + gender);
-                System.out.println("---------------");
-
-                // اینجا می‌توانید کد ذخیره‌سازی در پایگاه داده را اضافه کنید
-                // مثال: saveStudentToDatabase(firstName, lastName, major, studentId, age, gender);
-            }
-
-            // نمایش پیام موفقیت (اختیاری)
             if (errorLabelNumberOfStudents != null) {
                 errorLabelNumberOfStudents.setText("با موفقیت " + studentCount + " دانشجو تولید شد!");
             }
 
         } catch (NumberFormatException e) {
-            // مدیریت خطا در صورت وارد شدن مقدار غیرعددی
             if (errorLabelNumberOfStudents != null) {
                 errorLabelNumberOfStudents.setText("لطفاً یک عدد معتبر وارد کنید!");
-            } else {
-                System.out.println("خطا: لطفاً یک عدد معتبر وارد کنید!");
             }
-        }*/
+        }
     }
 
-    public void addRandomStudents(ActionEvent event) {
+    /** تابع اصلی تولید دانشجوی تصادفی */
+    @FXML
+    public void addRandomStudents (ActionEvent event) throws IOException {
+        University.loadFaculties();
+        Student.loadAllStudents();
+        String countText = numberOfStudents.getText();
+        int studentCount= Integer.parseInt(countText);
+        for (int i = 0; i < studentCount; i++) {
+            String firstName = FIRST_NAMES.get(RANDOM.nextInt(FIRST_NAMES.size()));
+            String lastName = LAST_NAMES.get(RANDOM.nextInt(LAST_NAMES.size()));
+            int age = 18 + RANDOM.nextInt(10);
+            Gender gender = RANDOM.nextBoolean() ? Gender.Male : Gender.Female;
+
+            for (Faculty faculty : University.allFaculties) {
+                if (faculty.getFacultyName().equals(LoginPanelController.employeePerson.getFaculty())) {
+                    for (Department department : faculty.departments) {
+                        if (department.getName().equals(LoginPanelController.employeePerson.getDepartment())) {
+                            if (!department.majors.isEmpty()) {
+                                Major major = department.majors.get(RANDOM.nextInt(department.majors.size()));
+
+                                if (!major.degrees.isEmpty()) {
+                                    Degree degree = major.degrees.get(RANDOM.nextInt(major.degrees.size()));
+
+                                    String studentId = "STU" + (University.allStudents.size() + 1);
+
+                                    Student student = new Student(
+                                            firstName, lastName,
+                                            LocalDate.now(), "", gender, "",
+                                            studentId, LocalDate.now(),
+                                            faculty.getFacultyName(),
+                                            department.getName(),
+                                            major.getName(),
+                                            Status.Active,
+                                            degree.getClass().getSimpleName()
+                                    );
+
+                                    // ذخیره در سیستم
+                                    major.students.add(student);
+                                    University.allStudents.add(student);
+
+                                    // چاپ برای تست
+                                    System.out.println("دانشجوی " + (i + 1) + ":");
+                                    System.out.println("نام: " + firstName);
+                                    System.out.println("فامیلی: " + lastName);
+                                    System.out.println("رشته: " + major.getName());
+                                    System.out.println("کد دانشجویی: " + studentId);
+                                    System.out.println("سن: " + age);
+                                    System.out.println("Degree:"+degree.getClass().getSimpleName());
+                                    System.out.println("جنسیت: " + gender);
+                                    System.out.println("---------------");
+                                } else {
+                                    System.out.println("⚠️ رشته " + major.getName() + " هیچ مقطعی (Degree) ندارد.");
+                                }
+                            } else {
+                                System.out.println("⚠️ دپارتمان " + department.getName() + " هیچ رشته‌ای ندارد.");
+                            }
+
+                        }
+                        }
+                    }
+                }
+            }
+        University.saveFaculties();
+        Student.saveAllStudent();
     }
+
 }
