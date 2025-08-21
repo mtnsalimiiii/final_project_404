@@ -26,6 +26,7 @@ import java.util.ResourceBundle;
 
 public class AdminPortal1 implements Initializable {
 
+    public Label errorLabelDeactiveSemester;
     @FXML
     private VBox DashboardVbox;
 
@@ -518,6 +519,8 @@ public class AdminPortal1 implements Initializable {
     @FXML
     private Button reportsScrollPane;
 
+    @FXML
+    private Button deactiveSemesterScrollPane;
     //    Reports
     //Departments
     @FXML private TableView<DepartmentReport> tableViewReportDepartment;
@@ -657,6 +660,19 @@ public class AdminPortal1 implements Initializable {
     @FXML
     private Button deactiveButton;
 
+    @FXML
+    public VBox deactiveSemesterVbox;
+
+    @FXML
+    public AnchorPane deactiveSemesterAnchorPane;
+
+    @FXML
+    public ComboBox semesterChooserDeactiveSemester;
+
+    @FXML
+    public Button deactiveSemesterButton;
+
+
 
     @FXML
     void activeEnrollment(ActionEvent event){
@@ -678,10 +694,6 @@ public class AdminPortal1 implements Initializable {
             System.out.println("Error in Active Enrollment!! " + e.getMessage());
         }
     }
-
-//      public int getEstablishmentYear(){
-//        return LocalDate.now().getYear();
-//    }
 
     public String getDepartmentId() throws FileNotFoundException {
         University.loadFaculties();
@@ -830,6 +842,9 @@ public class AdminPortal1 implements Initializable {
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
+        }else if (deactiveSemesterAnchorPane.isVisible()) {
+            deactiveSemesterAnchorPane.setVisible(false);
+            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
         }
 
         if (!addDepartmentAnchorPane.isVisible()) {
@@ -1103,6 +1118,9 @@ public class AdminPortal1 implements Initializable {
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
+        }else if (deactiveSemesterAnchorPane.isVisible()) {
+            deactiveSemesterAnchorPane.setVisible(false);
+            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
         }
         if (!addEmployeeAnchorPane.isVisible()) {
             addEmployeeAnchorPane.setVisible(true);
@@ -1277,6 +1295,9 @@ public class AdminPortal1 implements Initializable {
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
+        }else if (deactiveSemesterAnchorPane.isVisible()) {
+            deactiveSemesterAnchorPane.setVisible(false);
+            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
         }
         if (!addFacultyAnchorPane.isVisible()){
             addFacultyAnchorPane.setVisible(true);
@@ -1493,6 +1514,9 @@ public class AdminPortal1 implements Initializable {
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
+        }else if (deactiveSemesterAnchorPane.isVisible()) {
+            deactiveSemesterAnchorPane.setVisible(false);
+            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
         }
         if (!addMajorAnchorPane.isVisible()) {
             addMajorAnchorPane.setVisible(true);
@@ -1592,6 +1616,9 @@ public class AdminPortal1 implements Initializable {
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
+        }else if (deactiveSemesterAnchorPane.isVisible()) {
+            deactiveSemesterAnchorPane.setVisible(false);
+            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
         }
 
         if (!addSemesterAnchorPane.isVisible()) {
@@ -1652,6 +1679,9 @@ public class AdminPortal1 implements Initializable {
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
+        }else if (deactiveSemesterAnchorPane.isVisible()) {
+            deactiveSemesterAnchorPane.setVisible(false);
+            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
         }
 
         buttonsScrollPane.setVisible(false);
@@ -2554,6 +2584,9 @@ public class AdminPortal1 implements Initializable {
         }else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
+        }else if (deactiveSemesterAnchorPane.isVisible()) {
+            deactiveSemesterAnchorPane.setVisible(false);
+            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
         }
 
         if (!enrollmentAnchorPane.isVisible()) {
@@ -2730,6 +2763,9 @@ public class AdminPortal1 implements Initializable {
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
+        }else if (deactiveSemesterAnchorPane.isVisible()) {
+            deactiveSemesterAnchorPane.setVisible(false);
+            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
         }
 
         if (!profileAnchorPane.isVisible()) {
@@ -2796,6 +2832,9 @@ public class AdminPortal1 implements Initializable {
         } else if (profileAnchorPane.isVisible()) {
             profileAnchorPane.setVisible(false);
             profileScrollPane.getStyleClass().remove("pressed");
+        }else if (deactiveSemesterAnchorPane.isVisible()) {
+            deactiveSemesterAnchorPane.setVisible(false);
+            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
         }
 
         if (!reportsAnchorPane.isVisible()) {
@@ -3632,6 +3671,9 @@ public class AdminPortal1 implements Initializable {
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
+        }else if (deactiveSemesterAnchorPane.isVisible()) {
+            deactiveSemesterAnchorPane.setVisible(false);
+            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
         }
         if (!updateDepartmentAnchorPane.isVisible()) {
             updateDepartmentAnchorPane.setVisible(true);
@@ -3704,6 +3746,9 @@ public class AdminPortal1 implements Initializable {
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
+        }else if (deactiveSemesterAnchorPane.isVisible()) {
+            deactiveSemesterAnchorPane.setVisible(false);
+            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
         }
 
         if (!updateEmployeeAnchorPane.isVisible()) {
@@ -3778,6 +3823,9 @@ public class AdminPortal1 implements Initializable {
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
+        }else if (deactiveSemesterAnchorPane.isVisible()) {
+            deactiveSemesterAnchorPane.setVisible(false);
+            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
         }
         if (!updateFacultyAnchorPane.isVisible()) {
             updateFacultyAnchorPane.setVisible(true);
@@ -3850,6 +3898,9 @@ public class AdminPortal1 implements Initializable {
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
+        }else if (deactiveSemesterAnchorPane.isVisible()) {
+            deactiveSemesterAnchorPane.setVisible(false);
+            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
         }
         if (!updateMajorAnchorPane.isVisible()) {
             updateMajorAnchorPane.setVisible(true);
@@ -3862,6 +3913,113 @@ public class AdminPortal1 implements Initializable {
 //        deactivate the edit and deactive vboxs
             editMajorVbox.setVisible(false);
             deactiveMajorVbox.setVisible(false);
+        }
+    }
+
+    @FXML
+    void deactiveSemesterScrollPane(ActionEvent event) {
+        // Set the header
+        headerTitle.setText(" --> Deactive Semester");
+
+        // Hide other anchor panes and remove "pressed" style
+        if (addFacultyAnchorPane.isVisible()) {
+            addFacultyAnchorPane.setVisible(false);
+            addFacultyScrollPane.getStyleClass().remove("pressed");
+        } else if (updateFacultyAnchorPane.isVisible()) {
+            updateFacultyAnchorPane.setVisible(false);
+            updateFacultyScrollPane.getStyleClass().remove("pressed");
+        } else if (addDepartmentAnchorPane.isVisible()) {
+            addDepartmentAnchorPane.setVisible(false);
+            addDepartmentScrollPane.getStyleClass().remove("pressed");
+        } else if (updateDepartmentAnchorPane.isVisible()) {
+            updateDepartmentAnchorPane.setVisible(false);
+            updateDepartmentScrollPane.getStyleClass().remove("pressed");
+        } else if (addMajorAnchorPane.isVisible()) {
+            addMajorAnchorPane.setVisible(false);
+            addMajorScrollPane.getStyleClass().remove("pressed");
+        } else if (addEmployeeAnchorPane.isVisible()) {
+            addEmployeeAnchorPane.setVisible(false);
+            addEmployeeScrollPane.getStyleClass().remove("pressed");
+        } else if (updateEmployeeAnchorPane.isVisible()) {
+            updateEmployeeAnchorPane.setVisible(false);
+            updateEmployeeScrollPane.getStyleClass().remove("pressed");
+        } else if (addSemesterAnchorPane.isVisible()) {
+            addSemesterAnchorPane.setVisible(false);
+            addSemesterScrollPane.getStyleClass().remove("pressed");
+        } else if (enrollmentAnchorPane.isVisible()) {
+            enrollmentAnchorPane.setVisible(false);
+            enrollmentScrollPane.getStyleClass().remove("pressed");
+        } else if (profileAnchorPane.isVisible()) {
+            profileAnchorPane.setVisible(false);
+            profileScrollPane.getStyleClass().remove("pressed");
+        } else if (reportsAnchorPane.isVisible()) {
+            reportsAnchorPane.setVisible(false);
+            reportsScrollPane.getStyleClass().remove("pressed");
+        }
+
+        // Show deactive semester pane and populate ComboBox
+        if (!deactiveSemesterAnchorPane.isVisible()) {
+            deactiveSemesterAnchorPane.setVisible(true);
+            deactiveSemesterScrollPane.getStyleClass().add("pressed"); // Fixed: Use correct ScrollPane reference
+            semesterChooserDeactiveSemester.getItems().clear();
+            errorLabelDeactiveSemester.setText(""); // Clear error label
+            University.loadAllSemester();
+            for (Semester semester : University.allSemesters) {
+                if (semester.getStatus().equals(Status.Active)) {
+                    semesterChooserDeactiveSemester.getItems().add(semester.getName());
+                }
+            }
+        }
+    }
+
+    @FXML
+    public void deactiveSemesterDashboard(ActionEvent event) {
+        semesterChooserDeactiveSemester.getItems().clear();
+        errorLabelDeactiveSemester.setText(""); // Clear error label
+        headerTitle.setText(" --> Deactive Semester");
+        dashboardAnchorPane.setVisible(false);
+        buttonsScrollPane.setVisible(true);
+        deactiveSemesterAnchorPane.setVisible(true);
+        University.loadAllSemester();
+        for (Semester semester : University.allSemesters) {
+            if (semester.getStatus().equals(Status.Active)) {
+                semesterChooserDeactiveSemester.getItems().add(semester.getName());
+            }
+        }
+    }
+
+    @FXML
+    public void deactiveSemester(ActionEvent event) {
+        // Clear previous error message
+        errorLabelDeactiveSemester.setText("");
+
+        // Check if a semester is selected
+        if (semesterChooserDeactiveSemester.getValue() == null) {
+            errorLabelDeactiveSemester.setText("Please select a semester to deactivate.");
+            return;
+        }
+
+        boolean semesterFound = false;
+        University.loadAllSemester();
+        for (Semester semester : University.allSemesters) {
+            if (semesterChooserDeactiveSemester.getValue().equals(semester.getName())) {
+                semester.setStatus(Status.Inactive);
+                semesterFound = true;
+                break; // Exit loop once semester is found and updated
+            }
+        }
+
+        if (semesterFound) {
+            try {
+                University.saveAllSemester();
+                errorLabelDeactiveSemester.setText("Semester deactivated successfully.");
+                semesterChooserDeactiveSemester.getItems().remove(semesterChooserDeactiveSemester.getValue()); // Remove deactivated semester
+                semesterChooserDeactiveSemester.setValue(null); // Clear selection
+            } catch (Exception e) {
+                errorLabelDeactiveSemester.setText("Error saving semester: " + e.getMessage());
+            }
+        } else {
+            errorLabelDeactiveSemester.setText("Selected semester not found.");
         }
     }
 
