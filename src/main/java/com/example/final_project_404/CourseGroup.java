@@ -20,9 +20,9 @@ public class CourseGroup implements Serializable {
     private String id;
     private Map<String, Double> grades = new HashMap<>();
     private List<Student> enrolledStudents = new ArrayList<>();
-    public CourseGroup(String professorName,String semasterCode,int capacity,String id,Status status, Course course) {
+    public CourseGroup(String professorName,String semesterCode,int capacity,String id,Status status, Course course) {
         this.professorName = professorName;
-        this.semesterCode=semasterCode;
+        this.semesterCode=semesterCode;
         this.capacity=capacity;
         this.id=id;
         this.status=status;
@@ -38,11 +38,11 @@ public class CourseGroup implements Serializable {
         this.status = status;
     }
 
-    public String getSemasterCode() {
+    public String getSemesterCode() {
         return semesterCode;
     }
-    public void setSemasterCode(String semasterCode) {
-        this.semesterCode = semasterCode;
+    public void setSemesterCode(String semesterCode) {
+        this.semesterCode = semesterCode;
     }
 
     public String getProfessor() {
@@ -62,15 +62,12 @@ public class CourseGroup implements Serializable {
     public List<Student> getRegisteredStudents() {
         return enrolledStudents;
     }
+
     public Course getCourse() {
         return course;
     }
-
     public void setCourse(Course course) {
         this.course = course;
-    }
-    public String getProfessorName() {
-        return professorName;
     }
 
     public String getCourseCode() {
@@ -89,9 +86,9 @@ public class CourseGroup implements Serializable {
         return grades.containsKey(student) ? String.valueOf(grades.get(student)) : "-";
     }*/
 
-    public String getStatusText() {
-        return status == Status.Active ? "Active" : "Inactive";
-    }
+//    public String getStatusText() {
+//        return status == Status.Active ? "Active" : "Inactive";
+//    }
 
     public Double getScore(Student student) {
         return grades.get(student.getId());

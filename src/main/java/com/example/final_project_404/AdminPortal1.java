@@ -1005,6 +1005,7 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     void addEmployeeDashboard(ActionEvent event) {
+        University.loadFaculties();
 //        name the header
         headerTitle.setText(" --> Add New Employee");
 //        activate the add employee anchorpane

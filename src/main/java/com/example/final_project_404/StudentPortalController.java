@@ -216,7 +216,7 @@ public class StudentPortalController {
                     for (Degree degree : major.degrees) {
                         for (Course course : degree.courses) {
                             for (CourseGroup group : course.courseGroups) {
-                                if (group.getSemasterCode().equals(selectedSemester) &&
+                                if (group.getSemesterCode().equals(selectedSemester) &&
                                         group.getRegisteredStudents().contains(LoginPanelController.studentPerson)) {
                                     Double score = group.getGrades().get(LoginPanelController.studentPerson.getId());
                                     if (score != null) {
@@ -290,7 +290,7 @@ public class StudentPortalController {
                                 if (group.getRegisteredStudents().contains(LoginPanelController.studentPerson)) {
                                     Double score = group.getGrades().get(LoginPanelController.studentPerson.getId());
                                     if (score != null) {
-                                        String semester = group.getSemasterCode();
+                                        String semester = group.getSemesterCode();
                                         semesters.add(semester);
                                         Degree degreeForStatus = findDegreeForCourseGroup(group);
                                         CourseStatus status = (degreeForStatus != null) ? degreeForStatus.getPassStatus(score) : CourseStatus.Fail;
@@ -324,7 +324,7 @@ public class StudentPortalController {
                         for (Degree degree : major.degrees) {
                             for (Course course : degree.courses) {
                                 for (CourseGroup group : course.courseGroups) {
-                                    if (group.getSemasterCode().equals(semester) &&
+                                    if (group.getSemesterCode().equals(semester) &&
                                             group.getRegisteredStudents().contains(LoginPanelController.studentPerson)) {
                                         Double score = group.getGrades().get(LoginPanelController.studentPerson.getId());
                                         if (score != null) {

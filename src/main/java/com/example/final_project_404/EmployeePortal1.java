@@ -1135,8 +1135,8 @@ public class EmployeePortal1 {
 
                                     professorChooserAddCourseGroup.getItems().clear();
                                     professorChooserAddCourseGroup.getItems().add("Professor");
-                                    for (Professor prof : major.professors) {
-                                        professorChooserAddCourseGroup.getItems().add(prof.getFullName());
+                                    for (Professor professor : major.professors) {
+                                        professorChooserAddCourseGroup.getItems().add(professor.getFullName());
                                     }
                                     professorChooserAddCourseGroup.setVisibleRowCount(5);
                                     professorChooserAddCourseGroup.getSelectionModel().selectFirst();
@@ -1520,7 +1520,7 @@ public class EmployeePortal1 {
         } else {
             errorLabelNationalIdRegisterProfessor.setText(null);
             try {
-                long nationalid = Integer.parseInt(nationalIdRegisterProfessor.getText());
+                Long nationalid = Long.parseLong(nationalIdRegisterProfessor.getText());
                 if (nationalIdRegisterProfessor.getText().length() != 10) {
                     errorLabelNationalIdRegisterProfessor.setText("Enter 10 digit");
                     confirmation = false;

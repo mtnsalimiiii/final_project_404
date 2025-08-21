@@ -98,7 +98,7 @@ public class ReportsStudentPortalController {
     }
 
     private String getProfessorName(CourseGroup group) {
-        return group.getProfessorName() != null ? group.getProfessorName() : "-";
+        return group.getProfessor() != null ? group.getProfessor() : "-";
     }
 
     private String getScore(CourseGroup group) {

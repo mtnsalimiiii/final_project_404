@@ -30,28 +30,33 @@
         </HBox>
         <ScrollPane fx:id="buttonsScrollPane" layoutY="80.0" prefHeight="470.0" prefWidth="170.0" visible="false">
             <content>
-                <VBox fx:id="navigationBarVBox" prefHeight="420.0" prefWidth="150.0" styleClass="nav-bar" stylesheets="@EmployeePortal.css">
+                <VBox fx:id="navigationBarVBox" prefHeight="420.0" prefWidth="150.0" styleClass="nav-bar">
                     <children>
-                        <Button fx:id="dashboardScrollPane" layoutX="20.0" layoutY="20.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#dashboardScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Dashboard" />
-                        <Button fx:id="addFacultyScrollPane" layoutX="20.0" layoutY="62.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addFacultyScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add Faculty" />
-                        <Button fx:id="updateFacultyScrollPane" layoutX="20.0" layoutY="65.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateFacultyScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Update&#10;Faculty" />
-                        <Button fx:id="addDepartmentScrollPane" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addDepartmentScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add &#10;Department" textAlignment="CENTER" />
-                        <Button fx:id="updateDepartmentScrollPane" layoutX="20.0" layoutY="176.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateDepartmentScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Update&#10;Department" textAlignment="CENTER" />
-                        <Button fx:id="addMajorScrollPane" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addMajorScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add Major" textAlignment="CENTER" />
-                        <Button fx:id="updateMajorScrollPane" layoutX="20.0" layoutY="307.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateMajorScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Update Major" textAlignment="CENTER" />
-                        <Button fx:id="addEmployeeScrollPane" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addEmployeeScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add Employee" textAlignment="CENTER" />
-                        <Button fx:id="updateEmployeeScrollPane" layoutX="20.0" layoutY="396.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateEmployeeScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Update &#10;Employee" textAlignment="CENTER" />
-                        <Button fx:id="addSemesterScrollPane" layoutX="20.0" layoutY="545.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addSemesterScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add Semester" textAlignment="CENTER" />
-                        <Button fx:id="enrollmentScrollPane" layoutX="20.0" layoutY="808.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#enrollmentScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Enrollment" textAlignment="CENTER" />
-                        <Button fx:id="profileScrollPane" layoutX="20.0" layoutY="150.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#profileScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Profile" />
-                        <Button fx:id="reportsScrollPane" layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#reportsScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Reports" />
-                        <Button layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#signOutScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Sign out" />
+                        <Button fx:id="dashboardScrollPane" layoutX="20.0" layoutY="20.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#dashboardScrollPane" styleClass="nav-button-dashboard" text="Dashboard" />
+                        <Button fx:id="addFacultyScrollPane" layoutX="20.0" layoutY="62.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addFacultyScrollPane" styleClass="nav-button-dashboard" text="Add Faculty" />
+                        <Button fx:id="updateFacultyScrollPane" layoutX="20.0" layoutY="65.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateFacultyScrollPane" styleClass="nav-button-dashboard" text="Update&#10;Faculty" />
+                        <Button fx:id="addDepartmentScrollPane" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addDepartmentScrollPane" styleClass="nav-button-dashboard" text="Add &#10;Department" textAlignment="CENTER" />
+                        <Button fx:id="updateDepartmentScrollPane" layoutX="20.0" layoutY="176.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateDepartmentScrollPane" styleClass="nav-button-dashboard" text="Update&#10;Department" textAlignment="CENTER" />
+                        <Button fx:id="addMajorScrollPane" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addMajorScrollPane" styleClass="nav-button-dashboard" text="Add Major" textAlignment="CENTER" />
+                        <Button fx:id="updateMajorScrollPane" layoutX="20.0" layoutY="307.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateMajorScrollPane" styleClass="nav-button-dashboard" text="Update Major" textAlignment="CENTER" />
+                        <Button fx:id="addEmployeeScrollPane" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addEmployeeScrollPane" styleClass="nav-button-dashboard" text="Add Employee" textAlignment="CENTER" />
+                        <Button fx:id="updateEmployeeScrollPane" layoutX="20.0" layoutY="396.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateEmployeeScrollPane" styleClass="nav-button-dashboard" text="Update &#10;Employee" textAlignment="CENTER" />
+                        <Button fx:id="addSemesterScrollPane" layoutX="20.0" layoutY="545.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addSemesterScrollPane" styleClass="nav-button-dashboard" text="Add Semester" textAlignment="CENTER" />
+                        <Button fx:id="enrollmentScrollPane" layoutX="20.0" layoutY="808.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#enrollmentScrollPane" styleClass="nav-button-dashboard" text="Enrollment" textAlignment="CENTER" />
+                        <Button fx:id="profileScrollPane" layoutX="20.0" layoutY="150.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#profileScrollPane" styleClass="nav-button-dashboard" text="Profile" />
+                        <Button fx:id="reportsScrollPane" layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#reportsScrollPane" styleClass="nav-button-dashboard" text="Reports" />
+                        <Button layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#signOutScrollPane" styleClass="nav-button-dashboard" text="Sign out" />
                     </children>
                     <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                     </padding>
                 </VBox>
             </content>
+         <stylesheets>
+            <URL value="@ScrollPaneStyle.css" />
+            <URL value="@EmployeePortal.css" />
+            <URL value="@DashboardButton.css" />
+         </stylesheets>
         </ScrollPane>
         <AnchorPane fx:id="dashboardAnchorPane" layoutY="80.0" prefHeight="470.0" prefWidth="800.0">
             <children>
@@ -80,7 +85,7 @@
                                 <RowConstraints minHeight="50.0" percentHeight="0.0" prefHeight="55.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
-                                <Button alignment="CENTER" mnemonicParsing="false" onAction="#addFacultyDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Add Faculty" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                <Button mnemonicParsing="false" onAction="#addFacultyDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Add Faculty" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                 <Button mnemonicParsing="false" onAction="#updateFacultyDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Update Faculty" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                 <Button mnemonicParsing="false" onAction="#addDepartmentDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Add Department" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                                 <Button mnemonicParsing="false" onAction="#updateDepartmentDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Update Department" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
@@ -88,11 +93,11 @@
                                 <Button mnemonicParsing="false" onAction="#updateMajorDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Update Major" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                                 <Button mnemonicParsing="false" onAction="#addEmployeeDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Add Employee" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                                 <Button mnemonicParsing="false" onAction="#updateEmployeeDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Update Employee" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                                <Button fx:id="enrollment" mnemonicParsing="false" onAction="#enrollmentDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Enrollment" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-                                <Button mnemonicParsing="false" onAction="#reportsDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Reports" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-                                <Button mnemonicParsing="false" onAction="#profileDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Profile" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                                <Button mnemonicParsing="false" onAction="#enrollmentDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Enrollment" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                                <Button mnemonicParsing="false" onAction="#profileDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Profile" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                                <Button mnemonicParsing="false" onAction="#reportsDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Reports" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
                                 <Button mnemonicParsing="false" onAction="#signOutDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Sign out" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
-                                <Button layoutX="440.0" layoutY="223.0" mnemonicParsing="false" onAction="#addSemesterDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Add Semester" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                                <Button mnemonicParsing="false" onAction="#addSemesterDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Add Semester" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                             </children>
                         </GridPane>
                     </children>
