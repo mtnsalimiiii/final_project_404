@@ -505,15 +505,6 @@ public class AdminPortal1 implements Initializable {
     private TextField phoneNumberEditEmployee;
 
     @FXML
-    private AnchorPane profileAnchorPane;
-
-    @FXML
-    private Button profileScrollPane;
-
-    @FXML
-    private VBox profileVbox;
-
-    @FXML
     private AnchorPane reportsAnchorPane;
 
     @FXML
@@ -836,13 +827,10 @@ public class AdminPortal1 implements Initializable {
         } else if (enrollmentAnchorPane.isVisible()) {
             enrollmentAnchorPane.setVisible(false);
             enrollmentScrollPane.getStyleClass().remove("pressed");
-        } else if (profileAnchorPane.isVisible()) {
-            profileAnchorPane.setVisible(false);
-            profileScrollPane.getStyleClass().remove("pressed");
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
-        }else if (deactiveSemesterAnchorPane.isVisible()) {
+        } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
             deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
         }
@@ -1112,13 +1100,10 @@ public class AdminPortal1 implements Initializable {
         } else if (enrollmentAnchorPane.isVisible()) {
             enrollmentAnchorPane.setVisible(false);
             enrollmentScrollPane.getStyleClass().remove("pressed");
-        } else if (profileAnchorPane.isVisible()) {
-            profileAnchorPane.setVisible(false);
-            profileScrollPane.getStyleClass().remove("pressed");
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
-        }else if (deactiveSemesterAnchorPane.isVisible()) {
+        } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
             deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
         }
@@ -1289,13 +1274,10 @@ public class AdminPortal1 implements Initializable {
         } else if (enrollmentAnchorPane.isVisible()) {
             enrollmentAnchorPane.setVisible(false);
             enrollmentScrollPane.getStyleClass().remove("pressed");
-        } else if (profileAnchorPane.isVisible()) {
-            profileAnchorPane.setVisible(false);
-            profileScrollPane.getStyleClass().remove("pressed");
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
-        }else if (deactiveSemesterAnchorPane.isVisible()) {
+        } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
             deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
         }
@@ -1508,13 +1490,10 @@ public class AdminPortal1 implements Initializable {
         } else if (enrollmentAnchorPane.isVisible()) {
             enrollmentAnchorPane.setVisible(false);
             enrollmentScrollPane.getStyleClass().remove("pressed");
-        } else if (profileAnchorPane.isVisible()) {
-            profileAnchorPane.setVisible(false);
-            profileScrollPane.getStyleClass().remove("pressed");
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
-        }else if (deactiveSemesterAnchorPane.isVisible()) {
+        } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
             deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
         }
@@ -1610,13 +1589,10 @@ public class AdminPortal1 implements Initializable {
         } else if (enrollmentAnchorPane.isVisible()) {
             enrollmentAnchorPane.setVisible(false);
             enrollmentScrollPane.getStyleClass().remove("pressed");
-        } else if (profileAnchorPane.isVisible()) {
-            profileAnchorPane.setVisible(false);
-            profileScrollPane.getStyleClass().remove("pressed");
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
-        }else if (deactiveSemesterAnchorPane.isVisible()) {
+        } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
             deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
         }
@@ -1673,13 +1649,10 @@ public class AdminPortal1 implements Initializable {
         } else if (enrollmentAnchorPane.isVisible()) {
             enrollmentAnchorPane.setVisible(false);
             enrollmentScrollPane.getStyleClass().remove("pressed");
-        } else if (profileAnchorPane.isVisible()) {
-            profileAnchorPane.setVisible(false);
-            profileScrollPane.getStyleClass().remove("pressed");
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
-        }else if (deactiveSemesterAnchorPane.isVisible()) {
+        } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
             deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
         }
@@ -2578,13 +2551,10 @@ public class AdminPortal1 implements Initializable {
         } else if (addSemesterAnchorPane.isVisible()) {
             addSemesterAnchorPane.setVisible(false);
             addSemesterScrollPane.getStyleClass().remove("pressed");
-        } else if (profileAnchorPane.isVisible()) {
-            profileAnchorPane.setVisible(false);
-            profileScrollPane.getStyleClass().remove("pressed");
-        }else if (reportsAnchorPane.isVisible()) {
+        } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
-        }else if (deactiveSemesterAnchorPane.isVisible()) {
+        } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
             deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
         }
@@ -2717,66 +2687,6 @@ public class AdminPortal1 implements Initializable {
     }
 
     @FXML
-    void profileDashboard(ActionEvent event) {
-        headerTitle.setText(" --> Profile");
-
-        dashboardAnchorPane.setVisible(false);
-        buttonsScrollPane.setVisible(true);
-        profileAnchorPane.setVisible(true);
-        profileScrollPane.getStyleClass().add("pressed");
-    }
-
-    @FXML
-    void profileScrollPane(ActionEvent event) {
-        headerTitle.setText(" --> Profile");
-
-        if (addFacultyAnchorPane.isVisible()){
-            addFacultyAnchorPane.setVisible(false);
-            addFacultyScrollPane.getStyleClass().remove("pressed");
-        } else if (updateFacultyAnchorPane.isVisible()) {
-            updateFacultyAnchorPane.setVisible(false);
-            updateFacultyScrollPane.getStyleClass().remove("pressed");
-        } else if (addDepartmentAnchorPane.isVisible()) {
-            addDepartmentAnchorPane.setVisible(false);
-            addDepartmentScrollPane.getStyleClass().remove("pressed");
-        } else if (updateDepartmentAnchorPane.isVisible()) {
-            updateDepartmentAnchorPane.setVisible(false);
-            updateDepartmentScrollPane.getStyleClass().remove("pressed");
-        } else if (addMajorAnchorPane.isVisible()) {
-            addMajorAnchorPane.setVisible(false);
-            addMajorScrollPane.getStyleClass().remove("pressed");
-        } else if (updateMajorAnchorPane.isVisible()) {
-            updateMajorAnchorPane.setVisible(false);
-            updateMajorScrollPane.getStyleClass().remove("pressed");
-        } else if (addEmployeeAnchorPane.isVisible()) {
-            addEmployeeAnchorPane.setVisible(false);
-            addEmployeeScrollPane.getStyleClass().remove("pressed");
-        } else if (updateEmployeeAnchorPane.isVisible()) {
-            updateEmployeeAnchorPane.setVisible(false);
-            updateEmployeeScrollPane.getStyleClass().remove("pressed");
-        } else if (addSemesterAnchorPane.isVisible()) {
-            addSemesterAnchorPane.setVisible(false);
-            addSemesterScrollPane.getStyleClass().remove("pressed");
-        } else if (enrollmentAnchorPane.isVisible()) {
-            enrollmentAnchorPane.setVisible(false);
-            enrollmentScrollPane.getStyleClass().remove("pressed");
-        } else if (reportsAnchorPane.isVisible()) {
-            reportsAnchorPane.setVisible(false);
-            reportsScrollPane.getStyleClass().remove("pressed");
-        }else if (deactiveSemesterAnchorPane.isVisible()) {
-            deactiveSemesterAnchorPane.setVisible(false);
-            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
-        }
-
-        if (!profileAnchorPane.isVisible()) {
-            profileAnchorPane.setVisible(true);
-            profileScrollPane.getStyleClass().add("pressed");
-        }
-
-
-    }
-
-    @FXML
     void reportsDashboard(ActionEvent event) {
         headerTitle.setText(" --> Reports");
 
@@ -2829,10 +2739,7 @@ public class AdminPortal1 implements Initializable {
         } else if (enrollmentAnchorPane.isVisible()) {
             enrollmentAnchorPane.setVisible(false);
             enrollmentScrollPane.getStyleClass().remove("pressed");
-        } else if (profileAnchorPane.isVisible()) {
-            profileAnchorPane.setVisible(false);
-            profileScrollPane.getStyleClass().remove("pressed");
-        }else if (deactiveSemesterAnchorPane.isVisible()) {
+        } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
             deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
         }
@@ -3665,9 +3572,6 @@ public class AdminPortal1 implements Initializable {
         } else if (enrollmentAnchorPane.isVisible()) {
             enrollmentAnchorPane.setVisible(false);
             enrollmentScrollPane.getStyleClass().remove("pressed");
-        } else if (profileAnchorPane.isVisible()) {
-            profileAnchorPane.setVisible(false);
-            profileScrollPane.getStyleClass().remove("pressed");
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
@@ -3740,9 +3644,6 @@ public class AdminPortal1 implements Initializable {
         } else if (enrollmentAnchorPane.isVisible()) {
             enrollmentAnchorPane.setVisible(false);
             enrollmentScrollPane.getStyleClass().remove("pressed");
-        } else if (profileAnchorPane.isVisible()) {
-            profileAnchorPane.setVisible(false);
-            profileScrollPane.getStyleClass().remove("pressed");
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
@@ -3817,9 +3718,6 @@ public class AdminPortal1 implements Initializable {
         } else if (enrollmentAnchorPane.isVisible()) {
             enrollmentAnchorPane.setVisible(false);
             enrollmentScrollPane.getStyleClass().remove("pressed");
-        } else if (profileAnchorPane.isVisible()) {
-            profileAnchorPane.setVisible(false);
-            profileScrollPane.getStyleClass().remove("pressed");
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
@@ -3892,9 +3790,6 @@ public class AdminPortal1 implements Initializable {
         } else if (enrollmentAnchorPane.isVisible()) {
             enrollmentAnchorPane.setVisible(false);
             enrollmentScrollPane.getStyleClass().remove("pressed");
-        } else if (profileAnchorPane.isVisible()) {
-            profileAnchorPane.setVisible(false);
-            profileScrollPane.getStyleClass().remove("pressed");
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
@@ -3949,9 +3844,6 @@ public class AdminPortal1 implements Initializable {
         } else if (enrollmentAnchorPane.isVisible()) {
             enrollmentAnchorPane.setVisible(false);
             enrollmentScrollPane.getStyleClass().remove("pressed");
-        } else if (profileAnchorPane.isVisible()) {
-            profileAnchorPane.setVisible(false);
-            profileScrollPane.getStyleClass().remove("pressed");
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");

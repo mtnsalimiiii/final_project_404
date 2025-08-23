@@ -15,18 +15,12 @@ public class Student extends Person implements Serializable {
     private String faculty;
     private String department;
     private String major;
+    private String degree;
     private List<Semester> semesters = new ArrayList<>();
 
 
-    public String getDegree() {
-        return degree;
-    }
 
-    public void setDegree(String degree) {
-        this.degree = degree;
-    }
 
-    private String degree;
 
     public Student(String first_name, String last_name, LocalDate dateOfBirth, String nationalId, Gender gender, String phoneNumber, String id, LocalDate dateOfRegistration, String faculty, String department, String major, Status status, String degree){
         super(first_name,last_name,dateOfBirth,nationalId,gender,phoneNumber, dateOfRegistration,status);
@@ -61,6 +55,13 @@ public class Student extends Person implements Serializable {
     }
     public void setMajor(String major) {
         this.major = major;
+    }
+
+    public String getDegree() {
+        return degree;
+    }
+    public void setDegree(String degree) {
+        this.degree = degree;
     }
 
     public static void loadAllStudents() {

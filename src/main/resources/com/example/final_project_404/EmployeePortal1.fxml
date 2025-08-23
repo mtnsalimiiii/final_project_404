@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane minHeight="550.0" minWidth="800.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.EmployeePortal1">
+<AnchorPane minHeight="550.0" minWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.EmployeePortal1">
     <children>
         <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="801.0" styleClass="header" stylesheets="@EmployeePortal.css">
             <children>
@@ -34,12 +34,11 @@
                     <Button fx:id="addDegreeScrollPane" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addDegreeScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add Degree" />
                     <Button fx:id="addCourseScrollPane" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addCourseScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add Course" />
                     <Button fx:id="addCourseGroupScrollPane" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addCourseGroupScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add&#10;Course Group" textAlignment="CENTER" />
-                    <Button fx:id="professorsScrollPane" layoutX="20.0" layoutY="62.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#professorsScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Professors" />
                     <Button fx:id="registerProfessorScrollPane" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#registerProfessorScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Register New&#10;Professor" textAlignment="CENTER" />
                     <Button fx:id="updateProfessorScrollPane" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateProfessorScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Update&#10;Professor" />
-                    <Button fx:id="studentsScrollPane" layoutX="20.0" layoutY="107.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#studentsScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Students" />
                     <Button fx:id="registerStudentScrollPane" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#registerStudentScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Register New&#10;Student" textAlignment="CENTER" />
                     <Button fx:id="updateStudentScrollPane" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#updateStudentScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Update&#10;Student" />
+               <Button fx:id="addRandomStudentsScrollPane" layoutX="22.0" layoutY="808.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addRandomStudentsScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Add Random&#10;Student" textAlignment="CENTER" />
                     <Button fx:id="profileScrollPane" layoutX="20.0" layoutY="150.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#profileScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Profile" />
                     <Button fx:id="reportsScrollPane" layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#reportsScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Reports" />
                     <Button layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#signOutScrollPane" styleClass="nav-button-dashboard" stylesheets="@DashboardButton.css" text="Sign out" />
@@ -58,46 +57,36 @@
                     <children>
                         <Label fx:id="dashboardText" maxWidth="1.7976931348623157E308" prefHeight="30.0" prefWidth="698.0" styleClass="label-title" stylesheets="@EmployeePortal.css" text="welcome, Employee!">
                             <VBox.margin>
-                                <Insets bottom="20.0" />
+                                <Insets bottom="10.0" />
                             </VBox.margin>
                         </Label>
-                        <ScrollPane hbarPolicy="NEVER" prefHeight="370.0" prefWidth="760.0" vbarPolicy="AS_NEEDED">
-                            <content>
-                                <GridPane prefWidth="760.0">
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="379.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="379.0" />
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
-                                    </rowConstraints>
-                                    <children>
-                                        <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#addDegreeDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Add Degree" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                                        <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#addCourseDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Add Course" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                                        <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#addCourseGroupDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Add CourseGroup" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                        <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#professorsDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Professors" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                                        <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#registerProfessorDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Register New Professor" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                                        <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#updateProfessorDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Update Professor" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                                        <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#studentsDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Students" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                                        <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#registerStudentDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Register New Student" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                                        <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#updateStudentDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Update Student" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-                                        <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#reportsDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Reports" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-                                        <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#profileDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Profile" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-                                        <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#signOutDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Sign out" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-                                        <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#addRandomStudentsDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Add Random Students" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
-                                    </children>
-                                </GridPane>
-                            </content>
-                        </ScrollPane>
+                          <GridPane prefWidth="760.0">
+                              <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="379.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="379.0" />
+                              </columnConstraints>
+                              <rowConstraints>
+                                  <RowConstraints minHeight="50.0" percentHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="50.0" percentHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="50.0" percentHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="50.0" percentHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="50.0" percentHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="50.0" percentHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                              </rowConstraints>
+                              <children>
+                                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#addDegreeDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Add Degree" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#addCourseDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Add Course" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#addCourseGroupDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Add CourseGroup" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#registerProfessorDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Register New Professor" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#updateProfessorDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Update Professor" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#registerStudentDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Register New Student" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#updateStudentDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Update Student" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#addRandomStudentsDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Add Random Students" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#profileDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Profile" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#reportsDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Reports" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#signOutDashboard" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Sign out" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
+                              </children>
+                          </GridPane>
                     </children>
                 </VBox>
             </children>
@@ -134,32 +123,45 @@
         </AnchorPane>
         <AnchorPane fx:id="addCourseAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false">
             <children>
-                <GridPane prefHeight="260.0" prefWidth="610.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="586.399951171875" minWidth="10.0" prefWidth="370.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="246.4000244140625" minWidth="10.0" prefWidth="231.59996337890624" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="50.0" minHeight="10.0" percentHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                    <children>
-                        <ComboBox fx:id="majorChooserAddCourse" maxWidth="1.7976931348623157E308" promptText="Major" stylesheets="@comboBoxStyle.css" />
-                        <Label fx:id="errorLabelMajorAddCourse" alignment="CENTER_RIGHT" layoutX="414.0" layoutY="82.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                        <ComboBox fx:id="degreeChooserAddCourse" maxWidth="1.7976931348623157E308" promptText="Degree" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="1" />
-                        <Label fx:id="errorLabelDegreeAddCourse" alignment="CENTER_RIGHT" layoutX="414.0" layoutY="145.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                        <TextField fx:id="courseNameAddCourse" maxWidth="1.7976931348623157E308" promptText="Name" stylesheets="@EmployeePortal.css" GridPane.rowIndex="2" />
-                        <Label fx:id="errorLabelNameAddCourse" alignment="CENTER_RIGHT" layoutX="414.0" layoutY="145.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                        <TextField fx:id="courseCreditAddCourse" maxWidth="1.7976931348623157E308" promptText="Credit" stylesheets="@EmployeePortal.css" GridPane.rowIndex="3" />
-                        <Label fx:id="errorLabelCreditAddCourse" alignment="CENTER_RIGHT" layoutX="414.0" layoutY="145.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-                        <Button fx:id="addCourseButton" mnemonicParsing="false" onAction="#addCourse" stylesheets="@EmployeePortal.css" text="Add" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-                        <Label fx:id="errorLabelAddCourse" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
-                        <Label fx:id="successfulLabelAddCourse" alignment="CENTER" layoutX="385.0" layoutY="227.0" prefHeight="30.0" prefWidth="220.0" styleClass="success-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                    </children>
-                </GridPane>
+            <VBox layoutX="20.0" layoutY="20.0" prefHeight="470.4" prefWidth="630.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                      <GridPane>
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="586.399951171875" minWidth="10.0" prefWidth="370.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="246.4000244140625" minWidth="10.0" prefWidth="231.59996337890624" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                          <children>
+                              <ComboBox fx:id="majorChooserAddCourse" maxWidth="1.7976931348623157E308" promptText="Major" stylesheets="@comboBoxStyle.css" />
+                              <Label fx:id="errorLabelMajorAddCourse" alignment="CENTER_RIGHT" layoutX="414.0" layoutY="82.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER" />
+                              <ComboBox fx:id="degreeChooserAddCourse" maxWidth="1.7976931348623157E308" promptText="Degree" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="1" />
+                              <Label fx:id="errorLabelDegreeAddCourse" alignment="CENTER_RIGHT" layoutX="414.0" layoutY="145.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                              <TextField fx:id="courseNameAddCourse" maxWidth="1.7976931348623157E308" promptText="Name" stylesheets="@EmployeePortal.css" GridPane.rowIndex="2" />
+                              <Label fx:id="errorLabelNameAddCourse" alignment="CENTER_RIGHT" layoutX="414.0" layoutY="145.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                              <TextField fx:id="courseCreditAddCourse" maxWidth="1.7976931348623157E308" promptText="Credit" stylesheets="@EmployeePortal.css" GridPane.rowIndex="3" />
+                              <Label fx:id="errorLabelCreditAddCourse" alignment="CENTER_RIGHT" layoutX="414.0" layoutY="145.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+                          </children>
+                      </GridPane>
+                  <Group>
+                     <children>
+                        <Button fx:id="addCourseButton" mnemonicParsing="false" onAction="#addCourse" stylesheets="@EmployeePortal.css" text="Add" />
+                        <Label fx:id="errorLabelAddCourse" alignment="CENTER_RIGHT" layoutX="85.0" prefWidth="515.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" />
+                        <Label fx:id="successfulLabelAddCourse" alignment="CENTER" layoutX="85.0" prefWidth="515.0" styleClass="success-label" stylesheets="@ErrorAndSuccessfulLabel.css" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </Group>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </VBox>
             </children>
         </AnchorPane>
         <AnchorPane fx:id="addCourseGroupAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false">
@@ -168,8 +170,8 @@
                     <children>
                         <GridPane alignment="CENTER">
                             <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="370.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="230.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="0.0" prefWidth="370.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="0.0" prefWidth="230.0" />
                             </columnConstraints>
                             <rowConstraints>
                                 <RowConstraints minHeight="10.0" prefHeight="50.0" vgrow="SOMETIMES" />
@@ -188,14 +190,11 @@
                                 <Label fx:id="errorLabelCourseAddCourseGroup" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="36.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
                                 <ComboBox fx:id="professorChooserAddCourseGroup" maxWidth="1.7976931348623157E308" promptText="Professor" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="3" />
                                 <Label fx:id="errorLabelProfessorAddCourseGroup" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="36.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                                <ComboBox fx:id="semasterChooserAddCourseGroup" maxWidth="1.7976931348623157E308" promptText="Semaster" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="4" />
+                                <ComboBox fx:id="semasterChooserAddCourseGroup" maxWidth="1.7976931348623157E308" promptText="Semester" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="4" />
                                 <Label fx:id="errorLabelSemasterAddCourseGroup" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="36.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
                                 <TextField fx:id="capacityAddCourseGroup" maxWidth="1.7976931348623157E308" promptText="Capacity" stylesheets="@EmployeePortal.css" GridPane.rowIndex="5" />
                                 <Label fx:id="errorLabelCapacityAddCourseGroup" alignment="CENTER_RIGHT" layoutX="396.0" layoutY="237.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
                             </children>
-                            <padding>
-                                <Insets left="15.0" right="15.0" top="15.0" />
-                            </padding>
                         </GridPane>
                         <Group>
                             <children>
@@ -204,96 +203,70 @@
                                         <Insets left="15.0" right="15.0" />
                                     </padding>
                                 </Button>
-                                <Label fx:id="errorLabelAddCourseGroup" alignment="CENTER_RIGHT" layoutX="300.0" prefHeight="30.0" prefWidth="300.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" />
-                                <Label fx:id="successLabelAddCourseGroup" alignment="CENTER_RIGHT" layoutX="300.0" prefHeight="30.0" prefWidth="300.0" styleClass="success-label" stylesheets="@ErrorAndSuccessfulLabel.css" />
+                                <Label fx:id="errorLabelAddCourseGroup" alignment="CENTER_RIGHT" layoutX="85.0" prefWidth="515.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" />
+                                <Label fx:id="successLabelAddCourseGroup" alignment="CENTER_RIGHT" layoutX="85.0" prefWidth="515.0" styleClass="success-label" stylesheets="@ErrorAndSuccessfulLabel.css" />
                             </children>
                             <VBox.margin>
-                                <Insets left="15.0" right="15.0" top="20.0" />
+                                <Insets top="20.0" />
                             </VBox.margin>
                         </Group>
                     </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
                 </VBox>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="professorsAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false" AnchorPane.leftAnchor="170.0">
-            <children>
-                <ComboBox fx:id="topicChooserProfessors" layoutX="164.0" layoutY="14.0" onAction="#setTopicChooserProfessors" prefWidth="300.0" promptText="what topic do you want search:" stylesheets="@comboBoxStyle.css" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="0.0" />
-                <TextField fx:id="searchBoxProfessors" layoutX="19.0" layoutY="67.0" onAction="#setSearchBoxProfessors" prefHeight="26.0" prefWidth="540.0" visible="false" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="45.0" />
-                <ScrollPane layoutX="60.0" layoutY="113.0" prefHeight="350.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0">
-                    <content>
-                        <TableView fx:id="professorsTableview" stylesheets="@TableViewStyle.css">
-                            <columns>
-                                <TableColumn fx:id="rowNumberTableviewProfessors" editable="false" prefWidth="60.0" resizable="false" text="Number" />
-                                <TableColumn fx:id="nameTableviewProfessors" editable="false" prefWidth="240.0" resizable="false" text="Name">
-                                    <columns>
-                                        <TableColumn fx:id="firstNameTableviewProfessors" editable="false" prefWidth="120.0" resizable="false" text="First Name" />
-                                        <TableColumn fx:id="lastNameTableviewProfessors" editable="false" prefWidth="120.0" resizable="false" text="Last Name" />
-                                    </columns>
-                                </TableColumn>
-                                <TableColumn fx:id="ageTableviewProfessors" editable="false" prefWidth="50.0" resizable="false" text="Age" />
-                                <TableColumn fx:id="genderTableviewProfessors" editable="false" prefWidth="75.0" resizable="false" text="Gender" />
-                                <TableColumn fx:id="phoneTableviewProfessors" editable="false" prefWidth="100.0" resizable="false" text="Phone Number" />
-                                <TableColumn fx:id="nationalIdTableviewProfessors" editable="false" prefWidth="100.0" resizable="false" text="National ID" />
-                                <TableColumn fx:id="professorIdTableviewProfessors" editable="false" prefWidth="75.0" resizable="false" text="Professor ID" />
-                                <TableColumn fx:id="dateOfJoinTableviewProfessors" editable="false" prefWidth="100.0" resizable="false" text="Date of&#10;Registration" />
-                                <TableColumn fx:id="facultyTableviewProfessors" editable="false" prefWidth="100.0" resizable="false" text="Facullty" />
-                                <TableColumn fx:id="departmentTableviewProfessors" editable="false" prefWidth="100.0" resizable="false" text="Department" />
-                                <TableColumn fx:id="majorTableviewProfessors" editable="false" prefWidth="100.0" resizable="false" text="Major" />
-                            </columns>
-                        </TableView>
-                    </content>
-                </ScrollPane>
-                <ComboBox fx:id="itemChooserProfessors" layoutX="183.0" layoutY="64.0" onAction="#setItemChooserProfessors" prefHeight="38.0" prefWidth="261.0" stylesheets="@comboBoxStyle.css" visible="false" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="45.0" />
-                <DatePicker fx:id="primaryDateProfessors" layoutX="148.0" layoutY="71.0" onAction="#setPrimaryDateProfessors" visible="false" AnchorPane.leftAnchor="95.0" AnchorPane.rightAnchor="340.0" AnchorPane.topAnchor="45.0" />
-                <DatePicker fx:id="secondaryDateProfessors" layoutX="363.0" layoutY="71.0" onAction="#setSecondaryDateProfessors" visible="false" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="95.0" AnchorPane.topAnchor="45.0" />
-            </children>
-            <padding>
-                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-            </padding>
-        </AnchorPane>
         <AnchorPane fx:id="registerProfessorAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false">
             <children>
-                <GridPane>
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="370.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="0.0" prefWidth="230.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                    <children>
-                        <TextField fx:id="firstNameRegisterProfessor" prefWidth="370.0" promptText="First Name" stylesheets="@EmployeePortal.css" />
-                        <Label fx:id="errorLabelFirstNameRegisterProfessor" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
-                        <TextField fx:id="lastNameRegisterProfessor" prefWidth="370.0" promptText="Last Name" stylesheets="@EmployeePortal.css" GridPane.rowIndex="1" />
-                        <Label fx:id="errorLabelLastNameRegisterProfessor" alignment="CENTER_RIGHT" layoutX="396.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                        <TextField fx:id="nationalIdRegisterProfessor" prefWidth="370.0" promptText="National ID" stylesheets="@EmployeePortal.css" GridPane.rowIndex="2" />
-                        <Label fx:id="errorLabelNationalIdRegisterProfessor" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                        <TextField fx:id="phoneNumberRegisterProfessor" prefWidth="370.0" promptText="Phone Number" stylesheets="@EmployeePortal.css" GridPane.rowIndex="3" />
-                        <Label fx:id="errorLabelPhoneRegisterProfessor" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                        <ComboBox fx:id="genderChooserRegisterProfessor" prefWidth="370.0" promptText="Gender" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="4" />
-                        <Label fx:id="errorLabelGenderRegisterProfessor" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
-                        <DatePicker fx:id="dateOfBirthRegisterProfessor" prefWidth="370.0" promptText="Date of Birth" stylesheets="@EmployeePortal.css" GridPane.rowIndex="5" />
-                        <Label fx:id="errorLabelDateOfBirthRegisterProfessor" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
-                        <ComboBox fx:id="majorChooserRegisterProfessor" prefWidth="370.0" promptText="Major" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="6" />
-                        <Label fx:id="errorLabelMajorRegisterProfessor" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
-                    </children>
-                    <padding>
-                        <Insets left="15.0" right="15.0" top="15.0" />
-                    </padding>
-                </GridPane>
-                <Group layoutX="15.0" layoutY="320.0">
-                    <children>
-                        <Button fx:id="addProfessorButton" mnemonicParsing="false" onAction="#addProfessor" stylesheets="@EmployeePortal.css" text="Register" />
-                        <Label fx:id="errorLabelRegisterProfessor" alignment="CENTER_RIGHT" layoutX="100.0" layoutY="3.0" prefHeight="30.0" prefWidth="495.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" />
-                        <Label fx:id="successLabelRegisterProfessor" alignment="CENTER_RIGHT" layoutX="105.0" prefHeight="30.0" prefWidth="495.0" styleClass="success-label" stylesheets="@ErrorAndSuccessfulLabel.css" />
-                    </children>
-                </Group>
+            <VBox>
+               <children>
+                      <GridPane>
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="370.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="0.0" prefWidth="230.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                          <children>
+                              <TextField fx:id="firstNameRegisterProfessor" prefWidth="370.0" promptText="First Name" stylesheets="@EmployeePortal.css" />
+                              <Label fx:id="errorLabelFirstNameRegisterProfessor" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                              <TextField fx:id="lastNameRegisterProfessor" prefWidth="370.0" promptText="Last Name" stylesheets="@EmployeePortal.css" GridPane.rowIndex="1" />
+                              <Label fx:id="errorLabelLastNameRegisterProfessor" alignment="CENTER_RIGHT" layoutX="396.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                              <TextField fx:id="nationalIdRegisterProfessor" prefWidth="370.0" promptText="National ID" stylesheets="@EmployeePortal.css" GridPane.rowIndex="2" />
+                              <Label fx:id="errorLabelNationalIdRegisterProfessor" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                              <TextField fx:id="phoneNumberRegisterProfessor" prefWidth="370.0" promptText="Phone Number" stylesheets="@EmployeePortal.css" GridPane.rowIndex="3" />
+                              <Label fx:id="errorLabelPhoneRegisterProfessor" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                              <ComboBox fx:id="genderChooserRegisterProfessor" prefWidth="370.0" promptText="Gender" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="4" />
+                              <Label fx:id="errorLabelGenderRegisterProfessor" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+                              <DatePicker fx:id="dateOfBirthRegisterProfessor" prefWidth="370.0" promptText="Date of Birth" stylesheets="@EmployeePortal.css" GridPane.rowIndex="5" />
+                              <Label fx:id="errorLabelDateOfBirthRegisterProfessor" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+                              <ComboBox fx:id="majorChooserRegisterProfessor" prefWidth="370.0" promptText="Major" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="6" />
+                              <Label fx:id="errorLabelMajorRegisterProfessor" alignment="CENTER_RIGHT" layoutX="25.0" layoutY="30.0" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+                          </children>
+                      </GridPane>
+                      <Group>
+                          <children>
+                              <Button fx:id="addProfessorButton" mnemonicParsing="false" onAction="#addProfessor" stylesheets="@EmployeePortal.css" text="Register" />
+                              <Label fx:id="errorLabelRegisterProfessor" alignment="CENTER_RIGHT" layoutX="105.0" prefWidth="495.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" />
+                              <Label fx:id="successLabelRegisterProfessor" alignment="CENTER_RIGHT" layoutX="105.0" prefWidth="495.0" styleClass="success-label" stylesheets="@ErrorAndSuccessfulLabel.css" />
+                          </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                      </Group>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </VBox>
             </children>
         </AnchorPane>
         <AnchorPane fx:id="updateProfessorAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: #7b7b7b;" visible="false">
@@ -396,91 +369,59 @@
                 </VBox>
             </children>
         </AnchorPane>
-        <AnchorPane fx:id="studentsAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false" AnchorPane.leftAnchor="170.0">
+        <AnchorPane fx:id="registerStudentAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false">
             <children>
-                <ComboBox fx:id="topicChooserStudents" layoutX="164.0" layoutY="14.0" onAction="#setTopicChooserStudents" prefWidth="300.0" promptText="what topic do you want search:" stylesheets="@comboBoxStyle.css" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="0.0" />
-                <TextField fx:id="searchBoxStudents" layoutX="19.0" layoutY="67.0" onAction="#setSearchBoxStudents" prefHeight="26.0" prefWidth="540.0" visible="false" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="50.0" />
-                <ScrollPane layoutX="60.0" layoutY="113.0" prefHeight="350.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="90.0">
-                    <content>
-                        <TableView fx:id="studetnsTableview" stylesheets="@TableViewStyle.css">
-                            <columns>
-                                <TableColumn fx:id="rowNumberTableviewStudents" editable="false" prefWidth="60.0" resizable="false" text="Number" />
-                                <TableColumn fx:id="nameTableviewStudents" editable="false" prefWidth="240.0" resizable="false" text="Name">
-                                    <columns>
-                                        <TableColumn fx:id="firstNameTableviewStudents" editable="false" prefWidth="120.0" resizable="false" text="First Name" />
-                                        <TableColumn fx:id="lastNameTableviewStudents" editable="false" prefWidth="120.0" resizable="false" text="Last Name" />
-                                    </columns>
-                                </TableColumn>
-                                <TableColumn fx:id="ageTableviewStudents" editable="false" prefWidth="50.0" resizable="false" text="Age" />
-                                <TableColumn fx:id="genderTableviewStudents" editable="false" prefWidth="75.0" resizable="false" text="Gender" />
-                                <TableColumn fx:id="phoneTableviewStudents" editable="false" prefWidth="100.0" resizable="false" text="Phone Number" />
-                                <TableColumn fx:id="nationalIdTableviewStudents" editable="false" prefWidth="100.0" resizable="false" text="National ID" />
-                                <TableColumn fx:id="studentIdTableviewStudents" editable="false" prefWidth="75.0" resizable="false" text="Student ID" />
-                                <TableColumn fx:id="dateOfJoinTableviewStudents" editable="false" prefWidth="100.0" resizable="false" text="Date of&#10;Registration" />
-                                <TableColumn fx:id="facultyTableviewStudents" editable="false" prefWidth="100.0" resizable="false" text="Facullty" />
-                                <TableColumn fx:id="departmentTableviewStudents" editable="false" prefWidth="100.0" resizable="false" text="Department" />
-                                <TableColumn fx:id="majorTableviewStudents" editable="false" prefWidth="100.0" resizable="false" text="Major" />
-                            </columns>
-                        </TableView>
-                    </content>
-                </ScrollPane>
-                <ComboBox fx:id="itemChooserStudents" layoutX="183.0" layoutY="64.0" onAction="#setItemChooserStudents" prefHeight="38.0" prefWidth="261.0" stylesheets="@comboBoxStyle.css" visible="false" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="150.0" />
-                <DatePicker fx:id="primaryDateStudents" layoutX="148.0" layoutY="71.0" onAction="#setPrimaryDateStudents" visible="false" AnchorPane.leftAnchor="95.0" AnchorPane.rightAnchor="340.0" />
-                <DatePicker fx:id="secondaryDateStudents" layoutX="363.0" layoutY="71.0" onAction="#setSecondaryDateStudents" visible="false" AnchorPane.leftAnchor="340.0" AnchorPane.rightAnchor="95.0" />
-            </children>
-            <padding>
-                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-            </padding>
-        </AnchorPane>
-        <AnchorPane fx:id="registerStudentAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" visible="false">
-            <children>
-                <GridPane prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="370.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="230.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                    <children>
-                        <TextField fx:id="firstNameRegisterStudent" prefWidth="370.0" promptText="First Name" stylesheets="@EmployeePortal.css" />
-                        <Label fx:id="errorLabelFirstNameRegisterStudent" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
-                        <TextField fx:id="lastNameRegisterStudent" prefWidth="370.0" promptText="Last Name" stylesheets="@EmployeePortal.css" GridPane.rowIndex="1" />
-                        <Label fx:id="errorLabelLastNameRegisterStudent" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                        <TextField fx:id="nationalIdRegisterStudent" prefWidth="370.0" promptText="National ID" stylesheets="@EmployeePortal.css" GridPane.rowIndex="2" />
-                        <Label fx:id="errorLabelNationalIdRegisterStudent" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-                        <TextField fx:id="phoneNumberRegisterStudent" prefWidth="370.0" promptText="Phone Number" stylesheets="@EmployeePortal.css" GridPane.rowIndex="3" />
-                        <Label fx:id="errorLabelPhoneRegisterStudent" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
-                        <ComboBox fx:id="genderChooserRegisterStudent" prefWidth="370.0" promptText="Gender" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="4" />
-                        <Label fx:id="errorLabelGenderRegisterStudent" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
-                        <DatePicker fx:id="dateOfBirthRegisterStudent" prefWidth="370.0" promptText="Date of Birth" stylesheets="@EmployeePortal.css" GridPane.rowIndex="5" />
-                        <Label fx:id="errorLabelDateOfBirthRegisterStudent" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
-                        <ComboBox fx:id="facultyChooserRegisterStudent" prefWidth="370.0" promptText="Faculty" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="6" />
-                        <Label fx:id="errorLabelFacultyRegisterStudent" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
-                        <ComboBox fx:id="departmentChooserRegisterStudent" prefWidth="370.0" promptText="Department" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="7" />
-                        <Label fx:id="errorLabelDepartmentRegisterStudent" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
-                        <ComboBox fx:id="majorChooserRegisterStudent" prefWidth="370.0" promptText="Major" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="8" />
-                        <Label fx:id="errorLabelMajorRegisterStudent" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="8" />
-                        <ComboBox fx:id="degreeChooserRegisterStudent" prefWidth="370.0" promptText="Degree" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="9" />
-                        <Label fx:id="errorLabelDegreeRegisterStudent" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="9" />
-                        <Button fx:id="addStudentButton" mnemonicParsing="false" onAction="#addStudent" stylesheets="@EmployeePortal.css" text="Register" GridPane.rowIndex="10" />
-                        <Label fx:id="errorLabelRegisterStudent" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="10" />
-                        <Label fx:id="successLabelRegisterStudent" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="success-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="10" />
-                    </children>
-                    <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                    </padding>
-                </GridPane>
+            <VBox>
+               <children>
+                      <GridPane>
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="370.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="230.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="35.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="45.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                          <children>
+                              <TextField fx:id="firstNameRegisterStudent" prefWidth="370.0" promptText="First Name" stylesheets="@EmployeePortal.css" />
+                              <Label fx:id="errorLabelFirstNameRegisterStudent" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                              <TextField fx:id="lastNameRegisterStudent" prefWidth="370.0" promptText="Last Name" stylesheets="@EmployeePortal.css" GridPane.rowIndex="1" />
+                              <Label fx:id="errorLabelLastNameRegisterStudent" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                              <TextField fx:id="nationalIdRegisterStudent" prefWidth="370.0" promptText="National ID" stylesheets="@EmployeePortal.css" GridPane.rowIndex="2" />
+                              <Label fx:id="errorLabelNationalIdRegisterStudent" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                              <TextField fx:id="phoneNumberRegisterStudent" prefWidth="370.0" promptText="Phone Number" stylesheets="@EmployeePortal.css" GridPane.rowIndex="3" />
+                              <Label fx:id="errorLabelPhoneRegisterStudent" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
+                              <ComboBox fx:id="genderChooserRegisterStudent" prefWidth="370.0" promptText="Gender" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="4" />
+                              <Label fx:id="errorLabelGenderRegisterStudent" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+                              <DatePicker fx:id="dateOfBirthRegisterStudent" prefWidth="370.0" promptText="Date of Birth" stylesheets="@EmployeePortal.css" GridPane.rowIndex="5" />
+                              <Label fx:id="errorLabelDateOfBirthRegisterStudent" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+                              <ComboBox fx:id="majorChooserRegisterStudent" prefWidth="370.0" promptText="Major" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="6" />
+                              <Label fx:id="errorLabelMajorRegisterStudent" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+                              <ComboBox fx:id="degreeChooserRegisterStudent" prefWidth="370.0" promptText="Degree" stylesheets="@comboBoxStyle.css" GridPane.rowIndex="7" />
+                              <Label fx:id="errorLabelDegreeRegisterStudent" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
+                          </children>
+                      </GridPane>
+                  <Group>
+                     <children>
+                              <Button fx:id="addStudentButton" mnemonicParsing="false" onAction="#addStudent" stylesheets="@EmployeePortal.css" text="Register" />
+                              <Label fx:id="errorLabelRegisterStudent" alignment="CENTER_RIGHT" layoutX="105.0" prefWidth="495.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" />
+                              <Label fx:id="successLabelRegisterStudent" alignment="CENTER_RIGHT" layoutX="105.0" prefWidth="495.0" styleClass="success-label" stylesheets="@ErrorAndSuccessfulLabel.css" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Group>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </VBox>
             </children>
         </AnchorPane>
         <AnchorPane fx:id="updateStudentAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: #7b7b7b;" visible="false">
@@ -591,54 +532,105 @@
                 </VBox>
             </children>
         </AnchorPane>
+        <AnchorPane fx:id="addRandomStudentsAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false">
+            <children>
+            <VBox>
+               <children>
+                      <GridPane>
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="370.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="230.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                              <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                          <children>
+                              <TextField fx:id="numberOfRandomStudents" prefWidth="370.0" promptText="Number of Students to Add" />
+                              <Label fx:id="errorLabelNumberOfRandomStudents" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                          </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                      </GridPane>
+                  <Group>
+                     <children>
+                        <Button mnemonicParsing="false" onAction="#addRandomStudents" text="Add Random Students" />
+                        <Label fx:id="errorLabelAddRandomStudents" alignment="CENTER_RIGHT" layoutX="180.0" prefWidth="410.0" styleClass="error-label" />
+                        <Label fx:id="successLabelAddRandomStudents" alignment="CENTER_RIGHT" layoutX="180.0" prefWidth="410.0" styleClass="success-label" />
+                     </children>
+                  </Group>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </VBox>
+            </children>
+            <stylesheets>
+                <URL value="@EmployeePortal.css" />
+                <URL value="@comboBoxStyle.css" />
+            <URL value="@ErrorAndSuccessfulLabel.css" />
+            </stylesheets>
+        </AnchorPane>
         <AnchorPane fx:id="profileAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" visible="false">
             <children>
                 <VBox prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" stylesheets="@EmployeePortal.css">
                     <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                     </padding>
                     <children>
-                        <GridPane alignment="CENTER_LEFT" prefHeight="378.0" prefWidth="618.0">
+                        <GridPane alignment="CENTER_LEFT">
                             <columnConstraints>
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="504.0000457763672" minWidth="0.0" percentWidth="0.0" prefWidth="100.0" />
-                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="588.0" minWidth="10.0" prefWidth="274.1999877929687" />
-                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="588.0" minWidth="10.0" prefWidth="216.60001220703123" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="0.0" percentWidth="0.0" prefWidth="100.0" />
+                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="0.0" prefWidth="280.0" />
+                                <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" percentWidth="0.0" prefWidth="220.0" />
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-                                <RowConstraints maxHeight="108.0" minHeight="48.99998779296874" prefHeight="48.99998779296874" vgrow="SOMETIMES" />
-                                <RowConstraints percentHeight="0.0" vgrow="SOMETIMES" />
+                                <RowConstraints percentHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                <RowConstraints percentHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                <RowConstraints percentHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                <RowConstraints percentHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                                <RowConstraints percentHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
+                                <RowConstraints percentHeight="0.0" prefHeight="50.0" vgrow="SOMETIMES" />
                             </rowConstraints>
                             <children>
                                 <Label prefWidth="120.0" style="-fx-text-fill: BLACK; -fx-font-weight: bold;" stylesheets="@EmployeePortal.css" text="FIRST NAME" />
-                                <Label layoutX="10.0" layoutY="36.0" prefWidth="120.0" style="-fx-text-fill: BLACK; -fx-font-weight: bold;" stylesheets="@EmployeePortal.css" text="LAST NAME" GridPane.rowIndex="1" />
-                                <Label layoutX="10.0" layoutY="150.0" prefWidth="120.0" style="-fx-text-fill: BLACK; -fx-font-weight: bold;" stylesheets="@EmployeePortal.css" text="DATE OF BIRTH" GridPane.rowIndex="2" />
-                                <Label contentDisplay="TOP" layoutX="10.0" layoutY="35.0" prefWidth="120.0" style="-fx-text-fill: BLACK; -fx-font-weight: bold;" stylesheets="@EmployeePortal.css" text="GENDER" GridPane.rowIndex="3" />
-                                <Label layoutX="10.0" layoutY="35.0" prefWidth="120.0" style="-fx-text-fill: BLACK; -fx-font-weight: bold;" stylesheets="@EmployeePortal.css" text="PHONE NUMBER" GridPane.rowIndex="4" />
-                                <Label layoutX="10.0" layoutY="35.0" prefWidth="120.0" style="-fx-text-fill: BLACK; -fx-font-weight: bold;" stylesheets="@EmployeePortal.css" text="NATIONAL ID" GridPane.rowIndex="5" />
-                                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#changeProfile" text="Submit" GridPane.halignment="LEFT" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" />
+                                <Label layoutX="10.0" layoutY="36.0" prefWidth="120.0" style="-fx-text-fill: BLACK; -fx-font-weight: bold;" text="LAST NAME" GridPane.rowIndex="1" />
+                                <Label layoutX="10.0" layoutY="150.0" prefWidth="120.0" style="-fx-text-fill: BLACK; -fx-font-weight: bold;" text="DATE OF BIRTH" GridPane.rowIndex="2" />
+                                <Label contentDisplay="TOP" layoutX="10.0" layoutY="35.0" prefWidth="120.0" style="-fx-text-fill: BLACK; -fx-font-weight: bold;" text="GENDER" GridPane.rowIndex="3" />
+                                <Label layoutX="10.0" layoutY="35.0" prefWidth="120.0" style="-fx-text-fill: BLACK; -fx-font-weight: bold;" text="PHONE NUMBER" GridPane.rowIndex="4" />
+                                <Label layoutX="10.0" layoutY="35.0" prefWidth="120.0" style="-fx-text-fill: BLACK; -fx-font-weight: bold;" text="NATIONAL ID" GridPane.rowIndex="5" />
                                 <TextField fx:id="newFirstNameProfile" maxWidth="300.0" GridPane.columnIndex="1" />
                                 <TextField fx:id="newLastNameProfile" layoutX="130.0" layoutY="25.0" maxWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                 <DatePicker fx:id="newDateOfBirthProfile" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                 <ComboBox fx:id="newGenderProfile" prefWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                 <TextField fx:id="newPhoneNumberProfile" layoutX="130.0" layoutY="78.0" maxWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                 <TextField fx:id="newNationalIdProfile" layoutX="130.0" layoutY="248.0" maxWidth="300.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                <Label fx:id="errorLabelFirstnameProfile" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="200.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="2" />
-                                <Label fx:id="errorLabelLastnameProfile" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="200.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                <Label fx:id="errorLabelBirthDateProfile" alignment="CENTER_RIGHT" layoutY="77.0" prefHeight="30.0" prefWidth="200.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                                <Label fx:id="errorLabelPhoneProfile" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="200.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                                <Label fx:id="errorLabelNationalIdProfile" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="200.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                                <Label fx:id="errorLabelGenderProfile" alignment="CENTER_RIGHT" layoutX="392.0" layoutY="121.0" prefHeight="30.0" prefWidth="200.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                                <Label fx:id="errorLabelFirstnameProfile" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="200.0" styleClass="error-label" GridPane.columnIndex="2" GridPane.halignment="RIGHT" />
+                                <Label fx:id="errorLabelLastnameProfile" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="200.0" styleClass="error-label" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                                <Label fx:id="errorLabelBirthDateProfile" alignment="CENTER_RIGHT" layoutY="77.0" prefHeight="30.0" prefWidth="200.0" styleClass="error-label" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+                                <Label fx:id="errorLabelPhoneProfile" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="200.0" styleClass="error-label" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+                                <Label fx:id="errorLabelNationalIdProfile" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="200.0" styleClass="error-label" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="5" />
+                                <Label fx:id="errorLabelGenderProfile" alignment="CENTER_RIGHT" layoutX="392.0" layoutY="121.0" prefHeight="30.0" prefWidth="200.0" styleClass="error-label" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" />
                             </children>
                         </GridPane>
+                        <Group>
+                            <children>
+                                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#changeProfile" text="Submit" />
+                                <Label fx:id="errorLabelProfile" alignment="CENTER_RIGHT" layoutX="105.0" prefWidth="495.0" styleClass="error-label" />
+                                <Label fx:id="successLabelProfile" alignment="CENTER_RIGHT" layoutX="105.0" prefWidth="495.0" styleClass="success-label" />
+                            </children>
+                     <VBox.margin>
+                        <Insets top="30.0" />
+                     </VBox.margin>
+                        </Group>
                     </children>
                 </VBox>
             </children>
+            <stylesheets>
+                <URL value="@EmployeePortal.css" />
+                <URL value="@ErrorAndSuccessfulLabel.css" />
+                <URL value="@comboBoxStyle.css" />
+            </stylesheets>
         </AnchorPane>
         <AnchorPane fx:id="reportsAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" visible="false">
             <children>
@@ -754,33 +746,6 @@
                 <AnchorPane fx:id="degreeReportAnchorPane" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false" />
                 <AnchorPane fx:id="semesterReportAnchorPane" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false" />
             </children>
-        </AnchorPane>
-        <AnchorPane fx:id="addRandomStudentsAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false">
-            <children>
-                <GridPane prefHeight="470.0" prefWidth="630.0">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="370.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="230.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
-                    <children>
-                        <TextField fx:id="numberOfStudents" prefWidth="370.0" promptText="Number of Students to Add" stylesheets="@EmployeePortal.css" />
-                        <Label fx:id="errorLabelNumberOfStudents" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="error-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
-                        <Button fx:id="addRandomStudentsButton" mnemonicParsing="false" onAction="#addRandomStudents" stylesheets="@EmployeePortal.css" text="Add Random Students" GridPane.rowIndex="1" />
-                        <Label fx:id="successLabelAddRandomStudents" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="220.0" styleClass="success-label" stylesheets="@ErrorAndSuccessfulLabel.css" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-                    </children>
-                    <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                    </padding>
-                </GridPane>
-            </children>
-            <stylesheets>
-                <URL value="@EmployeePortal.css" />
-                <URL value="@comboBoxStyle.css" />
-            </stylesheets>
         </AnchorPane>
     </children>
 </AnchorPane>
