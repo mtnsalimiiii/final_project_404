@@ -18,7 +18,7 @@
         <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0" styleClass="header" stylesheets="@EmployeePortal.css">
             <children>
                 <Label styleClass="header-title" text="Student Portal" />
-                <Label styleClass="header-title" text=" --&gt; Course Registration" />
+                <Label styleClass="header-title" text=" --> Course Registration" />
             </children>
         </HBox>
 
@@ -50,36 +50,60 @@
 
             <!-- ComboBox & Search -->
             <HBox spacing="10">
-                <ComboBox fx:id="semesterComboBox" prefWidth="200.0" promptText="Select Semester" />
-                <Button onAction="#searchCourses" text="Search" />
+                <ComboBox fx:id="semesterComboBox" prefWidth="200.0" promptText="انتخاب ترم" />
+                <Button onAction="#searchCourses" text="جستجو" />
             </HBox>
 
-            <!-- Courses Table -->
-            <TableView fx:id="coursesTableView" prefHeight="300.0" prefWidth="590.0" stylesheets="@TableViewStyle.css">
+            <!-- Available Course Groups Table -->
+            <Label style="-fx-font-weight: bold;" text="گروه‌های درسی موجود" />
+            <TableView fx:id="coursesTableView" prefHeight="150.0" prefWidth="590.0" stylesheets="@TableViewStyle.css">
                 <columns>
-                    <TableColumn fx:id="selectCol" prefWidth="60.0" text="Select" />
-                    <TableColumn fx:id="courseCodeCol" prefWidth="100.0" text="Course Code">
+                    <TableColumn fx:id="selectCol" prefWidth="60.0" text="انتخاب" />
+                    <TableColumn fx:id="courseCodeCol" prefWidth="100.0" text="کد درس">
                         <cellValueFactory><PropertyValueFactory property="courseCode" /></cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="courseNameCol" prefWidth="200.0" text="Course Name">
+                    <TableColumn fx:id="courseNameCol" prefWidth="200.0" text="نام درس">
                         <cellValueFactory><PropertyValueFactory property="courseName" /></cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="creditsCol" prefWidth="70.0" text="Credits">
+                    <TableColumn fx:id="creditsCol" prefWidth="70.0" text="واحدها">
                         <cellValueFactory><PropertyValueFactory property="credits" /></cellValueFactory>
                     </TableColumn>
-                    <TableColumn fx:id="scheduleCol" prefWidth="150.0" text="Schedule">
+                    <TableColumn fx:id="scheduleCol" prefWidth="150.0" text="برنامه">
                         <cellValueFactory><PropertyValueFactory property="schedule" /></cellValueFactory>
                     </TableColumn>
                 </columns>
                 <VBox.margin>
-                    <Insets top="15.0" />
+                    <Insets top="10.0" bottom="15.0" />
+                </VBox.margin>
+            </TableView>
+
+            <!-- Enrolled Course Groups Table -->
+            <Label style="-fx-font-weight: bold;" text="گروه‌های درسی ثبت‌نام‌شده" />
+            <TableView fx:id="enrolledCoursesTableView" prefHeight="150.0" prefWidth="590.0" stylesheets="@TableViewStyle.css">
+                <columns>
+                    <TableColumn fx:id="dropCol" prefWidth="60.0" text="حذف" />
+                    <TableColumn fx:id="enrolledCourseCodeCol" prefWidth="100.0" text="کد درس">
+                        <cellValueFactory><PropertyValueFactory property="courseCode" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="enrolledCourseNameCol" prefWidth="200.0" text="نام درس">
+                        <cellValueFactory><PropertyValueFactory property="courseName" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="enrolledCreditsCol" prefWidth="70.0" text="واحدها">
+                        <cellValueFactory><PropertyValueFactory property="credits" /></cellValueFactory>
+                    </TableColumn>
+                    <TableColumn fx:id="enrolledScheduleCol" prefWidth="150.0" text="برنامه">
+                        <cellValueFactory><PropertyValueFactory property="schedule" /></cellValueFactory>
+                    </TableColumn>
+                </columns>
+                <VBox.margin>
+                    <Insets top="10.0" bottom="15.0" />
                 </VBox.margin>
             </TableView>
 
             <!-- Register & Total -->
             <HBox alignment="CENTER_RIGHT" spacing="10.0">
-                <Label fx:id="totalCreditsLabel" style="-fx-font-weight: bold;" text="Total Credits: 0" />
-                <Button onAction="#registerCourses" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Register Selected Courses" />
+                <Label fx:id="totalCreditsLabel" style="-fx-font-weight: bold;" text="مجموع واحدها: 0" />
+                <Button onAction="#registerCourses" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="ثبت درس‌های انتخاب‌شده" />
             </HBox>
 
             <!-- Message Label -->
