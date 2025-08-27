@@ -59,20 +59,6 @@ public class University implements Serializable{
         }
     }
 
-    public static Faculty findFacultyByName(String name) {
-        for (Faculty faculty : allFaculties) {
-            if (faculty.getFacultyName().equalsIgnoreCase(name)) {
-                return faculty;
-            }
-        }
-        return null;
-    }
-
-//    public static void addFaculty(Faculty faculty) {
-//        allFaculties.add(faculty);
-//        faculty.saveToFile();
-//    }
-
 
     public int getEstablishmetYear() {
         return  1991;

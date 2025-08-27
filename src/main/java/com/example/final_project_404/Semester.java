@@ -11,12 +11,12 @@ public class Semester implements Serializable {
 
     private String name;
     private Status status;
-    private List<CourseGroup> courseGroups;
+    public static List<CourseGroup> courseGroups;
 
     public Semester(String name) {
         this.name = name;
         this.status = Status.Active;
-        this.courseGroups = new ArrayList<>();
+        courseGroups = new ArrayList<>();
     }
 
     public String getName() {
