@@ -45,15 +45,17 @@
                         <RowConstraints prefHeight="50.0" vgrow="SOMETIMES" />
                         <RowConstraints prefHeight="50.0" vgrow="SOMETIMES" />
                         <RowConstraints prefHeight="50.0" vgrow="SOMETIMES" />
+                        <RowConstraints prefHeight="50.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
                         <!-- Buttons -->
                         <Button minHeight="40.0" minWidth="280.0" onAction="#EnrollmentStudentPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Enrollment" GridPane.halignment="CENTER" />
                         <Button minHeight="40.0" minWidth="280.0" onAction="#profileStudentPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Profile" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
-                        <Button minHeight="40.0" minWidth="280.0" onAction="#reportsStudentPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Reports" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <Button minHeight="40.0" minWidth="280.0" onAction="#showReportCardPane" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="See Report Card" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                        <Button minHeight="40.0" minWidth="280.0" onAction="#showOverallReportCardPane" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Overall Report Card" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                        <Button minHeight="40.0" minWidth="280.0" onAction="#signOutStudentPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Sign out" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Button minHeight="40.0" minWidth="280.0" onAction="#reportsStudentPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Reports" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Button minHeight="40.0" minWidth="280.0" onAction="#showReportCardPane" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="See Report Card" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Button minHeight="40.0" minWidth="280.0" onAction="#showOverallReportCardPane" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Overall Report Card" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                        <Button minHeight="40.0" minWidth="280.0" onAction="#showEmergencyDropPane" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Emergency Drop" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Button minHeight="40.0" minWidth="280.0" onAction="#signOutStudentPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Sign out" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                     </children>
                 </GridPane>
 
@@ -65,7 +67,6 @@
                                 <Insets bottom="15" left="15" right="15" top="15" />
                             </padding>
                             <children>
-                                <!-- Student Info Section -->
                                 <GridPane hgap="10" prefWidth="730.0" vgap="5">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" prefWidth="150.0" />
@@ -96,7 +97,6 @@
                                         <Insets bottom="10" left="0" right="0" top="0" />
                                     </VBox.margin>
                                 </GridPane>
-                                <!-- ComboBoxes & Search -->
                                 <HBox prefHeight="40.0" spacing="10">
                                     <ComboBox fx:id="semesterComboBox" prefWidth="200.0" promptText="Select Semester" />
                                     <Button onAction="#loadReportCard" text="Load Report" />
@@ -104,7 +104,6 @@
                                         <Insets bottom="10" left="0" right="0" top="0" />
                                     </VBox.margin>
                                 </HBox>
-                                <!-- Table -->
                                 <TableView fx:id="reportCardTable" prefHeight="200.0" prefWidth="730.0" stylesheets="@TableViewStyle.css">
                                     <columns>
                                         <TableColumn fx:id="courseNameCol" prefWidth="250.0" text="Course Name" />
@@ -115,7 +114,6 @@
                                         <Insets bottom="10" left="0" right="0" top="0" />
                                     </VBox.margin>
                                 </TableView>
-                                <!-- Back Button -->
                                 <HBox alignment="CENTER_RIGHT" prefHeight="40.0">
                                     <Button onAction="#showMainMenuPane" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Back" />
                                     <VBox.margin>
@@ -136,13 +134,11 @@
                                 <Insets bottom="15" left="15" right="15" top="15" />
                             </padding>
                             <children>
-                                <!-- Title -->
                                 <Label styleClass="label-title" text="Overall Report Card">
                                     <VBox.margin>
                                         <Insets bottom="10" left="0" right="0" top="0" />
                                     </VBox.margin>
                                 </Label>
-                                <!-- Student Info Section -->
                                 <GridPane hgap="10" prefWidth="730.0" vgap="5">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" prefWidth="150.0" />
@@ -167,13 +163,60 @@
                                         <Insets bottom="10" left="0" right="0" top="0" />
                                     </VBox.margin>
                                 </GridPane>
-                                <!-- Table -->
                                 <TableView fx:id="overallReportTable" prefHeight="200.0" prefWidth="730.0" stylesheets="@TableViewStyle.css">
                                     <columns>
                                         <TableColumn fx:id="overallSemesterCol" prefWidth="150.0" text="Semester" />
                                         <TableColumn fx:id="overallCourseCol" prefWidth="250.0" text="Course Name" />
                                         <TableColumn fx:id="overallScoreCol" prefWidth="100.0" text="Score" />
                                         <TableColumn fx:id="overallStatusCol" prefWidth="100.0" text="Status" />
+                                    </columns>
+                                    <VBox.margin>
+                                        <Insets bottom="10" left="0" right="0" top="0" />
+                                    </VBox.margin>
+                                </TableView>
+                                <HBox alignment="CENTER_RIGHT" prefHeight="40.0">
+                                    <Button onAction="#showMainMenuPane" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Back" />
+                                    <VBox.margin>
+                                        <Insets bottom="10" left="0" right="0" top="0" />
+                                    </VBox.margin>
+                                </HBox>
+                                <Label fx:id="overallMessageLabel" style="-fx-text-fill: red;" />
+                            </children>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+
+                <!-- ===== Emergency Drop Panel (Hidden by default) ===== -->
+                <!-- ===== Emergency Drop Panel (Hidden by default) ===== -->
+                <AnchorPane fx:id="emergencyDropPane" managed="false" prefHeight="370.0" prefWidth="760.0" visible="false">
+                    <children>
+                        <VBox prefHeight="370.0" prefWidth="760.0" spacing="10" style="-fx-background-color: #f7f9fc;">
+                            <padding>
+                                <Insets bottom="15" left="15" right="15" top="15" />
+                            </padding>
+                            <children>
+                                <!-- Title -->
+                                <Label styleClass="label-title" text="Emergency Drop">
+                                    <VBox.margin>
+                                        <Insets bottom="10" left="0" right="0" top="0" />
+                                    </VBox.margin>
+                                </Label>
+                                <!-- Semester Selection and Search -->
+                                <HBox prefHeight="40.0" spacing="10">
+                                    <ComboBox fx:id="emergencyDropSemesterComboBox" prefWidth="200.0" promptText="Select Active Semester" />
+                                    <Button onAction="#loadCoursesForSemester" text="Search" style="-fx-background-color: #2196F3; -fx-text-fill: white;" />
+                                    <VBox.margin>
+                                        <Insets bottom="10" left="0" right="0" top="0" />
+                                    </VBox.margin>
+                                </HBox>
+                                <!-- Courses Table -->
+                                <TableView fx:id="emergencyDropTable" prefHeight="200.0" prefWidth="730.0" stylesheets="@TableViewStyle.css">
+                                    <columns>
+                                        <TableColumn fx:id="emergencyDropCourseNameCol" prefWidth="200.0" text="Course Name" />
+                                        <TableColumn fx:id="emergencyDropCourseCodeCol" prefWidth="100.0" text="Course Code" />
+                                        <TableColumn fx:id="emergencyDropProfessorNameCol" prefWidth="200.0" text="Professor Name" />
+                                        <TableColumn fx:id="emergencyDropUnitsCol" prefWidth="100.0" text="Units" />
+                                        <TableColumn fx:id="emergencyDropActionCol" prefWidth="100.0" text="Action" />
                                     </columns>
                                     <VBox.margin>
                                         <Insets bottom="10" left="0" right="0" top="0" />
@@ -187,7 +230,7 @@
                                     </VBox.margin>
                                 </HBox>
                                 <!-- Message -->
-                                <Label fx:id="overallMessageLabel" style="-fx-text-fill: red;" />
+                                <Label fx:id="emergencyDropMessageLabel" style="-fx-text-fill: red;" />
                             </children>
                         </VBox>
                     </children>

@@ -448,6 +448,8 @@ public class StudentPortalController {
         stage.show();
     }
 
+
+
     private void showAlert(String msg) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(msg);
@@ -507,4 +509,5 @@ public class StudentPortalController {
             return status;
         }
     }
+
 }

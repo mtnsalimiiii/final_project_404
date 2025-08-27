@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.AdminPortal1">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.AdminPortal1">
     <children>
         <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0" styleClass="header" stylesheets="@EmployeePortal.css">
             <children>
@@ -44,6 +44,7 @@
                         <Button fx:id="addSemesterScrollPane" layoutX="20.0" layoutY="545.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addSemesterScrollPane" styleClass="nav-button-dashboard" text="Add Semester" textAlignment="CENTER" />
                         <Button fx:id="deactiveSemesterScrollPane" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#deactiveSemesterScrollPane" text="Deactive Semester" />
                         <Button fx:id="enrollmentScrollPane" layoutX="20.0" layoutY="808.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#enrollmentScrollPane" styleClass="nav-button-dashboard" text="Enrollment" textAlignment="CENTER" />
+                  <Button fx:id="emergencyDropScrollPane" layoutX="20.0" layoutY="808.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#emergencyDropScrollPane" styleClass="nav-button-dashboard" text="Emergency Drop" />
                         <Button fx:id="reportsScrollPane" layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#reportsScrollPane" styleClass="nav-button-dashboard" text="Reports" />
                         <Button layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#signOutScrollPane" styleClass="nav-button-dashboard" text="Sign out" />
                     </children>
@@ -94,10 +95,11 @@
                                 <Button mnemonicParsing="false" onAction="#addEmployeeDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Add Employee" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                                 <Button mnemonicParsing="false" onAction="#updateEmployeeDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Update Employee" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                                 <Button mnemonicParsing="false" onAction="#enrollmentDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Enrollment" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-                                <Button mnemonicParsing="false" onAction="#reportsDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Reports" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
-                                <Button mnemonicParsing="false" onAction="#signOutDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Sign out" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                                <Button mnemonicParsing="false" onAction="#reportsDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Reports" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+                                <Button mnemonicParsing="false" onAction="#signOutDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Sign out" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
                                 <Button mnemonicParsing="false" onAction="#addSemesterDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Add Semester" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
                                 <Button mnemonicParsing="false" onAction="#deactiveSemesterDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Deactive Semester" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+                        <Button mnemonicParsing="false" onAction="#emergencyDropDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Emergency Drop" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="CENTER" />
                             </children>
                         </GridPane>
                     </children>
@@ -926,6 +928,27 @@
                         </Button>
                     </children>
                 </VBox>
+            </children>
+        </AnchorPane>
+        <AnchorPane fx:id="emergencyDropAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" visible="false">
+            <children>
+                <HBox alignment="CENTER" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" stylesheets="@EmployeePortal.css">
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                    </padding>
+                    <children>
+                        <Button fx:id="activeEmergencDropButton" minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#activeEmergencyDrop" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Active">
+                            <HBox.margin>
+                                <Insets right="10.0" />
+                            </HBox.margin>
+                        </Button>
+                        <Button fx:id="deactiveEmergencDropButton" minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#deactiveEmergencyDrop" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Deactive">
+                            <HBox.margin>
+                                <Insets left="10.0" />
+                            </HBox.margin>
+                        </Button>
+                    </children>
+                </HBox>
             </children>
         </AnchorPane>
     </children>

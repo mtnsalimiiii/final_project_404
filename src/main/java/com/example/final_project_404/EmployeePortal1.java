@@ -1549,16 +1549,19 @@ public class EmployeePortal1 {
 
             Employee employee = LoginPanelController.employeePerson;
             Professor professor = new Professor(firstName, lastName, dateOfBirth, nationalId, Gender.valueOf(gender), phoneNumber, professorId, dateOfHire, employee.getFaculty(), employee.getDepartment(), majorName, Status.Active);
-
+            University.loadFaculties();
+            Professor.loadAllProfessor();
             for (Faculty faculty : University.allFaculties) {
+                System.out.println(employee.getFaculty());
+                System.out.println(faculty.getFacultyName());
                 if (faculty.getFacultyName().equals(employee.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
                     for (Department department : faculty.departments) {
                         if (department.getName().equals(employee.getDepartment()) && department.getStatus().equals(Status.Active)) {
                             for (Major major : department.majors) {
-                                if (!major.professors.contains(professor) && major.getStatus().equals(Status.Active)) {
+                                if (major.getName().equals(majorChooserRegisterProfessor.getValue())&&!major.professors.contains(professor) && major.getStatus().equals(Status.Active)) {
                                     major.professors.add(professor);
-                                    University.saveFaculties();
                                     University.allProfessors.add(professor);
+                                    University.saveFaculties();
                                     Professor.saveAllProfessor();
                                     errorLabelRegisterProfessor.setText(null);
                                     successLabelRegisterProfessor.setText("The Professor Registered Successfully\nProfessor ID : " + professorId + " | Password : National ID(" + nationalId + ")");
@@ -1573,13 +1576,10 @@ public class EmployeePortal1 {
                                 } else {
                                     errorLabelRegisterProfessor.setText("The Professor Has Been Registered Earlier");
                                 }
-                                break;
                             }
                         }
-                        break;
                     }
                 }
-                break;
             }
         } else {
             errorLabelRegisterProfessor.setText("Fill All Fields");
@@ -1877,13 +1877,13 @@ public class EmployeePortal1 {
                                     } else {
                                         errorLabelRegisterStudent.setText("The Student Has Been Registered Earlier");
                                     }
-                                    break;
+                                   // break;
                                 }
                             }
-                            break;
+                            //break;
                         }
                     }
-                    break;
+                    //break;
                 }
             }
         } else {
@@ -2793,11 +2793,15 @@ public class EmployeePortal1 {
                             for (Major major : department.majors) {
                                 if (major.getStatus().equals(Status.Active) && major.getName().equals(majorChooserRegisterStudent.getValue())) {
                                     for (Degree degree : major.degrees) {
-                                        if (degree.getClass().getSimpleName().equals("Bachelor") && !degreeChooserRegisterStudent.getValue().contains("Bachelor")) {
+                                        String selectedValue = degreeChooserRegisterStudent.getValue();
+                                        if (degree.getClass().getSimpleName().equals("Bachelor") &&
+                                                (selectedValue == null || !selectedValue.contains("Bachelor"))) {
                                             degreeChooserRegisterStudent.getItems().add("Bachelor");
-                                        } else if (degree.getClass().getSimpleName().equals("Master") && !degreeChooserRegisterStudent.getValue().contains("Master")) {
+                                        } else if (degree.getClass().getSimpleName().equals("Master") &&
+                                                (selectedValue == null || !selectedValue.contains("Master"))) {
                                             degreeChooserRegisterStudent.getItems().add("Master");
-                                        } else if (degree.getClass().getSimpleName().equals("PHD") && !degreeChooserRegisterStudent.getValue().contains("PHD")) {
+                                        } else if (degree.getClass().getSimpleName().equals("PHD") &&
+                                                (selectedValue == null || !selectedValue.contains("PHD"))) {
                                             degreeChooserRegisterStudent.getItems().add("PHD");
                                         }
                                     }

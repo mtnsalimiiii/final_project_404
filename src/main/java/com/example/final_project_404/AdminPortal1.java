@@ -27,6 +27,13 @@ import java.util.ResourceBundle;
 public class AdminPortal1 implements Initializable {
 
     public Label errorLabelDeactiveSemester;
+
+    @FXML
+    private Button deactiveEmergencDropButton;
+    @FXML
+    private Button activeEmergencDropButton;
+    @FXML
+    private AnchorPane emergencyDropAnchorPane;
     @FXML
     private VBox DashboardVbox;
 
@@ -182,6 +189,9 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     private Button enrollmentScrollPane;
+
+    @FXML
+    private Button emergencyDropScrollPane;
 
     @FXML
     private ComboBox<String> employeeChooserDeactiveEmployee;
@@ -833,6 +843,9 @@ public class AdminPortal1 implements Initializable {
         } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
             deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+        }else if (emergencyDropAnchorPane.isVisible()) {
+            emergencyDropAnchorPane.setVisible(false);
+            emergencyDropAnchorPane.getStyleClass().remove("pressed");
         }
 
         if (!addDepartmentAnchorPane.isVisible()) {
@@ -985,7 +998,7 @@ public class AdminPortal1 implements Initializable {
                                                     departmentChooserAddEmployee.getItems().add(department1.getName());
                                                 }
                                             }
-                                            break;
+                                            //break;
                                         }
                                     }
                                     departmentChooserAddEmployee.setVisibleRowCount(5);
@@ -995,10 +1008,10 @@ public class AdminPortal1 implements Initializable {
                             } else {
                                 errorLabelAddEmployee.setText("The Employee Has Been Registered Earlier");
                             }
-                            break;
+                           // break;
                         }
                     }
-                    break;
+                    //break;
                 }
             }
         } else {
@@ -1106,6 +1119,9 @@ public class AdminPortal1 implements Initializable {
         } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
             deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+        }else if (emergencyDropAnchorPane.isVisible()) {
+            emergencyDropAnchorPane.setVisible(false);
+            emergencyDropAnchorPane.getStyleClass().remove("pressed");
         }
         if (!addEmployeeAnchorPane.isVisible()) {
             addEmployeeAnchorPane.setVisible(true);
@@ -1280,6 +1296,9 @@ public class AdminPortal1 implements Initializable {
         } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
             deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+        }else if (emergencyDropAnchorPane.isVisible()) {
+            emergencyDropAnchorPane.setVisible(false);
+            emergencyDropAnchorPane.getStyleClass().remove("pressed");
         }
         if (!addFacultyAnchorPane.isVisible()){
             addFacultyAnchorPane.setVisible(true);
@@ -1496,6 +1515,9 @@ public class AdminPortal1 implements Initializable {
         } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
             deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+        }else if (emergencyDropAnchorPane.isVisible()) {
+            emergencyDropAnchorPane.setVisible(false);
+            emergencyDropAnchorPane.getStyleClass().remove("pressed");
         }
         if (!addMajorAnchorPane.isVisible()) {
             addMajorAnchorPane.setVisible(true);
@@ -1595,6 +1617,9 @@ public class AdminPortal1 implements Initializable {
         } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
             deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+        }else if (emergencyDropAnchorPane.isVisible()) {
+            emergencyDropAnchorPane.setVisible(false);
+            emergencyDropAnchorPane.getStyleClass().remove("pressed");
         }
 
         if (!addSemesterAnchorPane.isVisible()) {
@@ -1655,6 +1680,9 @@ public class AdminPortal1 implements Initializable {
         } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
             deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+        }else if (emergencyDropAnchorPane.isVisible()) {
+            emergencyDropAnchorPane.setVisible(false);
+            emergencyDropAnchorPane.getStyleClass().remove("pressed");
         }
 
         buttonsScrollPane.setVisible(false);
@@ -2557,6 +2585,9 @@ public class AdminPortal1 implements Initializable {
         } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
             deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+        }else if (emergencyDropAnchorPane.isVisible()) {
+            emergencyDropAnchorPane.setVisible(false);
+            emergencyDropAnchorPane.getStyleClass().remove("pressed");
         }
 
         if (!enrollmentAnchorPane.isVisible()) {
@@ -2742,6 +2773,9 @@ public class AdminPortal1 implements Initializable {
         } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
             deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+        }else if (emergencyDropAnchorPane.isVisible()) {
+            emergencyDropAnchorPane.setVisible(false);
+            emergencyDropAnchorPane.getStyleClass().remove("pressed");
         }
 
         if (!reportsAnchorPane.isVisible()) {
@@ -3578,6 +3612,9 @@ public class AdminPortal1 implements Initializable {
         }else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
             deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+        }else if (emergencyDropAnchorPane.isVisible()) {
+            emergencyDropAnchorPane.setVisible(false);
+            emergencyDropAnchorPane.getStyleClass().remove("pressed");
         }
         if (!updateDepartmentAnchorPane.isVisible()) {
             updateDepartmentAnchorPane.setVisible(true);
@@ -3650,6 +3687,9 @@ public class AdminPortal1 implements Initializable {
         }else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
             deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+        }else if (emergencyDropAnchorPane.isVisible()) {
+            emergencyDropAnchorPane.setVisible(false);
+            emergencyDropAnchorPane.getStyleClass().remove("pressed");
         }
 
         if (!updateEmployeeAnchorPane.isVisible()) {
@@ -3724,6 +3764,9 @@ public class AdminPortal1 implements Initializable {
         }else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
             deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+        }else if (emergencyDropAnchorPane.isVisible()) {
+            emergencyDropAnchorPane.setVisible(false);
+            emergencyDropAnchorPane.getStyleClass().remove("pressed");
         }
         if (!updateFacultyAnchorPane.isVisible()) {
             updateFacultyAnchorPane.setVisible(true);
@@ -3796,6 +3839,9 @@ public class AdminPortal1 implements Initializable {
         }else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
             deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+        }else if (emergencyDropAnchorPane.isVisible()) {
+            emergencyDropAnchorPane.setVisible(false);
+            emergencyDropAnchorPane.getStyleClass().remove("pressed");
         }
         if (!updateMajorAnchorPane.isVisible()) {
             updateMajorAnchorPane.setVisible(true);
@@ -3847,6 +3893,9 @@ public class AdminPortal1 implements Initializable {
         } else if (reportsAnchorPane.isVisible()) {
             reportsAnchorPane.setVisible(false);
             reportsScrollPane.getStyleClass().remove("pressed");
+        }else if (emergencyDropAnchorPane.isVisible()) {
+            emergencyDropAnchorPane.setVisible(false);
+            emergencyDropAnchorPane.getStyleClass().remove("pressed");
         }
 
         // Show deactive semester pane and populate ComboBox
@@ -3914,6 +3963,111 @@ public class AdminPortal1 implements Initializable {
             errorLabelDeactiveSemester.setText("Selected semester not found.");
         }
     }
+
+    @FXML
+    void emergencyDropDashboard(ActionEvent event) {
+        // Set the header title
+        headerTitle.setText(" --> Emergency Drop");
+
+        // Hide all anchor panes
+        dashboardAnchorPane.setVisible(false);
+        buttonsScrollPane.setVisible(true);
+        emergencyDropAnchorPane.setVisible(true);
+        emergencyDropScrollPane.getStyleClass().add("pressed");
+
+    }
+
+    @FXML
+    void emergencyDropScrollPane(ActionEvent event) {
+        headerTitle.setText(" --> Emergency Drop");
+
+        if (addFacultyAnchorPane.isVisible()){
+            addFacultyAnchorPane.setVisible(false);
+            addFacultyScrollPane.getStyleClass().remove("pressed");
+        } else if (updateFacultyAnchorPane.isVisible()) {
+            updateFacultyAnchorPane.setVisible(false);
+            updateFacultyScrollPane.getStyleClass().remove("pressed");
+        } else if (addDepartmentAnchorPane.isVisible()) {
+            addDepartmentAnchorPane.setVisible(false);
+            addDepartmentScrollPane.getStyleClass().remove("pressed");
+        } else if (updateDepartmentAnchorPane.isVisible()) {
+            updateDepartmentAnchorPane.setVisible(false);
+            updateDepartmentScrollPane.getStyleClass().remove("pressed");
+        } else if (addMajorAnchorPane.isVisible()) {
+            addMajorAnchorPane.setVisible(false);
+            addMajorScrollPane.getStyleClass().remove("pressed");
+        } else if (updateMajorAnchorPane.isVisible()) {
+            updateMajorAnchorPane.setVisible(false);
+            updateMajorScrollPane.getStyleClass().remove("pressed");
+        } else if (addEmployeeAnchorPane.isVisible()) {
+            addEmployeeAnchorPane.setVisible(false);
+            addEmployeeScrollPane.getStyleClass().remove("pressed");
+        } else if (updateEmployeeAnchorPane.isVisible()) {
+            updateEmployeeAnchorPane.setVisible(false);
+            updateEmployeeScrollPane.getStyleClass().remove("pressed");
+        } else if (addSemesterAnchorPane.isVisible()) {
+            addSemesterAnchorPane.setVisible(false);
+            addSemesterScrollPane.getStyleClass().remove("pressed");
+        } else if (reportsAnchorPane.isVisible()) {
+            reportsAnchorPane.setVisible(false);
+            reportsScrollPane.getStyleClass().remove("pressed");
+        } else if (deactiveSemesterAnchorPane.isVisible()) {
+            deactiveSemesterAnchorPane.setVisible(false);
+            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+        }
+        else if (enrollmentAnchorPane.isVisible()) {
+            enrollmentAnchorPane.setVisible(false);
+            enrollmentAnchorPane.getStyleClass().remove("pressed");
+        }
+
+        if (!emergencyDropAnchorPane.isVisible()) {
+            emergencyDropAnchorPane.setVisible(true);
+            emergencyDropAnchorPane.getStyleClass().add("pressed");
+        }
+    }
+
+    @FXML
+    void activeEmergencyDrop(ActionEvent event){
+        File file = new File("EmergencyDrop.txt");
+        try {
+            if (file.exists()) {
+                if (!file.delete()) {
+                    System.out.println("Error in delete file!!");
+                    return;
+                }
+            }
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer.write("Active");
+                System.out.println("Emergency Drop is active now!");
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error in Active Emergency Drop!! " + e.getMessage());
+        }
+    }
+
+    @FXML
+    void deactiveEmergencyDrop(ActionEvent event){
+        File file = new File("EmergencyDrop.txt");
+        try {
+            if (file.exists()) {
+                if (!file.delete()) {
+                    System.out.println("Error in delete file!!");
+                    return;
+                }
+            }
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer.write("Deactive");
+                System.out.println("Emergency Drop is Deactive now!");
+            }
+
+        } catch (IOException e) {
+            System.out.println("Error in Deactive Emergency Drop!! " + e.getMessage());
+        }
+    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
