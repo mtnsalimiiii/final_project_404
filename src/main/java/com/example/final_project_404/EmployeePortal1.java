@@ -1195,15 +1195,6 @@ public class EmployeePortal1 {
                             if (department.getName().equals(employee.getDepartment()) && department.getStatus().equals(Status.Active)) {
                                 for (Major major : department.majors) {
                                     if (major.getName().equals(majorName) && major.getStatus().equals(Status.Active)) {
-
-                                        String degreeCode;
-                                        if (selectedDegree.equalsIgnoreCase("Bachelor")) {
-                                            degreeCode = "0";
-                                        } else if (selectedDegree.equalsIgnoreCase("Master")) {
-                                            degreeCode = "1";
-                                        } else if (selectedDegree.equalsIgnoreCase("Phd")) {
-                                            degreeCode = "2";
-                                        }
                                         try {
                                             for (Degree degree : major.degrees) {
                                                 if (degree.getClass().getSimpleName().equalsIgnoreCase(selectedDegree)) {

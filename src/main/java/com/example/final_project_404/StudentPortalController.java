@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -51,6 +52,15 @@ public class StudentPortalController {
     @FXML private Label overallPassedUnitsLabel;
     @FXML private Label overallFailedUnitsLabel;
     @FXML private Label overallMessageLabel;
+    @FXML private AnchorPane emergencyDropPane;
+    @FXML private ComboBox<String> emergencyDropSemesterComboBox;
+    @FXML private TableView<CourseGroupRow> emergencyDropTable;
+    @FXML private TableColumn<CourseGroupRow, String> emergencyDropCourseNameCol;
+    @FXML private TableColumn<CourseGroupRow, String> emergencyDropCourseCodeCol;
+    @FXML private TableColumn<CourseGroupRow, String> emergencyDropProfessorNameCol;
+    @FXML private TableColumn<CourseGroupRow, Integer> emergencyDropUnitsCol;
+    @FXML private TableColumn<CourseGroupRow, Void> emergencyDropActionCol;
+    @FXML private Label emergencyDropMessageLabel;
 
     private final ObservableList<ReportCardEntry> reportCardRows = FXCollections.observableArrayList();
     private final ObservableList<OverallReportCardEntry> overallReportRows = FXCollections.observableArrayList();
@@ -179,17 +189,20 @@ public class StudentPortalController {
     }
 
     @FXML
-    void showMainMenuPane(ActionEvent event) {
+    void showMainMenuPane(javafx.event.ActionEvent event) {
         reportCardPane.setVisible(false);
         reportCardPane.setManaged(false);
         overallReportCardPane.setVisible(false);
         overallReportCardPane.setManaged(false);
+        emergencyDropPane.setVisible(false);
+        emergencyDropPane.setManaged(false);
         mainMenuPane.setVisible(true);
         mainMenuPane.setManaged(true);
         clearStudentInfoLabels();
         //clearOverallStudentInfoLabels();
         messageLabel.setText("");
         overallMessageLabel.setText("");
+        emergencyDropMessageLabel.setText("");
     }
 
     @FXML
@@ -508,6 +521,169 @@ public class StudentPortalController {
         public String getStatus() {
             return status;
         }
+    }
+    @FXML
+    void showEmergencyDropPane(javafx.event.ActionEvent event) {
+        mainMenuPane.setVisible(false);
+        mainMenuPane.setManaged(false);
+        reportCardPane.setVisible(false);
+        reportCardPane.setManaged(false);
+        overallReportCardPane.setVisible(false);
+        overallReportCardPane.setManaged(false);
+        emergencyDropPane.setVisible(true);
+        emergencyDropPane.setManaged(true);
+
+        emergencyDropSemesterComboBox.getItems().clear();
+        University.loadAllSemester();
+        if (LoginPanelController.studentPerson == null) {
+            emergencyDropMessageLabel.setText("Error: Student information not found.");
+            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
+            return;
+        }
+        for (Semester semester : University.allSemesters) {
+            if (semester.getStatus() == Status.Active) {
+                emergencyDropSemesterComboBox.getItems().add(semester.getName());
+            }
+        }
+        if (emergencyDropSemesterComboBox.getItems().isEmpty()) {
+            emergencyDropMessageLabel.setText("No active semesters found.");
+            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
+        } else {
+            System.out.println("Active semesters for emergency drop: " + emergencyDropSemesterComboBox.getItems());
+        }
+
+        emergencyDropCourseNameCol.setCellValueFactory(new PropertyValueFactory<>("courseName"));
+        emergencyDropCourseCodeCol.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
+        emergencyDropProfessorNameCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(
+                cellData.getValue().getCourseGroup().getProfessor() != null
+                        ? cellData.getValue().getCourseGroup().getProfessor()
+                        : "Unknown"));
+        emergencyDropUnitsCol.setCellValueFactory(new PropertyValueFactory<>("credits"));
+        emergencyDropActionCol.setCellFactory(param -> new TableCell<CourseGroupRow, Void>() {
+            private final Button dropButton = new Button("Drop");
+
+            {
+                dropButton.setStyle("-fx-background-color: #ff4444; -fx-text-fill: white;");
+                dropButton.setOnAction(e -> {
+                    CourseGroupRow row = getTableView().getItems().get(getIndex());
+                    dropEmergencyCourse(row);
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : dropButton);
+            }
+        });
+
+        emergencyDropMessageLabel.setText("");
+    }
+
+    @FXML
+    void loadCoursesForSemester() {
+        emergencyDropTable.getItems().clear();
+        String selectedSemesterName = emergencyDropSemesterComboBox.getValue();
+
+        if (selectedSemesterName == null) {
+            emergencyDropMessageLabel.setText("Please select a semester");
+            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        Student realStudent = findStudentInUniversity(LoginPanelController.studentPerson);
+        if (realStudent == null) {
+            emergencyDropMessageLabel.setText("Student not found in the system");
+            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        Semester studentSemester = realStudent.getSemesterByName(selectedSemesterName);
+        if (studentSemester == null) {
+            emergencyDropMessageLabel.setText("Selected semester not found for student");
+            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        if (studentSemester.getCourseGroups() == null || studentSemester.getCourseGroups().isEmpty()) {
+            emergencyDropMessageLabel.setText("No courses found for this semester");
+            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        boolean foundData = false;
+        for (CourseGroup group : studentSemester.getCourseGroups()) {
+            if (group.getStatus() == Status.Active) {
+                emergencyDropTable.getItems().add(new CourseGroupRow(group));
+                foundData = true;
+            }
+        }
+
+        if (!foundData) {
+            emergencyDropMessageLabel.setText("No active courses found for this semester");
+            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
+        } else {
+            emergencyDropMessageLabel.setText(emergencyDropTable.getItems().size() + " courses found");
+            emergencyDropMessageLabel.setStyle("-fx-text-fill: green;");
+        }
+    }
+
+    private void dropEmergencyCourse(CourseGroupRow row) {
+        String selectedSemesterName = emergencyDropSemesterComboBox.getValue();
+        if (selectedSemesterName == null) {
+            emergencyDropMessageLabel.setText("Please select a semester");
+            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        Student realStudent = findStudentInUniversity(LoginPanelController.studentPerson);
+        if (realStudent == null) {
+            emergencyDropMessageLabel.setText("Student not found in the system");
+            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        Semester studentSemester = realStudent.getSemesterByName(selectedSemesterName);
+        if (studentSemester == null) {
+            emergencyDropMessageLabel.setText("Selected semester not found for student");
+            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        CourseGroup group = row.getCourseGroup();
+        try {
+            studentSemester.getCourseGroups().remove(group);
+            group.getRegisteredStudents().remove(realStudent);
+            group.getGrades().remove(realStudent.getId());
+            University.saveFaculties();
+
+            emergencyDropTable.getItems().remove(row);
+            emergencyDropMessageLabel.setText("Course " + group.getCourse().getName() + " dropped successfully");
+            emergencyDropMessageLabel.setStyle("-fx-text-fill: green;");
+        } catch (Exception e) {
+            emergencyDropMessageLabel.setText("Error dropping course: " + e.getMessage());
+            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
+        }
+    }
+    private Student findStudentInUniversity(Student loginStudent) {
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName().equals(loginStudent.getFaculty())) {
+                for (Department department : faculty.departments) {
+                    if (department.getName().equals(loginStudent.getDepartment())) {
+                        for (Major major : department.majors) {
+                            if (major.getName().equals(loginStudent.getMajor())) {
+                                for (Student s : major.students) {
+                                    if (s.getId().equals(loginStudent.getId())) {
+                                        return s;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return null;
     }
 
 }

@@ -28,7 +28,7 @@ public class CourseGroupRow {
     }
 
     public String getCourseCode() {
-        return courseGroup.getCourse().getId();
+        return courseGroup.getId();
     }
 
     public String getCourseName() {

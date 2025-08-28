@@ -12,31 +12,18 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-import java.awt.event.ActionEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class EnrollStudentController {
 
-    @FXML
-    private ComboBox<String> semesterComboBox;
-
-    @FXML
-    private TableView<CourseGroupRow> coursesTableView, enrolledCoursesTableView;
-
-    @FXML
-    private TableColumn<CourseGroupRow, Boolean> selectCol;
-
-    @FXML
-    private TableColumn<CourseGroupRow, Void> dropCol;
-
-    @FXML
-    private TableColumn<CourseGroupRow, String> courseCodeCol, courseNameCol, scheduleCol, enrolledCourseCodeCol, enrolledCourseNameCol, enrolledScheduleCol;
-
-    @FXML
-    private TableColumn<CourseGroupRow, Integer> creditsCol, enrolledCreditsCol;
-
-    @FXML
-    private Label totalCreditsLabel, messageLabel;
+    @FXML private ComboBox<String> semesterComboBox;
+    @FXML private TableView<CourseGroupRow> coursesTableView, enrolledCoursesTableView;
+    @FXML private TableColumn<CourseGroupRow, Boolean> selectCol;
+    @FXML private TableColumn<CourseGroupRow, Void> dropCol;
+    @FXML private TableColumn<CourseGroupRow, String> courseCodeCol, courseNameCol, scheduleCol, enrolledCourseCodeCol, enrolledCourseNameCol, enrolledScheduleCol;
+    @FXML private TableColumn<CourseGroupRow, Integer> creditsCol, enrolledCreditsCol;
+    @FXML private Label totalCreditsLabel, messageLabel;
 
     private ObservableList<CourseGroupRow> availableCourses = FXCollections.observableArrayList();
     private ObservableList<CourseGroupRow> enrolledCourses = FXCollections.observableArrayList();
@@ -49,10 +36,18 @@ public class EnrollStudentController {
             University.loadAllSemester();
             University.loadFaculties();
 
+            if (University.allSemesters == null) {
+                University.allSemesters = new ArrayList<>();
+            }
+
             for (Semester semester : University.allSemesters) {
                 if (semester.getStatus() == Status.Active) {
                     semesterComboBox.getItems().add(semester.getName());
                 }
+            }
+
+            if (semesterComboBox.getItems().isEmpty()) {
+                showMessage("No active semesters found", "error");
             }
 
             semesterComboBox.setVisibleRowCount(4);
@@ -60,8 +55,8 @@ public class EnrollStudentController {
             setupEnrolledCoursesTable();
 
         } catch (Exception e) {
-            System.out.println("خطا در initialize: " + e.getMessage());
-            showMessage("خطا در بارگذاری: " + e.getMessage(), "error");
+            showMessage("Error loading data: " + e.getMessage(), "error");
+            System.out.println("Exception in initialize: " + e.getMessage());
         }
     }
 
@@ -81,7 +76,7 @@ public class EnrollStudentController {
 
     private void setupEnrolledCoursesTable() {
         dropCol.setCellFactory(param -> new TableCell<CourseGroupRow, Void>() {
-            private final Button dropButton = new Button("حذف");
+            private final Button dropButton = new Button("Drop");
 
             {
                 dropButton.setStyle("-fx-background-color: #ff4444; -fx-text-fill: white;");
@@ -94,11 +89,7 @@ public class EnrollStudentController {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(dropButton);
-                }
+                setGraphic(empty ? null : dropButton);
             }
         });
 
@@ -118,31 +109,46 @@ public class EnrollStudentController {
 
         String selectedSemesterName = semesterComboBox.getValue();
         if (selectedSemesterName == null) {
-            showMessage("لطفاً یک ترم را انتخاب کنید", "error");
+            showMessage("Please select a semester", "error");
             return;
         }
 
         Student student = LoginPanelController.studentPerson;
         if (student == null) {
-            showMessage("دانشجو یافت نشد", "error");
+            showMessage("Student not found", "error");
             return;
         }
 
         Student realStudent = findStudentInUniversity(student);
         if (realStudent == null) {
-            showMessage("دانشجو در سیستم یافت نشد", "error");
+            showMessage("Student not found in the system", "error");
             return;
         }
 
-        // بارگذاری درس‌های ثبت‌نام‌شده
+        // Load enrolled courses
         Semester studentSemester = realStudent.getSemesterByName(selectedSemesterName);
+        System.out.println("Loading courses for semester: " + selectedSemesterName);
         if (studentSemester != null) {
-            for (CourseGroup group : studentSemester.getCourseGroups()) {
-                enrolledCourses.add(new CourseGroupRow(group));
+            if (studentSemester.courseGroups == null) {
+                System.out.println("courseGroups is null for " + selectedSemesterName + ", initializing...");
+                studentSemester.courseGroups = new ArrayList<>();
             }
+            System.out.println("courseGroups size: " + studentSemester.courseGroups.size());
+            if (studentSemester.courseGroups.isEmpty()) {
+                showMessage("No courses enrolled for this semester", "error");
+            } else {
+                for (CourseGroup group : studentSemester.courseGroups) {
+                    System.out.println("Adding enrolled course: " + group.getCourse().getName());
+                    enrolledCourses.add(new CourseGroupRow(group));
+                }
+            }
+        } else {
+            System.out.println("No semester found for " + selectedSemesterName);
+            showMessage("No semester found for this student", "error");
         }
 
-        // بارگذاری درس‌های موجود
+        // Load available courses
+        boolean foundCourses = false;
         for (Faculty faculty : University.allFaculties) {
             if (faculty.getFacultyName().equals(student.getFaculty())) {
                 for (Department department : faculty.departments) {
@@ -154,8 +160,9 @@ public class EnrollStudentController {
                                         for (Course course : degree.courses) {
                                             for (CourseGroup group : course.courseGroups) {
                                                 if (group.getStatus() == Status.Active && group.getSemesterCode().equals(selectedSemesterName)) {
-                                                    if (studentSemester == null || !studentSemester.getCourseGroups().contains(group)) {
+                                                    if (studentSemester == null || studentSemester.courseGroups == null || !studentSemester.courseGroups.contains(group)) {
                                                         availableCourses.add(new CourseGroupRow(group));
+                                                        foundCourses = true;
                                                     }
                                                 }
                                             }
@@ -169,7 +176,11 @@ public class EnrollStudentController {
             }
         }
 
-        showMessage(availableCourses.size() + " درس یافت شد", "success");
+        if (!foundCourses && (studentSemester == null || studentSemester.courseGroups == null || studentSemester.courseGroups.isEmpty())) {
+            showMessage("No courses found for this semester", "error");
+        } else {
+            showMessage(availableCourses.size() + " courses found", "success");
+        }
         updateTotalCredits();
     }
 
@@ -178,20 +189,22 @@ public class EnrollStudentController {
         String selectedSemesterName = semesterComboBox.getValue();
 
         if (selectedSemesterName == null) {
-            showMessage("لطفاً یک ترم را انتخاب کنید", "error");
+            showMessage("Please select a semester", "error");
             return;
         }
 
         Student realStudent = findStudentInUniversity(LoginPanelController.studentPerson);
         if (realStudent == null) {
-            showMessage("دانشجو در سیستم یافت نشد", "error");
+            showMessage("Student not found in the system", "error");
             return;
         }
 
         Semester studentSemester = realStudent.getSemesterByName(selectedSemesterName);
         if (studentSemester == null) {
             studentSemester = new Semester(selectedSemesterName);
+            studentSemester.courseGroups = new ArrayList<>();
             realStudent.getSemesters().add(studentSemester);
+            System.out.println("Created new semester: " + selectedSemesterName);
         }
 
         int selectedCount = 0;
@@ -201,32 +214,43 @@ public class EnrollStudentController {
                 CourseGroup group = row.getCourseGroup();
 
                 if (group.getRegisteredStudents().size() >= group.getCapacity()) {
-                    showMessage("ظرفیت کلاس " + group.getCourse().getName() + " پر شده است.", "error");
+                    showMessage("Course " + group.getCourse().getName() + " is full", "error");
                     return;
                 }
 
-                if (!studentSemester.getCourseGroups().contains(group)) {
-                    studentSemester.getCourseGroups().add(group);
+                if (studentSemester.courseGroups == null) {
+                    studentSemester.courseGroups = new ArrayList<>();
+                    System.out.println("Initialized courseGroups for " + selectedSemesterName);
+                }
+
+                if (!studentSemester.courseGroups.contains(group)) {
+                    studentSemester.courseGroups.add(group);
                     group.getRegisteredStudents().add(realStudent);
                     group.getGrades().put(realStudent.getId(), 0.0);
                     selectedCount++;
+                    System.out.println("Registered course: " + group.getCourse().getName());
                 }
             }
         }
 
         if (selectedCount == 0) {
-            showMessage("هیچ درسی برای ثبت انتخاب نشده است", "error");
+            showMessage("No courses selected for registration", "error");
         } else {
             try {
                 University.saveFaculties();
+                System.out.println("Saved faculties after registering " + selectedCount + " courses");
                 enrolledCourses.clear();
-                for (CourseGroup group : studentSemester.getCourseGroups()) {
-                    enrolledCourses.add(new CourseGroupRow(group));
+                if (studentSemester.courseGroups != null) {
+                    for (CourseGroup group : studentSemester.courseGroups) {
+                        enrolledCourses.add(new CourseGroupRow(group));
+                        System.out.println("Added to enrolledCourses: " + group.getCourse().getName());
+                    }
                 }
                 availableCourses.removeIf(CourseGroupRow::isSelected);
-                showMessage(selectedCount + " درس با موفقیت ثبت شد", "success");
+                showMessage(selectedCount + " courses registered successfully", "success");
             } catch (Exception e) {
-                showMessage("خطا در ثبت درس‌ها: " + e.getMessage(), "error");
+                showMessage("Error registering courses: " + e.getMessage(), "error");
+                System.out.println("Error in saveFaculties: " + e.getMessage());
             }
         }
 
@@ -236,37 +260,43 @@ public class EnrollStudentController {
     private void dropCourse(CourseGroupRow row) {
         String selectedSemesterName = semesterComboBox.getValue();
         if (selectedSemesterName == null) {
-            showMessage("لطفاً یک ترم را انتخاب کنید", "error");
+            showMessage("Please select a semester", "error");
             return;
         }
 
         Student realStudent = findStudentInUniversity(LoginPanelController.studentPerson);
         if (realStudent == null) {
-            showMessage("دانشجو در سیستم یافت نشد", "error");
+            showMessage("Student not found in the system", "error");
             return;
         }
 
         Semester studentSemester = realStudent.getSemesterByName(selectedSemesterName);
         if (studentSemester == null) {
-            showMessage("ترم انتخاب‌شده برای دانشجو وجود ندارد", "error");
+            showMessage("Selected semester not found for student", "error");
             return;
         }
 
         CourseGroup group = row.getCourseGroup();
         try {
-            studentSemester.getCourseGroups().remove(group);
-            group.getRegisteredStudents().remove(realStudent);
-            group.getGrades().remove(realStudent.getId());
-            University.saveFaculties();
+            if (studentSemester.courseGroups != null) {
+                studentSemester.courseGroups.remove(group);
+                group.getRegisteredStudents().remove(realStudent);
+                group.getGrades().remove(realStudent.getId());
+                University.saveFaculties();
+                System.out.println("Saved faculties after dropping course: " + group.getCourse().getName());
 
-            enrolledCourses.remove(row);
-            if (group.getStatus() == Status.Active && group.getSemesterCode().equals(selectedSemesterName)) {
-                availableCourses.add(new CourseGroupRow(group));
+                enrolledCourses.remove(row);
+                if (group.getStatus() == Status.Active && group.getSemesterCode().equals(selectedSemesterName)) {
+                    availableCourses.add(new CourseGroupRow(group));
+                }
+
+                showMessage("Course " + group.getCourse().getName() + " dropped successfully", "success");
+            } else {
+                showMessage("No courses enrolled for this semester", "error");
             }
-
-            showMessage("درس " + group.getCourse().getName() + " با موفقیت حذف شد", "success");
         } catch (Exception e) {
-            showMessage("خطا در حذف درس: " + e.getMessage(), "error");
+            showMessage("Error dropping course: " + e.getMessage(), "error");
+            System.out.println("Error in saveFaculties: " + e.getMessage());
         }
     }
 
@@ -296,7 +326,7 @@ public class EnrollStudentController {
                 .filter(CourseGroupRow::isSelected)
                 .mapToInt(CourseGroupRow::getCredits)
                 .sum();
-        totalCreditsLabel.setText("مجموع واحدها: " + total);
+        totalCreditsLabel.setText("Total Credits: " + total);
     }
 
     private void showMessage(String message, String type) {
@@ -308,6 +338,7 @@ public class EnrollStudentController {
         }
     }
 
+    @FXML
     public void dashboardStudentPortal(javafx.event.ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("StudentPortal.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -316,5 +347,4 @@ public class EnrollStudentController {
         stage.setResizable(false);
         stage.show();
     }
-
 }
