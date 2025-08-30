@@ -24,18 +24,16 @@ import java.time.Month;
 import java.time.Period;
 import java.util.ResourceBundle;
 
-public class AdminPortal1 implements Initializable {
+public class AdminPortal1 {
 
     public Label errorLabelDeactiveSemester;
 
     @FXML
-    private Button deactiveEmergencDropButton;
+    private Button deactiveEmergencyDropButton;
     @FXML
-    private Button activeEmergencDropButton;
+    private Button activeEmergencyDropButton;
     @FXML
     private AnchorPane emergencyDropAnchorPane;
-    @FXML
-    private VBox DashboardVbox;
 
     @FXML
     private AnchorPane addDepartmentAnchorPane;
@@ -44,16 +42,10 @@ public class AdminPortal1 implements Initializable {
     private Button addDepartmentScrollPane;
 
     @FXML
-    private VBox addDepartmentVbox;
-
-    @FXML
     private AnchorPane addEmployeeAnchorPane;
 
     @FXML
     private Button addEmployeeScrollPane;
-
-    @FXML
-    private VBox addEmployeeVbox;
 
     @FXML
     private AnchorPane addFacultyAnchorPane;
@@ -62,16 +54,10 @@ public class AdminPortal1 implements Initializable {
     private Button addFacultyScrollPane;
 
     @FXML
-    private VBox addFacultyVbox;
-
-    @FXML
     private AnchorPane addMajorAnchorPane;
 
     @FXML
     private Button addMajorScrollPane;
-
-    @FXML
-    private VBox addMajorVbox;
 
     @FXML
     private AnchorPane addSemesterAnchorPane;
@@ -92,9 +78,6 @@ public class AdminPortal1 implements Initializable {
     private AnchorPane dashboardAnchorPane;
 
     @FXML
-    private Button dashboardScrollPane;
-
-    @FXML
     private Label dashboardText;
 
     @FXML
@@ -104,31 +87,16 @@ public class AdminPortal1 implements Initializable {
     private DatePicker dateOfBirthEditEmployee;
 
     @FXML
-    private Button deactiveDepartmentButton;
-
-    @FXML
     private VBox deactiveDepartmentVbox;
-
-    @FXML
-    private Button deactiveEmployeeButton;
 
     @FXML
     private VBox deactiveEmployeeVbox;
 
     @FXML
-    private Button deactiveFacultyButton;
-
-    @FXML
     private VBox deactiveFacultyVbox;
 
     @FXML
-    private Button deactiveMajorButton;
-
-    @FXML
     private VBox deactiveMajorVbox;
-
-    @FXML
-    private AnchorPane degreesReportsAnchorPane;
 
     @FXML
     private AnchorPane departmentsReportsAnchorPane;
@@ -161,25 +129,13 @@ public class AdminPortal1 implements Initializable {
     private TextField departmentNameAddDepartment;
 
     @FXML
-    private Button editDepartmentButton;
-
-    @FXML
     private VBox editDepartmentVbox;
-
-    @FXML
-    private Button editEmployeeButton;
 
     @FXML
     private VBox editEmployeeVbox;
 
     @FXML
-    private Button editFacultyButton;
-
-    @FXML
     private VBox editFacultyVbox;
-
-    @FXML
-    private Button editMajorButton;
 
     @FXML
     private VBox editMajorVbox;
@@ -574,8 +530,37 @@ public class AdminPortal1 implements Initializable {
     @FXML private TableColumn<People, String> colStatusReportPeople;
     @FXML private TextField searchFieldPeople;
 
-    private ObservableList<People> peoplelist;
+    private ObservableList<People> peopleList;
     private FilteredList<People> filteredListReportPeople;
+
+    // Courses
+    @FXML private TextField searchFieldCourses;
+    @FXML private TableView<CourseReports> tableViewReportCourses;
+    @FXML private  TableColumn<CourseReports, String> colNameReportCourses;
+    @FXML private  TableColumn<CourseReports, String> colIdReportCourses;
+    @FXML private  TableColumn<CourseReports, Integer> colCreditReportCourses;
+    @FXML private  TableColumn<CourseReports, String> colMajorReportCourses;
+    @FXML private  TableColumn<CourseReports, String> colDegreeReportCourses;
+    @FXML private  TableColumn<CourseReports, String> colStatusReportCourses;
+
+    private ObservableList<CourseReports> coursesList;
+    private FilteredList<CourseReports> filteredListReportCourses;
+
+    //Course Group
+    @FXML private TableView<CourseGroupReports> tableViewReportCourseGroups;
+    @FXML private TableColumn<CourseGroupReports, String> colCourseNameReportCourseGroups;
+    @FXML private TableColumn<CourseGroupReports, Integer> colCourseCreditReportCourseGroups;
+    @FXML private TableColumn<CourseGroupReports, String> colSemesterCodeReportCourseGroups;
+    @FXML private TableColumn<CourseGroupReports, String> colProfessorNameReportCourseGroups;
+    @FXML private TableColumn<CourseGroupReports, String> colIdReportCourseGroups;
+    @FXML private TableColumn<CourseGroupReports, String> colMajorReportCourseGroups;
+    @FXML private TableColumn<CourseGroupReports, String> colDegreeReportCourseGroups;
+    @FXML private TableColumn<CourseGroupReports, String> colStatusReportCourseGroups;
+    @FXML private TableColumn<CourseGroupReports, Integer> colCapacityReportCourseGroups;
+    @FXML private TextField searchFieldCourseGroups;
+
+    private ObservableList<CourseGroupReports> courseGroupsList;
+    private FilteredList<CourseGroupReports> filteredListReportCourseGroups;
 
 
 //    Reports Done
@@ -585,9 +570,6 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     private TextField semesterCodeAddSemester;
-
-    @FXML
-    private AnchorPane semestersReportsAnchorPane;
 
     @FXML
     private Label successLabelAddDepartment;
@@ -662,16 +644,34 @@ public class AdminPortal1 implements Initializable {
     private Button deactiveButton;
 
     @FXML
-    public VBox deactiveSemesterVbox;
-
-    @FXML
     public AnchorPane deactiveSemesterAnchorPane;
 
     @FXML
-    public ComboBox semesterChooserDeactiveSemester;
+    public ComboBox<String> semesterChooserDeactiveSemester;
 
     @FXML
-    public Button deactiveSemesterButton;
+    private Label errorLabelSemesterDeactiveSemester;
+
+    @FXML
+    private Label successLabelDeactiveSemester;
+
+    @FXML
+    private Label enrollmentStatusLabel;
+
+    @FXML
+    private Label errorLabelEnrollment;
+
+    @FXML
+    private Label successLabelEnrollment;
+
+    @FXML
+    private Label emergencyDropStatusLabel;
+
+    @FXML
+    private Label errorLabelEmergencyDrop;
+
+    @FXML
+    private Label successLabelEmergencyDrop;
 
 
 
@@ -842,10 +842,10 @@ public class AdminPortal1 implements Initializable {
             reportsScrollPane.getStyleClass().remove("pressed");
         } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
-            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+            deactiveSemesterScrollPane.getStyleClass().remove("pressed");
         }else if (emergencyDropAnchorPane.isVisible()) {
             emergencyDropAnchorPane.setVisible(false);
-            emergencyDropAnchorPane.getStyleClass().remove("pressed");
+            emergencyDropScrollPane.getStyleClass().remove("pressed");
         }
 
         if (!addDepartmentAnchorPane.isVisible()) {
@@ -942,13 +942,13 @@ public class AdminPortal1 implements Initializable {
             confirmation = false;
         } else if (departmentChooserAddEmployee.getValue().isEmpty() || departmentChooserAddEmployee.getValue().equals("Department")){
             errorLabelFacultyChooserAddEmployee.setText(null);
-            errorLabelDepartmentChooserAddEmployee.setText("Enter Department");
+            errorLabelDepartmentChooserAddEmployee.setText("Choose Department");
             confirmation = false;
         } else {
             errorLabelDepartmentChooserAddEmployee.setText(null);
         }
         if (dateOfBirthAddEmployee.getValue() == null) {
-            errorLabelDateOfBirthAddEmployee.setText("Choose Date Of Birth");
+            errorLabelDateOfBirthAddEmployee.setText("Enter Date Of Birth");
             confirmation = false;
         } else {
             errorLabelDateOfBirthAddEmployee.setText(null);
@@ -1118,10 +1118,10 @@ public class AdminPortal1 implements Initializable {
             reportsScrollPane.getStyleClass().remove("pressed");
         } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
-            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+            deactiveSemesterScrollPane.getStyleClass().remove("pressed");
         }else if (emergencyDropAnchorPane.isVisible()) {
             emergencyDropAnchorPane.setVisible(false);
-            emergencyDropAnchorPane.getStyleClass().remove("pressed");
+            emergencyDropScrollPane.getStyleClass().remove("pressed");
         }
         if (!addEmployeeAnchorPane.isVisible()) {
             addEmployeeAnchorPane.setVisible(true);
@@ -1190,7 +1190,7 @@ public class AdminPortal1 implements Initializable {
         University.loadFaculties();
         boolean confirmation = true;
         if (facultyNameAddFaculty.getText().isEmpty()) {
-            errorLabelFacultyNameAddFaculty.setText("Enter The Name");
+            errorLabelFacultyNameAddFaculty.setText("Enter Faculty Name");
             confirmation = false;
         } else {
             errorLabelFacultyNameAddFaculty.setText(null);
@@ -1295,10 +1295,10 @@ public class AdminPortal1 implements Initializable {
             reportsScrollPane.getStyleClass().remove("pressed");
         } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
-            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+            deactiveSemesterScrollPane.getStyleClass().remove("pressed");
         }else if (emergencyDropAnchorPane.isVisible()) {
             emergencyDropAnchorPane.setVisible(false);
-            emergencyDropAnchorPane.getStyleClass().remove("pressed");
+            emergencyDropScrollPane.getStyleClass().remove("pressed");
         }
         if (!addFacultyAnchorPane.isVisible()){
             addFacultyAnchorPane.setVisible(true);
@@ -1514,10 +1514,10 @@ public class AdminPortal1 implements Initializable {
             reportsScrollPane.getStyleClass().remove("pressed");
         } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
-            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+            deactiveSemesterScrollPane.getStyleClass().remove("pressed");
         }else if (emergencyDropAnchorPane.isVisible()) {
             emergencyDropAnchorPane.setVisible(false);
-            emergencyDropAnchorPane.getStyleClass().remove("pressed");
+            emergencyDropScrollPane.getStyleClass().remove("pressed");
         }
         if (!addMajorAnchorPane.isVisible()) {
             addMajorAnchorPane.setVisible(true);
@@ -1563,10 +1563,19 @@ public class AdminPortal1 implements Initializable {
 
     @FXML
     void addSemester(ActionEvent event) {
+        successLabelAddSemester.setText(null);
         University.loadAllSemester();
-        University.allSemesters.add(new Semester(semesterCodeAddSemester.getText().trim()));
-        University.saveAllSemester();
-        System.out.println("Semester with code:"+ semesterCodeAddSemester.getText().trim()+"add successfull.");
+
+        if (!semesterCodeAddSemester.getText().isEmpty()) {
+            University.allSemesters.add(new Semester(semesterCodeAddSemester.getText().trim(),Status.Active));
+            University.saveAllSemester();
+            errorLabelSemesterCodeAddSemester.setText(null);
+            errorLabelAddSemester.setText(null);
+            successLabelAddSemester.setText("The Selected Semester Added Successfully\nSemester Code : " + semesterCodeAddSemester.getText());
+        } else {
+            errorLabelSemesterCodeAddSemester.setText("Enter Semester Code");
+            errorLabelAddSemester.setText("Fill In All Fields");
+        }
     }
 
     @FXML
@@ -1579,6 +1588,9 @@ public class AdminPortal1 implements Initializable {
         addSemesterScrollPane.getStyleClass().add("pressed");
 
         semesterCodeAddSemester.clear();
+        errorLabelAddSemester.setText(null);
+        errorLabelSemesterCodeAddSemester.setText(null);
+        successLabelAddSemester.setText(null);
     }
 
     @FXML
@@ -1616,10 +1628,10 @@ public class AdminPortal1 implements Initializable {
             reportsScrollPane.getStyleClass().remove("pressed");
         } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
-            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+            deactiveSemesterScrollPane.getStyleClass().remove("pressed");
         }else if (emergencyDropAnchorPane.isVisible()) {
             emergencyDropAnchorPane.setVisible(false);
-            emergencyDropAnchorPane.getStyleClass().remove("pressed");
+            emergencyDropScrollPane.getStyleClass().remove("pressed");
         }
 
         if (!addSemesterAnchorPane.isVisible()) {
@@ -1627,17 +1639,89 @@ public class AdminPortal1 implements Initializable {
             addSemesterScrollPane.getStyleClass().add("pressed");
 
             semesterCodeAddSemester.clear();
+            errorLabelSemesterCodeAddSemester.setText(null);
+            errorLabelAddSemester.setText(null);
+            successLabelAddSemester.setText(null);
         }
     }
 
     @FXML
     void courseGroupsReports(ActionEvent event) {
+        headerTitle.setText(" --> Reports --> Course Groups");
         courseGroupsReportsAnchorPane.setVisible(true);
+
+        searchFieldCourseGroups.clear();
+        searchFieldCourseGroups.setPromptText("Search ...");
+
+        //Courses
+        colCourseNameReportCourseGroups.setCellValueFactory(data -> data.getValue().courseNameProperty());
+        colIdReportCourseGroups.setCellValueFactory(data -> data.getValue().idProperty());
+        colStatusReportCourseGroups.setCellValueFactory(data -> data.getValue().statusProperty());
+        colMajorReportCourseGroups.setCellValueFactory(data -> data.getValue().majorProperty());
+        colDegreeReportCourseGroups.setCellValueFactory(data -> data.getValue().degreeProperty());
+        colSemesterCodeReportCourseGroups.setCellValueFactory(data -> data.getValue().semesterCodeProperty());
+        colProfessorNameReportCourseGroups.setCellValueFactory(data -> data.getValue().professorNameProperty());
+        colCourseCreditReportCourseGroups.setCellValueFactory(data -> data.getValue().courseCreditProperty().asObject());
+        colCapacityReportCourseGroups.setCellValueFactory(data -> data.getValue().capacityProperty().asObject());
+
+        University.loadFaculties();
+
+        courseGroupsList = FXCollections.observableArrayList();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Major major : department.majors) {
+                    for (Degree degree : major.degrees) {
+                        for (Course course : degree.courses) {
+                            for (CourseGroup courseGroup : course.courseGroups) {
+                                courseGroupsList.add(new CourseGroupReports(courseGroup.getCourseName(), courseGroup.getCourse().getCredit(), courseGroup.getSemesterCode(), courseGroup.getProfessor(), courseGroup.getId(), major.getName(), degree.getClass().getSimpleName(), courseGroup.getStatus(), courseGroup.getCapacity()));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        filteredListReportCourseGroups = new FilteredList<>(courseGroupsList, courseGroupReports -> true);
+        tableViewReportCourseGroups.setItems(filteredListReportCourseGroups);
+
+        setupStatusContextMenuReportCourseGroups();
     }
 
     @FXML
     void coursesReports(ActionEvent event) {
+        headerTitle.setText(" --> Reports --> Courses");
         coursesReportsAnchorPane.setVisible(true);
+
+        searchFieldCourses.clear();
+        searchFieldCourses.setPromptText("Search ...");
+
+        //Courses
+        colNameReportCourses.setCellValueFactory(data -> data.getValue().nameProperty());
+        colIdReportCourses.setCellValueFactory(data -> data.getValue().idProperty());
+        colStatusReportCourses.setCellValueFactory(data -> data.getValue().statusProperty());
+        colMajorReportCourses.setCellValueFactory(data -> data.getValue().majorProperty());
+        colDegreeReportCourses.setCellValueFactory(data -> data.getValue().degreeProperty());
+        colCreditReportCourses.setCellValueFactory(data -> data.getValue().creditProperty().asObject());
+
+        University.loadFaculties();
+
+        coursesList = FXCollections.observableArrayList();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Major major : department.majors) {
+                    for (Degree degree : major.degrees) {
+                        for (Course course : degree.courses) {
+                            coursesList.add(new CourseReports(course.getName(), course.getCredit(), course.getId(), major.getName(), degree.getClass().getSimpleName(), course.getStatus()));
+                        }
+                    }
+                }
+            }
+        }
+
+        filteredListReportCourses = new FilteredList<>(coursesList, courseReports -> true);
+        tableViewReportCourses.setItems(filteredListReportCourses);
+
+        setupStatusContextMenuReportCourses();
     }
 
     @FXML
@@ -1679,10 +1763,10 @@ public class AdminPortal1 implements Initializable {
             reportsScrollPane.getStyleClass().remove("pressed");
         } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
-            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+            deactiveSemesterScrollPane.getStyleClass().remove("pressed");
         }else if (emergencyDropAnchorPane.isVisible()) {
             emergencyDropAnchorPane.setVisible(false);
-            emergencyDropAnchorPane.getStyleClass().remove("pressed");
+            emergencyDropScrollPane.getStyleClass().remove("pressed");
         }
 
         buttonsScrollPane.setVisible(false);
@@ -1966,11 +2050,6 @@ public class AdminPortal1 implements Initializable {
         } else {
             errorLabelDeactiveMajor.setText("Fill In All Fields");
         }
-    }
-
-    @FXML
-    void degreesReports(ActionEvent event) {
-
     }
 
     @FXML
@@ -2292,6 +2371,7 @@ public class AdminPortal1 implements Initializable {
         }
     }
 
+
     @FXML
     void editFaculty(ActionEvent event) throws Exception {
         successLabelEditFaculty.setText(null);
@@ -2546,6 +2626,10 @@ public class AdminPortal1 implements Initializable {
         enrollmentAnchorPane.setVisible(true);
         enrollmentScrollPane.getStyleClass().add("pressed");
 
+
+        errorLabelEnrollment.setText(null);
+        successLabelEnrollment.setText(null);
+
     }
 
     @FXML
@@ -2584,15 +2668,18 @@ public class AdminPortal1 implements Initializable {
             reportsScrollPane.getStyleClass().remove("pressed");
         } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
-            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+            deactiveSemesterScrollPane.getStyleClass().remove("pressed");
         }else if (emergencyDropAnchorPane.isVisible()) {
             emergencyDropAnchorPane.setVisible(false);
-            emergencyDropAnchorPane.getStyleClass().remove("pressed");
+            emergencyDropScrollPane.getStyleClass().remove("pressed");
         }
 
         if (!enrollmentAnchorPane.isVisible()) {
             enrollmentAnchorPane.setVisible(true);
             enrollmentScrollPane.getStyleClass().add("pressed");
+
+            errorLabelEnrollment.setText(null);
+            successLabelEnrollment.setText(null);
         }
     }
 
@@ -2688,28 +2775,28 @@ public class AdminPortal1 implements Initializable {
         Student.loadAllStudents();
 
 
-        peoplelist = FXCollections.observableArrayList();
+        peopleList = FXCollections.observableArrayList();
         for (Employee employee : University.allEmployees) {
-            peoplelist.add(new People(employee.getFirst_name(), employee.getLast_name(), employee.getDateOfBirth(), employee.getNationalId(),
+            peopleList.add(new People(employee.getFirst_name(), employee.getLast_name(), employee.getDateOfBirth(), employee.getNationalId(),
                     employee.getGender(), employee.getPhoneNumber(), employee.getDateOfJoin(),"Employee", employee.getId(),
                     employee.getFaculty(), employee.getDepartment(), "----", "----", employee.getStatus()));
         }
 
         for (Professor professor : University.allProfessors) {
-            peoplelist.add(new People(professor.getFirst_name(), professor.getLast_name(), professor.getDateOfBirth(), professor.getNationalId(),
+            peopleList.add(new People(professor.getFirst_name(), professor.getLast_name(), professor.getDateOfBirth(), professor.getNationalId(),
                     professor.getGender(), professor.getPhoneNumber(), professor.getDateOfJoin(), "Professor", professor.getId(),
                     professor.getFaculty(), professor.getDepartment(), professor.getMajor(), "----", professor.getStatus()));
         }
 
         for (Student student : University.allStudents) {
-            peoplelist.add(new People(student.getFirst_name(), student.getLast_name(), student.getDateOfBirth(), student.getNationalId(),
+            peopleList.add(new People(student.getFirst_name(), student.getLast_name(), student.getDateOfBirth(), student.getNationalId(),
                     student.getGender(), student.getPhoneNumber(), student.getDateOfJoin(), "Student", student.getId(),
                     student.getFaculty(), student.getDepartment(), student.getMajor(), "----", student.getStatus()));
         }
 
 
 
-        filteredListReportPeople = new FilteredList<>(peoplelist, people -> true);
+        filteredListReportPeople = new FilteredList<>(peopleList, people -> true);
         tableViewReportPeople.setItems(filteredListReportPeople);
 
         setupGenderContextMenuPeople();
@@ -2732,8 +2819,6 @@ public class AdminPortal1 implements Initializable {
         peopleReportsAnchorPane.setVisible(false);
         coursesReportsAnchorPane.setVisible(false);
         courseGroupsReportsAnchorPane.setVisible(false);
-        degreesReportsAnchorPane.setVisible(false);
-        semestersReportsAnchorPane.setVisible(false);
     }
 
     @FXML
@@ -2772,10 +2857,10 @@ public class AdminPortal1 implements Initializable {
             enrollmentScrollPane.getStyleClass().remove("pressed");
         } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
-            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+            deactiveSemesterScrollPane.getStyleClass().remove("pressed");
         }else if (emergencyDropAnchorPane.isVisible()) {
             emergencyDropAnchorPane.setVisible(false);
-            emergencyDropAnchorPane.getStyleClass().remove("pressed");
+            emergencyDropScrollPane.getStyleClass().remove("pressed");
         }
 
         if (!reportsAnchorPane.isVisible()) {
@@ -2788,8 +2873,6 @@ public class AdminPortal1 implements Initializable {
             peopleReportsAnchorPane.setVisible(false);
             coursesReportsAnchorPane.setVisible(false);
             courseGroupsReportsAnchorPane.setVisible(false);
-            degreesReportsAnchorPane.setVisible(false);
-            semestersReportsAnchorPane.setVisible(false);
         }
     }
     //    Reports ------>>> Departments
@@ -2966,7 +3049,7 @@ public class AdminPortal1 implements Initializable {
         inactive.setOnAction(e -> filterByStatusPeople("Inactive"));
 
         MenuItem allStatus = new MenuItem("All");
-        allStatus.setOnAction(e -> tableViewReportPeople.setItems(peoplelist));
+        allStatus.setOnAction(e -> tableViewReportPeople.setItems(peopleList));
 
         statusMenu.getItems().addAll(active, inactive, allStatus);
         colStatusReportPeople.setContextMenu(statusMenu);
@@ -2974,7 +3057,7 @@ public class AdminPortal1 implements Initializable {
 
     private void filterByStatusPeople(String status) {
         ObservableList<People> filtered = FXCollections.observableArrayList();
-        for (People people : peoplelist) {
+        for (People people : peopleList) {
             if (people.getStatus().equals(status)) {
                 filtered.add(people);
             }
@@ -2992,7 +3075,7 @@ public class AdminPortal1 implements Initializable {
         MenuItem student = new MenuItem("Student");
         student.setOnAction(e -> filterByRolePeople("Student"));
         MenuItem allRole = new MenuItem("All");
-        allRole.setOnAction(e -> tableViewReportPeople.setItems(peoplelist));
+        allRole.setOnAction(e -> tableViewReportPeople.setItems(peopleList));
 
         roleMenu.getItems().addAll(employee, professor, student, allRole);
         colRoleReportPeople.setContextMenu(roleMenu);
@@ -3000,7 +3083,7 @@ public class AdminPortal1 implements Initializable {
 
     private void filterByRolePeople(String role) {
         ObservableList<People> filtered = FXCollections.observableArrayList();
-        for (People people : peoplelist) {
+        for (People people : peopleList) {
             if (people.getRole().equals(role)) {
                 filtered.add(people);
             }
@@ -3036,18 +3119,108 @@ public class AdminPortal1 implements Initializable {
         headerTitle.setText(" --> Reports");
         peopleReportsAnchorPane.setVisible(false);
     }
+    //    Reports ------>>> Courses
+    private void setupStatusContextMenuReportCourses() {
+        ContextMenu statusMenu = new ContextMenu();
+
+        MenuItem active = new MenuItem("Active");
+        active.setOnAction(e -> filterByStatusCourses("Active"));
+
+        MenuItem inactive = new MenuItem("Inactive");
+        inactive.setOnAction(e -> filterByStatusCourses("Inactive"));
+
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(e -> tableViewReportCourses.setItems(coursesList));
+
+        statusMenu.getItems().addAll(active, inactive, allItem);
+        colStatusReportCourses.setContextMenu(statusMenu);
+    }
+
+    private void filterByStatusCourses(String status) {
+        ObservableList<CourseReports> filtered = FXCollections.observableArrayList();
+        for (CourseReports courseReports : coursesList) {
+            if (courseReports.getStatus().equals(status)) {
+                filtered.add(courseReports);
+            }
+        }
+        tableViewReportCourses.setItems(filtered);
+    }
+
+    @FXML
+    private void onSearchCourses() {
+        String keyword = searchFieldCourses.getText().toLowerCase().trim();
+        if (keyword.isEmpty()) {
+            filteredListReportCourses.setPredicate(courseReports -> true);
+            return;
+        }
+        filteredListReportCourses.setPredicate(courseReports ->
+                courseReports.getName().toLowerCase().contains(keyword) ||
+                        courseReports.getId().toLowerCase().contains(keyword) ||
+                        courseReports.getDegree().toLowerCase().contains(keyword) ||
+                        courseReports.getMajor().toLowerCase().contains(keyword) ||
+                        String.valueOf(courseReports.getCredit()).contains(keyword) ||
+                        courseReports.getStatus().contains(keyword)
+        );
+    }
+
+    public void onBackCourses(ActionEvent event) {
+        headerTitle.setText(" --> Reports");
+        coursesReportsAnchorPane.setVisible(false);
+    }
+    //    Reports ------>>> CourseGroup
+    private void setupStatusContextMenuReportCourseGroups() {
+        ContextMenu statusMenu = new ContextMenu();
+
+        MenuItem active = new MenuItem("Active");
+        active.setOnAction(e -> filterByStatusCourseGroups("Active"));
+
+        MenuItem inactive = new MenuItem("Inactive");
+        inactive.setOnAction(e -> filterByStatusCourseGroups("Inactive"));
+
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(e -> tableViewReportCourseGroups.setItems(courseGroupsList));
+
+        statusMenu.getItems().addAll(active, inactive, allItem);
+        colStatusReportCourseGroups.setContextMenu(statusMenu);
+    }
+
+    private void filterByStatusCourseGroups(String status) {
+        ObservableList<CourseGroupReports> filtered = FXCollections.observableArrayList();
+        for (CourseGroupReports courseGroupReports : courseGroupsList) {
+            if (courseGroupReports.getStatus().equals(status)) {
+                filtered.add(courseGroupReports);
+            }
+        }
+        tableViewReportCourseGroups.setItems(filtered);
+    }
+
+    @FXML
+    private void onSearchCourseGroups() {
+        String keyword = searchFieldCourseGroups.getText().toLowerCase().trim();
+        if (keyword.isEmpty()) {
+            filteredListReportCourseGroups.setPredicate(courseGroupReports -> true);
+            return;
+        }
+        filteredListReportCourseGroups.setPredicate(courseGroupReports ->
+                courseGroupReports.getCourseName().toLowerCase().contains(keyword) ||
+                        courseGroupReports.getId().toLowerCase().contains(keyword) ||
+                        courseGroupReports.getProfessorName().toLowerCase().contains(keyword) ||
+                        courseGroupReports.getSemesterCode().toLowerCase().contains(keyword) ||
+                        courseGroupReports.getMajor().toLowerCase().contains(keyword) ||
+                        courseGroupReports.getDegree().toLowerCase().contains(keyword) ||
+                        String.valueOf(courseGroupReports.getCourseCredit()).toLowerCase().contains(keyword) ||
+                        String.valueOf(courseGroupReports.getCapacity()).toLowerCase().contains(keyword) ||
+                        courseGroupReports.getStatus().toLowerCase().contains(keyword)
+        );
+    }
+
+    public void onBackCourseGroups(ActionEvent event) {
+        headerTitle.setText(" --> Reports");
+        courseGroupsReportsAnchorPane.setVisible(false);
+    }
+
 
 //    Reports ----->>> Done
-
-    @FXML
-    void semestersReports(ActionEvent event) {
-
-    }
-
-    @FXML
-    void setDepartmentChooserDeactiveDepartment(ActionEvent event) {
-
-    }
 
     @FXML
     void setDepartmentChooserEditDepartment(ActionEvent event) {
@@ -3067,11 +3240,6 @@ public class AdminPortal1 implements Initializable {
     }
 
     @FXML
-    void setEmployeeChooserDeactive(ActionEvent event) {
-
-    }
-
-    @FXML
     void setEmployeeChooserEditEmployee(ActionEvent event) {
         Employee.loadAllEmployee();
         for (Employee employee : University.allEmployees) {
@@ -3087,11 +3255,6 @@ public class AdminPortal1 implements Initializable {
     }
 
     @FXML
-    void setFacultyChooserDeactiveFaculty(ActionEvent event) {
-
-    }
-
-    @FXML
     void setFacultyChooserEditFaculty(ActionEvent event) {
         University.loadFaculties();
         for (Faculty faculty : University.allFaculties) {
@@ -3101,11 +3264,6 @@ public class AdminPortal1 implements Initializable {
                 break;
             }
         }
-    }
-
-    @FXML
-    void setMajorChooserDeactiveMajor(ActionEvent event) {
-
     }
 
     @FXML
@@ -3611,10 +3769,10 @@ public class AdminPortal1 implements Initializable {
             reportsScrollPane.getStyleClass().remove("pressed");
         }else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
-            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+            deactiveSemesterScrollPane.getStyleClass().remove("pressed");
         }else if (emergencyDropAnchorPane.isVisible()) {
             emergencyDropAnchorPane.setVisible(false);
-            emergencyDropAnchorPane.getStyleClass().remove("pressed");
+            emergencyDropScrollPane.getStyleClass().remove("pressed");
         }
         if (!updateDepartmentAnchorPane.isVisible()) {
             updateDepartmentAnchorPane.setVisible(true);
@@ -3686,10 +3844,10 @@ public class AdminPortal1 implements Initializable {
             reportsScrollPane.getStyleClass().remove("pressed");
         }else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
-            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+            deactiveSemesterScrollPane.getStyleClass().remove("pressed");
         }else if (emergencyDropAnchorPane.isVisible()) {
             emergencyDropAnchorPane.setVisible(false);
-            emergencyDropAnchorPane.getStyleClass().remove("pressed");
+            emergencyDropScrollPane.getStyleClass().remove("pressed");
         }
 
         if (!updateEmployeeAnchorPane.isVisible()) {
@@ -3763,10 +3921,10 @@ public class AdminPortal1 implements Initializable {
             reportsScrollPane.getStyleClass().remove("pressed");
         }else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
-            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+            deactiveSemesterScrollPane.getStyleClass().remove("pressed");
         }else if (emergencyDropAnchorPane.isVisible()) {
             emergencyDropAnchorPane.setVisible(false);
-            emergencyDropAnchorPane.getStyleClass().remove("pressed");
+            emergencyDropScrollPane.getStyleClass().remove("pressed");
         }
         if (!updateFacultyAnchorPane.isVisible()) {
             updateFacultyAnchorPane.setVisible(true);
@@ -3838,10 +3996,10 @@ public class AdminPortal1 implements Initializable {
             reportsScrollPane.getStyleClass().remove("pressed");
         }else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
-            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
+            deactiveSemesterScrollPane.getStyleClass().remove("pressed");
         }else if (emergencyDropAnchorPane.isVisible()) {
             emergencyDropAnchorPane.setVisible(false);
-            emergencyDropAnchorPane.getStyleClass().remove("pressed");
+            emergencyDropScrollPane.getStyleClass().remove("pressed");
         }
         if (!updateMajorAnchorPane.isVisible()) {
             updateMajorAnchorPane.setVisible(true);
@@ -3895,73 +4053,96 @@ public class AdminPortal1 implements Initializable {
             reportsScrollPane.getStyleClass().remove("pressed");
         }else if (emergencyDropAnchorPane.isVisible()) {
             emergencyDropAnchorPane.setVisible(false);
-            emergencyDropAnchorPane.getStyleClass().remove("pressed");
+            emergencyDropScrollPane.getStyleClass().remove("pressed");
         }
 
         // Show deactive semester pane and populate ComboBox
         if (!deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(true);
             deactiveSemesterScrollPane.getStyleClass().add("pressed"); // Fixed: Use correct ScrollPane reference
+
             semesterChooserDeactiveSemester.getItems().clear();
-            errorLabelDeactiveSemester.setText(""); // Clear error label
+            errorLabelDeactiveSemester.setText(null); // Clear error label
+            errorLabelSemesterDeactiveSemester.setText(null);
+            successLabelDeactiveSemester.setText(null);
+
             University.loadAllSemester();
+            semesterChooserDeactiveSemester.getItems().clear();
+            semesterChooserDeactiveSemester.getItems().add("Semester");
             for (Semester semester : University.allSemesters) {
                 if (semester.getStatus().equals(Status.Active)) {
                     semesterChooserDeactiveSemester.getItems().add(semester.getName());
                 }
             }
+            semesterChooserDeactiveSemester.setVisibleRowCount(4);
+            semesterChooserDeactiveSemester.getSelectionModel().selectFirst();
         }
     }
 
     @FXML
     public void deactiveSemesterDashboard(ActionEvent event) {
-        semesterChooserDeactiveSemester.getItems().clear();
-        errorLabelDeactiveSemester.setText(""); // Clear error label
         headerTitle.setText(" --> Deactive Semester");
         dashboardAnchorPane.setVisible(false);
         buttonsScrollPane.setVisible(true);
         deactiveSemesterAnchorPane.setVisible(true);
+        deactiveSemesterScrollPane.getStyleClass().add("pressed");
+
+        semesterChooserDeactiveSemester.getItems().clear();
+        errorLabelDeactiveSemester.setText(null); // Clear error label
+        errorLabelSemesterDeactiveSemester.setText(null);
+        successLabelDeactiveSemester.setText(null);
+
         University.loadAllSemester();
+        semesterChooserDeactiveSemester.getItems().clear();
+        semesterChooserDeactiveSemester.getItems().add("Semester");
         for (Semester semester : University.allSemesters) {
             if (semester.getStatus().equals(Status.Active)) {
                 semesterChooserDeactiveSemester.getItems().add(semester.getName());
             }
         }
+        semesterChooserDeactiveSemester.setVisibleRowCount(4);
+        semesterChooserDeactiveSemester.getSelectionModel().selectFirst();
     }
 
     @FXML
     public void deactiveSemester(ActionEvent event) {
-        // Clear previous error message
-        errorLabelDeactiveSemester.setText("");
-
+        successLabelDeactiveSemester.setText(null);
+        boolean confirmation = true;
         // Check if a semester is selected
-        if (semesterChooserDeactiveSemester.getValue() == null) {
-            errorLabelDeactiveSemester.setText("Please select a semester to deactivate.");
-            return;
-        }
-
-        boolean semesterFound = false;
-        University.loadAllSemester();
-        for (Semester semester : University.allSemesters) {
-            if (semesterChooserDeactiveSemester.getValue().equals(semester.getName())) {
-                semester.setStatus(Status.Inactive);
-                semesterFound = true;
-                break; // Exit loop once semester is found and updated
-            }
-        }
-
-        if (semesterFound) {
-            try {
-                University.saveAllSemester();
-                errorLabelDeactiveSemester.setText("Semester deactivated successfully.");
-                semesterChooserDeactiveSemester.getItems().remove(semesterChooserDeactiveSemester.getValue()); // Remove deactivated semester
-                semesterChooserDeactiveSemester.setValue(null); // Clear selection
-            } catch (Exception e) {
-                errorLabelDeactiveSemester.setText("Error saving semester: " + e.getMessage());
-            }
+        if (semesterChooserDeactiveSemester.getValue().isEmpty() || semesterChooserDeactiveSemester.getValue().equals("Semester")) {
+            errorLabelSemesterDeactiveSemester.setText("Choose Semester");
+            confirmation = false;
         } else {
-            errorLabelDeactiveSemester.setText("Selected semester not found.");
+            errorLabelSemesterDeactiveSemester.setText(null);
         }
+        if (confirmation) {
+            boolean semesterFound = false;
+            University.loadAllSemester();
+            for (Semester semester : University.allSemesters) {
+                if (semesterChooserDeactiveSemester.getValue().equals(semester.getName())) {
+                    semester.setStatus(Status.Inactive);
+                    semesterFound = true;
+                    break; // Exit loop once semester is found and updated
+                }
+            }
+
+            if (semesterFound) {
+                try {
+                    University.saveAllSemester();
+                    successLabelDeactiveSemester.setText("The Selected Semester Deactivated Successfully");
+                    semesterChooserDeactiveSemester.getItems().remove(semesterChooserDeactiveSemester.getValue()); // Remove deactivated semester
+                    semesterChooserDeactiveSemester.setValue(null); // Clear selection
+                } catch (Exception e) {
+                    errorLabelDeactiveSemester.setText("Error saving semester: " + e.getMessage());
+                }
+            } else {
+                errorLabelDeactiveSemester.setText("The Selected Semester Has Not Found");
+            }
+
+        } else {
+            errorLabelDeactiveSemester.setText("Fill In All Fields");
+        }
+
     }
 
     @FXML
@@ -3974,6 +4155,9 @@ public class AdminPortal1 implements Initializable {
         buttonsScrollPane.setVisible(true);
         emergencyDropAnchorPane.setVisible(true);
         emergencyDropScrollPane.getStyleClass().add("pressed");
+
+        errorLabelEmergencyDrop.setText(null);
+        successLabelEmergencyDrop.setText(null);
 
     }
 
@@ -4013,16 +4197,18 @@ public class AdminPortal1 implements Initializable {
             reportsScrollPane.getStyleClass().remove("pressed");
         } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
-            deactiveSemesterAnchorPane.getStyleClass().remove("pressed");
-        }
-        else if (enrollmentAnchorPane.isVisible()) {
+            deactiveSemesterScrollPane.getStyleClass().remove("pressed");
+        } else if (enrollmentAnchorPane.isVisible()) {
             enrollmentAnchorPane.setVisible(false);
-            enrollmentAnchorPane.getStyleClass().remove("pressed");
+            enrollmentScrollPane.getStyleClass().remove("pressed");
         }
 
         if (!emergencyDropAnchorPane.isVisible()) {
             emergencyDropAnchorPane.setVisible(true);
-            emergencyDropAnchorPane.getStyleClass().add("pressed");
+            emergencyDropScrollPane.getStyleClass().add("pressed");
+
+            errorLabelEmergencyDrop.setText(null);
+            successLabelEmergencyDrop.setText(null);
         }
     }
 
@@ -4066,12 +4252,5 @@ public class AdminPortal1 implements Initializable {
         } catch (IOException e) {
             System.out.println("Error in Deactive Emergency Drop!! " + e.getMessage());
         }
-    }
-
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
-
     }
 }

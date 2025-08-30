@@ -13,9 +13,9 @@ public class Semester implements Serializable {
     private Status status;
     public static List<CourseGroup> courseGroups;
 
-    public Semester(String name) {
+    public Semester(String name, Status status) {
         this.name = name;
-        this.status = Status.Active;
+        this.status = status;
         courseGroups = new ArrayList<>();
     }
 

@@ -201,7 +201,7 @@ public class EnrollStudentController {
 
         Semester studentSemester = realStudent.getSemesterByName(selectedSemesterName);
         if (studentSemester == null) {
-            studentSemester = new Semester(selectedSemesterName);
+            studentSemester = new Semester(selectedSemesterName, Status.Active);
             studentSemester.courseGroups = new ArrayList<>();
             realStudent.getSemesters().add(studentSemester);
             System.out.println("Created new semester: " + selectedSemesterName);

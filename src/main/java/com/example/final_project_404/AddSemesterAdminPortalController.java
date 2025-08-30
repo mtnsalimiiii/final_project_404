@@ -161,7 +161,7 @@ public class AddSemesterAdminPortalController {
 
     public void addSemester(ActionEvent event){
         University.loadAllSemester();
-        University.allSemesters.add(new Semester(semesterCode.getText().trim()));
+        University.allSemesters.add(new Semester(semesterCode.getText().trim(), Status.Active));
         University.saveAllSemester();
         System.out.println("Semester with code:"+ semesterCode.getText().trim()+"add successfull.");
     }

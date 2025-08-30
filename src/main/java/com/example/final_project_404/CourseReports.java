@@ -58,8 +58,8 @@ public class CourseReports implements Serializable{
         this.creditProperty.set(credit);
     }
 
-    public Status getStatus() {
-        return Status.valueOf(statusProperty.get());
+    public String getStatus() {
+        return statusProperty.get();
     }
     public StringProperty statusProperty() {
         return statusProperty;

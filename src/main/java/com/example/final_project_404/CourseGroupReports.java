@@ -13,7 +13,7 @@ public class CourseGroupReports implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private final StringProperty courseNameProperty;
-    private final StringProperty courseCreditProperty;
+    private final IntegerProperty courseCreditProperty;
     private final StringProperty semesterCodeProperty;
     private final StringProperty professorNameProperty;
     private final StringProperty idProperty;
@@ -23,9 +23,9 @@ public class CourseGroupReports implements Serializable {
     private final IntegerProperty capacityProperty;
 
 
-    public CourseGroupReports(String name, String credit, String semesterCode, String professor, String id, String major, String degree, Status status, int capacity) {
+    public CourseGroupReports(String name, int credit, String semesterCode, String professor, String id, String major, String degree, Status status, int capacity) {
         this.courseNameProperty = new SimpleStringProperty(name);
-        this.courseCreditProperty = new SimpleStringProperty(credit);
+        this.courseCreditProperty = new SimpleIntegerProperty(credit);
         this.professorNameProperty = new SimpleStringProperty(professor);
         this.semesterCodeProperty = new SimpleStringProperty(semesterCode);
         this.idProperty = new SimpleStringProperty(id);
@@ -45,13 +45,13 @@ public class CourseGroupReports implements Serializable {
         this.courseNameProperty.set(name);
     }
 
-    public String getCourseCredit() {
+    public int getCourseCredit() {
         return courseCreditProperty.get();
     }
-    public StringProperty courseCreditProperty() {
+    public IntegerProperty courseCreditProperty() {
         return courseCreditProperty;
     }
-    public void setCourseCredit(String credit) {
+    public void setCourseCredit(int credit) {
         this.courseCreditProperty.set(credit);
     }
 
@@ -85,8 +85,8 @@ public class CourseGroupReports implements Serializable {
         this.idProperty.set(id);
     }
 
-    public Status getStatus() {
-        return Status.valueOf(statusProperty.get());
+    public String getStatus() {
+        return statusProperty.get();
     }
     public StringProperty statusProperty() {
         return statusProperty;

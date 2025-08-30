@@ -5035,7 +5035,7 @@ public class EmployeePortal1 {
         searchFieldCourseGroup.setText("Search ...");
 
         colCourseNameReportCourseGroup.setCellValueFactory(data -> data.getValue().courseNameProperty());
-        colCourseCreditReportCourseGroup.setCellValueFactory(data -> data.getValue().courseCreditProperty());
+        colCourseCreditReportCourseGroup.setCellValueFactory(data -> data.getValue().courseCreditProperty().asString());
         colSemesterCodeReportCourseGroup.setCellValueFactory(data -> data.getValue().semesterCodeProperty());
         colProfessorNameReportCourseGroup.setCellValueFactory(data -> data.getValue().professorNameProperty());
         colIdReportCourseGroup.setCellValueFactory(data -> data.getValue().idProperty());
@@ -5057,7 +5057,7 @@ public class EmployeePortal1 {
                                         if (course.getStatus().equals(Status.Active)) {
                                             for (CourseGroup courseGroup : course.courseGroups) {
                                                 if (courseGroup.getStatus().equals(Status.Active)) {
-                                                    courseGroupList.add(new CourseGroupReports(course.getName(), String.valueOf(course.getCredit()), courseGroup.getSemesterCode(), courseGroup.getProfessor(), courseGroup.getId(), major.getName(), degree.getClass().getSimpleName(), courseGroup.getStatus(), courseGroup.getCapacity()));
+                                                    courseGroupList.add(new CourseGroupReports(course.getName(), course.getCredit(), courseGroup.getSemesterCode(), courseGroup.getProfessor(), courseGroup.getId(), major.getName(), degree.getClass().getSimpleName(), courseGroup.getStatus(), courseGroup.getCapacity()));
                                                 }
                                             }
                                         }
@@ -5418,7 +5418,7 @@ public class EmployeePortal1 {
         filteredListReportCourseGroup.setPredicate(courseGroupReports ->
                 courseGroupReports.getCourseName().toLowerCase().contains(keyword) ||
                         String.valueOf(courseGroupReports.getCapacity()).contains(keyword) ||
-                        courseGroupReports.getCourseCredit().toLowerCase().contains(keyword) ||
+                        String.valueOf(courseGroupReports.getCourseCredit()).toLowerCase().contains(keyword) ||
                         courseGroupReports.getProfessorName().toLowerCase().contains(keyword) ||
                         courseGroupReports.getSemesterCode().toLowerCase().contains(keyword) ||
                         courseGroupReports.getId().toLowerCase().contains(keyword) ||

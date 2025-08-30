@@ -15,7 +15,6 @@ public class Major implements Serializable{
     private Status status;
 
     public List<Degree> degrees=new ArrayList<>();
-    //public List<Course>  courses=new ArrayList<>();
     public List<Student> students = new ArrayList<>();
     public List<Professor> professors = new ArrayList<>();
 
