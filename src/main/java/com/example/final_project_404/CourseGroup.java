@@ -19,6 +19,9 @@ public class CourseGroup implements Serializable {
     private int capacity;
     private String id;
     private Map<String, Double> grades = new HashMap<>();
+
+
+
     private List<Student> enrolledStudents = new ArrayList<>();
     public CourseGroup(String professorName,String semesterCode,int capacity,String id,Status status, Course course) {
         this.professorName = professorName;
@@ -62,7 +65,9 @@ public class CourseGroup implements Serializable {
     public List<Student> getRegisteredStudents() {
         return enrolledStudents;
     }
-
+    public void setRegisteredStudents(List<Student> enrolledStudents) {
+        this.enrolledStudents = enrolledStudents;
+    }
     public Course getCourse() {
         return course;
     }

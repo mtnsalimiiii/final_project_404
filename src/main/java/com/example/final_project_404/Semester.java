@@ -11,13 +11,19 @@ public class Semester implements Serializable {
 
     private String name;
     private Status status;
-    public static List<CourseGroup> courseGroups;
+    public  List<CourseGroup> courseGroups;
 
     public Semester(String name, Status status) {
         this.name = name;
         this.status = status;
-        courseGroups = new ArrayList<>();
+        courseGroups = new ArrayList<>(); // 👈 اینو اضافه کن
     }
+
+    // لازم برای سریالایز
+    public Semester() {
+        courseGroups = new ArrayList<>(); // 👈 اینم اضافه کن
+    }
+
 
     public String getName() {
         return name;
@@ -32,7 +38,7 @@ public class Semester implements Serializable {
     }
 
     public List<CourseGroup> getCourseGroups() {
-        return courseGroups;
+       return courseGroups;
     }
 
     public void addCourseGroup(CourseGroup courseGroup) {
