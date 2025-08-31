@@ -19,7 +19,6 @@
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane maxWidth="800.0" minHeight="550.0" minWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.ProfessorPortalController">
-
     <children>
         <!-- ======= Header ======= -->
         <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0" styleClass="header" stylesheets="@EmployeePortal.css">
@@ -36,8 +35,9 @@
                         <Button fx:id="gradeSubmissionScrollPane" layoutX="20.0" layoutY="85.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#gradeSubmissionScrollPane" styleClass="nav-button-dashboard" text="Grade&#10;Submission" textAlignment="CENTER" />
                         <Button fx:id="removeStudentScrollPane" layoutX="20.0" layoutY="150.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#removeStudentScrollPane" styleClass="nav-button-dashboard" text="Remove&#10;Student" textAlignment="CENTER" />
                         <Button fx:id="profileScrollPane" layoutX="20.0" layoutY="215.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#profileScrollPane" styleClass="nav-button-dashboard" text="Profile" />
-                        <Button fx:id="reportsScrollPane" layoutX="20.0" layoutY="280.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#reportsScrollPane" styleClass="nav-button-dashboard" text="Reports" />
-                        <Button layoutX="20.0" layoutY="345.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#signOutScrollPane" styleClass="nav-button-dashboard" text="Sign Out" />
+                        <Button fx:id="coursesListScrollPane" layoutX="20.0" layoutY="280.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#coursesListScrollPane" styleClass="nav-button-dashboard" text="Courses List" />
+                        <Button fx:id="reportsScrollPane" layoutX="20.0" layoutY="345.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#reportsScrollPane" styleClass="nav-button-dashboard" text="Reports" />
+                        <Button layoutX="20.0" layoutY="410.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#signOutScrollPane" styleClass="nav-button-dashboard" text="Sign Out" />
                     </children>
                     <padding>
                         <Insets bottom="10.0" left="12.5" right="12.5" top="10.0" />
@@ -77,8 +77,9 @@
                                 <Button onAction="#gradeSubmissionDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Grade Submission" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                 <Button onAction="#removeStudentDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Remove Student" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                 <Button onAction="#profileDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Profile" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                                <Button onAction="#reportsDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Reports" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                                <Button onAction="#signOutDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Sign out" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                                <Button onAction="#coursesListDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Courses List" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                                <Button onAction="#reportsDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Reports" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                                <Button onAction="#signOutDashboard" prefWidth="280.0" styleClass="button-dashboard" text="Sign out" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
                             </children>
                         </GridPane>
                     </children>
@@ -224,6 +225,42 @@
             <stylesheets>
                 <URL value="@EmployeePortal.css" />
                 <URL value="@ErrorAndSuccessfulLabel.css" />
+            </stylesheets>
+        </AnchorPane>
+        <AnchorPane fx:id="coursesListAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false">
+            <children>
+                <VBox prefHeight="470.0" prefWidth="630.0" spacing="15" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <padding>
+                        <Insets bottom="15" left="15" right="15" top="15" />
+                    </padding>
+                    <children>
+                        <!-- ======= Filters ======= -->
+                        <HBox alignment="CENTER" spacing="10">
+                            <ComboBox fx:id="semesterComboBoxCoursesList" prefHeight="35.0" prefWidth="220.0" promptText="Semester" />
+                            <Button onAction="#loadCoursesList" prefHeight="32.0" prefWidth="115.0" text="Load Courses" />
+                        </HBox>
+                        <!-- ======= Courses Table ======= -->
+                        <TableView fx:id="coursesTableCoursesList" prefHeight="350.0">
+                            <columns>
+                                <TableColumn fx:id="rowNumberColCoursesList" prefWidth="80.0" text="Row" />
+                                <TableColumn fx:id="courseNameColCoursesList" prefWidth="170.0" text="Course Name" />
+                                <TableColumn fx:id="groupIdColCoursesList" prefWidth="100.0" text="Group ID" />
+                                <TableColumn fx:id="semesterColCoursesList" prefWidth="100.0" text="Semester" />
+                                <TableColumn fx:id="studentCountColCoursesList" prefWidth="120.0" text="Students Enrolled" />
+                            </columns>
+                        </TableView>
+                        <!-- ======= Message Label ======= -->
+                        <HBox alignment="CENTER_RIGHT">
+                            <Label fx:id="messageLabelCoursesList" prefHeight="30.0" prefWidth="465.0" styleClass="error-label" textAlignment="LEFT" />
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+            <stylesheets>
+                <URL value="@EmployeePortal.css" />
+                <URL value="@ErrorAndSuccessfulLabel.css" />
+                <URL value="@comboBoxStyle.css" />
+                <URL value="@TableViewStyle.css" />
             </stylesheets>
         </AnchorPane>
         <AnchorPane fx:id="reportsAnchorPane" layoutX="170.0" layoutY="80.0" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false">
