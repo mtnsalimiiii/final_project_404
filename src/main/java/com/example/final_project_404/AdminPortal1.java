@@ -673,26 +673,56 @@ public class AdminPortal1 {
     @FXML
     private Label successLabelEmergencyDrop;
 
-
-
     @FXML
-    void activeEnrollment(ActionEvent event){
-        File file = new File("Enrollment.txt");
+    void activeEmergencyDrop(ActionEvent event) {
+        File file = new File("EmergencyDrop.txt");
         try {
             if (file.exists()) {
                 if (!file.delete()) {
-                    System.out.println("Error in delete file!!");
+                    errorLabelEmergencyDrop.setText("Error deleting file!");
+                    successLabelEmergencyDrop.setText(null);
+                    emergencyDropStatusLabel.setText("Emergency Drop Status: Unknown");
                     return;
                 }
             }
 
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                 writer.write("Active");
-                System.out.println("Enrollment is active now!");
+                successLabelEmergencyDrop.setText("Emergency Drop successfully activated!");
+                errorLabelEmergencyDrop.setText(null);
+                emergencyDropStatusLabel.setText("Emergency Drop Status: Active");
             }
 
         } catch (IOException e) {
-            System.out.println("Error in Active Enrollment!! " + e.getMessage());
+            errorLabelEmergencyDrop.setText("Error activating Emergency Drop: " + e.getMessage());
+            successLabelEmergencyDrop.setText(null);
+            emergencyDropStatusLabel.setText("Emergency Drop Status: Unknown");
+        }
+    }
+
+    @FXML
+    void activeEnrollment(ActionEvent event) {
+        File file = new File("Enrollment.txt");
+        try {
+            if (file.exists()) {
+                if (!file.delete()) {
+                    errorLabelEnrollment.setText("Error deleting file!");
+                    successLabelEnrollment.setText(null);
+                    return;
+                }
+            }
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer.write("Active");
+                successLabelEnrollment.setText("Enrollment successfully activated!");
+                errorLabelEnrollment.setText(null);
+                enrollmentStatusLabel.setText("Enrollment Status: Active");
+            }
+
+        } catch (IOException e) {
+            errorLabelEnrollment.setText("Error activating enrollment: " + e.getMessage());
+            successLabelEnrollment.setText(null);
+            enrollmentStatusLabel.setText("Enrollment Status: Unknown");
         }
     }
 
@@ -1830,23 +1860,55 @@ public class AdminPortal1 {
     }
 
     @FXML
-    void deactiveEnrollment(ActionEvent event){
-        File file = new File("Enrollment.txt");
+    void deactiveEmergencyDrop(ActionEvent event) {
+        File file = new File("EmergencyDrop.txt");
         try {
             if (file.exists()) {
                 if (!file.delete()) {
-                    System.out.println("Error in delete file!!");
+                    errorLabelEmergencyDrop.setText("Error deleting file!");
+                    successLabelEmergencyDrop.setText(null);
+                    emergencyDropStatusLabel.setText("Emergency Drop Status: Unknown");
                     return;
                 }
             }
 
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                 writer.write("Deactive");
-                System.out.println("Enrollment is Deactive now!");
+                successLabelEmergencyDrop.setText("Emergency Drop successfully deactivated!");
+                errorLabelEmergencyDrop.setText(null);
+                emergencyDropStatusLabel.setText("Emergency Drop Status: Deactive");
             }
 
         } catch (IOException e) {
-            System.out.println("Error in Deactive Enrollment!! " + e.getMessage());
+            errorLabelEmergencyDrop.setText("Error deactivating Emergency Drop: " + e.getMessage());
+            successLabelEmergencyDrop.setText(null);
+            emergencyDropStatusLabel.setText("Emergency Drop Status: Unknown");
+        }
+    }
+
+    @FXML
+    void deactiveEnrollment(ActionEvent event) {
+        File file = new File("Enrollment.txt");
+        try {
+            if (file.exists()) {
+                if (!file.delete()) {
+                    errorLabelEnrollment.setText("Error deleting file!");
+                    successLabelEnrollment.setText(null);
+                    return;
+                }
+            }
+
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                writer.write("Deactive");
+                successLabelEnrollment.setText("Enrollment successfully deactivated!");
+                errorLabelEnrollment.setText(null);
+                enrollmentStatusLabel.setText("Enrollment Status: Deactive");
+            }
+
+        } catch (IOException e) {
+            errorLabelEnrollment.setText("Error deactivating enrollment: " + e.getMessage());
+            successLabelEnrollment.setText(null);
+            enrollmentStatusLabel.setText("Enrollment Status: Unknown");
         }
     }
 
@@ -2616,27 +2678,38 @@ public class AdminPortal1 {
     }
 
     @FXML
-    void enrollmentDashboard(ActionEvent event) {
+    void emergencyDropDashboard(ActionEvent event) {
         // Set the header title
-        headerTitle.setText(" --> Enrollment");
+        headerTitle.setText(" --> Emergency Drop");
 
         // Hide all anchor panes
         dashboardAnchorPane.setVisible(false);
         buttonsScrollPane.setVisible(true);
-        enrollmentAnchorPane.setVisible(true);
-        enrollmentScrollPane.getStyleClass().add("pressed");
+        emergencyDropAnchorPane.setVisible(true);
+        emergencyDropScrollPane.getStyleClass().add("pressed");
 
+        errorLabelEmergencyDrop.setText(null);
+        successLabelEmergencyDrop.setText(null);
 
-        errorLabelEnrollment.setText(null);
-        successLabelEnrollment.setText(null);
-
+        // Check current emergency drop status
+        File file = new File("EmergencyDrop.txt");
+        if (file.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String status = reader.readLine();
+                emergencyDropStatusLabel.setText("Emergency Drop Status: " + (status.equals("Active") ? "Active" : "Deactive"));
+            } catch (IOException e) {
+                emergencyDropStatusLabel.setText("Emergency Drop Status: Unknown");
+            }
+        } else {
+            emergencyDropStatusLabel.setText("Emergency Drop Status: Unknown");
+        }
     }
 
     @FXML
-    void enrollmentScrollPane(ActionEvent event) {
-        headerTitle.setText(" --> Enrollment");
+    void emergencyDropScrollPane(ActionEvent event) {
+        headerTitle.setText(" --> Emergency Drop");
 
-        if (addFacultyAnchorPane.isVisible()){
+        if (addFacultyAnchorPane.isVisible()) {
             addFacultyAnchorPane.setVisible(false);
             addFacultyScrollPane.getStyleClass().remove("pressed");
         } else if (updateFacultyAnchorPane.isVisible()) {
@@ -2669,7 +2742,99 @@ public class AdminPortal1 {
         } else if (deactiveSemesterAnchorPane.isVisible()) {
             deactiveSemesterAnchorPane.setVisible(false);
             deactiveSemesterScrollPane.getStyleClass().remove("pressed");
-        }else if (emergencyDropAnchorPane.isVisible()) {
+        } else if (enrollmentAnchorPane.isVisible()) {
+            enrollmentAnchorPane.setVisible(false);
+            enrollmentScrollPane.getStyleClass().remove("pressed");
+        }
+
+        if (!emergencyDropAnchorPane.isVisible()) {
+            emergencyDropAnchorPane.setVisible(true);
+            emergencyDropScrollPane.getStyleClass().add("pressed");
+
+            errorLabelEmergencyDrop.setText(null);
+            successLabelEmergencyDrop.setText(null);
+
+            // Check current emergency drop status
+            File file = new File("EmergencyDrop.txt");
+            if (file.exists()) {
+                try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                    String status = reader.readLine();
+                    emergencyDropStatusLabel.setText("Emergency Drop Status: " + (status.equals("Active") ? "Active" : "Deactive"));
+                } catch (IOException e) {
+                    emergencyDropStatusLabel.setText("Emergency Drop Status: Unknown");
+                }
+            } else {
+                emergencyDropStatusLabel.setText("Emergency Drop Status: Unknown");
+            }
+        }
+    }
+
+    @FXML
+    void enrollmentDashboard(ActionEvent event) {
+        // Set the header title
+        headerTitle.setText(" --> Enrollment");
+
+        // Hide all anchor panes
+        dashboardAnchorPane.setVisible(false);
+        buttonsScrollPane.setVisible(true);
+        enrollmentAnchorPane.setVisible(true);
+        enrollmentScrollPane.getStyleClass().add("pressed");
+
+        errorLabelEnrollment.setText(null);
+        successLabelEnrollment.setText(null);
+
+        // Check current enrollment status
+        File file = new File("Enrollment.txt");
+        if (file.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                String status = reader.readLine();
+                enrollmentStatusLabel.setText("Enrollment Status: " + (status.equals("Active") ? "Active" : "Deactive"));
+            } catch (IOException e) {
+                enrollmentStatusLabel.setText("Enrollment Status: Unknown");
+            }
+        } else {
+            enrollmentStatusLabel.setText("Enrollment Status: Unknown");
+        }
+    }
+
+    @FXML
+    void enrollmentScrollPane(ActionEvent event) {
+        headerTitle.setText(" --> Enrollment");
+
+        if (addFacultyAnchorPane.isVisible()) {
+            addFacultyAnchorPane.setVisible(false);
+            addFacultyScrollPane.getStyleClass().remove("pressed");
+        } else if (updateFacultyAnchorPane.isVisible()) {
+            updateFacultyAnchorPane.setVisible(false);
+            updateFacultyScrollPane.getStyleClass().remove("pressed");
+        } else if (addDepartmentAnchorPane.isVisible()) {
+            addDepartmentAnchorPane.setVisible(false);
+            addDepartmentScrollPane.getStyleClass().remove("pressed");
+        } else if (updateDepartmentAnchorPane.isVisible()) {
+            updateDepartmentAnchorPane.setVisible(false);
+            updateDepartmentScrollPane.getStyleClass().remove("pressed");
+        } else if (addMajorAnchorPane.isVisible()) {
+            addMajorAnchorPane.setVisible(false);
+            addMajorScrollPane.getStyleClass().remove("pressed");
+        } else if (updateMajorAnchorPane.isVisible()) {
+            updateMajorAnchorPane.setVisible(false);
+            updateMajorScrollPane.getStyleClass().remove("pressed");
+        } else if (addEmployeeAnchorPane.isVisible()) {
+            addEmployeeAnchorPane.setVisible(false);
+            addEmployeeScrollPane.getStyleClass().remove("pressed");
+        } else if (updateEmployeeAnchorPane.isVisible()) {
+            updateEmployeeAnchorPane.setVisible(false);
+            updateEmployeeScrollPane.getStyleClass().remove("pressed");
+        } else if (addSemesterAnchorPane.isVisible()) {
+            addSemesterAnchorPane.setVisible(false);
+            addSemesterScrollPane.getStyleClass().remove("pressed");
+        } else if (reportsAnchorPane.isVisible()) {
+            reportsAnchorPane.setVisible(false);
+            reportsScrollPane.getStyleClass().remove("pressed");
+        } else if (deactiveSemesterAnchorPane.isVisible()) {
+            deactiveSemesterAnchorPane.setVisible(false);
+            deactiveSemesterScrollPane.getStyleClass().remove("pressed");
+        } else if (emergencyDropAnchorPane.isVisible()) {
             emergencyDropAnchorPane.setVisible(false);
             emergencyDropScrollPane.getStyleClass().remove("pressed");
         }
@@ -4145,112 +4310,4 @@ public class AdminPortal1 {
 
     }
 
-    @FXML
-    void emergencyDropDashboard(ActionEvent event) {
-        // Set the header title
-        headerTitle.setText(" --> Emergency Drop");
-
-        // Hide all anchor panes
-        dashboardAnchorPane.setVisible(false);
-        buttonsScrollPane.setVisible(true);
-        emergencyDropAnchorPane.setVisible(true);
-        emergencyDropScrollPane.getStyleClass().add("pressed");
-
-        errorLabelEmergencyDrop.setText(null);
-        successLabelEmergencyDrop.setText(null);
-
-    }
-
-    @FXML
-    void emergencyDropScrollPane(ActionEvent event) {
-        headerTitle.setText(" --> Emergency Drop");
-
-        if (addFacultyAnchorPane.isVisible()){
-            addFacultyAnchorPane.setVisible(false);
-            addFacultyScrollPane.getStyleClass().remove("pressed");
-        } else if (updateFacultyAnchorPane.isVisible()) {
-            updateFacultyAnchorPane.setVisible(false);
-            updateFacultyScrollPane.getStyleClass().remove("pressed");
-        } else if (addDepartmentAnchorPane.isVisible()) {
-            addDepartmentAnchorPane.setVisible(false);
-            addDepartmentScrollPane.getStyleClass().remove("pressed");
-        } else if (updateDepartmentAnchorPane.isVisible()) {
-            updateDepartmentAnchorPane.setVisible(false);
-            updateDepartmentScrollPane.getStyleClass().remove("pressed");
-        } else if (addMajorAnchorPane.isVisible()) {
-            addMajorAnchorPane.setVisible(false);
-            addMajorScrollPane.getStyleClass().remove("pressed");
-        } else if (updateMajorAnchorPane.isVisible()) {
-            updateMajorAnchorPane.setVisible(false);
-            updateMajorScrollPane.getStyleClass().remove("pressed");
-        } else if (addEmployeeAnchorPane.isVisible()) {
-            addEmployeeAnchorPane.setVisible(false);
-            addEmployeeScrollPane.getStyleClass().remove("pressed");
-        } else if (updateEmployeeAnchorPane.isVisible()) {
-            updateEmployeeAnchorPane.setVisible(false);
-            updateEmployeeScrollPane.getStyleClass().remove("pressed");
-        } else if (addSemesterAnchorPane.isVisible()) {
-            addSemesterAnchorPane.setVisible(false);
-            addSemesterScrollPane.getStyleClass().remove("pressed");
-        } else if (reportsAnchorPane.isVisible()) {
-            reportsAnchorPane.setVisible(false);
-            reportsScrollPane.getStyleClass().remove("pressed");
-        } else if (deactiveSemesterAnchorPane.isVisible()) {
-            deactiveSemesterAnchorPane.setVisible(false);
-            deactiveSemesterScrollPane.getStyleClass().remove("pressed");
-        } else if (enrollmentAnchorPane.isVisible()) {
-            enrollmentAnchorPane.setVisible(false);
-            enrollmentScrollPane.getStyleClass().remove("pressed");
-        }
-
-        if (!emergencyDropAnchorPane.isVisible()) {
-            emergencyDropAnchorPane.setVisible(true);
-            emergencyDropScrollPane.getStyleClass().add("pressed");
-
-            errorLabelEmergencyDrop.setText(null);
-            successLabelEmergencyDrop.setText(null);
-        }
-    }
-
-    @FXML
-    void activeEmergencyDrop(ActionEvent event){
-        File file = new File("EmergencyDrop.txt");
-        try {
-            if (file.exists()) {
-                if (!file.delete()) {
-                    System.out.println("Error in delete file!!");
-                    return;
-                }
-            }
-
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-                writer.write("Active");
-                System.out.println("Emergency Drop is active now!");
-            }
-
-        } catch (IOException e) {
-            System.out.println("Error in Active Emergency Drop!! " + e.getMessage());
-        }
-    }
-
-    @FXML
-    void deactiveEmergencyDrop(ActionEvent event){
-        File file = new File("EmergencyDrop.txt");
-        try {
-            if (file.exists()) {
-                if (!file.delete()) {
-                    System.out.println("Error in delete file!!");
-                    return;
-                }
-            }
-
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
-                writer.write("Deactive");
-                System.out.println("Emergency Drop is Deactive now!");
-            }
-
-        } catch (IOException e) {
-            System.out.println("Error in Deactive Emergency Drop!! " + e.getMessage());
-        }
-    }
 }
