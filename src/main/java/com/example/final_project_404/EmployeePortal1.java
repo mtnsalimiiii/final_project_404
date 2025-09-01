@@ -56,6 +56,9 @@ public class EmployeePortal1 {
     private AnchorPane peopleReportAnchorPane;
 
     @FXML
+    private AnchorPane peopleByDateReportAnchorPane;
+
+    @FXML
     private Button AddCourseGroupButton;
 
     @FXML
@@ -501,6 +504,9 @@ public class EmployeePortal1 {
     private Label errorLabelRegisterStudent;
 
     @FXML
+    private Label errorLabelReportPeopleByDate;
+
+    @FXML
     private Label errorLabelSemesterAddCourseGroup;
 
     @FXML
@@ -511,6 +517,9 @@ public class EmployeePortal1 {
 
     @FXML
     private Label errorLabelNumberOfStudents;
+
+    @FXML
+    private ComboBox<String> fieldOfDateChooserPeopleByDate;
 
     @FXML
     private TextField firstNameEditProfessor;
@@ -657,7 +666,10 @@ public class EmployeePortal1 {
     private TextField phoneNumberRegisterStudent;
 
     @FXML
-    private DatePicker primaryDateProfessors;
+    private DatePicker primaryDatePeopleByDate;
+
+    @FXML
+    private DatePicker secondaryDatePeopleByDate;
 
     @FXML
     private ComboBox<String> professorChooserAddCourseGroup;
@@ -821,10 +833,31 @@ public class EmployeePortal1 {
     @FXML private TableColumn<People, String> colMajorReportPeople;
     @FXML private TableColumn<People, String> colDegreeReportPeople;
     @FXML private TableColumn<People, String> colStatusReportPeople;
+    @FXML private TableColumn<People, String> colDateOfDeactivationReportPeople;
     @FXML private TextField searchFieldPeople;
 
     private ObservableList<People> peopleList;
     private FilteredList<People> filteredListReportPeople;
+
+    //People Report
+    @FXML private TableView<People> tableViewReportPeopleByDate;
+    @FXML private TableColumn<People, String> colNameReportPeopleByDate;
+    @FXML private TableColumn<People, Integer> colAgeReportPeopleByDate;
+    @FXML private TableColumn<People, String> colGenderReportPeopleByDate;
+    @FXML private TableColumn<People, String> colPhoneReportPeopleByDate;
+    @FXML private TableColumn<People, String> colNationalIDReportPeopleByDate;
+    @FXML private TableColumn<People, String> colRoleReportPeopleByDate;
+    @FXML private TableColumn<People, String> colIDReportPeopleByDate;
+    @FXML private TableColumn<People, String> colDateOfRegisterReportPeopleByDate;
+    @FXML private TableColumn<People, String> colFacultyReportPeopleByDate;
+    @FXML private TableColumn<People, String> colDepartmentReportPeopleByDate;
+    @FXML private TableColumn<People, String> colMajorReportPeopleByDate;
+    @FXML private TableColumn<People, String> colDegreeReportPeopleByDate;
+    @FXML private TableColumn<People, String> colStatusReportPeopleByDate;
+    @FXML private TableColumn<People, String> colDateOfDeactivationReportPeopleByDate;
+
+    private ObservableList<People> peopleByDateList;
+    private FilteredList<People> filteredListReportPeopleByDate;
 
     //Course Report
     @FXML private TableView<CourseReports> tableViewReportCourse;
@@ -1767,7 +1800,7 @@ public class EmployeePortal1 {
             String professorId = "PRO"+(University.allProfessors.size()+1);
 
             Employee employee = LoginPanelController.employeePerson;
-            Professor professor = new Professor(firstName, lastName, dateOfBirth, nationalId, Gender.valueOf(gender), phoneNumber, professorId, dateOfHire, employee.getFaculty(), employee.getDepartment(), majorName, Status.Active);
+            Professor professor = new Professor(firstName, lastName, dateOfBirth, nationalId, Gender.valueOf(gender), phoneNumber, professorId, dateOfHire, employee.getFaculty(), employee.getDepartment(), majorName, Status.Active, null);
 
             for (Faculty faculty : University.allFaculties) {
                 if (faculty.getFacultyName().equals(employee.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
@@ -1856,7 +1889,8 @@ public class EmployeePortal1 {
                                                                 department.getName(),
                                                                 major.getName(),
                                                                 Status.Active,
-                                                                degree.getClass().getSimpleName()
+                                                                degree.getClass().getSimpleName(),
+                                                                null
                                                         );
 
                                                         major.students.add(student);
@@ -2066,7 +2100,7 @@ public class EmployeePortal1 {
             // ایجاد شیء دانشجو
             assert degree != null;
             Student student = new Student(firstName, lastName, dateOfBirth, nationalId, Gender.valueOf(gender),
-                    phoneNumber, studentId, dateOfJoin, employee.getFaculty(), employee.getDepartment(), majorName, Status.Active,degree.getClass().getSimpleName());
+                    phoneNumber, studentId, dateOfJoin, employee.getFaculty(), employee.getDepartment(), majorName, Status.Active,degree.getClass().getSimpleName(), null);
 
             if (University.allStudents.stream().anyMatch(student1 -> student1.getNationalId().equals(student.getNationalId()) && student1.getStatus().equals(Status.Active))) {
                 errorLabelRegisterStudent.setText("The Student Has Been Registered Earlier");
@@ -2666,10 +2700,12 @@ public class EmployeePortal1 {
                                 if (major.getName().equals(majorChooserDeactiveProfessor.getValue()) && major.getStatus().equals(Status.Active)) {
                                     for (Professor professor : major.professors){
                                         if (professor.getFullName().equals(professorChooserDeactiveProfessor.getValue())){
+                                            professor.setDateOfDeactivation(LocalDate.now());
                                             professor.setStatus(Status.Inactive);
                                             University.saveFaculties();
                                             for (Professor professor1 : University.allProfessors) {
                                                 if (professor1.getFullName().equals(professorChooserDeactiveProfessor.getValue())) {
+                                                    professor1.setDateOfDeactivation(LocalDate.now());
                                                     professor1.setStatus(Status.Inactive);
                                                     Professor.saveAllProfessor();
                                                     break;
@@ -2736,10 +2772,12 @@ public class EmployeePortal1 {
                                 if (major.getName().equals(majorChooserDeactiveStudents.getValue()) && major.getStatus().equals(Status.Active)) {
                                     for (Student student : major.students){
                                         if (student.getFullName().equals(studentChooserDeactiveStudents.getValue())){
+                                            student.setDateOfDeactivation(LocalDate.now());
                                             student.setStatus(Status.Inactive);
                                             University.saveFaculties();
                                             for (Student student1 : University.allStudents) {
                                                 if (student1.getFullName().equals(studentChooserDeactiveStudents.getValue())) {
+                                                    student1.setDateOfDeactivation(LocalDate.now());
                                                     student1.setStatus(Status.Inactive);
                                                     Student.saveAllStudent();
                                                     break;
@@ -4551,11 +4589,6 @@ public class EmployeePortal1 {
     }
 
     @FXML
-    void setProfessorChooserDeactive(ActionEvent event) {
-
-    }
-
-    @FXML
     void setProfessorChooserEdit(ActionEvent event) throws Exception {
         Professor.loadAllProfessor();
         for (Professor professor : University.allProfessors) {
@@ -4571,11 +4604,6 @@ public class EmployeePortal1 {
     }
 
     @FXML
-    void setStudentChooserDeactive(ActionEvent event) {
-
-    }
-
-    @FXML
     void setStudentChooserEdit(ActionEvent event) {
         Student.loadAllStudents();
         for (Student student : University.allStudents) {
@@ -4588,10 +4616,6 @@ public class EmployeePortal1 {
                 genderChooserEditStudents.getSelectionModel().select("Male");
             }
         }
-    }
-
-    public boolean isDateInRange(LocalDate date, LocalDate dateStart, LocalDate dateEnd) {
-        return (date.isAfter(dateStart) || date.isEqual(dateStart)) && (date.isBefore(dateEnd) || date.isEqual(dateEnd));
     }
 
     @FXML
@@ -5156,7 +5180,7 @@ public class EmployeePortal1 {
     }
 
     @FXML
-    void peopleReports() throws Exception {
+    void peopleReports() {
         headerTitle.setText(" --> Reports --> People");
         peopleReportAnchorPane.setVisible(true);
         reportsVbox.setVisible(false);
@@ -5178,24 +5202,29 @@ public class EmployeePortal1 {
         colMajorReportPeople.setCellValueFactory(data -> data.getValue().majorProperty());
         colDegreeReportPeople.setCellValueFactory(data -> data.getValue().degreeProperty());
         colStatusReportPeople.setCellValueFactory(data -> data.getValue().statusProperty());
+        colDateOfDeactivationReportPeople.setCellValueFactory(data -> data.getValue().dateOfDeactivationProperty());
 
-
-        Professor.loadAllProfessor();
-        Student.loadAllStudents();
+        University.loadFaculties();
 
 
         peopleList = FXCollections.observableArrayList();
 
-        for (Professor professor : University.allProfessors) {
-            peopleList.add(new People(professor.getFirst_name(), professor.getLast_name(), professor.getDateOfBirth(), professor.getNationalId(),
-                    professor.getGender(), professor.getPhoneNumber(), professor.getDateOfJoin(), "Professor", professor.getId(),
-                    professor.getFaculty(), professor.getDepartment(), professor.getMajor(), "----", professor.getStatus()));
-        }
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Major major : department.majors) {
+                    for (Student student : major.students) {
+                        peopleList.add(new People(student.getFirst_name(), student.getLast_name(), student.getDateOfBirth(), student.getNationalId(),
+                                student.getGender(), student.getPhoneNumber(), student.getDateOfJoin(), "Student", student.getId(),
+                                student.getFaculty(), student.getDepartment(), student.getMajor(), student.getDegree(), student.getStatus(), student.getDateOfDeactivation()));
+                    }
+                    for (Professor professor : major.professors) {
+                        peopleList.add(new People(professor.getFirst_name(), professor.getLast_name(), professor.getDateOfBirth(), professor.getNationalId(),
+                                professor.getGender(), professor.getPhoneNumber(), professor.getDateOfJoin(), "Professor", professor.getId(),
+                                professor.getFaculty(), professor.getDepartment(), professor.getMajor(), "----", professor.getStatus(), professor.getDateOfDeactivation()));
 
-        for (Student student : University.allStudents) {
-            peopleList.add(new People(student.getFirst_name(), student.getLast_name(), student.getDateOfBirth(), student.getNationalId(),
-                    student.getGender(), student.getPhoneNumber(), student.getDateOfJoin(), "Student", student.getId(),
-                    student.getFaculty(), student.getDepartment(), student.getMajor(), "----", student.getStatus()));
+                    }
+                }
+            }
         }
 
 
@@ -5206,6 +5235,66 @@ public class EmployeePortal1 {
         setupGenderContextMenuPeople();
         setupStatusContextMenuPeople();
         setupRoleContextMenuPeople();
+    }
+
+    @FXML
+    void peopleByDateReports() {
+        headerTitle.setText(" --> Reports --> People By Date");
+        peopleByDateReportAnchorPane.setVisible(true);
+        reportsVbox.setVisible(false);
+
+        fieldOfDateChooserPeopleByDate.getItems().clear();
+        fieldOfDateChooserPeopleByDate.getItems().addAll("Field", "Registration Date", "Deactivation Date");
+        fieldOfDateChooserPeopleByDate.getSelectionModel().selectFirst();
+        primaryDatePeopleByDate.setValue(null);
+        secondaryDatePeopleByDate.setValue(null);
+
+
+        // People
+        colNameReportPeopleByDate.setCellValueFactory(data -> data.getValue().fullNameProperty());
+        colAgeReportPeopleByDate.setCellValueFactory(data -> data.getValue().ageProperty().asObject());
+        colGenderReportPeopleByDate.setCellValueFactory(data -> data.getValue().genderProperty());
+        colPhoneReportPeopleByDate.setCellValueFactory(data -> data.getValue().phoneNumberProperty());
+        colNationalIDReportPeopleByDate.setCellValueFactory(data -> data.getValue().nationalIdProperty());
+        colRoleReportPeopleByDate.setCellValueFactory(data -> data.getValue().roleProperty());
+        colIDReportPeopleByDate.setCellValueFactory(data -> data.getValue().idProperty());
+        colDateOfRegisterReportPeopleByDate.setCellValueFactory(data -> data.getValue().dateOfRegistrationProperty());
+        colFacultyReportPeopleByDate.setCellValueFactory(data -> data.getValue().facultyProperty());
+        colDepartmentReportPeopleByDate.setCellValueFactory(data -> data.getValue().departmentProperty());
+        colMajorReportPeopleByDate.setCellValueFactory(data -> data.getValue().majorProperty());
+        colDegreeReportPeopleByDate.setCellValueFactory(data -> data.getValue().degreeProperty());
+        colStatusReportPeopleByDate.setCellValueFactory(data -> data.getValue().statusProperty());
+        colDateOfDeactivationReportPeopleByDate.setCellValueFactory(data -> data.getValue().dateOfDeactivationProperty());
+
+        University.loadFaculties();
+        peopleByDateList = FXCollections.observableArrayList();
+
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Major major : department.majors) {
+                    for (Student student : major.students) {
+                        peopleByDateList.add(new People(student.getFirst_name(), student.getLast_name(), student.getDateOfBirth(), student.getNationalId(),
+                                student.getGender(), student.getPhoneNumber(), student.getDateOfJoin(), "Student", student.getId(),
+                                student.getFaculty(), student.getDepartment(), student.getMajor(), student.getDegree(), student.getStatus(), student.getDateOfDeactivation()));
+                    }
+                    for (Professor professor : major.professors) {
+                        peopleByDateList.add(new People(professor.getFirst_name(), professor.getLast_name(), professor.getDateOfBirth(), professor.getNationalId(),
+                                professor.getGender(), professor.getPhoneNumber(), professor.getDateOfJoin(), "Professor", professor.getId(),
+                                professor.getFaculty(), professor.getDepartment(), professor.getMajor(), "----", professor.getStatus(), professor.getDateOfDeactivation()));
+
+                    }
+                }
+            }
+        }
+
+
+
+        filteredListReportPeopleByDate = new FilteredList<>(peopleByDateList, people -> true);
+        tableViewReportPeopleByDate.setItems(filteredListReportPeopleByDate);
+
+        setupGenderContextMenuPeopleByDate();
+        setupStatusContextMenuPeopleByDate();
+        setupRoleContextMenuPeopleByDate();
     }
 
     //    Reports ----->>> Majors
@@ -5248,6 +5337,110 @@ public class EmployeePortal1 {
     public void onBackReportMajor(ActionEvent event) {
         headerTitle.setText(" --> Reports");
         majorReportAnchorPane.setVisible(false);
+        reportsVbox.setVisible(true);
+    }
+    //    Reports ----->>> PeopleByDate
+    private void setupGenderContextMenuPeopleByDate() {
+        ContextMenu genderMenu = new ContextMenu();
+
+        MenuItem male = new MenuItem("Male");
+        male.setOnAction(e -> filterByGenderPeopleByDate("Male"));
+
+        MenuItem female = new MenuItem("Female");
+        female.setOnAction(e -> filterByGenderPeopleByDate("Female"));
+
+        MenuItem allGender = new MenuItem("All");
+        allGender.setOnAction(e -> {
+            filteredListReportPeopleByDate.setPredicate(p -> true);
+            tableViewReportPeopleByDate.setItems(filteredListReportPeopleByDate);
+        });
+
+        genderMenu.getItems().addAll(male, female, allGender);
+        colGenderReportPeopleByDate.setContextMenu(genderMenu);
+    }
+    private void filterByGenderPeopleByDate(String gender) {
+        filteredListReportPeopleByDate.setPredicate(people -> people.getGender().equalsIgnoreCase(gender));
+    }
+
+    private void setupStatusContextMenuPeopleByDate() {
+        ContextMenu statusMenu = new ContextMenu();
+
+        MenuItem active = new MenuItem("Active");
+        active.setOnAction(e -> filterByStatusByDate("Active"));
+        MenuItem inactive = new MenuItem("Inactive");
+        inactive.setOnAction(e -> filterByStatusByDate("Inactive"));
+
+        MenuItem allStatus = new MenuItem("All");
+        allStatus.setOnAction(e -> {
+            filteredListReportPeopleByDate.setPredicate(p -> true);
+            tableViewReportPeopleByDate.setItems(filteredListReportPeopleByDate);
+        });
+
+        statusMenu.getItems().addAll(active, inactive, allStatus);
+        colStatusReportPeopleByDate.setContextMenu(statusMenu);
+    }
+    private void filterByStatusByDate(String status) {
+        filteredListReportPeopleByDate.setPredicate(people -> people.getStatus().equalsIgnoreCase(status));
+    }
+
+    private void setupRoleContextMenuPeopleByDate() {
+        ContextMenu roleMenu = new ContextMenu();
+
+        MenuItem professor = new MenuItem("Professor");
+        professor.setOnAction(e -> filterByRolePeopleByDate("Professor"));
+        MenuItem student = new MenuItem("Student");
+        student.setOnAction(e -> filterByRolePeopleByDate("Student"));
+        MenuItem allRole = new MenuItem("All");
+        allRole.setOnAction(e -> {
+            filteredListReportPeopleByDate.setPredicate(p -> true);
+            tableViewReportPeopleByDate.setItems(filteredListReportPeopleByDate);
+        });
+
+        roleMenu.getItems().addAll(professor, student, allRole);
+        colRoleReportPeopleByDate.setContextMenu(roleMenu);
+    }
+
+    private void filterByRolePeopleByDate(String role) {
+        filteredListReportPeopleByDate.setPredicate(people -> people.getRole().equalsIgnoreCase(role));
+    }
+
+    public boolean isDateInRange(LocalDate date, LocalDate dateStart, LocalDate dateEnd) {
+        return (date.isAfter(dateStart) || date.isEqual(dateStart)) && (date.isBefore(dateEnd) || date.isEqual(dateEnd));
+    }
+
+    @FXML
+    private void onSearchPeopleByDate() {
+        boolean confirmation = true;
+        if (fieldOfDateChooserPeopleByDate.getValue() == null || fieldOfDateChooserPeopleByDate.getValue().equals("Field")) {
+            errorLabelReportPeopleByDate.setText("Choose Field Of Date");
+            confirmation = false;
+        } else if (primaryDatePeopleByDate.getValue() == null) {
+            errorLabelReportPeopleByDate.setText("Enter The Beginning Of Time Period");
+            confirmation = false;
+        } else if (secondaryDatePeopleByDate.getValue() == null) {
+            errorLabelReportPeopleByDate.setText("Enter The End Of Time Period");
+            confirmation = false;
+        } else if (primaryDatePeopleByDate.getValue().isAfter(secondaryDatePeopleByDate.getValue())) {
+            errorLabelReportPeopleByDate.setText("Enter Dates Correctly");
+            confirmation = false;
+        } else {
+            errorLabelReportPeopleByDate.setText(null);
+        }
+        if (confirmation) {
+            LocalDate primaryDate = primaryDatePeopleByDate.getValue();
+            LocalDate secondaryDate = secondaryDatePeopleByDate.getValue();
+            if (fieldOfDateChooserPeopleByDate.getValue().equals("Registration Date")) {
+                filteredListReportPeopleByDate.setPredicate(people -> isDateInRange(people.getDateOfRegistrationLocalDate(), primaryDate, secondaryDate));
+            } else if (fieldOfDateChooserPeopleByDate.getValue().equals("Deactivation Date")) {
+                filteredListReportPeopleByDate.setPredicate(people -> isDateInRange(people.getDateOfDeactivationLocalDate(), primaryDate, secondaryDate));
+            }
+        }
+    }
+
+    @FXML
+    private void onBackPeopleByDate() {
+        headerTitle.setText(" --> Reports");
+        peopleByDateReportAnchorPane.setVisible(false);
         reportsVbox.setVisible(true);
     }
     //    Reports ----->>> People

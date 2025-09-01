@@ -16,11 +16,12 @@ public abstract class Person implements Serializable {
     private String phoneNumber;
     private LocalDate dateOfBirth;
     private LocalDate dateOfJoin;
+    private LocalDate dateOfDeactivation;
     private Gender gender;
     private Status status;
 
     public Person(String firstName, String lastName, LocalDate dateOfBirth, String nationalId, Gender gender,
-                  String phoneNumber, LocalDate dateOfJoin, Status status) {
+                  String phoneNumber, LocalDate dateOfJoin, Status status, LocalDate dateOfDeactivation) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -28,6 +29,7 @@ public abstract class Person implements Serializable {
         this.gender = gender;
         this.phoneNumber = phoneNumber;
         this.dateOfJoin = dateOfJoin;
+        this.dateOfDeactivation = dateOfDeactivation;
         this.status = status;
         updateFullName();
     }
@@ -95,5 +97,12 @@ public abstract class Person implements Serializable {
     }
     private void updateFullName() {
         this.fullName = firstName + " " + lastName;
+    }
+
+    public LocalDate getDateOfDeactivation() {
+        return dateOfDeactivation;
+    }
+    public void setDateOfDeactivation(LocalDate dateOfDeactivation) {
+        this.dateOfDeactivation = dateOfDeactivation;
     }
 }

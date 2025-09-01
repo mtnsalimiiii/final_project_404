@@ -838,14 +838,16 @@
                             <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" percentHeight="0.0" prefHeight="60.0" vgrow="SOMETIMES" />
                         </rowConstraints>
                         <children>
                             <Button alignment="CENTER" layoutX="10.0" layoutY="17.0" mnemonicParsing="false" onAction="#facultiesReports" prefWidth="280.0" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Faculties" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                             <Button alignment="CENTER" layoutX="10.0" layoutY="17.0" mnemonicParsing="false" onAction="#departmentsReports" prefWidth="280.0" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Departments" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                             <Button alignment="CENTER" layoutX="10.0" layoutY="17.0" mnemonicParsing="false" onAction="#majorsReports" prefWidth="280.0" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Majors" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                             <Button alignment="CENTER" layoutX="10.0" layoutY="17.0" mnemonicParsing="false" onAction="#peopleReports" prefWidth="280.0" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="People" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-                            <Button alignment="CENTER" layoutX="10.0" layoutY="17.0" mnemonicParsing="false" onAction="#coursesReports" prefWidth="280.0" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Courses" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-                            <Button alignment="CENTER" layoutX="10.0" layoutY="17.0" mnemonicParsing="false" onAction="#courseGroupsReports" prefWidth="280.0" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Course Groups" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                            <Button alignment="CENTER" layoutX="10.0" layoutY="17.0" mnemonicParsing="false" onAction="#peopleByDateReports" prefWidth="280.0" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="People By Dates" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                            <Button alignment="CENTER" layoutX="10.0" layoutY="17.0" mnemonicParsing="false" onAction="#coursesReports" prefWidth="280.0" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Courses" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                            <Button alignment="CENTER" layoutX="10.0" layoutY="17.0" mnemonicParsing="false" onAction="#courseGroupsReports" prefWidth="280.0" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Course Groups" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
                         </children>
                         <VBox.margin>
                             <Insets top="10.0" />
@@ -975,14 +977,15 @@
                                     <TableColumn fx:id="colGenderReportPeople" prefWidth="90" text="Gender" />
                                     <TableColumn fx:id="colPhoneReportPeople" prefWidth="130" text="Phone Number" />
                                     <TableColumn fx:id="colNationalIDReportPeople" prefWidth="120" text="National ID" />
+                                    <TableColumn fx:id="colDateOfRegisterReportPeople" prefWidth="140" text="Date of Registration" />
                                     <TableColumn fx:id="colRoleReportPeople" prefWidth="90" text="Role" />
                                     <TableColumn fx:id="colIDReportPeople" prefWidth="90" text="ID" />
-                                    <TableColumn fx:id="colDateOfRegisterReportPeople" prefWidth="140" text="Date of Registration" />
                                     <TableColumn fx:id="colFacultyReportPeople" prefWidth="120" text="Faculty" />
                                     <TableColumn fx:id="colDepartmentReportPeople" prefWidth="120" text="Department" />
                                     <TableColumn fx:id="colMajorReportPeople" prefWidth="120" text="Major" />
                                     <TableColumn fx:id="colDegreeReportPeople" prefWidth="100" text="Degree" />
                                     <TableColumn fx:id="colStatusReportPeople" prefWidth="90" text="Status" />
+                                    <TableColumn fx:id="colDateOfDeactivationReportPeople" prefWidth="140" text="Date Of Deactivation" />
                                 </columns>
                                 <padding>
                                     <Insets left="5.0" right="5.0" />
@@ -994,6 +997,62 @@
                         </center>
 
                     </BorderPane>
+                </AnchorPane>
+                <AnchorPane fx:id="peopleByDateReportAnchorPane" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false">
+                    <BorderPane prefHeight="470" prefWidth="630">
+
+                        <top>
+                            <HBox alignment="CENTER_LEFT" spacing="10" style="-fx-padding: 10;">
+                                <Button onAction="#onBackPeopleByDate" styleClass="report-button" stylesheets="@DashboardButton.css" text="Back">
+                                    <HBox.margin>
+                                        <Insets right="15.0" />
+                                    </HBox.margin></Button>
+                                <ComboBox fx:id="fieldOfDateChooserPeopleByDate" prefWidth="150.0" promptText="Field" />
+                                <DatePicker fx:id="primaryDatePeopleByDate" prefWidth="140.0" promptText="From ..." />
+                                <DatePicker fx:id="secondaryDatePeopleByDate" layoutX="247.0" layoutY="25.0" prefWidth="140.0" promptText="To ..." />
+                                <Button layoutX="20.0" layoutY="22.0" onAction="#onSearchPeopleByDate" styleClass="report-button" stylesheets="@DashboardButton.css" text="Search" />
+                            </HBox>
+                        </top>
+
+                        <center>
+                            <TableView fx:id="tableViewReportPeopleByDate" prefWidth="630.0" stylesheets="@TableViewStyle.css" BorderPane.alignment="CENTER">
+                                <columns>
+                                    <TableColumn fx:id="colNameReportPeopleByDate" prefWidth="120" text="Name" />
+                                    <TableColumn fx:id="colAgeReportPeopleByDate" prefWidth="60" text="Age" />
+                                    <TableColumn fx:id="colGenderReportPeopleByDate" prefWidth="90" text="Gender" />
+                                    <TableColumn fx:id="colPhoneReportPeopleByDate" prefWidth="130" text="Phone Number" />
+                                    <TableColumn fx:id="colNationalIDReportPeopleByDate" prefWidth="120" text="National ID" />
+                                    <TableColumn fx:id="colDateOfRegisterReportPeopleByDate" prefWidth="140" text="Date of Registration" />
+                                    <TableColumn fx:id="colRoleReportPeopleByDate" prefWidth="90" text="Role" />
+                                    <TableColumn fx:id="colIDReportPeopleByDate" prefWidth="90" text="ID" />
+                                    <TableColumn fx:id="colFacultyReportPeopleByDate" prefWidth="120" text="Faculty" />
+                                    <TableColumn fx:id="colDepartmentReportPeopleByDate" prefWidth="120" text="Department" />
+                                    <TableColumn fx:id="colMajorReportPeopleByDate" prefWidth="120" text="Major" />
+                                    <TableColumn fx:id="colDegreeReportPeopleByDate" prefWidth="100" text="Degree" />
+                                    <TableColumn fx:id="colStatusReportPeopleByDate" prefWidth="90" text="Status" />
+                                    <TableColumn fx:id="colDateOfDeactivationReportPeopleByDate" prefWidth="140" text="Date Of Deactivation" />
+                                </columns>
+                                <padding>
+                                    <Insets left="5.0" right="5.0" />
+                                </padding>
+                                <BorderPane.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                </BorderPane.margin>
+                            </TableView>
+                        </center>
+                        <bottom>
+                            <Label fx:id="errorLabelReportPeopleByDate" styleClass="error-label" BorderPane.alignment="CENTER_LEFT">
+                                <BorderPane.margin>
+                                    <Insets bottom="10.0" />
+                                </BorderPane.margin>
+                            </Label>
+                        </bottom>
+
+                    </BorderPane>
+                    <stylesheets>
+                        <URL value="@comboBoxStyle.css" />
+                        <URL value="@ErrorAndSuccessfulLabel.css" />
+                    </stylesheets>
                 </AnchorPane>
                 <AnchorPane fx:id="coursesReportsAnchorPane" prefHeight="470.0" prefWidth="630.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false">
                     <BorderPane prefHeight="470" prefWidth="630">

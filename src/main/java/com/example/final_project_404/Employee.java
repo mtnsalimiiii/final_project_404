@@ -14,8 +14,8 @@ public class Employee extends Person implements Serializable{
     private String faculty;
     private String department;
 
-    public Employee(String first_name, String last_name, LocalDate dateOfBirth, String nationalId, Gender gender, String phoneNumber, String id, String department, String faculty, LocalDate dateOfHire, Status status){
-        super(first_name,last_name,dateOfBirth,nationalId,gender,phoneNumber,dateOfHire,status);
+    public Employee(String first_name, String last_name, LocalDate dateOfBirth, String nationalId, Gender gender, String phoneNumber, String id, String department, String faculty, LocalDate dateOfHire, Status status, LocalDate dateOfDeactivation){
+        super(first_name,last_name,dateOfBirth,nationalId,gender,phoneNumber,dateOfHire,status,dateOfDeactivation);
         this.id=id;
         this.faculty = faculty;
         this.department = department;

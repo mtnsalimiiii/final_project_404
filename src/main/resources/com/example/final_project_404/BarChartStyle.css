@@ -1,0 +1,56 @@
+.chart {
+    -fx-background-color: transparent;
+    -fx-padding: 10;
+}
+
+.chart-plot-background {
+    -fx-background-color: rgba(255,255,255,0.3);
+    -fx-background-radius: 8;
+}
+
+.chart-title {
+    -fx-text-fill: #0d2c54;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.axis {
+    -fx-tick-label-fill: #0d2c54;
+    -fx-font-size: 12px;
+    -fx-tick-mark-visible: true;
+    -fx-minor-tick-visible: false;
+}
+
+.axis-label {
+    -fx-text-fill: #0d2c54;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.chart-legend {
+    -fx-background-color: transparent;
+    -fx-text-fill: #0d2c54;
+    -fx-font-size: 12px;
+}
+
+.chart-bar {
+    -fx-bar-fill: linear-gradient(to top, #1e90ff, #00bfff);
+    -fx-background-radius: 6;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 5, 0, 2, 2);
+}
+
+.default-color0.chart-bar {
+    -fx-bar-fill: linear-gradient(to top, #1e90ff, #00bfff);
+}
+
+.default-color1.chart-bar {
+    -fx-bar-fill: linear-gradient(to top, #ff7f50, #ff6347);
+}
+
+.default-color2.chart-bar {
+    -fx-bar-fill: linear-gradient(to top, #3cb371, #2e8b57);
+}
+
+.default-color3.chart-bar {
+    -fx-bar-fill: linear-gradient(to top, #9370db, #6a5acd);
+}

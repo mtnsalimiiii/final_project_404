@@ -528,10 +528,38 @@ public class AdminPortal1 {
     @FXML private TableColumn<People, String> colMajorReportPeople;
     @FXML private TableColumn<People, String> colDegreeReportPeople;
     @FXML private TableColumn<People, String> colStatusReportPeople;
+    @FXML private TableColumn<People, String> colDateOfDeactivationReportPeople;
     @FXML private TextField searchFieldPeople;
 
     private ObservableList<People> peopleList;
     private FilteredList<People> filteredListReportPeople;
+
+    // PeopleByDate
+    @FXML private AnchorPane peopleByDateReportAnchorPane;
+    @FXML private TableView<People> tableViewReportPeopleByDate;
+
+    @FXML private TableColumn<People, String> colNameReportPeopleByDate;
+    @FXML private TableColumn<People, Integer> colAgeReportPeopleByDate;
+    @FXML private TableColumn<People, String> colGenderReportPeopleByDate;
+    @FXML private TableColumn<People, String> colPhoneReportPeopleByDate;
+    @FXML private TableColumn<People, String> colNationalIDReportPeopleByDate;
+    @FXML private TableColumn<People, String> colRoleReportPeopleByDate;
+    @FXML private TableColumn<People, String> colIDReportPeopleByDate;
+    @FXML private TableColumn<People, String> colDateOfRegisterReportPeopleByDate;
+    @FXML private TableColumn<People, String> colFacultyReportPeopleByDate;
+    @FXML private TableColumn<People, String> colDepartmentReportPeopleByDate;
+    @FXML private TableColumn<People, String> colMajorReportPeopleByDate;
+    @FXML private TableColumn<People, String> colDegreeReportPeopleByDate;
+    @FXML private TableColumn<People, String> colStatusReportPeopleByDate;
+    @FXML private TableColumn<People, String> colDateOfDeactivationReportPeopleByDate;
+    @FXML private ComboBox<String> fieldOfDateChooserPeopleByDate;
+    @FXML private DatePicker primaryDatePeopleByDate;
+    @FXML private DatePicker secondaryDatePeopleByDate;
+    @FXML private Label errorLabelReportPeopleByDate;
+
+
+    private ObservableList<People> peopleByDateList;
+    private FilteredList<People> filteredListReportPeopleByDate;
 
     // Courses
     @FXML private TextField searchFieldCourses;
@@ -997,7 +1025,7 @@ public class AdminPortal1 {
             LocalDate dateOfHire = LocalDate.now();
             String id = getEmployeeId();
 
-            Employee employee = new Employee(firstName, lastName, dateOfBirth, nationalId, gender, phoneNumber, id, departmentName, facultyName, dateOfHire, Status.Active);
+            Employee employee = new Employee(firstName, lastName, dateOfBirth, nationalId, gender, phoneNumber, id, departmentName, facultyName, dateOfHire, Status.Active, null);
             for (Faculty faculty : University.allFaculties) {
                 if (faculty.getFacultyName().equals(facultyName) && faculty.getStatus().equals(Status.Active)) {
                     for (Department department : faculty.departments) {
@@ -1939,10 +1967,12 @@ public class AdminPortal1 {
                         if (department.getName().equals(departmentChooserDeactiveEmployee.getValue())) {
                             for (Employee employee : department.employees){
                                 if (employee.getFullName().equals(employeeChooserDeactiveEmployee.getValue())){
+                                    employee.setDateOfDeactivation(LocalDate.now());
                                     employee.setStatus(Status.Inactive);
                                     Employee.loadAllEmployee();
                                     for (Employee employee1 : University.allEmployees){
                                         if (employee1.getId().equals(employeeChooserDeactiveEmployee.getValue())){
+                                            employee1.setDateOfDeactivation(LocalDate.now());
                                             employee1.setStatus(Status.Inactive);
                                             break;
                                         }
@@ -2929,36 +2959,32 @@ public class AdminPortal1 {
         colMajorReportPeople.setCellValueFactory(data -> data.getValue().majorProperty());
         colDegreeReportPeople.setCellValueFactory(data -> data.getValue().degreeProperty());
         colStatusReportPeople.setCellValueFactory(data -> data.getValue().statusProperty());
+        colDateOfDeactivationReportPeople.setCellValueFactory(data -> data.getValue().dateOfDeactivationProperty());
 
-
-        Employee.loadAllEmployee();
-        try {
-            Professor.loadAllProfessor();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        Student.loadAllStudents();
-
-
+        University.loadFaculties();
         peopleList = FXCollections.observableArrayList();
-        for (Employee employee : University.allEmployees) {
-            peopleList.add(new People(employee.getFirst_name(), employee.getLast_name(), employee.getDateOfBirth(), employee.getNationalId(),
-                    employee.getGender(), employee.getPhoneNumber(), employee.getDateOfJoin(),"Employee", employee.getId(),
-                    employee.getFaculty(), employee.getDepartment(), "----", "----", employee.getStatus()));
-        }
 
-        for (Professor professor : University.allProfessors) {
-            peopleList.add(new People(professor.getFirst_name(), professor.getLast_name(), professor.getDateOfBirth(), professor.getNationalId(),
-                    professor.getGender(), professor.getPhoneNumber(), professor.getDateOfJoin(), "Professor", professor.getId(),
-                    professor.getFaculty(), professor.getDepartment(), professor.getMajor(), "----", professor.getStatus()));
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Employee employee : department.employees) {
+                    peopleList.add(new People(employee.getFirst_name(), employee.getLast_name(), employee.getDateOfBirth(), employee.getNationalId(),
+                            employee.getGender(), employee.getPhoneNumber(), employee.getDateOfJoin(),"Employee", employee.getId(),
+                            employee.getFaculty(), employee.getDepartment(), "----", "----", employee.getStatus(), employee.getDateOfDeactivation()));
+                }
+                for (Major major : department.majors) {
+                    for (Student student : major.students) {
+                        peopleList.add(new People(student.getFirst_name(), student.getLast_name(), student.getDateOfBirth(), student.getNationalId(),
+                                student.getGender(), student.getPhoneNumber(), student.getDateOfJoin(), "Student", student.getId(),
+                                student.getFaculty(), student.getDepartment(), student.getMajor(), student.getDegree(), student.getStatus(), student.getDateOfDeactivation()));
+                    }
+                    for (Professor professor : major.professors) {
+                        peopleList.add(new People(professor.getFirst_name(), professor.getLast_name(), professor.getDateOfBirth(), professor.getNationalId(),
+                                professor.getGender(), professor.getPhoneNumber(), professor.getDateOfJoin(), "Professor", professor.getId(),
+                                professor.getFaculty(), professor.getDepartment(), professor.getMajor(), "----", professor.getStatus(), professor.getDateOfDeactivation()));
+                    }
+                }
+            }
         }
-
-        for (Student student : University.allStudents) {
-            peopleList.add(new People(student.getFirst_name(), student.getLast_name(), student.getDateOfBirth(), student.getNationalId(),
-                    student.getGender(), student.getPhoneNumber(), student.getDateOfJoin(), "Student", student.getId(),
-                    student.getFaculty(), student.getDepartment(), student.getMajor(), "----", student.getStatus()));
-        }
-
 
 
         filteredListReportPeople = new FilteredList<>(peopleList, people -> true);
@@ -2967,6 +2993,70 @@ public class AdminPortal1 {
         setupGenderContextMenuPeople();
         setupStatusContextMenuPeople();
         setupRoleContextMenuPeople();
+    }
+
+    @FXML
+    void peopleByDateReports(ActionEvent event) {
+        headerTitle.setText(" --> Reports --> People");
+        peopleByDateReportAnchorPane.setVisible(true);
+
+        fieldOfDateChooserPeopleByDate.getItems().clear();
+        fieldOfDateChooserPeopleByDate.getItems().addAll("Field", "Registration Date", "Deactivation Date");
+        fieldOfDateChooserPeopleByDate.getSelectionModel().selectFirst();
+        primaryDatePeopleByDate.setValue(null);
+        secondaryDatePeopleByDate.setValue(null);
+
+
+        // People
+        colNameReportPeopleByDate.setCellValueFactory(data -> data.getValue().fullNameProperty());
+        colAgeReportPeopleByDate.setCellValueFactory(data -> data.getValue().ageProperty().asObject());
+        colGenderReportPeopleByDate.setCellValueFactory(data -> data.getValue().genderProperty());
+        colPhoneReportPeopleByDate.setCellValueFactory(data -> data.getValue().phoneNumberProperty());
+        colNationalIDReportPeopleByDate.setCellValueFactory(data -> data.getValue().nationalIdProperty());
+        colRoleReportPeopleByDate.setCellValueFactory(data -> data.getValue().roleProperty());
+        colIDReportPeopleByDate.setCellValueFactory(data -> data.getValue().idProperty());
+        colDateOfRegisterReportPeopleByDate.setCellValueFactory(data -> data.getValue().dateOfRegistrationProperty());
+        colFacultyReportPeopleByDate.setCellValueFactory(data -> data.getValue().facultyProperty());
+        colDepartmentReportPeopleByDate.setCellValueFactory(data -> data.getValue().departmentProperty());
+        colMajorReportPeopleByDate.setCellValueFactory(data -> data.getValue().majorProperty());
+        colDegreeReportPeopleByDate.setCellValueFactory(data -> data.getValue().degreeProperty());
+        colStatusReportPeopleByDate.setCellValueFactory(data -> data.getValue().statusProperty());
+        colDateOfDeactivationReportPeopleByDate.setCellValueFactory(data -> data.getValue().dateOfDeactivationProperty());
+
+        University.loadFaculties();
+        peopleByDateList = FXCollections.observableArrayList();
+
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Employee employee : department.employees) {
+                    peopleByDateList.add(new People(employee.getFirst_name(), employee.getLast_name(), employee.getDateOfBirth(), employee.getNationalId(),
+                            employee.getGender(), employee.getPhoneNumber(), employee.getDateOfJoin(), "Employee", employee.getId(),
+                            employee.getFaculty(), employee.getDepartment(), "----", "----", employee.getStatus(), employee.getDateOfDeactivation()));
+                }
+                for (Major major : department.majors) {
+                    for (Student student : major.students) {
+                        peopleByDateList.add(new People(student.getFirst_name(), student.getLast_name(), student.getDateOfBirth(), student.getNationalId(),
+                                student.getGender(), student.getPhoneNumber(), student.getDateOfJoin(), "Student", student.getId(),
+                                student.getFaculty(), student.getDepartment(), student.getMajor(), student.getDegree(), student.getStatus(), student.getDateOfDeactivation()));
+                    }
+                    for (Professor professor : major.professors) {
+                        peopleByDateList.add(new People(professor.getFirst_name(), professor.getLast_name(), professor.getDateOfBirth(), professor.getNationalId(),
+                                professor.getGender(), professor.getPhoneNumber(), professor.getDateOfJoin(), "Professor", professor.getId(),
+                                professor.getFaculty(), professor.getDepartment(), professor.getMajor(), "----", professor.getStatus(), professor.getDateOfDeactivation()));
+
+                    }
+                }
+            }
+        }
+
+
+
+        filteredListReportPeopleByDate = new FilteredList<>(peopleByDateList, people -> true);
+        tableViewReportPeopleByDate.setItems(filteredListReportPeopleByDate);
+
+        setupGenderContextMenuPeopleByDate();
+        setupStatusContextMenuPeopleByDate();
+        setupRoleContextMenuPeopleByDate();
     }
 
     @FXML
@@ -3283,6 +3373,118 @@ public class AdminPortal1 {
     private void onBackPeople() {
         headerTitle.setText(" --> Reports");
         peopleReportsAnchorPane.setVisible(false);
+    }
+    //    Reports ------>>> PeopleByDate
+    private void setupGenderContextMenuPeopleByDate() {
+        ContextMenu genderMenu = new ContextMenu();
+
+        MenuItem male = new MenuItem("Male");
+        male.setOnAction(e -> filterByGenderPeopleByDate("Male"));
+
+        MenuItem female = new MenuItem("Female");
+        female.setOnAction(e -> filterByGenderPeopleByDate("Female"));
+
+        MenuItem allGender = new MenuItem("All");
+        allGender.setOnAction(e -> {
+            filteredListReportPeopleByDate.setPredicate(p -> true);
+            tableViewReportPeopleByDate.setItems(filteredListReportPeopleByDate);
+        });
+
+        genderMenu.getItems().addAll(male, female, allGender);
+        colGenderReportPeopleByDate.setContextMenu(genderMenu);
+    }
+    private void filterByGenderPeopleByDate(String gender) {
+        filteredListReportPeopleByDate.setPredicate(people -> people.getGender().equalsIgnoreCase(gender));
+    }
+
+    private void setupStatusContextMenuPeopleByDate() {
+        ContextMenu statusMenu = new ContextMenu();
+
+        MenuItem active = new MenuItem("Active");
+        active.setOnAction(e -> filterByStatusPeopleByDate("Active"));
+        MenuItem inactive = new MenuItem("Inactive");
+        inactive.setOnAction(e -> filterByStatusPeopleByDate("Inactive"));
+
+        MenuItem allStatus = new MenuItem("All");
+        allStatus.setOnAction(e -> tableViewReportPeopleByDate.setItems(peopleByDateList));
+
+        statusMenu.getItems().addAll(active, inactive, allStatus);
+        colStatusReportPeopleByDate.setContextMenu(statusMenu);
+    }
+
+    private void filterByStatusPeopleByDate(String status) {
+        ObservableList<People> filtered = FXCollections.observableArrayList();
+        for (People people : peopleByDateList) {
+            if (people.getStatus().equals(status)) {
+                filtered.add(people);
+            }
+        }
+        tableViewReportPeopleByDate.setItems(filtered);
+    }
+
+    private void setupRoleContextMenuPeopleByDate() {
+        ContextMenu roleMenu = new ContextMenu();
+
+        MenuItem employee = new MenuItem("Employee");
+        employee.setOnAction(e -> filterByRolePeopleByDate("Employee"));
+        MenuItem professor = new MenuItem("Professor");
+        professor.setOnAction(e -> filterByRolePeopleByDate("Professor"));
+        MenuItem student = new MenuItem("Student");
+        student.setOnAction(e -> filterByRolePeopleByDate("Student"));
+        MenuItem allRole = new MenuItem("All");
+        allRole.setOnAction(e -> tableViewReportPeopleByDate.setItems(peopleByDateList));
+
+        roleMenu.getItems().addAll(employee, professor, student, allRole);
+        colRoleReportPeopleByDate.setContextMenu(roleMenu);
+    }
+
+    private void filterByRolePeopleByDate(String role) {
+        ObservableList<People> filtered = FXCollections.observableArrayList();
+        for (People people : peopleByDateList) {
+            if (people.getRole().equals(role)) {
+                filtered.add(people);
+            }
+        }
+        tableViewReportPeopleByDate.setItems(filtered);
+    }
+
+    public boolean isDateInRange(LocalDate date, LocalDate dateStart, LocalDate dateEnd) {
+        return (date.isAfter(dateStart) || date.isEqual(dateStart)) && (date.isBefore(dateEnd) || date.isEqual(dateEnd));
+    }
+
+    @FXML
+    private void onSearchPeopleByDate() {
+        boolean confirmation = true;
+        if (fieldOfDateChooserPeopleByDate.getValue() == null || fieldOfDateChooserPeopleByDate.getValue().equals("Field")) {
+            errorLabelReportPeopleByDate.setText("Choose Field Of Date");
+            confirmation = false;
+        } else if (primaryDatePeopleByDate.getValue() == null) {
+            errorLabelReportPeopleByDate.setText("Enter The Beginning Of Time Period");
+            confirmation = false;
+        } else if (secondaryDatePeopleByDate.getValue() == null) {
+            errorLabelReportPeopleByDate.setText("Enter The End Of Time Period");
+            confirmation = false;
+        } else if (primaryDatePeopleByDate.getValue().isAfter(secondaryDatePeopleByDate.getValue())) {
+            errorLabelReportPeopleByDate.setText("Enter Dates Correctly");
+            confirmation = false;
+        } else {
+            errorLabelReportPeopleByDate.setText(null);
+        }
+        if (confirmation) {
+            LocalDate primaryDate = primaryDatePeopleByDate.getValue();
+            LocalDate secondaryDate = secondaryDatePeopleByDate.getValue();
+            if (fieldOfDateChooserPeopleByDate.getValue().equals("Registration Date")) {
+                filteredListReportPeopleByDate.setPredicate(people -> isDateInRange(people.getDateOfRegistrationLocalDate(), primaryDate, secondaryDate));
+            } else if (fieldOfDateChooserPeopleByDate.getValue().equals("Deactivation Date")) {
+                filteredListReportPeopleByDate.setPredicate(people -> isDateInRange(people.getDateOfDeactivationLocalDate(), primaryDate, secondaryDate));
+            }
+        }
+    }
+
+    @FXML
+    private void onBackPeopleByDate() {
+        headerTitle.setText(" --> Reports");
+        peopleByDateReportAnchorPane.setVisible(false);
     }
     //    Reports ------>>> Courses
     private void setupStatusContextMenuReportCourses() {

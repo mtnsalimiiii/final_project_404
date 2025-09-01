@@ -213,7 +213,7 @@ public class RegisterProfessorController implements Initializable {
         String professorId = generateProfessorId();
 
         if (!firstName.isBlank() && !lastName.isBlank() && !phoneNumber.isBlank() && !nationalId.isBlank() && gender!=null && faculty!=null && department!=null && major!=null){
-            Professor professor = new Professor(firstName,lastName, dateOfBirth, nationalId,gender,phoneNumber,professorId,dateOfHire,faculty,department,major,Status.Active);
+            Professor professor = new Professor(firstName,lastName, dateOfBirth, nationalId,gender,phoneNumber,professorId,dateOfHire,faculty,department,major,Status.Active, null);
 
             for (Faculty faculty1 : University.allFaculties) {
                 if (faculty1.getFacultyName().equals(faculty) && faculty1.getStatus().equals(Status.Active)) {

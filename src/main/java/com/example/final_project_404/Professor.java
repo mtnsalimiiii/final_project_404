@@ -17,8 +17,8 @@ public class Professor extends Person implements Serializable {
     private String department;
     private String major;
 
-    public Professor(String first_name, String last_name, LocalDate dateOfBirth, String nationalId, Gender gender, String phoneNumber, String id, LocalDate dateOfHire, String faculty, String department, String major, Status status){
-        super(first_name,last_name,dateOfBirth,nationalId,gender,phoneNumber,dateOfHire,status);
+    public Professor(String first_name, String last_name, LocalDate dateOfBirth, String nationalId, Gender gender, String phoneNumber, String id, LocalDate dateOfHire, String faculty, String department, String major, Status status, LocalDate dateOfDeactivation){
+        super(first_name,last_name,dateOfBirth,nationalId,gender,phoneNumber,dateOfHire,status, dateOfDeactivation);
         this.id = id;
         this.faculty = faculty;
         this.department = department;

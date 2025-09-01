@@ -9,6 +9,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
@@ -22,36 +25,45 @@ import java.util.Set;
 
 public class StudentPortalController {
 
-    @FXML private VBox containerBarVBox;
-    @FXML private HBox headerHBox;
-    @FXML private GridPane mainMenuPane;
-    @FXML private AnchorPane reportCardPane;
-    @FXML private ComboBox<String> semesterComboBox;
-    @FXML private TableView<ReportCardEntry> reportCardTable;
-    @FXML private TableColumn<ReportCardEntry, String> courseNameCol;
-    @FXML private TableColumn<ReportCardEntry, Double> scoreCol;
-    @FXML private TableColumn<ReportCardEntry, String> statusCol;
-    @FXML private Label messageLabel;
-    @FXML private Label studentNameLabel;
-    @FXML private Label semesterLabel;
-    @FXML private Label gpaLabel;
-    @FXML private Label probationStatusLabel;
-    @FXML private Label passedUnitsLabel;
-    @FXML private Label failedUnitsLabel;
+    @FXML private Label headerTitle;
+    @FXML private AnchorPane dashboardAnchorPane;
+    // Report Card
+    @FXML private AnchorPane reportCardAnchorPane;
+    @FXML private Label studentNameReportCard;
+    @FXML private Label semesterReportCard;
+    @FXML private Label gpaReportCard;
+    @FXML private Label probationStatusReportCard;
+    @FXML private Label passedUnitsReportCard;
+    @FXML private Label failedUnitsReportCard;
+    @FXML private ComboBox<String> semesterChooserReportCard;
+    @FXML private ComboBox<String> gradeShowReportCard;
+    @FXML private TableView<ReportCardEntry> gradeTableReportCard;
+    @FXML private TableColumn<ReportCardEntry, String> courseNameColReportCard;
+    @FXML private TableColumn<ReportCardEntry, Double> scoreColReportCard;
+    @FXML private TableColumn<ReportCardEntry, String> statusColReportCard;
+    @FXML private BarChart<String, Number> gradeChartReportCard;
+    @FXML private NumberAxis gradeAxisReportCard;
+    @FXML private CategoryAxis lessonsAxisReportCard;
+    @FXML private Label messageLabelReportCard;
     // Overall Report Card Components
-    @FXML private AnchorPane overallReportCardPane;
-    @FXML private TableView<OverallReportCardEntry> overallReportTable;
-    @FXML private TableColumn<OverallReportCardEntry, String> overallSemesterCol;
-    @FXML private TableColumn<OverallReportCardEntry, String> overallCourseCol;
-    @FXML private TableColumn<OverallReportCardEntry, Double> overallScoreCol;
-    @FXML private TableColumn<OverallReportCardEntry, String> overallStatusCol;
-    @FXML private Label overallStudentNameLabel;
-    @FXML private Label overallGpaLabel;
-    @FXML private Label overallProbationCountLabel;
-    @FXML private Label overallTotalTermsLabel;
-    @FXML private Label overallPassedUnitsLabel;
-    @FXML private Label overallFailedUnitsLabel;
-    @FXML private Label overallMessageLabel;
+    @FXML private AnchorPane overallReportCardAnchorPane;
+    @FXML private ComboBox<String> gradeShowOverallReportCard;
+    @FXML private TableView<OverallReportCardEntry> gradesTableOverallReportCard;
+    @FXML private TableColumn<OverallReportCardEntry, String> semesterColOverallReportCard;
+    @FXML private TableColumn<OverallReportCardEntry, String> courseColOverallReportCard;
+    @FXML private TableColumn<OverallReportCardEntry, Double> scoreColOverallReportCard;
+    @FXML private TableColumn<OverallReportCardEntry, String> statusColOverallReportCard;
+    @FXML private BarChart<String, Number> gradeChartOverallReportCard;
+    @FXML private NumberAxis gradeAxisOverallReportCard;
+    @FXML private CategoryAxis termsAxisOverallReportCard;
+    @FXML private Label studentNameOverallReportCard;
+    @FXML private Label gpaOverallReportCard;
+    @FXML private Label probationTermsOverallReportCard;
+    @FXML private Label totalTermsOverallReportCard;
+    @FXML private Label passedUnitsOverallReportCard;
+    @FXML private Label failedUnitsOverallReportCard;
+    @FXML private Label messageLabelOverallReportCard;
+    // Emergency Drop
     @FXML private AnchorPane emergencyDropPane;
     @FXML private ComboBox<String> emergencyDropSemesterComboBox;
     @FXML private TableView<CourseGroupRow> emergencyDropTable;
@@ -62,157 +74,144 @@ public class StudentPortalController {
     @FXML private TableColumn<CourseGroupRow, Void> emergencyDropActionCol;
     @FXML private Label emergencyDropMessageLabel;
 
+
+
     private final ObservableList<ReportCardEntry> reportCardRows = FXCollections.observableArrayList();
     private final ObservableList<OverallReportCardEntry> overallReportRows = FXCollections.observableArrayList();
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
 
     @FXML
-    public void initialize() {
-        if (semesterComboBox != null && reportCardTable != null) {
-            loadSemestersForStudent();
-            setupReportCardTable();
-        } else {
-            System.out.println("Initialization error: semesterComboBox or reportCardTable is null");
-        }
-        if (overallReportTable != null) {
-            setupOverallReportTable();
-        } else {
-            System.out.println("Initialization error: overallReportTable is null");
-        }
+    void enrollmentDashboard(ActionEvent event) {
+
     }
 
-    private void loadSemestersForStudent() {
-        semesterComboBox.getItems().clear();
-        University.loadFaculties();
+    @FXML
+    void emergencyDropDashboard(ActionEvent event) {
+        dashboardAnchorPane.setVisible(false);
+        dashboardAnchorPane.setManaged(false);
+        emergencyDropPane.setVisible(true);
+        emergencyDropPane.setManaged(true);
 
+        emergencyDropSemesterComboBox.getItems().clear();
+        University.loadAllSemester();
         if (LoginPanelController.studentPerson == null) {
-            System.out.println("StudentPerson is null");
-            messageLabel.setText("Error: Student information not found.");
+            emergencyDropMessageLabel.setText("Error: Student information not found.");
+            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
             return;
         }
-
-        for (Faculty faculty : University.allFaculties) {
-            if (faculty.getFacultyName().equals(LoginPanelController.studentPerson.getFaculty())) {
-                for (Department department : faculty.departments) {
-                    if (department.getName().equals(LoginPanelController.studentPerson.getDepartment())) {
-                        for (Major major : department.majors) {
-                            if (major.getName().equals(LoginPanelController.studentPerson.getMajor())) {
-                                for (Student student : major.students) {
-                                    if (student.getId().equals(LoginPanelController.studentPerson.getId())) {
-                                        for (Semester semester : student.getSemesters()) {
-                                            String semesterName = semester.getName();
-                                            if (!semesterComboBox.getItems().contains(semesterName)) {
-                                                semesterComboBox.getItems().add(semesterName);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+        for (Semester semester : University.allSemesters) {
+            if (semester.getStatus() == Status.Active) {
+                emergencyDropSemesterComboBox.getItems().add(semester.getName());
             }
         }
-
-        if (semesterComboBox.getItems().isEmpty()) {
-            messageLabel.setText("No semesters found for this student.");
+        if (emergencyDropSemesterComboBox.getItems().isEmpty()) {
+            emergencyDropMessageLabel.setText("No active semesters found.");
+            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
         } else {
-            System.out.println("Semesters loaded: " + semesterComboBox.getItems());
+            System.out.println("Active semesters for emergency drop: " + emergencyDropSemesterComboBox.getItems());
         }
-    }
 
-    private void setupReportCardTable() {
-        courseNameCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getCourseName()));
-        scoreCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getScore()).asObject());
-        statusCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getStatus()));
-        statusCol.setCellFactory(col -> new TableCell<>() {
+        emergencyDropCourseNameCol.setCellValueFactory(new PropertyValueFactory<>("courseName"));
+        emergencyDropCourseCodeCol.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
+        emergencyDropProfessorNameCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(
+                cellData.getValue().getCourseGroup().getProfessor() != null
+                        ? cellData.getValue().getCourseGroup().getProfessor()
+                        : "Unknown"));
+        emergencyDropUnitsCol.setCellValueFactory(new PropertyValueFactory<>("credits"));
+        emergencyDropActionCol.setCellFactory(param -> new TableCell<CourseGroupRow, Void>() {
+            private final Button dropButton = new Button("Drop");
+
+            {
+                dropButton.setStyle("-fx-background-color: #ff4444; -fx-text-fill: white;");
+                dropButton.setOnAction(e -> {
+                    CourseGroupRow row = getTableView().getItems().get(getIndex());
+                    dropEmergencyCourse(row);
+                });
+            }
+
             @Override
-            protected void updateItem(String item, boolean empty) {
+            protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                    setStyle("");
-                } else {
-                    setText(item);
-                    setStyle(item.equals("Pass") ? "-fx-text-fill: green;" : "-fx-text-fill: red;");
-                }
+                setGraphic(empty ? null : dropButton);
             }
         });
-        reportCardTable.setItems(reportCardRows);
-    }
 
-    private void setupOverallReportTable() {
-        overallSemesterCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getSemester()));
-        overallCourseCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getCourseName()));
-        overallScoreCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getScore()).asObject());
-        overallStatusCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getStatus()));
-        overallStatusCol.setCellFactory(col -> new TableCell<>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                    setStyle("");
-                } else {
-                    setText(item);
-                    setStyle(item.equals("Pass") ? "-fx-text-fill: green;" : "-fx-text-fill: red;");
-                }
-            }
-        });
-        overallReportTable.setItems(overallReportRows);
-    }
-
-    @FXML
-    void showReportCardPane(ActionEvent event) {
-        mainMenuPane.setVisible(false);
-        mainMenuPane.setManaged(false);
-        reportCardPane.setVisible(true);
-        reportCardPane.setManaged(true);
-        overallReportCardPane.setVisible(false);
-        overallReportCardPane.setManaged(false);
-        loadSemestersForStudent();
-        clearStudentInfoLabels();
-        messageLabel.setText("");
-    }
-
-    @FXML
-    void showOverallReportCardPane(ActionEvent event) {
-        mainMenuPane.setVisible(false);
-        mainMenuPane.setManaged(false);
-        reportCardPane.setVisible(false);
-        reportCardPane.setManaged(false);
-        overallReportCardPane.setVisible(true);
-        overallReportCardPane.setManaged(true);
-        loadOverallReportCard();
-        //clearOverallStudentInfoLabels();
-        overallMessageLabel.setText("");
-    }
-
-    @FXML
-    void showMainMenuPane(javafx.event.ActionEvent event) {
-        reportCardPane.setVisible(false);
-        reportCardPane.setManaged(false);
-        overallReportCardPane.setVisible(false);
-        overallReportCardPane.setManaged(false);
-        emergencyDropPane.setVisible(false);
-        emergencyDropPane.setManaged(false);
-        mainMenuPane.setVisible(true);
-        mainMenuPane.setManaged(true);
-        clearStudentInfoLabels();
-        //clearOverallStudentInfoLabels();
-        messageLabel.setText("");
-        overallMessageLabel.setText("");
         emergencyDropMessageLabel.setText("");
     }
 
     @FXML
-    void loadReportCard(ActionEvent event) {
+    void onBackEmergencyDrop(ActionEvent event) {
+        reportCardAnchorPane.setVisible(false);
+        reportCardAnchorPane.setManaged(false);
+        overallReportCardAnchorPane.setVisible(false);
+        overallReportCardAnchorPane.setManaged(false);
+        emergencyDropPane.setVisible(false);
+        emergencyDropPane.setManaged(false);
+        dashboardAnchorPane.setVisible(true);
+        dashboardAnchorPane.setManaged(true);
+        clearStudentInfoLabels();
+        //clearOverallStudentInfoLabels();
+        messageLabelReportCard.setText("");
+        messageLabelOverallReportCard.setText("");
+        emergencyDropMessageLabel.setText("");
+    }
+
+    @FXML
+    void reportCardDashboard(ActionEvent event) {
+        dashboardAnchorPane.setVisible(false);
+        dashboardAnchorPane.setManaged(false);
+        reportCardAnchorPane.setVisible(true);
+        reportCardAnchorPane.setManaged(true);
+        loadSemestersForStudent();
+        clearStudentInfoLabels();
+        messageLabelReportCard.setText(null);
+
+
+        if (semesterChooserReportCard != null && gradeTableReportCard != null) {
+            loadSemestersForStudent();
+            setupReportCardTable();
+        } else {
+            System.out.println("Initialization error: semesterChooserReportCard or gradeTableReportCard is null");
+        }
+        if (gradesTableOverallReportCard != null) {
+            setupOverallReportTable();
+        } else {
+            System.out.println("Initialization error: gradesTableOverallReportCard is null");
+        }
+        gradeShowReportCard.getItems().clear();
+        gradeShowReportCard.getItems().addAll("Table View", "Bar Chart");
+        gradeShowReportCard.getSelectionModel().select("Table View");
+
+    }
+
+    private void setupReportCardTable() {
+        courseNameColReportCard.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getCourseName()));
+        scoreColReportCard.setCellValueFactory(cellData -> new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getScore()).asObject());
+        statusColReportCard.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getStatus()));
+        statusColReportCard.setCellFactory(col -> new TableCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item);
+                    setStyle(item.equals("Pass") ? "-fx-text-fill: green;" : "-fx-text-fill: red;");
+                }
+            }
+        });
+        gradeTableReportCard.setItems(reportCardRows);
+    }
+
+    @FXML
+    void loadReportCard() {
         reportCardRows.clear();
         clearStudentInfoLabels();
-        String selectedSemester = semesterComboBox.getValue();
+        String selectedSemester = semesterChooserReportCard.getValue();
 
         if (selectedSemester == null) {
-            messageLabel.setText("Please select a semester.");
+            messageLabelReportCard.setText("Please select a semester.");
             return;
         }
 
@@ -256,21 +255,109 @@ public class StudentPortalController {
         }
 
         if (!foundData) {
-            messageLabel.setText("No data found for this semester.");
+            messageLabelReportCard.setText("No data found for this semester.");
         } else {
             double gpa = (totalUnits > 0) ? totalScore / totalUnits : 0.0;
-            studentNameLabel.setText(LoginPanelController.studentPerson.getFullName());
-            semesterLabel.setText(selectedSemester);
-            gpaLabel.setText(DECIMAL_FORMAT.format(gpa));
-            probationStatusLabel.setText(gpa < 12.0 ? "On Probation" : "Normal");
-            passedUnitsLabel.setText(String.valueOf(passedUnits));
-            failedUnitsLabel.setText(String.valueOf(failedUnits));
-            messageLabel.setText("");
+            studentNameReportCard.setText(LoginPanelController.studentPerson.getFullName());
+            semesterReportCard.setText(selectedSemester);
+            gpaReportCard.setText(DECIMAL_FORMAT.format(gpa));
+            probationStatusReportCard.setText(gpa < 12.0 ? "On Probation" : "Normal");
+            passedUnitsReportCard.setText(String.valueOf(passedUnits));
+            failedUnitsReportCard.setText(String.valueOf(failedUnits));
+            messageLabelReportCard.setText("");
             System.out.println("Student info set: Name=" + LoginPanelController.studentPerson.getFullName() +
                     ", Semester=" + selectedSemester + ", GPA=" + gpa +
                     ", Probation=" + (gpa < 12.0 ? "On Probation" : "Normal") +
                     ", Passed Units=" + passedUnits + ", Failed Units=" + failedUnits);
         }
+    }
+
+    private void loadSemestersForStudent() {
+        semesterChooserReportCard.getItems().clear();
+        University.loadFaculties();
+
+        if (LoginPanelController.studentPerson == null) {
+            System.out.println("StudentPerson is null");
+            messageLabelReportCard.setText("Error: Student information not found.");
+            return;
+        }
+
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName().equals(LoginPanelController.studentPerson.getFaculty())) {
+                for (Department department : faculty.departments) {
+                    if (department.getName().equals(LoginPanelController.studentPerson.getDepartment())) {
+                        for (Major major : department.majors) {
+                            if (major.getName().equals(LoginPanelController.studentPerson.getMajor())) {
+                                for (Student student : major.students) {
+                                    if (student.getId().equals(LoginPanelController.studentPerson.getId())) {
+                                        for (Semester semester : student.getSemesters()) {
+                                            String semesterName = semester.getName();
+                                            if (!semesterChooserReportCard.getItems().contains(semesterName)) {
+                                                semesterChooserReportCard.getItems().add(semesterName);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        if (semesterChooserReportCard.getItems().isEmpty()) {
+            messageLabelReportCard.setText("No semesters found for this student.");
+        } else {
+            System.out.println("Semesters loaded: " + semesterChooserReportCard.getItems());
+        }
+    }
+
+    @FXML
+    void gradeShowReportCard(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onBackReportCard(ActionEvent event) {
+        reportCardAnchorPane.setVisible(false);
+        dashboardAnchorPane.setVisible(true);
+    }
+
+    @FXML
+    void overallReportCardDashboard(ActionEvent event) {
+        dashboardAnchorPane.setVisible(false);
+        dashboardAnchorPane.setManaged(false);
+        overallReportCardAnchorPane.setVisible(true);
+        overallReportCardAnchorPane.setManaged(true);
+        loadOverallReportCard();
+        //clearOverallStudentInfoLabels();
+        messageLabelOverallReportCard.setText(null);
+
+        gradeShowOverallReportCard.getItems().clear();
+        gradeShowOverallReportCard.getItems().addAll("Table View", "Bar Chart");
+        gradeShowOverallReportCard.getSelectionModel().select("Table View");
+
+    }
+
+    private void setupOverallReportTable() {
+        semesterColOverallReportCard.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getSemester()));
+        courseColOverallReportCard.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getCourseName()));
+        scoreColOverallReportCard.setCellValueFactory(cellData -> new javafx.beans.property.SimpleDoubleProperty(cellData.getValue().getScore()).asObject());
+        statusColOverallReportCard.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getStatus()));
+        statusColOverallReportCard.setCellFactory(col -> new TableCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item);
+                    setStyle(item.equals("Pass") ? "-fx-text-fill: green;" : "-fx-text-fill: red;");
+                }
+            }
+        });
+        gradesTableOverallReportCard.setItems(overallReportRows);
     }
 
     @FXML
@@ -280,7 +367,7 @@ public class StudentPortalController {
         University.loadFaculties();
 
         if (LoginPanelController.studentPerson == null) {
-            overallMessageLabel.setText("Error: Student information not found.");
+            messageLabelOverallReportCard.setText("Error: Student information not found.");
             System.out.println("StudentPerson is null in loadOverallReportCard");
             return;
         }
@@ -361,16 +448,16 @@ public class StudentPortalController {
         }
 
         if (!foundData) {
-            overallMessageLabel.setText("No data found for this student.");
+            messageLabelOverallReportCard.setText("No data found for this student.");
         } else {
             double gpa = (totalUnits > 0) ? totalScore / totalUnits : 0.0;
-            overallStudentNameLabel.setText("Student name:"+LoginPanelController.studentPerson.getFullName());
-            overallGpaLabel.setText("GPA:"+DECIMAL_FORMAT.format(gpa));
-            overallProbationCountLabel.setText("Probation Terms:"+String.valueOf(probationCount));
-            overallTotalTermsLabel.setText("Total Terms:"+String.valueOf(semesters.size()));
-            overallPassedUnitsLabel.setText("Passed Units:"+String.valueOf(passedUnits));
-            overallFailedUnitsLabel.setText("Failed Units:"+String.valueOf(failedUnits));
-            overallMessageLabel.setText("");
+            studentNameOverallReportCard.setText("Student name:"+LoginPanelController.studentPerson.getFullName());
+            gpaOverallReportCard.setText("GPA:"+DECIMAL_FORMAT.format(gpa));
+            probationTermsOverallReportCard.setText("Probation Terms:"+String.valueOf(probationCount));
+            totalTermsOverallReportCard.setText("Total Terms:"+String.valueOf(semesters.size()));
+            passedUnitsOverallReportCard.setText("Passed Units:"+String.valueOf(passedUnits));
+            failedUnitsOverallReportCard.setText("Failed Units:"+String.valueOf(failedUnits));
+            messageLabelOverallReportCard.setText("");
             System.out.println("Overall info set: Name=" + LoginPanelController.studentPerson.getFullName() +
                     ", GPA=" + gpa + ", Probation Terms=" + probationCount +
                     ", Total Terms=" + semesters.size() +
@@ -378,23 +465,70 @@ public class StudentPortalController {
         }
     }
 
-    private void clearStudentInfoLabels() {
-        studentNameLabel.setText("");
-        semesterLabel.setText("");
-        gpaLabel.setText("");
-        probationStatusLabel.setText("");
-        passedUnitsLabel.setText("");
-        failedUnitsLabel.setText("");
+    @FXML
+    void gradeShowOverallReportCard(ActionEvent event) {
+
     }
 
-    /*private void clearOverallStudentInfoLabels() {
-        overallStudentNameLabel.setText("");
-        overallGpaLabel.setText("");
-        overallProbationCountLabel.setText("");
-        overallTotalTermsLabel.setText("");
-        overallPassedUnitsLabel.setText("");
-        overallFailedUnitsLabel.setText("");
-    }*/
+    @FXML
+    void onBackOverallReportCard(ActionEvent event) {
+        overallReportCardAnchorPane.setVisible(false);
+        dashboardAnchorPane.setVisible(true);
+    }
+
+    @FXML
+    void profileDashboard(ActionEvent event) {
+        dashboardAnchorPane.setVisible(false);
+//        profileAnchorPane.setVisible(true);
+
+    }
+
+    @FXML
+    void reportsDashboard(ActionEvent event) {
+        dashboardAnchorPane.setVisible(false);
+//        reportsAnchorPane.setVisible(true);
+
+
+    }
+
+    @FXML
+    void signOutDashboard(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("LoginPanel.fxml"));
+        Scene scene = new Scene(root);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setTitle("Login Panel");
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+
+
+
+
+
+
+
+
+
+
+    private void clearStudentInfoLabels() {
+        studentNameReportCard.setText("");
+        semesterReportCard.setText("");
+        gpaReportCard.setText("");
+        probationStatusReportCard.setText("");
+        passedUnitsReportCard.setText("");
+        failedUnitsReportCard.setText("");
+    }
+
+    private void clearOverallStudentInfoLabels() {
+        studentNameOverallReportCard.setText("");
+        gpaOverallReportCard.setText("");
+        probationTermsOverallReportCard.setText("");
+        totalTermsOverallReportCard.setText("");
+        passedUnitsOverallReportCard.setText("");
+        failedUnitsOverallReportCard.setText("");
+    }
 
     private Degree findDegreeForCourseGroup(CourseGroup group) {
         if (group == null || group.getCourse() == null || group.getCourse().getName() == null) {
@@ -451,7 +585,8 @@ public class StudentPortalController {
         loadPage("LoginPanel.fxml", event, "Login Panel");
     }
 
-    private void loadPage(String fxml, ActionEvent event, String title) throws IOException {
+    @FXML
+    void loadPage(String fxml, ActionEvent event, String title) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(fxml));
         Scene scene = new Scene(root);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -521,63 +656,6 @@ public class StudentPortalController {
         public String getStatus() {
             return status;
         }
-    }
-    @FXML
-    void showEmergencyDropPane(javafx.event.ActionEvent event) {
-        mainMenuPane.setVisible(false);
-        mainMenuPane.setManaged(false);
-        reportCardPane.setVisible(false);
-        reportCardPane.setManaged(false);
-        overallReportCardPane.setVisible(false);
-        overallReportCardPane.setManaged(false);
-        emergencyDropPane.setVisible(true);
-        emergencyDropPane.setManaged(true);
-
-        emergencyDropSemesterComboBox.getItems().clear();
-        University.loadAllSemester();
-        if (LoginPanelController.studentPerson == null) {
-            emergencyDropMessageLabel.setText("Error: Student information not found.");
-            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
-            return;
-        }
-        for (Semester semester : University.allSemesters) {
-            if (semester.getStatus() == Status.Active) {
-                emergencyDropSemesterComboBox.getItems().add(semester.getName());
-            }
-        }
-        if (emergencyDropSemesterComboBox.getItems().isEmpty()) {
-            emergencyDropMessageLabel.setText("No active semesters found.");
-            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
-        } else {
-            System.out.println("Active semesters for emergency drop: " + emergencyDropSemesterComboBox.getItems());
-        }
-
-        emergencyDropCourseNameCol.setCellValueFactory(new PropertyValueFactory<>("courseName"));
-        emergencyDropCourseCodeCol.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
-        emergencyDropProfessorNameCol.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(
-                cellData.getValue().getCourseGroup().getProfessor() != null
-                        ? cellData.getValue().getCourseGroup().getProfessor()
-                        : "Unknown"));
-        emergencyDropUnitsCol.setCellValueFactory(new PropertyValueFactory<>("credits"));
-        emergencyDropActionCol.setCellFactory(param -> new TableCell<CourseGroupRow, Void>() {
-            private final Button dropButton = new Button("Drop");
-
-            {
-                dropButton.setStyle("-fx-background-color: #ff4444; -fx-text-fill: white;");
-                dropButton.setOnAction(e -> {
-                    CourseGroupRow row = getTableView().getItems().get(getIndex());
-                    dropEmergencyCourse(row);
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                setGraphic(empty ? null : dropButton);
-            }
-        });
-
-        emergencyDropMessageLabel.setText("");
     }
 
     @FXML

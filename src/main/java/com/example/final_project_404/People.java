@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Period;
+import java.util.IllegalFormatCodePointException;
 
 public class People implements Serializable {
     @Serial
@@ -21,6 +22,9 @@ public class People implements Serializable {
     private final StringProperty phoneNumberProperty;
     private final StringProperty genderProperty;
     private final StringProperty dateOfRegistration;
+    private LocalDate dateOfRegistrationLocalDate;
+    private final StringProperty dateOfDeactivation;
+    private LocalDate dateOfDeactivationLocalDate;
     private final StringProperty roleProperty;
     private final StringProperty idProperty;
     private final StringProperty facultyProperty;
@@ -29,7 +33,7 @@ public class People implements Serializable {
     private final StringProperty degreeProperty;
     private final StringProperty statusProperty;
 
-    public People(String first_name, String last_name, LocalDate dateOfBirth, String nationalId, Gender gender, String phoneNumber, LocalDate dateOfJoin, String role, String id, String faculty, String department, String major, String degree, Status status) {
+    public People(String first_name, String last_name, LocalDate dateOfBirth, String nationalId, Gender gender, String phoneNumber, LocalDate dateOfJoin, String role, String id, String faculty, String department, String major, String degree, Status status, LocalDate dateOfDeactivation) {
 
         this.firstNameProperty = new SimpleStringProperty(first_name);
         this.lastNameProperty = new SimpleStringProperty(last_name);
@@ -40,6 +44,10 @@ public class People implements Serializable {
 
         this.phoneNumberProperty = new SimpleStringProperty(phoneNumber);
         this.dateOfRegistration = new SimpleStringProperty(dateOfJoin.getDayOfMonth() + "-" + Month.of(dateOfJoin.getMonthValue()) + "-" + dateOfJoin.getYear());
+        this.dateOfRegistrationLocalDate = dateOfJoin;
+        this.dateOfDeactivation = new SimpleStringProperty(dateOfDeactivation == null ? "----" : dateOfDeactivation.getDayOfMonth() + "-" + Month.of(dateOfDeactivation.getMonthValue()) + "-" + dateOfDeactivation.getYear());
+        this.dateOfDeactivationLocalDate = dateOfDeactivation;
+
         this.roleProperty = new SimpleStringProperty(role);
         this.idProperty = new SimpleStringProperty(id);
         this.facultyProperty = new SimpleStringProperty(faculty);
@@ -116,11 +124,28 @@ public class People implements Serializable {
     public String getDateOfJoin() {
         return dateOfRegistration.get();
     }
+    public LocalDate getDateOfRegistrationLocalDate() {
+        return dateOfRegistrationLocalDate;
+    }
     public StringProperty dateOfRegistrationProperty() {
         return dateOfRegistration;
     }
     public void setDateOfJoin(LocalDate dateOfJoin) {
         this.dateOfRegistration.set(dateOfJoin.getDayOfMonth() + "-" + Month.of(dateOfJoin.getMonthValue()) + "-" + dateOfJoin.getYear());
+    }
+
+    // ---------- Date of Deactivation ----------
+    public String getDateOfDeactivation() {
+        return dateOfDeactivation.get();
+    }
+    public LocalDate getDateOfDeactivationLocalDate() {
+        return dateOfDeactivationLocalDate;
+    }
+    public StringProperty dateOfDeactivationProperty() {
+        return dateOfDeactivation;
+    }
+    public void setDateOfDeactivation(LocalDate dateOfDeactivation) {
+        this.dateOfDeactivation.set(dateOfDeactivation.getDayOfMonth() + "-" + Month.of(dateOfDeactivation.getMonthValue()) + "-" + dateOfDeactivation.getYear());
     }
 
     // ---------- Gender ----------

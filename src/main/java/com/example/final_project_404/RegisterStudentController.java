@@ -211,7 +211,7 @@ public class RegisterStudentController implements Initializable {
         String studentId = generateStudentId();
 
         if (!firstName.isBlank() && !lastName.isBlank() && !phoneNumber.isBlank() && !nationalId.isBlank() && gender!=null && faculty!=null && department!=null && major!=null){
-            Student student = new Student(firstName, lastName, dateOfBirth, nationalId, gender, phoneNumber, studentId, dateOfRegistration, faculty, department,major,Status.Active,degreeChooser.getValue());
+            Student student = new Student(firstName, lastName, dateOfBirth, nationalId, gender, phoneNumber, studentId, dateOfRegistration, faculty, department,major,Status.Active,degreeChooser.getValue(), null);
             for (Faculty faculty1 : University.allFaculties) {
                 if (faculty1.getFacultyName().equals(faculty) && faculty1.getStatus().equals(Status.Active)) {
                     for (Department department1 : faculty1.departments) {
