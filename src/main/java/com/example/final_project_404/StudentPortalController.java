@@ -24,8 +24,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class StudentPortalController {
-
     @FXML private Label headerTitle;
+
     @FXML private AnchorPane dashboardAnchorPane;
     // Report Card
     @FXML private AnchorPane reportCardAnchorPane;
@@ -75,8 +75,8 @@ public class StudentPortalController {
     @FXML private Label emergencyDropMessageLabel;
 
 
-
     private final ObservableList<ReportCardEntry> reportCardRows = FXCollections.observableArrayList();
+
     private final ObservableList<OverallReportCardEntry> overallReportRows = FXCollections.observableArrayList();
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
 
@@ -137,6 +137,54 @@ public class StudentPortalController {
         });
 
         emergencyDropMessageLabel.setText("");
+    }
+
+    @FXML
+    void loadCoursesForSemester() {
+        emergencyDropTable.getItems().clear();
+        String selectedSemesterName = emergencyDropSemesterComboBox.getValue();
+
+        if (selectedSemesterName == null) {
+            emergencyDropMessageLabel.setText("Please select a semester");
+            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        Student realStudent = findStudentInUniversity(LoginPanelController.studentPerson);
+        if (realStudent == null) {
+            emergencyDropMessageLabel.setText("Student not found in the system");
+            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        Semester studentSemester = realStudent.getSemesterByName(selectedSemesterName);
+        if (studentSemester == null) {
+            emergencyDropMessageLabel.setText("Selected semester not found for student");
+            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        if (studentSemester.getCourseGroups() == null || studentSemester.getCourseGroups().isEmpty()) {
+            emergencyDropMessageLabel.setText("No courses found for this semester");
+            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        boolean foundData = false;
+        for (CourseGroup group : studentSemester.getCourseGroups()) {
+            if (group.getStatus() == Status.Active) {
+                emergencyDropTable.getItems().add(new CourseGroupRow(group));
+                foundData = true;
+            }
+        }
+
+        if (!foundData) {
+            emergencyDropMessageLabel.setText("No active courses found for this semester");
+            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
+        } else {
+            emergencyDropMessageLabel.setText(emergencyDropTable.getItems().size() + " courses found");
+            emergencyDropMessageLabel.setStyle("-fx-text-fill: green;");
+        }
     }
 
     @FXML
@@ -502,16 +550,6 @@ public class StudentPortalController {
         stage.show();
     }
 
-
-
-
-
-
-
-
-
-
-
     private void clearStudentInfoLabels() {
         studentNameReportCard.setText("");
         semesterReportCard.setText("");
@@ -581,11 +619,6 @@ public class StudentPortalController {
     }
 
     @FXML
-    void signOutStudentPortal(ActionEvent event) throws IOException {
-        loadPage("LoginPanel.fxml", event, "Login Panel");
-    }
-
-    @FXML
     void loadPage(String fxml, ActionEvent event, String title) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(fxml));
         Scene scene = new Scene(root);
@@ -603,10 +636,10 @@ public class StudentPortalController {
         alert.setContentText(msg);
         alert.showAndWait();
     }
-
     public static class ReportCardEntry {
         private final String courseName;
         private final double score;
+
         private final String status;
 
         public ReportCardEntry(String courseName, double score, String status) {
@@ -622,16 +655,16 @@ public class StudentPortalController {
         public double getScore() {
             return score;
         }
-
         public String getStatus() {
             return status;
         }
-    }
 
+    }
     public static class OverallReportCardEntry {
         private final String semester;
         private final String courseName;
         private final double score;
+
         private final String status;
 
         public OverallReportCardEntry(String semester, String courseName, double score, String status) {
@@ -652,58 +685,10 @@ public class StudentPortalController {
         public double getScore() {
             return score;
         }
-
         public String getStatus() {
             return status;
         }
-    }
 
-    @FXML
-    void loadCoursesForSemester() {
-        emergencyDropTable.getItems().clear();
-        String selectedSemesterName = emergencyDropSemesterComboBox.getValue();
-
-        if (selectedSemesterName == null) {
-            emergencyDropMessageLabel.setText("Please select a semester");
-            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
-            return;
-        }
-
-        Student realStudent = findStudentInUniversity(LoginPanelController.studentPerson);
-        if (realStudent == null) {
-            emergencyDropMessageLabel.setText("Student not found in the system");
-            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
-            return;
-        }
-
-        Semester studentSemester = realStudent.getSemesterByName(selectedSemesterName);
-        if (studentSemester == null) {
-            emergencyDropMessageLabel.setText("Selected semester not found for student");
-            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
-            return;
-        }
-
-        if (studentSemester.getCourseGroups() == null || studentSemester.getCourseGroups().isEmpty()) {
-            emergencyDropMessageLabel.setText("No courses found for this semester");
-            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
-            return;
-        }
-
-        boolean foundData = false;
-        for (CourseGroup group : studentSemester.getCourseGroups()) {
-            if (group.getStatus() == Status.Active) {
-                emergencyDropTable.getItems().add(new CourseGroupRow(group));
-                foundData = true;
-            }
-        }
-
-        if (!foundData) {
-            emergencyDropMessageLabel.setText("No active courses found for this semester");
-            emergencyDropMessageLabel.setStyle("-fx-text-fill: red;");
-        } else {
-            emergencyDropMessageLabel.setText(emergencyDropTable.getItems().size() + " courses found");
-            emergencyDropMessageLabel.setStyle("-fx-text-fill: green;");
-        }
     }
 
     private void dropEmergencyCourse(CourseGroupRow row) {

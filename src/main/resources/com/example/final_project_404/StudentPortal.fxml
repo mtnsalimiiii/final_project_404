@@ -74,7 +74,7 @@
          <children>
                   <VBox prefHeight="470.4" prefWidth="800.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                       <padding>
-                          <Insets bottom="15.0" top="15.0" />
+                          <Insets top="15.0" />
                       </padding>
                       <children>
                           <GridPane hgap="10" vgap="5">
@@ -122,23 +122,20 @@
                         <Insets />
                      </VBox.margin>
                      <children>
-                                <TableView fx:id="gradeTableReportCard" layoutX="15.0" prefHeight="250.0" prefWidth="770.0" stylesheets="@TableViewStyle.css" visible="false">
+                                <TableView fx:id="gradeTableReportCard" fixedCellSize="0.0" prefHeight="250.0" prefWidth="770.0" stylesheets="@TableViewStyle.css">
                                     <columns>
                                         <TableColumn fx:id="courseNameColReportCard" prefWidth="250.0" text="Course Name" />
                                         <TableColumn fx:id="scoreColReportCard" prefWidth="100.0" text="Score" />
                                         <TableColumn fx:id="statusColReportCard" prefWidth="100.0" text="Status" />
                                     </columns>
                                 </TableView>
-                        <BarChart fx:id="gradeChartReportCard" prefHeight="260.0" prefWidth="800.0">
+                        <BarChart fx:id="gradeChartReportCard" prefHeight="260.0" prefWidth="800.0" visible="false">
                           <xAxis>
                             <CategoryAxis fx:id="lessonsAxisReportCard" label="lessons" prefHeight="40.0" side="BOTTOM" />
                           </xAxis>
                           <yAxis>
                             <NumberAxis fx:id="gradeAxisReportCard" autoRanging="false" label="grades" minorTickCount="2" minorTickLength="2.0" prefHeight="210.0" prefWidth="50.0" side="LEFT" tickUnit="2.0" upperBound="20.0" />
                           </yAxis>
-                           <padding>
-                              <Insets left="15.0" />
-                           </padding>
                         </BarChart>
                      </children>
                   </Group>
@@ -182,7 +179,7 @@
                                   <RowConstraints vgrow="SOMETIMES" />
                               </rowConstraints>
                               <children>
-                                  <Label style="-fx-font-weight: bold;" text="Student Name:" />
+                                  <Label prefHeight="18.0" prefWidth="120.0" style="-fx-font-weight: bold;" text="Student Name:" />
                         <Label fx:id="studentNameOverallReportCard" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" style="-fx-font-weight: bold;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                                   <Label style="-fx-font-weight: bold;" text="GPA:" GridPane.columnIndex="2" />
                         <Label fx:id="gpaOverallReportCard" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" style="-fx-font-weight: bold;" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
