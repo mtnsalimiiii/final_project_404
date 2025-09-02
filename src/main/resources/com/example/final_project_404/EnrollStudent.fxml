@@ -30,39 +30,42 @@
                     </padding>
 
                     <!-- ComboBox & Search -->
-                    <HBox spacing="10">
+                    <HBox alignment="CENTER_LEFT" spacing="10">
                         <ComboBox fx:id="semesterComboBox" prefWidth="200.0" promptText="Choose Term" />
                         <Button onAction="#searchCourses" text="Search" />
+                  <VBox.margin>
+                     <Insets bottom="10.0" />
+                  </VBox.margin>
                     </HBox>
 
                     <!-- Available Course Groups Table -->
                     <Label style="-fx-font-weight: bold;" text="Available Courses" />
                     <TableView fx:id="coursesTableView" prefHeight="150.0" prefWidth="590.0" stylesheets="@TableViewStyle.css">
                         <columns>
-                            <TableColumn fx:id="selectCol" prefWidth="60.0" text="Choose" />
-                            <TableColumn fx:id="courseCodeCol" prefWidth="100.0" text="Code">
+                            <TableColumn fx:id="selectCol" text="Choose" />
+                            <TableColumn fx:id="courseCodeCol" prefWidth="120.0" text="Code">
                                 <cellValueFactory>
                                     <PropertyValueFactory property="courseCode" />
                                 </cellValueFactory>
                             </TableColumn>
-                            <TableColumn fx:id="courseNameCol" prefWidth="200.0" text="Name">
+                            <TableColumn fx:id="courseNameCol" prefWidth="230.0" text="Name">
                                 <cellValueFactory>
                                     <PropertyValueFactory property="courseName" />
                                 </cellValueFactory>
                             </TableColumn>
-                            <TableColumn fx:id="creditsCol" prefWidth="70.0" text="Credits">
+                            <TableColumn fx:id="creditsCol" prefWidth="120.0" text="Credits">
                                 <cellValueFactory>
                                     <PropertyValueFactory property="credits" />
                                 </cellValueFactory>
                             </TableColumn>
-                            <TableColumn fx:id="professorCol" prefWidth="150.0" text="Professor">
+                            <TableColumn fx:id="professorCol" prefWidth="200.0" text="Professor">
                                 <cellValueFactory>
                                     <PropertyValueFactory property="professorName" />
                                 </cellValueFactory>
                             </TableColumn>
                         </columns>
                         <VBox.margin>
-                            <Insets bottom="15.0" top="10.0" />
+                            <Insets bottom="10.0" top="10.0" />
                         </VBox.margin>
                     </TableView>
 
@@ -70,30 +73,30 @@
                     <Label style="-fx-font-weight: bold;" text="Your Courses" />
                     <TableView fx:id="enrolledCoursesTableView" prefHeight="150.0" prefWidth="590.0" stylesheets="@TableViewStyle.css">
                         <columns>
-                            <TableColumn fx:id="dropCol" prefWidth="60.0" text="Delete" />
-                            <TableColumn fx:id="enrolledCourseCodeCol" prefWidth="100.0" text="Code">
+                            <TableColumn fx:id="dropCol" text="Delete" />
+                            <TableColumn fx:id="enrolledCourseCodeCol" prefWidth="120.0" text="Code">
                                 <cellValueFactory>
                                     <PropertyValueFactory property="courseCode" />
                                 </cellValueFactory>
                             </TableColumn>
-                            <TableColumn fx:id="enrolledCourseNameCol" prefWidth="200.0" text="Name">
+                            <TableColumn fx:id="enrolledCourseNameCol" prefWidth="230.0" text="Name">
                                 <cellValueFactory>
                                     <PropertyValueFactory property="courseName" />
                                 </cellValueFactory>
                             </TableColumn>
-                            <TableColumn fx:id="enrolledCreditsCol" prefWidth="70.0" text="Credits">
+                            <TableColumn fx:id="enrolledCreditsCol" prefWidth="120.0" text="Credits">
                                 <cellValueFactory>
                                     <PropertyValueFactory property="credits" />
                                 </cellValueFactory>
                             </TableColumn>
-                            <TableColumn fx:id="enrolledProfessorCol" prefWidth="150.0" text="Professor">
+                            <TableColumn fx:id="enrolledProfessorCol" prefWidth="200.0" text="Professor">
                                 <cellValueFactory>
                                     <PropertyValueFactory property="professorName" />
                                 </cellValueFactory>
                             </TableColumn>
                         </columns>
                         <VBox.margin>
-                            <Insets bottom="15.0" top="10.0" />
+                            <Insets bottom="10.0" top="10.0" />
                         </VBox.margin>
                     </TableView>
 

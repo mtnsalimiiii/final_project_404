@@ -12,15 +12,18 @@ import javafx.scene.Scene;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
+import javax.print.attribute.standard.NumberUp;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.HashSet;
+import java.util.IllegalFormatCodePointException;
 import java.util.Set;
 
 public class StudentPortalController {
@@ -87,10 +90,9 @@ public class StudentPortalController {
 
     @FXML
     void emergencyDropDashboard(ActionEvent event) {
+        headerTitle.setText(" --> Emergency Drop");
         dashboardAnchorPane.setVisible(false);
-        dashboardAnchorPane.setManaged(false);
         emergencyDropPane.setVisible(true);
-        emergencyDropPane.setManaged(true);
 
         emergencyDropSemesterComboBox.getItems().clear();
         University.loadAllSemester();
@@ -136,7 +138,7 @@ public class StudentPortalController {
             }
         });
 
-        emergencyDropMessageLabel.setText("");
+        emergencyDropMessageLabel.setText(null);
     }
 
     @FXML
@@ -189,30 +191,31 @@ public class StudentPortalController {
 
     @FXML
     void onBackEmergencyDrop(ActionEvent event) {
+        headerTitle.setText(null);
         reportCardAnchorPane.setVisible(false);
-        reportCardAnchorPane.setManaged(false);
         overallReportCardAnchorPane.setVisible(false);
-        overallReportCardAnchorPane.setManaged(false);
         emergencyDropPane.setVisible(false);
-        emergencyDropPane.setManaged(false);
         dashboardAnchorPane.setVisible(true);
-        dashboardAnchorPane.setManaged(true);
         clearStudentInfoLabels();
         //clearOverallStudentInfoLabels();
-        messageLabelReportCard.setText("");
-        messageLabelOverallReportCard.setText("");
-        emergencyDropMessageLabel.setText("");
+        messageLabelReportCard.setText(null);
+        messageLabelOverallReportCard.setText(null);
+        emergencyDropMessageLabel.setText(null);
     }
 
     @FXML
     void reportCardDashboard(ActionEvent event) {
         dashboardAnchorPane.setVisible(false);
-        dashboardAnchorPane.setManaged(false);
         reportCardAnchorPane.setVisible(true);
-        reportCardAnchorPane.setManaged(true);
         loadSemestersForStudent();
         clearStudentInfoLabels();
         messageLabelReportCard.setText(null);
+        gradeTableReportCard.setItems(null);
+
+        gradeShowReportCard.getItems().clear();
+        gradeShowReportCard.getItems().addAll("Table View", "Bar Chart");
+        gradeShowReportCard.getSelectionModel().select("Table View");
+
 
 
         if (semesterChooserReportCard != null && gradeTableReportCard != null) {
@@ -221,14 +224,6 @@ public class StudentPortalController {
         } else {
             System.out.println("Initialization error: semesterChooserReportCard or gradeTableReportCard is null");
         }
-        if (gradesTableOverallReportCard != null) {
-            setupOverallReportTable();
-        } else {
-            System.out.println("Initialization error: gradesTableOverallReportCard is null");
-        }
-        gradeShowReportCard.getItems().clear();
-        gradeShowReportCard.getItems().addAll("Table View", "Bar Chart");
-        gradeShowReportCard.getSelectionModel().select("Table View");
 
     }
 
@@ -254,6 +249,8 @@ public class StudentPortalController {
 
     @FXML
     void loadReportCard() {
+        Student student = LoginPanelController.studentPerson;
+        // Table View
         reportCardRows.clear();
         clearStudentInfoLabels();
         String selectedSemester = semesterChooserReportCard.getValue();
@@ -271,34 +268,43 @@ public class StudentPortalController {
         int failedUnits = 0;
 
         for (Faculty faculty : University.allFaculties) {
-            for (Department dept : faculty.departments) {
-                for (Major major : dept.majors) {
-                    for (Degree degree : major.degrees) {
-                        for (Course course : degree.courses) {
-                            for (CourseGroup group : course.courseGroups) {
-                                if (group.getSemesterCode().equals(selectedSemester) &&
-                                        group.getRegisteredStudents().contains(LoginPanelController.studentPerson)) {
-                                    Double score = group.getGrades().get(LoginPanelController.studentPerson.getId());
-                                    if (score != null) {
-                                        Degree degreeForStatus = findDegreeForCourseGroup(group);
-                                        CourseStatus status = (degreeForStatus != null) ? degreeForStatus.getPassStatus(score) : CourseStatus.Fail;
-                                        reportCardRows.add(new ReportCardEntry(course.getName(), score, status.name()));
-                                        foundData = true;
+            if (faculty.getFacultyName().equals(student.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
+                for (Department dept : faculty.departments) {
+                    if (dept.getName().equals(student.getDepartment()) && dept.getStatus().equals(Status.Active)) {
+                        for (Major major : dept.majors) {
+                            if (major.getName().equals(student.getMajor()) && major.getStatus().equals(Status.Active)) {
+                                for (Degree degree : major.degrees) {
+                                    for (Course course : degree.courses) {
+                                        for (CourseGroup group : course.courseGroups) {
+                                            if (group.getSemesterCode().equals(selectedSemester) &&
+                                                    group.getRegisteredStudents().contains(student)) {
+                                                Double score = group.getGrades().get(student.getId());
+                                                if (score != null) {
+                                                    Degree degreeForStatus = findDegreeForCourseGroup(group);
+                                                    CourseStatus status = (degreeForStatus != null) ? degreeForStatus.getPassStatus(score) : CourseStatus.Fail;
+                                                    reportCardRows.add(new ReportCardEntry(course.getName()+":"+group.getId(), score, status.name()));
+                                                    foundData = true;
 
-                                        int units = course.getCredit();
-                                        totalScore += score * units;
-                                        totalUnits += units;
-                                        if (status == CourseStatus.Pass) {
-                                            passedUnits += units;
-                                        } else {
-                                            failedUnits += units;
+                                                    int units = course.getCredit();
+                                                    totalScore += score * units;
+                                                    totalUnits += units;
+                                                    if (status == CourseStatus.Pass) {
+                                                        passedUnits += units;
+                                                    } else {
+                                                        failedUnits += units;
+                                                    }
+                                                }
+                                            }
                                         }
                                     }
                                 }
+                                break;
                             }
                         }
+                        break;
                     }
                 }
+                break;
             }
         }
 
@@ -312,12 +318,44 @@ public class StudentPortalController {
             probationStatusReportCard.setText(gpa < 12.0 ? "On Probation" : "Normal");
             passedUnitsReportCard.setText(String.valueOf(passedUnits));
             failedUnitsReportCard.setText(String.valueOf(failedUnits));
-            messageLabelReportCard.setText("");
-            System.out.println("Student info set: Name=" + LoginPanelController.studentPerson.getFullName() +
-                    ", Semester=" + selectedSemester + ", GPA=" + gpa +
-                    ", Probation=" + (gpa < 12.0 ? "On Probation" : "Normal") +
-                    ", Passed Units=" + passedUnits + ", Failed Units=" + failedUnits);
+            messageLabelReportCard.setText(null);
         }
+
+        // Bar Chart
+        gradeChartReportCard.getData().clear();
+        XYChart.Series<String, Number> grades = new XYChart.Series<>();
+//        grades.setName("Semester Grades");
+
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName().equals(student.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
+                for (Department dept : faculty.departments) {
+                    if (dept.getName().equals(student.getDepartment()) && dept.getStatus().equals(Status.Active)) {
+                        for (Major major : dept.majors) {
+                            if (major.getName().equals(student.getMajor()) && major.getStatus().equals(Status.Active)) {
+                                for (Degree degree : major.degrees) {
+                                    for (Course course : degree.courses) {
+                                        for (CourseGroup group : course.courseGroups) {
+                                            if (group.getSemesterCode().equals(selectedSemester) &&
+                                                    group.getRegisteredStudents().contains(student)) {
+                                                Double score = group.getGrades().get(student.getId());
+                                                if (score != null) {
+                                                    grades.getData().add(new XYChart.Data<>(course.getName()+":"+group.getId(), score));
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        gradeChartReportCard.getData().add(grades);
+
     }
 
     private void loadSemestersForStudent() {
@@ -362,7 +400,14 @@ public class StudentPortalController {
 
     @FXML
     void gradeShowReportCard(ActionEvent event) {
+        if (gradeShowReportCard.getValue().equals("Table View")) {
+            gradeTableReportCard.setVisible(true);
+            gradeChartReportCard.setVisible(false);
+        } else if (gradeShowReportCard.getValue().equals("Bar Chart")) {
+            gradeTableReportCard.setVisible(false);
+            gradeChartReportCard.setVisible(true);
 
+        }
     }
 
     @FXML
@@ -374,9 +419,7 @@ public class StudentPortalController {
     @FXML
     void overallReportCardDashboard(ActionEvent event) {
         dashboardAnchorPane.setVisible(false);
-        dashboardAnchorPane.setManaged(false);
         overallReportCardAnchorPane.setVisible(true);
-        overallReportCardAnchorPane.setManaged(true);
         loadOverallReportCard();
         //clearOverallStudentInfoLabels();
         messageLabelOverallReportCard.setText(null);
@@ -384,6 +427,12 @@ public class StudentPortalController {
         gradeShowOverallReportCard.getItems().clear();
         gradeShowOverallReportCard.getItems().addAll("Table View", "Bar Chart");
         gradeShowOverallReportCard.getSelectionModel().select("Table View");
+
+        if (gradesTableOverallReportCard != null) {
+            setupOverallReportTable();
+        } else {
+            System.out.println("Initialization error: gradesTableOverallReportCard is null");
+        }
 
     }
 
@@ -499,23 +548,30 @@ public class StudentPortalController {
             messageLabelOverallReportCard.setText("No data found for this student.");
         } else {
             double gpa = (totalUnits > 0) ? totalScore / totalUnits : 0.0;
-            studentNameOverallReportCard.setText("Student name:"+LoginPanelController.studentPerson.getFullName());
-            gpaOverallReportCard.setText("GPA:"+DECIMAL_FORMAT.format(gpa));
-            probationTermsOverallReportCard.setText("Probation Terms:"+String.valueOf(probationCount));
-            totalTermsOverallReportCard.setText("Total Terms:"+String.valueOf(semesters.size()));
-            passedUnitsOverallReportCard.setText("Passed Units:"+String.valueOf(passedUnits));
-            failedUnitsOverallReportCard.setText("Failed Units:"+String.valueOf(failedUnits));
-            messageLabelOverallReportCard.setText("");
-            System.out.println("Overall info set: Name=" + LoginPanelController.studentPerson.getFullName() +
-                    ", GPA=" + gpa + ", Probation Terms=" + probationCount +
-                    ", Total Terms=" + semesters.size() +
-                    ", Passed Units=" + passedUnits + ", Failed Units=" + failedUnits);
+            studentNameOverallReportCard.setText(LoginPanelController.studentPerson.getFullName());
+            gpaOverallReportCard.setText(DECIMAL_FORMAT.format(gpa));
+            probationTermsOverallReportCard.setText(String.valueOf(probationCount));
+            totalTermsOverallReportCard.setText(String.valueOf(semesters.size()));
+            passedUnitsOverallReportCard.setText(String.valueOf(passedUnits));
+            failedUnitsOverallReportCard.setText(String.valueOf(failedUnits));
+            messageLabelOverallReportCard.setText(null);
         }
+
+
+        // Bar Chart
     }
 
     @FXML
     void gradeShowOverallReportCard(ActionEvent event) {
-
+        if (gradeShowOverallReportCard.getValue() != null) {
+            if (gradeShowOverallReportCard.getValue().equals("Table View")) {
+                gradesTableOverallReportCard.setVisible(true);
+                gradeChartOverallReportCard.setVisible(false);
+            } else if (gradeShowOverallReportCard.getValue().equals("Bar Chart")) {
+                gradeChartOverallReportCard.setVisible(true);
+                gradesTableOverallReportCard.setVisible(false);
+            }
+        }
     }
 
     @FXML
@@ -535,8 +591,6 @@ public class StudentPortalController {
     void reportsDashboard(ActionEvent event) {
         dashboardAnchorPane.setVisible(false);
 //        reportsAnchorPane.setVisible(true);
-
-
     }
 
     @FXML
@@ -551,21 +605,21 @@ public class StudentPortalController {
     }
 
     private void clearStudentInfoLabels() {
-        studentNameReportCard.setText("");
-        semesterReportCard.setText("");
-        gpaReportCard.setText("");
-        probationStatusReportCard.setText("");
-        passedUnitsReportCard.setText("");
-        failedUnitsReportCard.setText("");
+        studentNameReportCard.setText(null);
+        semesterReportCard.setText(null);
+        gpaReportCard.setText(null);
+        probationStatusReportCard.setText(null);
+        passedUnitsReportCard.setText(null);
+        failedUnitsReportCard.setText(null);
     }
 
     private void clearOverallStudentInfoLabels() {
-        studentNameOverallReportCard.setText("");
-        gpaOverallReportCard.setText("");
-        probationTermsOverallReportCard.setText("");
-        totalTermsOverallReportCard.setText("");
-        passedUnitsOverallReportCard.setText("");
-        failedUnitsOverallReportCard.setText("");
+        studentNameOverallReportCard.setText(null);
+        gpaOverallReportCard.setText(null);
+        probationTermsOverallReportCard.setText(null);
+        totalTermsOverallReportCard.setText(null);
+        passedUnitsOverallReportCard.setText(null);
+        failedUnitsOverallReportCard.setText(null);
     }
 
     private Degree findDegreeForCourseGroup(CourseGroup group) {

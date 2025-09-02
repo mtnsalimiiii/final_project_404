@@ -1,5 +1,5 @@
 .chart {
-    -fx-background-color: transparent;
+    /*-fx-background-color: White;*/
     -fx-padding: 10;
 }
 
@@ -33,15 +33,16 @@
     -fx-font-size: 12px;
 }
 
+/* حذف background-radius و استفاده فقط از -fx-bar-fill */
 .chart-bar {
     -fx-bar-fill: linear-gradient(to top, #1e90ff, #00bfff);
-    -fx-background-radius: 6;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 5, 0, 2, 2);
 }
 
 .default-color0.chart-bar {
-    -fx-bar-fill: linear-gradient(to top, #1e90ff, #00bfff);
+    -fx-bar-fill: #1e90ff;
 }
+
 
 .default-color1.chart-bar {
     -fx-bar-fill: linear-gradient(to top, #ff7f50, #ff6347);

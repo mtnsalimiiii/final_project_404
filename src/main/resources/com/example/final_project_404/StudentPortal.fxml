@@ -70,6 +70,53 @@
               </VBox>
          </children>
       </AnchorPane>
+      <AnchorPane fx:id="emergencyDropPane" layoutY="80.0" prefHeight="470.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false">
+         <children>
+                  <VBox prefHeight="370.4" prefWidth="760.0" spacing="10" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                      <padding>
+                          <Insets bottom="15" left="15" right="15" top="15" />
+                      </padding>
+                      <children>
+                          <!-- Semester Selection and Search -->
+                          <HBox alignment="CENTER_LEFT" spacing="20.0">
+                              <ComboBox fx:id="emergencyDropSemesterComboBox" prefWidth="250.0" promptText="Select Active Semester" />
+                              <Button onAction="#loadCoursesForSemester" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Search" />
+                              <VBox.margin>
+                                  <Insets bottom="10" left="0" right="0" top="0" />
+                              </VBox.margin>
+                          </HBox>
+                          <!-- Courses Table -->
+                          <TableView fx:id="emergencyDropTable" prefHeight="320.0" prefWidth="770.0" stylesheets="@TableViewStyle.css">
+                              <columns>
+                                  <TableColumn fx:id="emergencyDropCourseNameCol" prefWidth="200.0" text="Course Name" />
+                                  <TableColumn fx:id="emergencyDropCourseCodeCol" prefWidth="100.0" text="Course Code" />
+                                  <TableColumn fx:id="emergencyDropProfessorNameCol" prefWidth="200.0" text="Professor Name" />
+                                  <TableColumn fx:id="emergencyDropUnitsCol" prefWidth="100.0" text="Units" />
+                                  <TableColumn fx:id="emergencyDropActionCol" prefWidth="100.0" text="Action" />
+                              </columns>
+                              <VBox.margin>
+                                  <Insets bottom="10" left="0" right="0" top="0" />
+                              </VBox.margin>
+                          </TableView>
+                          <!-- Back Button -->
+                          <HBox alignment="CENTER_LEFT" spacing="10.0">
+                             <!-- Message -->
+                             <Label fx:id="emergencyDropMessageLabel" prefWidth="700.0" styleClass="error-label" />
+                              <Button onAction="#onBackEmergencyDrop" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Back" />
+                              <VBox.margin>
+                                  <Insets bottom="10" left="0" right="0" top="0" />
+                              </VBox.margin>
+                          </HBox>
+                      </children>
+                  </VBox>
+         </children>
+         <stylesheets>
+            <URL value="@EmployeePortal.css" />
+            <URL value="@ErrorAndSuccessfulLabel.css" />
+            <URL value="@comboBoxStyle.css" />
+            <URL value="@TableViewStyle.css" />
+         </stylesheets>
+      </AnchorPane>
       <AnchorPane fx:id="reportCardAnchorPane" layoutY="80.0" prefHeight="470.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(from 100.0% 100.0% to 0.0% 0.0%, #00a1ffb1 0.0%, #ffffff 100.0%);" visible="false">
          <children>
                   <VBox prefHeight="470.4" prefWidth="800.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -119,22 +166,22 @@
                   </Group>
                   <Group>
                      <VBox.margin>
-                        <Insets />
+                        <Insets left="10.0" />
                      </VBox.margin>
                      <children>
-                                <TableView fx:id="gradeTableReportCard" fixedCellSize="0.0" prefHeight="250.0" prefWidth="770.0" stylesheets="@TableViewStyle.css">
+                                <TableView fx:id="gradeTableReportCard" fixedCellSize="0.0" prefHeight="250.0" prefWidth="780.0" stylesheets="@TableViewStyle.css">
                                     <columns>
-                                        <TableColumn fx:id="courseNameColReportCard" prefWidth="250.0" text="Course Name" />
-                                        <TableColumn fx:id="scoreColReportCard" prefWidth="100.0" text="Score" />
-                                        <TableColumn fx:id="statusColReportCard" prefWidth="100.0" text="Status" />
+                                        <TableColumn fx:id="courseNameColReportCard" prefWidth="300.0" text="Course Name" />
+                                        <TableColumn fx:id="scoreColReportCard" prefWidth="150.0" text="Score" />
+                                        <TableColumn fx:id="statusColReportCard" prefWidth="150.0" text="Status" />
                                     </columns>
                                 </TableView>
-                        <BarChart fx:id="gradeChartReportCard" prefHeight="260.0" prefWidth="800.0" visible="false">
+                        <BarChart fx:id="gradeChartReportCard" prefHeight="260.0" prefWidth="780.0" visible="false">
                           <xAxis>
-                            <CategoryAxis fx:id="lessonsAxisReportCard" label="lessons" prefHeight="40.0" side="BOTTOM" />
+                            <CategoryAxis fx:id="lessonsAxisReportCard" label="Lessons" prefHeight="40.0" side="BOTTOM" />
                           </xAxis>
                           <yAxis>
-                            <NumberAxis fx:id="gradeAxisReportCard" autoRanging="false" label="grades" minorTickCount="2" minorTickLength="2.0" prefHeight="210.0" prefWidth="50.0" side="LEFT" tickUnit="2.0" upperBound="20.0" />
+                            <NumberAxis fx:id="gradeAxisReportCard" autoRanging="false" label="Grades" minorTickCount="2" minorTickLength="2.0" prefHeight="210.0" prefWidth="50.0" side="LEFT" tickUnit="2.0" upperBound="20.0" />
                           </yAxis>
                         </BarChart>
                      </children>
@@ -203,18 +250,18 @@
                   </ComboBox>
                   <Group>
                      <VBox.margin>
-                        <Insets />
+                        <Insets left="10.0" />
                      </VBox.margin>
                      <children>
-                                <TableView fx:id="gradesTableOverallReportCard" layoutX="15.0" prefHeight="270.0" prefWidth="770.0" stylesheets="@TableViewStyle.css" visible="false">
+                                <TableView fx:id="gradesTableOverallReportCard" layoutX="15.0" prefHeight="270.0" prefWidth="780.0" stylesheets="@TableViewStyle.css">
                                     <columns>
                                         <TableColumn fx:id="semesterColOverallReportCard" prefWidth="150.0" text="Semester" />
                                         <TableColumn fx:id="courseColOverallReportCard" prefWidth="250.0" text="Course Name" />
-                                        <TableColumn fx:id="scoreColOverallReportCard" prefWidth="100.0" text="Score" />
-                                        <TableColumn fx:id="statusColOverallReportCard" prefWidth="100.0" text="Status" />
+                                        <TableColumn fx:id="scoreColOverallReportCard" prefWidth="150.0" text="Score" />
+                                        <TableColumn fx:id="statusColOverallReportCard" prefWidth="150.0" text="Status" />
                                     </columns>
                                 </TableView>
-                        <BarChart fx:id="gradeChartOverallReportCard" prefHeight="270.0" prefWidth="800.0">
+                        <BarChart fx:id="gradeChartOverallReportCard" prefHeight="270.0" prefWidth="780.0" visible="false">
                            <xAxis>
                               <CategoryAxis fx:id="termsAxisOverallReportCard" label="lessons" prefHeight="40.0" side="BOTTOM" />
                            </xAxis>
@@ -243,53 +290,6 @@
             <URL value="@ErrorAndSuccessfulLabel.css" />
             <URL value="@comboBoxStyle.css" />
          </stylesheets>
-      </AnchorPane>
-      <AnchorPane fx:id="emergencyDropPane" layoutY="80.0" prefHeight="470.0" prefWidth="800.0" visible="false">
-         <children>
-                  <VBox prefHeight="370.4" prefWidth="760.0" spacing="10" style="-fx-background-color: #f7f9fc;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                      <padding>
-                          <Insets bottom="15" left="15" right="15" top="15" />
-                      </padding>
-                      <children>
-                          <!-- Title -->
-                          <Label styleClass="label-title" text="Emergency Drop">
-                              <VBox.margin>
-                                  <Insets bottom="10" left="0" right="0" top="0" />
-                              </VBox.margin>
-                          </Label>
-                          <!-- Semester Selection and Search -->
-                          <HBox prefHeight="40.0" spacing="10">
-                              <ComboBox fx:id="emergencyDropSemesterComboBox" prefWidth="200.0" promptText="Select Active Semester" />
-                              <Button onAction="#loadCoursesForSemester" style="-fx-background-color: #2196F3; -fx-text-fill: white;" text="Search" />
-                              <VBox.margin>
-                                  <Insets bottom="10" left="0" right="0" top="0" />
-                              </VBox.margin>
-                          </HBox>
-                          <!-- Courses Table -->
-                          <TableView fx:id="emergencyDropTable" prefHeight="200.0" prefWidth="730.0" stylesheets="@TableViewStyle.css">
-                              <columns>
-                                  <TableColumn fx:id="emergencyDropCourseNameCol" prefWidth="200.0" text="Course Name" />
-                                  <TableColumn fx:id="emergencyDropCourseCodeCol" prefWidth="100.0" text="Course Code" />
-                                  <TableColumn fx:id="emergencyDropProfessorNameCol" prefWidth="200.0" text="Professor Name" />
-                                  <TableColumn fx:id="emergencyDropUnitsCol" prefWidth="100.0" text="Units" />
-                                  <TableColumn fx:id="emergencyDropActionCol" prefWidth="100.0" text="Action" />
-                              </columns>
-                              <VBox.margin>
-                                  <Insets bottom="10" left="0" right="0" top="0" />
-                              </VBox.margin>
-                          </TableView>
-                          <!-- Back Button -->
-                          <HBox alignment="CENTER_RIGHT" prefHeight="40.0">
-                              <Button onAction="#onBackEmergencyDrop" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Back" />
-                              <VBox.margin>
-                                  <Insets bottom="10" left="0" right="0" top="0" />
-                              </VBox.margin>
-                          </HBox>
-                          <!-- Message -->
-                          <Label fx:id="emergencyDropMessageLabel" style="-fx-text-fill: red;" />
-                      </children>
-                  </VBox>
-         </children>
       </AnchorPane>
     </children>
 </AnchorPane>

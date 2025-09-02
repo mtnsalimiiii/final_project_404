@@ -44,7 +44,7 @@
                         <Button fx:id="addSemesterScrollPane" layoutX="20.0" layoutY="545.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#addSemesterScrollPane" styleClass="nav-button-dashboard" text="Add Semester" textAlignment="CENTER" />
                         <Button fx:id="deactiveSemesterScrollPane" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#deactiveSemesterScrollPane" styleClass="nav-button-dashboard" text="Deactive&#10;Semester" />
                         <Button fx:id="enrollmentScrollPane" layoutX="20.0" layoutY="808.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#enrollmentScrollPane" styleClass="nav-button-dashboard" text="Enrollment" textAlignment="CENTER" />
-                  <Button fx:id="emergencyDropScrollPane" layoutX="20.0" layoutY="808.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#emergencyDropScrollPane" styleClass="nav-button-dashboard" text="Emergency&#10;Drop" />
+                  <Button fx:id="emergencyDropScrollPane" layoutX="20.0" layoutY="808.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#emergencyDropScrollPane" styleClass="nav-button-dashboard" text="Emergency&#10;Drop" textAlignment="CENTER" />
                         <Button fx:id="reportsScrollPane" layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#reportsScrollPane" styleClass="nav-button-dashboard" text="Reports" />
                         <Button layoutX="20.0" layoutY="193.0" minHeight="55.0" minWidth="130.0" mnemonicParsing="false" onAction="#signOutScrollPane" styleClass="nav-button-dashboard" text="Sign out" />
                     </children>

@@ -16,12 +16,11 @@ public class Semester implements Serializable {
     public Semester(String name, Status status) {
         this.name = name;
         this.status = status;
-        courseGroups = new ArrayList<>(); // 👈 اینو اضافه کن
+        courseGroups = new ArrayList<>();
     }
 
-    // لازم برای سریالایز
     public Semester() {
-        courseGroups = new ArrayList<>(); // 👈 اینم اضافه کن
+        courseGroups = new ArrayList<>();
     }
 
 

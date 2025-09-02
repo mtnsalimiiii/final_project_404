@@ -89,7 +89,7 @@ public class ProfessorPortalController {
     @FXML private Label errorLabelPhoneNumberProfile;
     @FXML private Label errorLabelProfile;
     @FXML private TextField firstNameProfile;
-    @FXML private ComboBox<String> genderProfile;
+    @FXML private ComboBox<Gender> genderProfile;
     @FXML private Label successLabelProfile;
     @FXML private AnchorPane studentListAnchorPane;
     @FXML private Button studentListScrollPane;
@@ -171,7 +171,7 @@ public class ProfessorPortalController {
                                                 edited = true;
                                             }
                                             if (!genderProfile.getValue().equals(String.valueOf(professor1.getGender()))) {
-                                                professor1.setGender(Gender.valueOf(genderProfile.getValue()));
+                                                professor1.setGender(genderProfile.getValue());
                                                 edited = true;
                                             }
                                             if (dateOfBirthProfile.getValue() != null) {
@@ -196,7 +196,7 @@ public class ProfessorPortalController {
                                                         professor2.setLast_name(lastNameProfile.getText());
                                                     }
                                                     if (!genderProfile.getValue().equals(String.valueOf(professor2.getGender()))) {
-                                                        professor2.setGender(Gender.valueOf(genderProfile.getValue()));
+                                                        professor2.setGender(genderProfile.getValue());
                                                     }
                                                     if (dateOfBirthProfile.getValue() != null) {
                                                         professor2.setDateOfBirth(dateOfBirthProfile.getValue());
@@ -227,7 +227,7 @@ public class ProfessorPortalController {
                                                 phoneNumberProfile.setPromptText(professor1.getPhoneNumber());
                                                 dateOfBirthProfile.setValue(null);
                                                 dateOfBirthProfile.setPromptText(professor1.getDateOfBirth().getDayOfMonth() + " " + Month.of(professor1.getDateOfBirth().getMonthValue()) + " " + professor1.getDateOfBirth().getYear());
-                                                genderProfile.getSelectionModel().select(String.valueOf(professor1.getGender()));
+                                                genderProfile.getSelectionModel().select(professor1.getGender());
                                             } else {
                                                 errorLabelProfile.setText("There Isn't Any Changes");
                                                 errorLabelProfile.setStyle("-fx-text-fill: red;");
@@ -253,13 +253,12 @@ public class ProfessorPortalController {
     private void courseGroupGradeSubmission() {
         String selectedSemester = semesterComboBoxGradeSubmission.getValue();
         Professor professor = LoginPanelController.professorPerson;
-        if (selectedSemester == null || selectedSemester.equals("Semester")) {
-            errorLabelGradeSubmission.setText("Select Semester");
-            errorLabelGradeSubmission.setStyle("-fx-text-fill: red;");
-            return;
-        }
         courseGroupComboBoxGradeSubmission.getItems().clear();
         courseGroupComboBoxGradeSubmission.getItems().add("Course Group");
+        if (selectedSemester == null || selectedSemester.equals("Semester")) {
+            errorLabelGradeSubmission.setText("Select Semester");
+            return;
+        }
         for (Faculty faculty : University.allFaculties) {
             if (faculty.getFacultyName().equals(professor.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
                 for (Department department : faculty.departments) {
@@ -277,10 +276,7 @@ public class ProfessorPortalController {
                                                     String groupName = course.getName() + " - Group " + groupId;
                                                     if (!courseGroupComboBoxGradeSubmission.getItems().contains(groupName)) {
                                                         courseGroupComboBoxGradeSubmission.getItems().add(groupName);
-                                                        System.out.println("Added course group: " + groupName);
                                                     }
-                                                } else {
-                                                    System.out.println("Skipping group with null or empty ID for course: " + course.getName());
                                                 }
                                             }
                                         }
@@ -299,7 +295,6 @@ public class ProfessorPortalController {
         courseGroupComboBoxGradeSubmission.getSelectionModel().selectFirst();
         if (courseGroupComboBoxGradeSubmission.getItems().size() == 1) {
             errorLabelGradeSubmission.setText("No Course Groups Found for Selected Semester");
-            errorLabelGradeSubmission.setStyle("-fx-text-fill: red;");
         } else {
             errorLabelGradeSubmission.setText(null);
         }
@@ -485,6 +480,7 @@ public class ProfessorPortalController {
         buttonsScrollPane.setVisible(true);
         gradeSubmissionScrollPane.getStyleClass().add("pressed");
         semestersGradeSubmission();
+        errorLabelGradeSubmission.setText(null);
     }
 
     @FXML
@@ -510,6 +506,8 @@ public class ProfessorPortalController {
             gradeSubmissionAnchorPane.setVisible(true);
             gradeSubmissionScrollPane.getStyleClass().add("pressed");
             semestersGradeSubmission();
+            errorLabelGradeSubmission.setText(null);
+
         }
     }
 
@@ -520,6 +518,21 @@ public class ProfessorPortalController {
         buttonsScrollPane.setVisible(true);
         profileAnchorPane.setVisible(true);
         profileScrollPane.getStyleClass().add("pressed");
+        Professor professor = LoginPanelController.professorPerson;
+        firstNameProfile.clear();
+        firstNameProfile.setPromptText(professor.getFirst_name());
+        lastNameProfile.clear();
+        lastNameProfile.setPromptText(professor.getLast_name());
+        nationalIdProfile.clear();
+        nationalIdProfile.setPromptText(professor.getNationalId());
+        phoneNumberProfile.clear();
+        phoneNumberProfile.setPromptText(professor.getPhoneNumber());
+        dateOfBirthProfile.setValue(null);
+        dateOfBirthProfile.setPromptText(professor.getDateOfBirth().getDayOfMonth() + " " + Month.of(professor.getDateOfBirth().getMonthValue()) + " " + professor.getDateOfBirth().getYear());
+        genderProfile.getItems().clear();
+        genderProfile.getItems().addAll(Gender.Male, Gender.Female);
+        genderProfile.getSelectionModel().select(professor.getGender());
+
     }
 
     @FXML
@@ -544,6 +557,21 @@ public class ProfessorPortalController {
         if (!profileAnchorPane.isVisible()) {
             profileAnchorPane.setVisible(true);
             profileScrollPane.getStyleClass().add("pressed");
+
+            Professor professor = LoginPanelController.professorPerson;
+            firstNameProfile.clear();
+            firstNameProfile.setPromptText(professor.getFirst_name());
+            lastNameProfile.clear();
+            lastNameProfile.setPromptText(professor.getLast_name());
+            nationalIdProfile.clear();
+            nationalIdProfile.setPromptText(professor.getNationalId());
+            phoneNumberProfile.clear();
+            phoneNumberProfile.setPromptText(professor.getPhoneNumber());
+            dateOfBirthProfile.setValue(null);
+            dateOfBirthProfile.setPromptText(professor.getDateOfBirth().getDayOfMonth() + " " + Month.of(professor.getDateOfBirth().getMonthValue()) + " " + professor.getDateOfBirth().getYear());
+            genderProfile.getItems().clear();
+            genderProfile.getItems().addAll(Gender.Male, Gender.Female);
+            genderProfile.getSelectionModel().select(professor.getGender());
         }
     }
 
@@ -585,15 +613,13 @@ public class ProfessorPortalController {
 
     @FXML
     private void studentsGradeChartDashboard(ActionEvent event) {
-        headerTitle.setText(" --> Reports");
+        headerTitle.setText(" --> Students Grade Chart");
         dashboardAnchorPane.setVisible(false);
         buttonsScrollPane.setVisible(true);
         studentsGradeChartAnchorPane.setVisible(true);
         studentsGradeChartScrollPane.getStyleClass().add("pressed");
 
-        XYChart.Series<String, Number> grades = new XYChart.Series<String, Number>();
-        grades.getData().clear();
-        studentsGradeChart.getData().add(grades);
+        studentsGradeChart.getData().clear();
 
         University.loadFaculties();
         Professor professor = LoginPanelController.professorPerson;
@@ -650,7 +676,7 @@ public class ProfessorPortalController {
 
     @FXML
     private void studentsGradeChartScrollPane(ActionEvent event) {
-        headerTitle.setText(" --> Reports");
+        headerTitle.setText(" --> Students Grade Chart");
         if (gradeSubmissionAnchorPane.isVisible()) {
             gradeSubmissionAnchorPane.setVisible(false);
             gradeSubmissionScrollPane.getStyleClass().remove("pressed");
@@ -668,9 +694,7 @@ public class ProfessorPortalController {
             studentsGradeChartAnchorPane.setVisible(true);
             studentsGradeChartScrollPane.getStyleClass().add("pressed");
 
-            XYChart.Series<String, Number> grades = new XYChart.Series<String, Number>();
-            grades.getData().clear();
-            studentsGradeChart.getData().add(grades);
+            studentsGradeChart.getData().clear();
 
             University.loadFaculties();
             Professor professor = LoginPanelController.professorPerson;
@@ -729,9 +753,11 @@ public class ProfessorPortalController {
 
     @FXML
     void loadStudentsGradeChart(ActionEvent event) {
+        studentsGradeChart.getData().clear();
         University.loadFaculties();
         Professor professor = LoginPanelController.professorPerson;
         XYChart.Series<String, Number> grades = new XYChart.Series<>();
+//        grades.setName("Students Grade Chart");
         for (Faculty faculty : University.allFaculties) {
             if (faculty.getFacultyName().equals(professor.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
                 for (Department department : faculty.departments) {

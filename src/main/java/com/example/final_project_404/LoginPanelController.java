@@ -9,10 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -28,6 +25,12 @@ public class LoginPanelController{
     private TextField usernameLoginPanel;
 
     @FXML
+    private TextField passwordLoginPanelText;
+
+    @FXML
+    private RadioButton passwordVisibility;
+
+    @FXML
     private ImageView userIcon;
 
     @FXML
@@ -35,6 +38,12 @@ public class LoginPanelController{
 
     @FXML
     private Label titleLabel;
+
+    @FXML
+    private Label errorLabelRoleChooser;
+
+    @FXML
+    private Label errorLabel;
 
     @FXML
     private PasswordField passwordLoginPanel;
@@ -51,7 +60,7 @@ public class LoginPanelController{
 
     @FXML
     public void initialize(/*URL location, ResourceBundle resources*/){
-        roleChooserLoginPanel.getItems().addAll("ADMIN", "PROFESSOR", "STUDENT", "EMPLOYEE");
+        roleChooserLoginPanel.getItems().addAll("ADMIN", "EMPLOYEE", "PROFESSOR", "STUDENT");
         roleChooserLoginPanel.setVisibleRowCount(4);
         rotateInTransition = new RotateTransition(Duration.millis(500), null);
         rotateInTransition.setByAngle(360);
@@ -76,6 +85,19 @@ public class LoginPanelController{
         passwordIcon.setOnMouseEntered(event -> handleMouseEntered(passwordIcon));
         passwordIcon.setOnMouseExited(event -> handleMouseExited(passwordIcon));
 
+    }
+
+    @FXML
+    void showPassword(ActionEvent event) {
+        if (passwordLoginPanel.isVisible()) {
+            passwordLoginPanel.setVisible(false);
+            passwordLoginPanelText.setVisible(true);
+            passwordLoginPanelText.setText(passwordLoginPanel.getText());
+        } else {
+            passwordLoginPanelText.setVisible(false);
+            passwordLoginPanel.setVisible(true);
+            passwordLoginPanel.setText(passwordLoginPanelText.getText());
+        }
     }
 
     private void handleMouseEntered(ImageView icon) {
@@ -112,16 +134,37 @@ public class LoginPanelController{
     @FXML
     public void signInLoginPanel(ActionEvent actionEvent) throws Exception {
         String username = usernameLoginPanel.getText().trim();
-        String password = passwordLoginPanel.getText().trim();
+        String password = "";
+        if (passwordLoginPanel.isVisible()) {
+            password = passwordLoginPanel.getText().trim();
+        } else {
+            password = passwordLoginPanelText.getText().trim();
+        }
         String role = roleChooserLoginPanel.getValue();
 
-        System.out.println("role: " + role);
-        System.out.println("username: " + username);
-        System.out.println("password: " + password);
+        System.out.println(password);
+
 
         if (role == null) {
-            System.out.println("The role has not been determined.");
+            errorLabelRoleChooser.setText("Select Your Role");
             return;
+        } else {
+            errorLabelRoleChooser.setText(null);
+        }
+        if (username.isEmpty()) {
+            if (password.isEmpty()) {
+                errorLabel.setText("Enter Username and Password");
+                return;
+            } else {
+                errorLabel.setText("Enter Username");
+                return;
+            }
+
+        } else if (password.isEmpty()) {
+            errorLabel.setText("Enter Password");
+            return;
+        } else {
+            errorLabel.setText(null);
         }
 
         switch (role.toLowerCase()) {
@@ -138,11 +181,9 @@ public class LoginPanelController{
                         stage.setScene(scene);
                         stage.setResizable(false);
                         stage.show();
-                    } else {
-                        System.out.println("The username or password is incorrect!!");
                     }
                 }
-//                System.out.println("The username not found!!");
+                errorLabel.setText("Username Or Password Is Incorrect");
                 break;
             case "professor":
                 Professor.loadAllProfessor();
@@ -157,11 +198,9 @@ public class LoginPanelController{
                         stage.setScene(scene);
                         stage.setResizable(false);
                         stage.show();
-                    } else {
-                        System.out.println("The username or password is incorrect!!");
                     }
                 }
-//                System.out.println("The username not found!!");
+                errorLabel.setText("Username Or Password Is Incorrect");
                 break;
             case "admin":
                 if ("admin".equals(username) && "admin404".equals(password)){
@@ -172,9 +211,9 @@ public class LoginPanelController{
                     stage.setScene(scene);
                     stage.setResizable(false);
                     stage.show();
-                } else{
-                    System.out.println("The username or password is incorrect.");
                 }
+                errorLabel.setText("Username Or Password Is Incorrect");
+
                 break;
             case "employee":
                 Employee.loadAllEmployee();
@@ -190,11 +229,9 @@ public class LoginPanelController{
                         stage.setResizable(false);
                         stage.show();
 
-                    } else {
-                        System.out.println("The username or password is incorrect.");
                     }
                 }
-//                System.out.println("The username not found!!");
+                errorLabel.setText("Username Or Password Is Incorrect");
                 break;
         }
     }
