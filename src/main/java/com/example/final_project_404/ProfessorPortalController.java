@@ -14,17 +14,23 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
+import java.awt.datatransfer.Clipboard;
 import java.io.IOException;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 
 public class ProfessorPortalController {
 
     @FXML private ScrollPane buttonsScrollPane;
     @FXML private ComboBox<String> courseGroupComboBoxGradeSubmission;
     @FXML private ComboBox<String> courseGroupComboBoxRemoveStudent;
+    @FXML private ComboBox<String> courseGroupComboBoxStudentList;
     @FXML private TableColumn<CourseGroup, String> courseNameColCoursesList;
     @FXML private TableView<CourseGroup> coursesTableCoursesList;
     @FXML private Button coursesListScrollPane;
@@ -40,6 +46,7 @@ public class ProfessorPortalController {
     @FXML private TextField lastNameProfile;
     @FXML private Label messageLabelCoursesList;
     @FXML private Label messageLabelRemoveStudent;
+    @FXML private Label messageLabelStudentList;
     @FXML private TextField nationalIdProfile;
     @FXML private TextField phoneNumberProfile;
     @FXML private AnchorPane profileAnchorPane;
@@ -47,23 +54,32 @@ public class ProfessorPortalController {
     @FXML private AnchorPane removeStudentAnchorPane;
     @FXML private Button removeStudentScrollPane;
     @FXML private TableColumn<CourseGroup, String> rowNumberColCoursesList;
-    @FXML private AnchorPane reportsAnchorPane;
-    @FXML private Button reportsScrollPane;
+    @FXML private AnchorPane studentsGradeChartAnchorPane;
+    @FXML private Button studentsGradeChartScrollPane;
     @FXML private ComboBox<String> semesterComboBoxCoursesList;
     @FXML private ComboBox<String> semesterComboBoxGradeSubmission;
     @FXML private ComboBox<String> semesterComboBoxRemoveStudent;
+    @FXML private ComboBox<String> semesterComboBoxStudentList;
+    @FXML private ComboBox<String> semesterChooserGradeChart;
+    @FXML private ComboBox<String> courseGroupChooserGradeChart;
+
     @FXML private TableColumn<CourseGroup, String> semesterColCoursesList;
     @FXML private TableColumn<Student, Void> dropColRemoveStudent;
     @FXML private TableColumn<Student, Void> editColGradeSubmission;
     @FXML private TableColumn<CourseGroup, String> studentCountColCoursesList;
     @FXML private TableColumn<Student, String> studentIdColGradeSubmission;
     @FXML private TableColumn<Student, String> studentIdColRemoveStudent;
+    @FXML private TableColumn<Student, String> studentIdColStudentList;
     @FXML private TableColumn<Student, String> studentNameColGradeSubmission;
     @FXML private TableColumn<Student, String> studentNameColRemoveStudent;
+    @FXML private TableColumn<Student, String> studentNameColStudentList;
     @FXML private TableView<Student> studentsTableGradeSubmission;
     @FXML private TableView<Student> studentsTableRemoveStudent;
+    @FXML private TableView<Student> studentsTableStudentList;
     @FXML private TableColumn<Student, String> scoreColGradeSubmission;
     @FXML private TableColumn<Student, String> statusColGradeSubmission;
+    @FXML private TableColumn<Student, String> nationalIdColStudentList;
+    @FXML private TableColumn<Student, String> rowNumberColStudentList;
     @FXML private Label errorLabelDateOfBirthProfile;
     @FXML private Label errorLabelFirstNameProfile;
     @FXML private Label errorLabelGenderProfile;
@@ -75,16 +91,21 @@ public class ProfessorPortalController {
     @FXML private TextField firstNameProfile;
     @FXML private ComboBox<String> genderProfile;
     @FXML private Label successLabelProfile;
+    @FXML private AnchorPane studentListAnchorPane;
+    @FXML private Button studentListScrollPane;
+    @FXML private Label studentCountLabelStudentList;
+    @FXML private BarChart<String, Number> studentsGradeChart;
 
     private ObservableList<Student> studentListGradeSubmission = FXCollections.observableArrayList();
     private ObservableList<Student> studentListRemoveStudent = FXCollections.observableArrayList();
+    private ObservableList<Student> studentListStudentList = FXCollections.observableArrayList();
     private ObservableList<CourseGroup> courseGroupListCoursesList = FXCollections.observableArrayList();
     private CourseGroup currentCourseGroup;
     private String selectedGroupNumber;
 
     @FXML
     public void initialize() {
-        // Empty as requested
+        // خالی به درخواست کاربر
     }
 
     @FXML
@@ -339,6 +360,61 @@ public class ProfessorPortalController {
         }
     }
 
+    private void courseGroupStudentList() {
+        String selectedSemester = semesterComboBoxStudentList.getValue();
+        Professor professor = LoginPanelController.professorPerson;
+        if (selectedSemester == null || selectedSemester.equals("Semester")) {
+            messageLabelStudentList.setText("Select Semester");
+            messageLabelStudentList.setStyle("-fx-text-fill: red;");
+            return;
+        }
+        courseGroupComboBoxStudentList.getItems().clear();
+        courseGroupComboBoxStudentList.getItems().add("Course Group");
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName().equals(professor.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
+                for (Department department : faculty.departments) {
+                    if (department.getName().equals(professor.getDepartment()) && department.getStatus().equals(Status.Active)) {
+                        for (Major major : department.majors) {
+                            if (major.getName().equals(professor.getMajor()) && major.getStatus().equals(Status.Active)) {
+                                for (Degree degree : major.degrees) {
+                                    for (Course course : degree.courses) {
+                                        for (CourseGroup group : course.courseGroups) {
+                                            if (group.getProfessor().equals(professor.getFullName()) &&
+                                                    group.getSemesterCode().equals(selectedSemester) &&
+                                                    group.getStatus().equals(Status.Active)) {
+                                                String groupId = group.getId();
+                                                if (groupId != null && !groupId.isEmpty()) {
+                                                    String groupName = course.getName() + " - Group " + groupId;
+                                                    if (!courseGroupComboBoxStudentList.getItems().contains(groupName)) {
+                                                        courseGroupComboBoxStudentList.getItems().add(groupName);
+                                                        System.out.println("Added course group: " + groupName);
+                                                    }
+                                                } else {
+                                                    System.out.println("Skipping group with null or empty ID for course: " + course.getName());
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        courseGroupComboBoxStudentList.setVisibleRowCount(5);
+        courseGroupComboBoxStudentList.getSelectionModel().selectFirst();
+        if (courseGroupComboBoxStudentList.getItems().size() == 1) {
+            messageLabelStudentList.setText("No Course Groups Found for Selected Semester");
+            messageLabelStudentList.setStyle("-fx-text-fill: red;");
+        } else {
+            messageLabelStudentList.setText(null);
+        }
+    }
+
     @FXML
     private void coursesListDashboard(ActionEvent event) {
         headerTitle.setText(" --> Courses List");
@@ -361,9 +437,12 @@ public class ProfessorPortalController {
         } else if (removeStudentAnchorPane.isVisible()) {
             removeStudentAnchorPane.setVisible(false);
             removeStudentScrollPane.getStyleClass().remove("pressed");
-        } else if (reportsAnchorPane.isVisible()) {
-            reportsAnchorPane.setVisible(false);
-            reportsScrollPane.getStyleClass().remove("pressed");
+        } else if (studentsGradeChartAnchorPane.isVisible()) {
+            studentsGradeChartAnchorPane.setVisible(false);
+            studentsGradeChartScrollPane.getStyleClass().remove("pressed");
+        } else if (studentListAnchorPane.isVisible()) {
+            studentListAnchorPane.setVisible(false);
+            studentListScrollPane.getStyleClass().remove("pressed");
         }
         if (!coursesListAnchorPane.isVisible()) {
             coursesListAnchorPane.setVisible(true);
@@ -383,16 +462,597 @@ public class ProfessorPortalController {
         } else if (coursesListAnchorPane.isVisible()) {
             coursesListAnchorPane.setVisible(false);
             coursesListScrollPane.getStyleClass().remove("pressed");
-        } else if (reportsAnchorPane.isVisible()) {
-            reportsAnchorPane.setVisible(false);
-            reportsScrollPane.getStyleClass().remove("pressed");
+        } else if (studentsGradeChartAnchorPane.isVisible()) {
+            studentsGradeChartAnchorPane.setVisible(false);
+            studentsGradeChartScrollPane.getStyleClass().remove("pressed");
         } else if (removeStudentAnchorPane.isVisible()) {
             removeStudentAnchorPane.setVisible(false);
             removeStudentScrollPane.getStyleClass().remove("pressed");
+        } else if (studentListAnchorPane.isVisible()) {
+            studentListAnchorPane.setVisible(false);
+            studentListScrollPane.getStyleClass().remove("pressed");
         }
         buttonsScrollPane.setVisible(false);
         dashboardAnchorPane.setVisible(true);
         headerTitle.setText("");
+    }
+
+    @FXML
+    private void gradeSubmissionDashboard(ActionEvent event) {
+        headerTitle.setText(" --> Grade Submission");
+        dashboardAnchorPane.setVisible(false);
+        gradeSubmissionAnchorPane.setVisible(true);
+        buttonsScrollPane.setVisible(true);
+        gradeSubmissionScrollPane.getStyleClass().add("pressed");
+        semestersGradeSubmission();
+    }
+
+    @FXML
+    private void gradeSubmissionScrollPane(ActionEvent event) {
+        headerTitle.setText(" --> Grade Submission");
+        if (profileAnchorPane.isVisible()) {
+            profileAnchorPane.setVisible(false);
+            profileScrollPane.getStyleClass().remove("pressed");
+        } else if (coursesListAnchorPane.isVisible()) {
+            coursesListAnchorPane.setVisible(false);
+            coursesListScrollPane.getStyleClass().remove("pressed");
+        } else if (studentsGradeChartAnchorPane.isVisible()) {
+            studentsGradeChartAnchorPane.setVisible(false);
+            studentsGradeChartScrollPane.getStyleClass().remove("pressed");
+        } else if (removeStudentAnchorPane.isVisible()) {
+            removeStudentAnchorPane.setVisible(false);
+            removeStudentScrollPane.getStyleClass().remove("pressed");
+        } else if (studentListAnchorPane.isVisible()) {
+            studentListAnchorPane.setVisible(false);
+            studentListScrollPane.getStyleClass().remove("pressed");
+        }
+        if (!gradeSubmissionAnchorPane.isVisible()) {
+            gradeSubmissionAnchorPane.setVisible(true);
+            gradeSubmissionScrollPane.getStyleClass().add("pressed");
+            semestersGradeSubmission();
+        }
+    }
+
+    @FXML
+    private void profileDashboard(ActionEvent event) {
+        headerTitle.setText(" --> Profile");
+        dashboardAnchorPane.setVisible(false);
+        buttonsScrollPane.setVisible(true);
+        profileAnchorPane.setVisible(true);
+        profileScrollPane.getStyleClass().add("pressed");
+    }
+
+    @FXML
+    private void profileScrollPane(ActionEvent event) {
+        headerTitle.setText(" --> Profile");
+        if (gradeSubmissionAnchorPane.isVisible()) {
+            gradeSubmissionAnchorPane.setVisible(false);
+            gradeSubmissionScrollPane.getStyleClass().remove("pressed");
+        } else if (coursesListAnchorPane.isVisible()) {
+            coursesListAnchorPane.setVisible(false);
+            coursesListScrollPane.getStyleClass().remove("pressed");
+        } else if (studentsGradeChartAnchorPane.isVisible()) {
+            studentsGradeChartAnchorPane.setVisible(false);
+            studentsGradeChartScrollPane.getStyleClass().remove("pressed");
+        } else if (removeStudentAnchorPane.isVisible()) {
+            removeStudentAnchorPane.setVisible(false);
+            removeStudentScrollPane.getStyleClass().remove("pressed");
+        } else if (studentListAnchorPane.isVisible()) {
+            studentListAnchorPane.setVisible(false);
+            studentListScrollPane.getStyleClass().remove("pressed");
+        }
+        if (!profileAnchorPane.isVisible()) {
+            profileAnchorPane.setVisible(true);
+            profileScrollPane.getStyleClass().add("pressed");
+        }
+    }
+
+    @FXML
+    private void removeStudentDashboard(ActionEvent event) {
+        headerTitle.setText(" --> Remove Student");
+        dashboardAnchorPane.setVisible(false);
+        buttonsScrollPane.setVisible(true);
+        removeStudentAnchorPane.setVisible(true);
+        removeStudentScrollPane.getStyleClass().add("pressed");
+        semestersRemoveStudent();
+    }
+
+    @FXML
+    private void removeStudentScrollPane(ActionEvent event) {
+        headerTitle.setText(" --> Remove Student");
+        if (gradeSubmissionAnchorPane.isVisible()) {
+            gradeSubmissionAnchorPane.setVisible(false);
+            gradeSubmissionScrollPane.getStyleClass().remove("pressed");
+        } else if (profileAnchorPane.isVisible()) {
+            profileAnchorPane.setVisible(false);
+            profileScrollPane.getStyleClass().remove("pressed");
+        } else if (coursesListAnchorPane.isVisible()) {
+            coursesListAnchorPane.setVisible(false);
+            coursesListScrollPane.getStyleClass().remove("pressed");
+        } else if (studentsGradeChartAnchorPane.isVisible()) {
+            studentsGradeChartAnchorPane.setVisible(false);
+            studentsGradeChartScrollPane.getStyleClass().remove("pressed");
+        } else if (studentListAnchorPane.isVisible()) {
+            studentListAnchorPane.setVisible(false);
+            studentListScrollPane.getStyleClass().remove("pressed");
+        }
+        if (!removeStudentAnchorPane.isVisible()) {
+            removeStudentAnchorPane.setVisible(true);
+            removeStudentScrollPane.getStyleClass().add("pressed");
+            semestersRemoveStudent();
+        }
+    }
+
+    @FXML
+    private void studentsGradeChartDashboard(ActionEvent event) {
+        headerTitle.setText(" --> Reports");
+        dashboardAnchorPane.setVisible(false);
+        buttonsScrollPane.setVisible(true);
+        studentsGradeChartAnchorPane.setVisible(true);
+        studentsGradeChartScrollPane.getStyleClass().add("pressed");
+
+        XYChart.Series<String, Number> grades = new XYChart.Series<String, Number>();
+        grades.getData().clear();
+        studentsGradeChart.getData().add(grades);
+
+        University.loadFaculties();
+        Professor professor = LoginPanelController.professorPerson;
+        semesterChooserGradeChart.getItems().clear();
+        semesterChooserGradeChart.getItems().add("Semester");
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName().equals(professor.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
+                for (Department department : faculty.departments) {
+                    if (department.getName().equals(professor.getDepartment()) && department.getStatus().equals(Status.Active)) {
+                        for (Major major : department.majors) {
+                            if (major.getName().equals(professor.getMajor()) && major.getStatus().equals(Status.Active)) {
+                                for (Degree degree : major.degrees) {
+                                    for (Course course : degree.courses) {
+                                        if (course.getStatus().equals(Status.Active)) {
+                                            for (CourseGroup courseGroup : course.courseGroups) {
+                                                if (courseGroup.getProfessor().equals(professor.getFullName())) {
+                                                    if (!semesterChooserGradeChart.getItems().contains(courseGroup.getSemesterCode())) {
+                                                        semesterChooserGradeChart.getItems().add(courseGroup.getSemesterCode());
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                semesterChooserGradeChart.setOnAction(event1 -> {
+                                    courseGroupChooserGradeChart.getItems().clear();
+                                    courseGroupChooserGradeChart.getItems().add("CourseGroup");
+                                    for (Degree degree : major.degrees) {
+                                        for (Course course : degree.courses) {
+                                            if (course.getStatus().equals(Status.Active)) {
+                                                for (CourseGroup courseGroup : course.courseGroups) {
+                                                    if (courseGroup.getProfessor().equals(professor.getFullName()) && courseGroup.getSemesterCode().equals(semesterChooserGradeChart.getValue())) {
+                                                        courseGroupChooserGradeChart.getItems().add(courseGroup.getCourseName() + " : " + courseGroup.getId());
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    courseGroupChooserGradeChart.setVisibleRowCount(5);
+                                    courseGroupChooserGradeChart.getSelectionModel().selectFirst();
+                                });
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        semesterChooserGradeChart.setVisibleRowCount(5);
+        semesterChooserGradeChart.getSelectionModel().selectFirst();
+    }
+
+    @FXML
+    private void studentsGradeChartScrollPane(ActionEvent event) {
+        headerTitle.setText(" --> Reports");
+        if (gradeSubmissionAnchorPane.isVisible()) {
+            gradeSubmissionAnchorPane.setVisible(false);
+            gradeSubmissionScrollPane.getStyleClass().remove("pressed");
+        } else if (profileAnchorPane.isVisible()) {
+            profileAnchorPane.setVisible(false);
+            profileScrollPane.getStyleClass().remove("pressed");
+        } else if (coursesListAnchorPane.isVisible()) {
+            coursesListAnchorPane.setVisible(false);
+            coursesListScrollPane.getStyleClass().remove("pressed");
+        } else if (removeStudentAnchorPane.isVisible()) {
+            removeStudentAnchorPane.setVisible(false);
+            removeStudentScrollPane.getStyleClass().remove("pressed");
+        }
+        if (!studentsGradeChartAnchorPane.isVisible()) {
+            studentsGradeChartAnchorPane.setVisible(true);
+            studentsGradeChartScrollPane.getStyleClass().add("pressed");
+
+            XYChart.Series<String, Number> grades = new XYChart.Series<String, Number>();
+            grades.getData().clear();
+            studentsGradeChart.getData().add(grades);
+
+            University.loadFaculties();
+            Professor professor = LoginPanelController.professorPerson;
+            semesterChooserGradeChart.getItems().clear();
+            semesterChooserGradeChart.getItems().add("Semester");
+            for (Faculty faculty : University.allFaculties) {
+                if (faculty.getFacultyName().equals(professor.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
+                    for (Department department : faculty.departments) {
+                        if (department.getName().equals(professor.getDepartment()) && department.getStatus().equals(Status.Active)) {
+                            for (Major major : department.majors) {
+                                if (major.getName().equals(professor.getMajor()) && major.getStatus().equals(Status.Active)) {
+                                    for (Degree degree : major.degrees) {
+                                        for (Course course : degree.courses) {
+                                            if (course.getStatus().equals(Status.Active)) {
+                                                for (CourseGroup courseGroup : course.courseGroups) {
+                                                    if (courseGroup.getProfessor().equals(professor.getFullName())) {
+                                                        if (!semesterChooserGradeChart.getItems().contains(courseGroup.getSemesterCode())) {
+                                                            semesterChooserGradeChart.getItems().add(courseGroup.getSemesterCode());
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                    semesterChooserGradeChart.setOnAction(event1 -> {
+                                        courseGroupChooserGradeChart.getItems().clear();
+                                        courseGroupChooserGradeChart.getItems().add("CourseGroup");
+                                        for (Degree degree : major.degrees) {
+                                            for (Course course : degree.courses) {
+                                                if (course.getStatus().equals(Status.Active)) {
+                                                    for (CourseGroup courseGroup : course.courseGroups) {
+                                                        if (courseGroup.getProfessor().equals(professor.getFullName()) && courseGroup.getSemesterCode().equals(semesterChooserGradeChart.getValue())) {
+                                                            courseGroupChooserGradeChart.getItems().add(courseGroup.getCourseName() + " : " + courseGroup.getId());
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        courseGroupChooserGradeChart.setVisibleRowCount(5);
+                                        courseGroupChooserGradeChart.getSelectionModel().selectFirst();
+                                    });
+                                    break;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                    break;
+                }
+            }
+            semesterChooserGradeChart.setVisibleRowCount(5);
+            semesterChooserGradeChart.getSelectionModel().selectFirst();
+
+        }
+    }
+
+    @FXML
+    void loadStudentsGradeChart(ActionEvent event) {
+        University.loadFaculties();
+        Professor professor = LoginPanelController.professorPerson;
+        XYChart.Series<String, Number> grades = new XYChart.Series<>();
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName().equals(professor.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
+                for (Department department : faculty.departments) {
+                    if (department.getName().equals(professor.getDepartment()) && department.getStatus().equals(Status.Active)) {
+                        for (Major major : department.majors) {
+                            if (major.getName().equals(professor.getMajor()) && major.getStatus().equals(Status.Active)) {
+                                for (Degree degree : major.degrees) {
+                                    for (Course course : degree.courses) {
+                                        if (course.getStatus().equals(Status.Active)) {
+                                            for (CourseGroup courseGroup : course.courseGroups) {
+                                                if (courseGroup.getProfessor().equals(professor.getFullName()) && courseGroup.getSemesterCode().equals(semesterChooserGradeChart.getValue())) {
+                                                    if (courseGroupChooserGradeChart.getValue().equals(courseGroup.getCourseName() + " : " + courseGroup.getId())) {
+                                                        for (Student student : courseGroup.getRegisteredStudents()) {
+                                                            if (student.getStatus().equals(Status.Active)) {
+                                                                grades.getData().add(new XYChart.Data<>(student.getFullName(), courseGroup.getScore(student)));
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        studentsGradeChart.getData().add(grades);
+    }
+
+    @FXML
+    private void studentListDashboard(ActionEvent event) {
+        headerTitle.setText(" --> Student List");
+        dashboardAnchorPane.setVisible(false);
+        buttonsScrollPane.setVisible(true);
+        studentListAnchorPane.setVisible(true);
+        studentListScrollPane.getStyleClass().add("pressed");
+        semestersStudentList();
+    }
+
+    @FXML
+    private void studentListScrollPane(ActionEvent event) {
+        headerTitle.setText(" --> Student List");
+        if (gradeSubmissionAnchorPane.isVisible()) {
+            gradeSubmissionAnchorPane.setVisible(false);
+            gradeSubmissionScrollPane.getStyleClass().remove("pressed");
+        } else if (profileAnchorPane.isVisible()) {
+            profileAnchorPane.setVisible(false);
+            profileScrollPane.getStyleClass().remove("pressed");
+        } else if (coursesListAnchorPane.isVisible()) {
+            coursesListAnchorPane.setVisible(false);
+            coursesListScrollPane.getStyleClass().remove("pressed");
+        } else if (removeStudentAnchorPane.isVisible()) {
+            removeStudentAnchorPane.setVisible(false);
+            removeStudentScrollPane.getStyleClass().remove("pressed");
+        } else if (studentsGradeChartAnchorPane.isVisible()) {
+            studentsGradeChartAnchorPane.setVisible(false);
+            studentsGradeChartScrollPane.getStyleClass().remove("pressed");
+        }
+        if (!studentListAnchorPane.isVisible()) {
+            studentListAnchorPane.setVisible(true);
+            studentListScrollPane.getStyleClass().add("pressed");
+            semestersStudentList();
+        }
+    }
+
+    @FXML
+    private void loadStudentsStudentList() {
+        if (semesterComboBoxStudentList.getValue() == null || semesterComboBoxStudentList.getValue().equals("Semester")) {
+            messageLabelStudentList.setText("Choose Semester");
+            messageLabelStudentList.setStyle("-fx-text-fill: red;");
+            studentCountLabelStudentList.setText("Total: 0");
+            return;
+        } else if (courseGroupComboBoxStudentList.getValue() == null || courseGroupComboBoxStudentList.getValue().equals("Course Group")) {
+            messageLabelStudentList.setText("Choose Course Group");
+            messageLabelStudentList.setStyle("-fx-text-fill: red;");
+            studentCountLabelStudentList.setText("Total: 0");
+            return;
+        } else {
+            messageLabelStudentList.setText(null);
+        }
+
+        rowNumberColStudentList.setCellValueFactory(cellData -> {
+            int rowIndex = studentsTableStudentList.getItems().indexOf(cellData.getValue()) + 1;
+            return new ReadOnlyStringWrapper(String.valueOf(rowIndex));
+        });
+        studentNameColStudentList.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(
+                cellData.getValue().getFirst_name() + " " + cellData.getValue().getLast_name()
+        ));
+        studentIdColStudentList.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getId()));
+        nationalIdColStudentList.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getNationalId()));
+
+        studentsTableStudentList.setItems(studentListStudentList);
+
+        studentListStudentList.clear();
+        String selectedSemester = semesterComboBoxStudentList.getValue();
+        String selectedCourseGroup = courseGroupComboBoxStudentList.getValue();
+        String[] parts = selectedCourseGroup.split(" - Group ");
+        if (parts.length < 2) {
+            messageLabelStudentList.setText("Invalid Course Group Format");
+            messageLabelStudentList.setStyle("-fx-text-fill: red;");
+            studentCountLabelStudentList.setText("Total: 0");
+            System.out.println("Invalid course group format: " + selectedCourseGroup);
+            return;
+        }
+        String selectedCourse = parts[0];
+        selectedGroupNumber = parts[1];
+
+        CourseGroup selectedGroup = null;
+        Professor professor = LoginPanelController.professorPerson;
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName().equals(professor.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
+                for (Department department : faculty.departments) {
+                    if (department.getName().equals(professor.getDepartment()) && department.getStatus().equals(Status.Active)) {
+                        for (Major major : department.majors) {
+                            if (major.getName().equals(professor.getMajor()) && major.getStatus().equals(Status.Active)) {
+                                for (Degree degree : major.degrees) {
+                                    for (Course course : degree.courses) {
+                                        if (course.getStatus().equals(Status.Active)) {
+                                            for (CourseGroup group : course.courseGroups) {
+                                                if (group.getProfessor().equals(professor.getFullName()) &&
+                                                        group.getCourse().getName().equals(selectedCourse) &&
+                                                        group.getSemesterCode().equals(selectedSemester) &&
+                                                        group.getStatus().equals(Status.Active) &&
+                                                        group.getId() != null && group.getId().equals(selectedGroupNumber)) {
+                                                    selectedGroup = group;
+                                                    studentListStudentList.addAll(group.getRegisteredStudents());
+                                                    System.out.println("Found course group: " + selectedCourseGroup + ", Students: " + group.getRegisteredStudents().size());
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+
+        if (selectedGroup == null) {
+            messageLabelStudentList.setText("Course Group Not Found");
+            messageLabelStudentList.setStyle("-fx-text-fill: red;");
+            studentCountLabelStudentList.setText("Total: 0");
+            System.out.println("Course group not found for: Semester=" + selectedSemester + ", Course=" + selectedCourse + ", GroupID=" + selectedGroupNumber);
+            return;
+        }
+
+        if (selectedGroup.getRegisteredStudents() == null) {
+            selectedGroup.setRegisteredStudents(new ArrayList<>());
+            System.out.println("Initialized registeredStudents for course group: " + selectedCourseGroup);
+        }
+
+        if (selectedGroup.getRegisteredStudents().isEmpty()) {
+            messageLabelStudentList.setText("No Students Enrolled in This Course Group");
+            messageLabelStudentList.setStyle("-fx-text-fill: red;");
+            studentCountLabelStudentList.setText("Total: 0");
+        } else {
+            messageLabelStudentList.setText(studentListStudentList.size() + " Students Found");
+            messageLabelStudentList.setStyle("-fx-text-fill: green;");
+            studentCountLabelStudentList.setText("Total: " + studentListStudentList.size());
+        }
+    }
+
+    private void semestersCoursesList() {
+        semesterComboBoxCoursesList.getItems().clear();
+        semesterComboBoxCoursesList.getItems().add("Semester");
+        Professor professor = LoginPanelController.professorPerson;
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName().equals(professor.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
+                for (Department department : faculty.departments) {
+                    if (department.getName().equals(professor.getDepartment()) && department.getStatus().equals(Status.Active)) {
+                        for (Major major : department.majors) {
+                            if (major.getName().equals(professor.getMajor()) && major.getStatus().equals(Status.Active)) {
+                                for (Degree degree : major.degrees) {
+                                    for (Course course : degree.courses) {
+                                        for (CourseGroup group : course.courseGroups) {
+                                            if (group.getProfessor().equals(professor.getFullName()) &&
+                                                    group.getStatus().equals(Status.Active)) {
+                                                String semesterCode = group.getSemesterCode();
+                                                if (!semesterComboBoxCoursesList.getItems().contains(semesterCode)) {
+                                                    semesterComboBoxCoursesList.getItems().add(semesterCode);
+                                                    System.out.println("Added semester: " + semesterCode);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        semesterComboBoxCoursesList.setVisibleRowCount(5);
+        semesterComboBoxCoursesList.getSelectionModel().selectFirst();
+    }
+
+    private void semestersGradeSubmission() {
+        semesterComboBoxGradeSubmission.getItems().clear();
+        semesterComboBoxGradeSubmission.getItems().add("Semester");
+        Professor professor = LoginPanelController.professorPerson;
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName().equals(professor.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
+                for (Department department : faculty.departments) {
+                    if (department.getName().equals(professor.getDepartment()) && department.getStatus().equals(Status.Active)) {
+                        for (Major major : department.majors) {
+                            if (major.getName().equals(professor.getMajor()) && major.getStatus().equals(Status.Active)) {
+                                for (Degree degree : major.degrees) {
+                                    for (Course course : degree.courses) {
+                                        for (CourseGroup group : course.courseGroups) {
+                                            if (group.getProfessor().equals(professor.getFullName()) &&
+                                                    group.getStatus().equals(Status.Active)) {
+                                                String semesterCode = group.getSemesterCode();
+                                                if (!semesterComboBoxGradeSubmission.getItems().contains(semesterCode)) {
+                                                    semesterComboBoxGradeSubmission.getItems().add(semesterCode);
+                                                    System.out.println("Added semester: " + semesterCode);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        semesterComboBoxGradeSubmission.setVisibleRowCount(5);
+        semesterComboBoxGradeSubmission.getSelectionModel().selectFirst();
+        semesterComboBoxGradeSubmission.setOnAction(event -> courseGroupGradeSubmission());
+    }
+
+    private void semestersRemoveStudent() {
+        semesterComboBoxRemoveStudent.getItems().clear();
+        semesterComboBoxRemoveStudent.getItems().add("Semester");
+        Professor professor = LoginPanelController.professorPerson;
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName().equals(professor.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
+                for (Department department : faculty.departments) {
+                    if (department.getName().equals(professor.getDepartment()) && department.getStatus().equals(Status.Active)) {
+                        for (Major major : department.majors) {
+                            if (major.getName().equals(professor.getMajor()) && major.getStatus().equals(Status.Active)) {
+                                for (Degree degree : major.degrees) {
+                                    for (Course course : degree.courses) {
+                                        for (CourseGroup group : course.courseGroups) {
+                                            if (group.getProfessor().equals(professor.getFullName()) &&
+                                                    group.getStatus().equals(Status.Active)) {
+                                                String semesterCode = group.getSemesterCode();
+                                                if (!semesterComboBoxRemoveStudent.getItems().contains(semesterCode)) {
+                                                    semesterComboBoxRemoveStudent.getItems().add(semesterCode);
+                                                    System.out.println("Added semester: " + semesterCode);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        semesterComboBoxRemoveStudent.setVisibleRowCount(5);
+        semesterComboBoxRemoveStudent.getSelectionModel().selectFirst();
+        semesterComboBoxRemoveStudent.setOnAction(event -> courseGroupRemoveStudent());
+    }
+
+    private void semestersStudentList() {
+        semesterComboBoxStudentList.getItems().clear();
+        semesterComboBoxStudentList.getItems().add("Semester");
+        Professor professor = LoginPanelController.professorPerson;
+        for (Faculty faculty : University.allFaculties) {
+            if (faculty.getFacultyName().equals(professor.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
+                for (Department department : faculty.departments) {
+                    if (department.getName().equals(professor.getDepartment()) && department.getStatus().equals(Status.Active)) {
+                        for (Major major : department.majors) {
+                            if (major.getName().equals(professor.getMajor()) && major.getStatus().equals(Status.Active)) {
+                                for (Degree degree : major.degrees) {
+                                    for (Course course : degree.courses) {
+                                        for (CourseGroup group : course.courseGroups) {
+                                            if (group.getProfessor().equals(professor.getFullName()) &&
+                                                    group.getStatus().equals(Status.Active)) {
+                                                String semesterCode = group.getSemesterCode();
+                                                if (!semesterComboBoxStudentList.getItems().contains(semesterCode)) {
+                                                    semesterComboBoxStudentList.getItems().add(semesterCode);
+                                                    System.out.println("Added semester: " + semesterCode);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        semesterComboBoxStudentList.setVisibleRowCount(5);
+        semesterComboBoxStudentList.getSelectionModel().selectFirst();
+        semesterComboBoxStudentList.setOnAction(event -> courseGroupStudentList());
     }
 
     private void dropStudent(Student student) {
@@ -555,39 +1215,6 @@ public class ProfessorPortalController {
         }
         System.out.println("No Degree found for CourseGroup with course name: " + targetCourseName);
         return null;
-    }
-
-    @FXML
-    private void gradeSubmissionDashboard(ActionEvent event) {
-        headerTitle.setText(" --> Grade Submission");
-        dashboardAnchorPane.setVisible(false);
-        gradeSubmissionAnchorPane.setVisible(true);
-        buttonsScrollPane.setVisible(true);
-        gradeSubmissionScrollPane.getStyleClass().add("pressed");
-        semestersGradeSubmission();
-    }
-
-    @FXML
-    private void gradeSubmissionScrollPane(ActionEvent event) {
-        headerTitle.setText(" --> Grade Submission");
-        if (profileAnchorPane.isVisible()) {
-            profileAnchorPane.setVisible(false);
-            profileScrollPane.getStyleClass().remove("pressed");
-        } else if (coursesListAnchorPane.isVisible()) {
-            coursesListAnchorPane.setVisible(false);
-            coursesListScrollPane.getStyleClass().remove("pressed");
-        } else if (reportsAnchorPane.isVisible()) {
-            reportsAnchorPane.setVisible(false);
-            reportsScrollPane.getStyleClass().remove("pressed");
-        } else if (removeStudentAnchorPane.isVisible()) {
-            removeStudentAnchorPane.setVisible(false);
-            removeStudentScrollPane.getStyleClass().remove("pressed");
-        }
-        if (!gradeSubmissionAnchorPane.isVisible()) {
-            gradeSubmissionAnchorPane.setVisible(true);
-            gradeSubmissionScrollPane.getStyleClass().add("pressed");
-            semestersGradeSubmission();
-        }
     }
 
     @FXML
@@ -895,280 +1522,6 @@ public class ProfessorPortalController {
         setupStudentsTableRemoveStudent();
     }
 
-    @FXML
-    private void profileDashboard(ActionEvent event) {
-        headerTitle.setText(" --> Profile");
-        Professor professor = LoginPanelController.professorPerson;
-        dashboardAnchorPane.setVisible(false);
-        buttonsScrollPane.setVisible(true);
-        profileAnchorPane.setVisible(true);
-        profileScrollPane.getStyleClass().add("pressed");
-
-        firstNameProfile.clear();
-        firstNameProfile.setPromptText(professor.getFirst_name());
-        lastNameProfile.clear();
-        lastNameProfile.setPromptText(professor.getLast_name());
-        nationalIdProfile.clear();
-        nationalIdProfile.setPromptText(professor.getNationalId());
-        phoneNumberProfile.clear();
-        phoneNumberProfile.setPromptText(professor.getPhoneNumber());
-        genderProfile.getItems().clear();
-        genderProfile.getItems().addAll(String.valueOf(Gender.Male), String.valueOf(Gender.Female));
-        genderProfile.getSelectionModel().select(String.valueOf(professor.getGender()));
-        dateOfBirthProfile.setValue(null);
-        dateOfBirthProfile.setPromptText(professor.getDateOfBirth().getDayOfMonth() + " " + Month.of(professor.getDateOfBirth().getMonthValue()) + " " + professor.getDateOfBirth().getYear());
-
-        errorLabelFirstNameProfile.setText(null);
-        errorLabelLastNameProfile.setText(null);
-        errorLabelGenderProfile.setText(null);
-        errorLabelDateOfBirthProfile.setText(null);
-        errorLabelPhoneNumberProfile.setText(null);
-        errorLabelNationalIdProfile.setText(null);
-        errorLabelProfile.setText(null);
-        successLabelProfile.setText(null);
-    }
-
-    @FXML
-    private void profileScrollPane(ActionEvent event) {
-        if (gradeSubmissionAnchorPane.isVisible()) {
-            gradeSubmissionAnchorPane.setVisible(false);
-            gradeSubmissionScrollPane.getStyleClass().remove("pressed");
-        } else if (coursesListAnchorPane.isVisible()) {
-            coursesListAnchorPane.setVisible(false);
-            coursesListScrollPane.getStyleClass().remove("pressed");
-        } else if (reportsAnchorPane.isVisible()) {
-            reportsAnchorPane.setVisible(false);
-            reportsScrollPane.getStyleClass().remove("pressed");
-        } else if (removeStudentAnchorPane.isVisible()) {
-            removeStudentAnchorPane.setVisible(false);
-            removeStudentScrollPane.getStyleClass().remove("pressed");
-        }
-        if (!profileAnchorPane.isVisible()) {
-            headerTitle.setText(" --> Profile");
-            profileAnchorPane.setVisible(true);
-            profileScrollPane.getStyleClass().add("pressed");
-
-            Professor professor = LoginPanelController.professorPerson;
-            firstNameProfile.clear();
-            firstNameProfile.setPromptText(professor.getFirst_name());
-            lastNameProfile.clear();
-            lastNameProfile.setPromptText(professor.getLast_name());
-            nationalIdProfile.clear();
-            nationalIdProfile.setPromptText(professor.getNationalId());
-            phoneNumberProfile.clear();
-            phoneNumberProfile.setPromptText(professor.getPhoneNumber());
-            genderProfile.getItems().clear();
-            genderProfile.getItems().addAll(String.valueOf(Gender.Male), String.valueOf(Gender.Female));
-            genderProfile.getSelectionModel().select(String.valueOf(professor.getGender()));
-            dateOfBirthProfile.setValue(null);
-            dateOfBirthProfile.setPromptText(professor.getDateOfBirth().getDayOfMonth() + " " + Month.of(professor.getDateOfBirth().getMonthValue()) + " " + professor.getDateOfBirth().getYear());
-
-            errorLabelFirstNameProfile.setText(null);
-            errorLabelLastNameProfile.setText(null);
-            errorLabelGenderProfile.setText(null);
-            errorLabelDateOfBirthProfile.setText(null);
-            errorLabelPhoneNumberProfile.setText(null);
-            errorLabelNationalIdProfile.setText(null);
-            errorLabelProfile.setText(null);
-            successLabelProfile.setText(null);
-        }
-    }
-
-    @FXML
-    private void removeStudentDashboard(ActionEvent event) {
-        headerTitle.setText(" --> Remove Student");
-        dashboardAnchorPane.setVisible(false);
-        removeStudentAnchorPane.setVisible(true);
-        buttonsScrollPane.setVisible(true);
-        removeStudentScrollPane.getStyleClass().add("pressed");
-        semestersRemoveStudent();
-        setupStudentsTableRemoveStudent();
-    }
-
-    @FXML
-    private void removeStudentScrollPane(ActionEvent event) {
-        headerTitle.setText(" --> Remove Student");
-        if (gradeSubmissionAnchorPane.isVisible()) {
-            gradeSubmissionAnchorPane.setVisible(false);
-            gradeSubmissionScrollPane.getStyleClass().remove("pressed");
-        } else if (profileAnchorPane.isVisible()) {
-            profileAnchorPane.setVisible(false);
-            profileScrollPane.getStyleClass().remove("pressed");
-        } else if (coursesListAnchorPane.isVisible()) {
-            coursesListAnchorPane.setVisible(false);
-            coursesListScrollPane.getStyleClass().remove("pressed");
-        } else if (reportsAnchorPane.isVisible()) {
-            reportsAnchorPane.setVisible(false);
-            reportsScrollPane.getStyleClass().remove("pressed");
-        }
-        if (!removeStudentAnchorPane.isVisible()) {
-            removeStudentAnchorPane.setVisible(true);
-            removeStudentScrollPane.getStyleClass().add("pressed");
-            semestersRemoveStudent();
-            setupStudentsTableRemoveStudent();
-        }
-    }
-
-    @FXML
-    private void reportsDashboard(ActionEvent event) {
-        headerTitle.setText(" --> Reports");
-        dashboardAnchorPane.setVisible(false);
-        buttonsScrollPane.setVisible(true);
-        reportsAnchorPane.setVisible(true);
-        reportsScrollPane.getStyleClass().add("pressed");
-    }
-
-    @FXML
-    private void reportsScrollPane(ActionEvent event) {
-        headerTitle.setText(" --> Reports");
-        if (gradeSubmissionAnchorPane.isVisible()) {
-            gradeSubmissionAnchorPane.setVisible(false);
-            gradeSubmissionScrollPane.getStyleClass().remove("pressed");
-        } else if (profileAnchorPane.isVisible()) {
-            profileAnchorPane.setVisible(false);
-            profileScrollPane.getStyleClass().remove("pressed");
-        } else if (coursesListAnchorPane.isVisible()) {
-            coursesListAnchorPane.setVisible(false);
-            coursesListScrollPane.getStyleClass().remove("pressed");
-        } else if (removeStudentAnchorPane.isVisible()) {
-            removeStudentAnchorPane.setVisible(false);
-            removeStudentScrollPane.getStyleClass().remove("pressed");
-        }
-        if (!reportsAnchorPane.isVisible()) {
-            reportsAnchorPane.setVisible(true);
-            reportsScrollPane.getStyleClass().add("pressed");
-        }
-    }
-
-    @FXML
-    private void saveGradesGradeSubmission(ActionEvent event) {
-        if (currentCourseGroup == null) {
-            showAlert("Choose Course Group");
-            return;
-        }
-        University.saveFaculties();
-        showAlert("The Grades Saved Successfully");
-    }
-
-    private void semestersCoursesList() {
-        University.loadFaculties();
-        Professor professor = LoginPanelController.professorPerson;
-        semesterComboBoxCoursesList.getItems().clear();
-        semesterComboBoxCoursesList.getItems().add("Semester");
-        for (Faculty faculty : University.allFaculties) {
-            if (faculty.getFacultyName().equals(professor.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
-                for (Department department : faculty.departments) {
-                    if (department.getName().equals(professor.getDepartment()) && department.getStatus().equals(Status.Active)) {
-                        for (Major major : department.majors) {
-                            if (major.getName().equals(professor.getMajor()) && major.getStatus().equals(Status.Active)) {
-                                for (Degree degree : major.degrees) {
-                                    for (Course course : degree.courses) {
-                                        if (course.getStatus().equals(Status.Active)) {
-                                            for (CourseGroup group : course.courseGroups) {
-                                                if (group.getProfessor().equals(professor.getFullName())) {
-                                                    String semesterCode = group.getSemesterCode();
-                                                    if (!semesterComboBoxCoursesList.getItems().contains(semesterCode)) {
-                                                        semesterComboBoxCoursesList.getItems().add(semesterCode);
-                                                        System.out.println("Added semester: " + semesterCode);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                break;
-                            }
-                        }
-                        break;
-                    }
-                }
-                break;
-            }
-        }
-        semesterComboBoxCoursesList.setVisibleRowCount(5);
-        semesterComboBoxCoursesList.getSelectionModel().selectFirst();
-    }
-
-    private void semestersGradeSubmission() {
-        University.loadFaculties();
-        Professor professor = LoginPanelController.professorPerson;
-        semesterComboBoxGradeSubmission.getItems().clear();
-        semesterComboBoxGradeSubmission.getItems().add("Semester");
-        for (Faculty faculty : University.allFaculties) {
-            if (faculty.getFacultyName().equals(professor.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
-                for (Department department : faculty.departments) {
-                    if (department.getName().equals(professor.getDepartment()) && department.getStatus().equals(Status.Active)) {
-                        for (Major major : department.majors) {
-                            if (major.getName().equals(professor.getMajor()) && major.getStatus().equals(Status.Active)) {
-                                for (Degree degree : major.degrees) {
-                                    for (Course course : degree.courses) {
-                                        if (course.getStatus().equals(Status.Active)) {
-                                            for (CourseGroup group : course.courseGroups) {
-                                                if (group.getProfessor().equals(professor.getFullName()) && group.getStatus().equals(Status.Active)) {
-                                                    String semesterCode = group.getSemesterCode();
-                                                    if (!semesterComboBoxGradeSubmission.getItems().contains(semesterCode)) {
-                                                        semesterComboBoxGradeSubmission.getItems().add(semesterCode);
-                                                        System.out.println("Added semester: " + semesterCode);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                break;
-                            }
-                        }
-                        break;
-                    }
-                }
-                break;
-            }
-        }
-        semesterComboBoxGradeSubmission.setVisibleRowCount(5);
-        semesterComboBoxGradeSubmission.getSelectionModel().selectFirst();
-        semesterComboBoxGradeSubmission.setOnAction(event -> courseGroupGradeSubmission());
-    }
-
-    private void semestersRemoveStudent() {
-        University.loadFaculties();
-        Professor professor = LoginPanelController.professorPerson;
-        semesterComboBoxRemoveStudent.getItems().clear();
-        semesterComboBoxRemoveStudent.getItems().add("Semester");
-        for (Faculty faculty : University.allFaculties) {
-            if (faculty.getFacultyName().equals(professor.getFaculty()) && faculty.getStatus().equals(Status.Active)) {
-                for (Department department : faculty.departments) {
-                    if (department.getName().equals(professor.getDepartment()) && department.getStatus().equals(Status.Active)) {
-                        for (Major major : department.majors) {
-                            if (major.getName().equals(professor.getMajor()) && major.getStatus().equals(Status.Active)) {
-                                for (Degree degree : major.degrees) {
-                                    for (Course course : degree.courses) {
-                                        if (course.getStatus().equals(Status.Active)) {
-                                            for (CourseGroup group : course.courseGroups) {
-                                                if (group.getProfessor().equals(professor.getFullName()) && group.getStatus().equals(Status.Active)) {
-                                                    String semesterCode = group.getSemesterCode();
-                                                    if (!semesterComboBoxRemoveStudent.getItems().contains(semesterCode)) {
-                                                        semesterComboBoxRemoveStudent.getItems().add(semesterCode);
-                                                        System.out.println("Added semester: " + semesterCode);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                break;
-                            }
-                        }
-                        break;
-                    }
-                }
-                break;
-            }
-        }
-        semesterComboBoxRemoveStudent.setVisibleRowCount(5);
-        semesterComboBoxRemoveStudent.getSelectionModel().selectFirst();
-        semesterComboBoxRemoveStudent.setOnAction(event -> courseGroupRemoveStudent());
-    }
-
     private void setupStudentsTableRemoveStudent() {
         studentIdColRemoveStudent.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getId()));
         studentNameColRemoveStudent.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(
@@ -1199,12 +1552,24 @@ public class ProfessorPortalController {
         studentsTableRemoveStudent.setItems(studentListRemoveStudent);
     }
 
-    private void showAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+    @FXML
+    private void saveGradesGradeSubmission() {
+        if (currentCourseGroup == null) {
+            errorLabelGradeSubmission.setText("No Course Group Selected");
+            errorLabelGradeSubmission.setStyle("-fx-text-fill: red;");
+            return;
+        }
+
+        try {
+            University.saveFaculties();
+            errorLabelGradeSubmission.setText("Grades Saved Successfully");
+            errorLabelGradeSubmission.setStyle("-fx-text-fill: green;");
+            System.out.println("Grades saved for course group: " + currentCourseGroup.getCourse().getName() + " - Group " + currentCourseGroup.getId());
+        } catch (Exception e) {
+            errorLabelGradeSubmission.setText("Error Saving Grades: " + e.getMessage());
+            errorLabelGradeSubmission.setStyle("-fx-text-fill: red;");
+            System.out.println("Error saving grades: " + e.getMessage());
+        }
     }
 
     @FXML
@@ -1219,9 +1584,17 @@ public class ProfessorPortalController {
     @FXML
     private void signOutScrollPane(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("LoginPanel.fxml"));
-        Stage stage = (Stage) buttonsScrollPane.getScene().getWindow();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void showAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

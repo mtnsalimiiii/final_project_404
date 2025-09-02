@@ -20,93 +20,93 @@
                 <Label styleClass="header-title" text=" --&gt; Course Registration" />
             </children>
         </HBox>
-      <AnchorPane layoutY="80.0" prefWidth="800.0" stylesheets="@comboBoxStyle.css">
-         <children>
-      
-              <!-- Main Panel -->
-              <VBox fx:id="containerBarVBox" prefHeight="470.4" prefWidth="630.4" style="-fx-background-color: linear-gradient(from 100% 100% to 0% 0%, #00a1ffb1 0%, #ffffff 100%);" stylesheets="@EmployeePortal.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                  <padding>
-                      <Insets bottom="20" left="20" right="20" top="20" />
-                  </padding>
-      
-                  <!-- ComboBox & Search -->
-                  <HBox spacing="10">
-                      <ComboBox fx:id="semesterComboBox" prefWidth="200.0" promptText="Choose Term" />
-                      <Button onAction="#searchCourses" text="Search" />
-                  </HBox>
-      
-                  <!-- Available Course Groups Table -->
-                  <Label style="-fx-font-weight: bold;" text="Available Courses" />
-                  <TableView fx:id="coursesTableView" prefHeight="150.0" prefWidth="590.0" stylesheets="@TableViewStyle.css">
-                      <columns>
-                          <TableColumn fx:id="selectCol" prefWidth="60.0" text="Choose" />
-                          <TableColumn fx:id="courseCodeCol" prefWidth="100.0" text="Code">
-                              <cellValueFactory>
-                           <PropertyValueFactory property="courseCode" />
-                        </cellValueFactory>
-                          </TableColumn>
-                          <TableColumn fx:id="courseNameCol" prefWidth="200.0" text="Name">
-                              <cellValueFactory>
-                           <PropertyValueFactory property="courseName" />
-                        </cellValueFactory>
-                          </TableColumn>
-                          <TableColumn fx:id="creditsCol" prefWidth="70.0" text="Credits">
-                              <cellValueFactory>
-                           <PropertyValueFactory property="credits" />
-                        </cellValueFactory>
-                          </TableColumn>
-                          <TableColumn fx:id="scheduleCol" prefWidth="150.0" text="Shadule">
-                              <cellValueFactory>
-                           <PropertyValueFactory property="schedule" />
-                        </cellValueFactory>
-                          </TableColumn>
-                      </columns>
-                      <VBox.margin>
-                          <Insets bottom="15.0" top="10.0" />
-                      </VBox.margin>
-                  </TableView>
-      
-                  <!-- Enrolled Course Groups Table -->
-                  <Label style="-fx-font-weight: bold;" text="Your Courses" />
-                  <TableView fx:id="enrolledCoursesTableView" prefHeight="150.0" prefWidth="590.0" stylesheets="@TableViewStyle.css">
-                      <columns>
-                          <TableColumn fx:id="dropCol" prefWidth="60.0" text="Delete" />
-                          <TableColumn fx:id="enrolledCourseCodeCol" prefWidth="100.0" text="Code">
-                              <cellValueFactory>
-                           <PropertyValueFactory property="courseCode" />
-                        </cellValueFactory>
-                          </TableColumn>
-                          <TableColumn fx:id="enrolledCourseNameCol" prefWidth="200.0" text="Name">
-                              <cellValueFactory>
-                           <PropertyValueFactory property="courseName" />
-                        </cellValueFactory>
-                          </TableColumn>
-                          <TableColumn fx:id="enrolledCreditsCol" prefWidth="70.0" text="Credits">
-                              <cellValueFactory>
-                           <PropertyValueFactory property="credits" />
-                        </cellValueFactory>
-                          </TableColumn>
-                          <TableColumn fx:id="enrolledScheduleCol" prefWidth="150.0" text="Shadule">
-                              <cellValueFactory>
-                           <PropertyValueFactory property="schedule" />
-                        </cellValueFactory>
-                          </TableColumn>
-                      </columns>
-                      <VBox.margin>
-                          <Insets bottom="15.0" top="10.0" />
-                      </VBox.margin>
-                  </TableView>
-      
-                  <!-- Register & Total -->
-                  <HBox alignment="CENTER_RIGHT" spacing="10.0">
-                      <Label fx:id="totalCreditsLabel" style="-fx-font-weight: bold;" text="مجموع واحدها: 0" />
-                      <Button onAction="#registerCourses" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Submit" />
-                  </HBox>
-      
-                  <!-- Message Label -->
-                  <Label fx:id="messageLabel" style="-fx-text-fill: red;" />
-              </VBox>
-         </children>
-      </AnchorPane>
+        <AnchorPane layoutY="80.0" prefWidth="800.0" stylesheets="@comboBoxStyle.css">
+            <children>
+
+                <!-- Main Panel -->
+                <VBox fx:id="containerBarVBox" prefHeight="470.4" prefWidth="630.4" style="-fx-background-color: linear-gradient(from 100% 100% to 0% 0%, #00a1ffb1 0%, #ffffff 100%);" stylesheets="@EmployeePortal.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <padding>
+                        <Insets bottom="20" left="20" right="20" top="20" />
+                    </padding>
+
+                    <!-- ComboBox & Search -->
+                    <HBox spacing="10">
+                        <ComboBox fx:id="semesterComboBox" prefWidth="200.0" promptText="Choose Term" />
+                        <Button onAction="#searchCourses" text="Search" />
+                    </HBox>
+
+                    <!-- Available Course Groups Table -->
+                    <Label style="-fx-font-weight: bold;" text="Available Courses" />
+                    <TableView fx:id="coursesTableView" prefHeight="150.0" prefWidth="590.0" stylesheets="@TableViewStyle.css">
+                        <columns>
+                            <TableColumn fx:id="selectCol" prefWidth="60.0" text="Choose" />
+                            <TableColumn fx:id="courseCodeCol" prefWidth="100.0" text="Code">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="courseCode" />
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn fx:id="courseNameCol" prefWidth="200.0" text="Name">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="courseName" />
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn fx:id="creditsCol" prefWidth="70.0" text="Credits">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="credits" />
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn fx:id="professorCol" prefWidth="150.0" text="Professor">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="professorName" />
+                                </cellValueFactory>
+                            </TableColumn>
+                        </columns>
+                        <VBox.margin>
+                            <Insets bottom="15.0" top="10.0" />
+                        </VBox.margin>
+                    </TableView>
+
+                    <!-- Enrolled Course Groups Table -->
+                    <Label style="-fx-font-weight: bold;" text="Your Courses" />
+                    <TableView fx:id="enrolledCoursesTableView" prefHeight="150.0" prefWidth="590.0" stylesheets="@TableViewStyle.css">
+                        <columns>
+                            <TableColumn fx:id="dropCol" prefWidth="60.0" text="Delete" />
+                            <TableColumn fx:id="enrolledCourseCodeCol" prefWidth="100.0" text="Code">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="courseCode" />
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn fx:id="enrolledCourseNameCol" prefWidth="200.0" text="Name">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="courseName" />
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn fx:id="enrolledCreditsCol" prefWidth="70.0" text="Credits">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="credits" />
+                                </cellValueFactory>
+                            </TableColumn>
+                            <TableColumn fx:id="enrolledProfessorCol" prefWidth="150.0" text="Professor">
+                                <cellValueFactory>
+                                    <PropertyValueFactory property="professorName" />
+                                </cellValueFactory>
+                            </TableColumn>
+                        </columns>
+                        <VBox.margin>
+                            <Insets bottom="15.0" top="10.0" />
+                        </VBox.margin>
+                    </TableView>
+
+                    <!-- Register & Total -->
+                    <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                        <Label fx:id="totalCreditsLabel" style="-fx-font-weight: bold;" text="مجموع واحدها: 0" />
+                        <Button onAction="#registerCourses" style="-fx-background-color: #4CAF50; -fx-text-fill: white;" text="Submit" />
+                    </HBox>
+
+                    <!-- Message Label -->
+                    <Label fx:id="messageLabel" style="-fx-text-fill: red;" />
+                </VBox>
+            </children>
+        </AnchorPane>
     </children>
 </AnchorPane>
