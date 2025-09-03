@@ -8,6 +8,11 @@ public class Phd extends Degree implements Serializable,IsPass,SemesterStatusChe
     private static final long serialVersionUID = 1L;
 
     public double conditionalScore = 16;
+
+    public Phd(Status status) {
+        super(status);
+    }
+
     @Override
     public CourseStatus getPassStatus(double score) {
         return score >= 14 ? CourseStatus.Pass : CourseStatus.Fail;

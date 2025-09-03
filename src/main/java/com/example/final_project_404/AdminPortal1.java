@@ -759,7 +759,11 @@ public class AdminPortal1 {
         String id = "";
         for (Faculty faculty : University.allFaculties) {
             if (faculty.getFacultyName().equals(facultyChooserAddDepartment.getValue())) {
-                id = String.format("%02d", faculty.departments.size() + 1);
+                id = String.format("%s%02d",
+                        faculty.getId(),
+                        faculty.departments.size() + 1
+                );
+
                 break;
             }
         }
@@ -1379,7 +1383,7 @@ public class AdminPortal1 {
             if (faculty.getFacultyName().equals(facultyChooserAddMajor.getValue())) {
                 for (Department department : faculty.departments) {
                     if (department.getName().equals(departmentChooserAddMajor.getValue())) {
-                        id = String.format("%02d", department.majors.size() + 1);
+                        id = String.format("%s%02d", department.getId(),department.majors.size() + 1);
                         break;
                     }
                 }

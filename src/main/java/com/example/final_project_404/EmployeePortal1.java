@@ -1548,11 +1548,11 @@ public class EmployeePortal1 {
                                 if (major.getName().equals(majorChooserAddDegree.getValue()) && major.getStatus().equals(Status.Active)) {
                                     String selectedDegree = degreeChooserAddDegree.getValue();
                                     if ("Bachelor".equals(selectedDegree)) {
-                                        degree = new Bachelor();
+                                        degree = new Bachelor(Status.Active);
                                     } else if ("Master".equals(selectedDegree)) {
-                                        degree = new Master();
+                                        degree = new Master(Status.Active);
                                     } else if ("Phd".equals(selectedDegree)) {
-                                        degree = new Phd();
+                                        degree = new Phd(Status.Active);
                                     }
                                     if (!major.degrees.contains(degree)){
                                         if (major.degrees.stream().noneMatch(degree1 -> degree1.getClass().getSimpleName().equals(selectedDegree))) {
@@ -1605,7 +1605,7 @@ public class EmployeePortal1 {
         addDegreeScrollPane.getStyleClass().add("pressed");
         buttonsScrollPane.setVisible(true);
         dashboardAnchorPane.setVisible(false);
-//        Initialize the Major and Degree combobox for Add Degree
+
         Employee employee = LoginPanelController.employeePerson;
 
         for (Faculty faculty : University.allFaculties) {
@@ -1613,9 +1613,9 @@ public class EmployeePortal1 {
                 for (Department department : faculty.departments) {
                     if (department.getName().equals(employee.getDepartment()) && department.getStatus().equals(Status.Active)) {
                         majorChooserAddDegree.getItems().clear();
-                        majorChooserAddDegree.getItems().add("Major");
+                        majorChooserAddDegree.getItems().add("Major"); // مقدار پیش‌فرض
                         for (Major major : department.majors) {
-                            if (major.getStatus().equals(Status.Active)){
+                            if (major.getStatus().equals(Status.Active)) {
                                 majorChooserAddDegree.getItems().add(major.getName());
                             }
                         }
@@ -1627,10 +1627,43 @@ public class EmployeePortal1 {
                 break;
             }
         }
-        degreeChooserAddDegree.getItems().clear();
-        degreeChooserAddDegree.getItems().addAll("Degree", "Bachelor", "Master", "Phd");
-        degreeChooserAddDegree.setVisibleRowCount(4);
-        degreeChooserAddDegree.getSelectionModel().selectFirst();
+
+        majorChooserAddDegree.getSelectionModel().selectedItemProperty().addListener((obs, oldVal, newVal) -> {
+            degreeChooserAddDegree.getItems().clear();
+            degreeChooserAddDegree.getItems().add("Degree"); // پیش‌فرض
+
+            if (newVal == null || newVal.equals("Major")) return;
+
+            int num1 = 0, num2 = 0, num3 = 0;
+
+            for (Faculty faculty : University.allFaculties) {
+                if (!faculty.getFacultyName().equals(employee.getFaculty()) || faculty.getStatus() != Status.Active) continue;
+
+                for (Department department : faculty.departments) {
+                    if (!department.getName().equals(employee.getDepartment()) || department.getStatus() != Status.Active) continue;
+
+                    for (Major major : department.majors) {
+                        if (!major.getName().equals(newVal) || major.getStatus() != Status.Active) continue;
+
+                        for (Degree degree : major.degrees) {
+                            if (degree.getStatus() != Status.Active) continue;
+                            switch (degree.getClass().getSimpleName()) {
+                                case "Bachelor" -> num1++;
+                                case "Master" -> num2++;
+                                case "Phd" -> num3++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (num1 == 0) degreeChooserAddDegree.getItems().add("Bachelor");
+            if (num2 == 0) degreeChooserAddDegree.getItems().add("Master");
+            if (num3 == 0) degreeChooserAddDegree.getItems().add("Phd");
+
+            degreeChooserAddDegree.setVisibleRowCount(4);
+            degreeChooserAddDegree.getSelectionModel().selectFirst();
+        });
 
         errorLabelMajorAddDegree.setText(null);
         errorLabelDegreeAddDegree.setText(null);
@@ -2085,13 +2118,13 @@ public class EmployeePortal1 {
             Degree degree = null;
             String degreeClassName;
             if (selectedDegree.equalsIgnoreCase("Bachelor")) {
-                degree = new Bachelor();
+                degree = new Bachelor(Status.Active);
                 degreeClassName = "BachelorDegree";
             } else if (selectedDegree.equalsIgnoreCase("Master")) {
-                degree = new Master();
+                degree = new Master(Status.Active);
                 degreeClassName = "MasterDegree";
             } else if (selectedDegree.equalsIgnoreCase("PHD")) {
-                degree = new Phd();
+                degree = new Phd(Status.Active);
                 degreeClassName = "PhdDegree";
             } else {
                 degreeClassName = "";

@@ -21,8 +21,15 @@ public class EnrollStudentController {
     @FXML private TableView<CourseGroupRow> coursesTableView, enrolledCoursesTableView;
     @FXML private TableColumn<CourseGroupRow, Boolean> selectCol;
     @FXML private TableColumn<CourseGroupRow, Void> dropCol;
-    @FXML private TableColumn<CourseGroupRow, String> courseCodeCol, courseNameCol, scheduleCol, enrolledCourseCodeCol, enrolledCourseNameCol, enrolledScheduleCol;
-    @FXML private TableColumn<CourseGroupRow, Integer> creditsCol, enrolledCreditsCol;
+
+    // ستون‌های Available Courses
+    @FXML private TableColumn<CourseGroupRow, String> courseCodeCol, courseNameCol, professorCol;
+    @FXML private TableColumn<CourseGroupRow, Integer> creditsCol;
+
+    // ستون‌های Enrolled Courses
+    @FXML private TableColumn<CourseGroupRow, String> enrolledCourseCodeCol, enrolledCourseNameCol, enrolledProfessorCol;
+    @FXML private TableColumn<CourseGroupRow, Integer> enrolledCreditsCol;
+
     @FXML private Label totalCreditsLabel, messageLabel;
 
     private ObservableList<CourseGroupRow> availableCourses = FXCollections.observableArrayList();
@@ -68,7 +75,7 @@ public class EnrollStudentController {
         courseCodeCol.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
         courseNameCol.setCellValueFactory(new PropertyValueFactory<>("courseName"));
         creditsCol.setCellValueFactory(new PropertyValueFactory<>("credits"));
-        scheduleCol.setCellValueFactory(new PropertyValueFactory<>("schedule"));
+        professorCol.setCellValueFactory(new PropertyValueFactory<>("professor"));
 
         coursesTableView.setEditable(true);
         coursesTableView.setItems(availableCourses);
@@ -96,7 +103,7 @@ public class EnrollStudentController {
         enrolledCourseCodeCol.setCellValueFactory(new PropertyValueFactory<>("courseCode"));
         enrolledCourseNameCol.setCellValueFactory(new PropertyValueFactory<>("courseName"));
         enrolledCreditsCol.setCellValueFactory(new PropertyValueFactory<>("credits"));
-        enrolledScheduleCol.setCellValueFactory(new PropertyValueFactory<>("schedule"));
+        enrolledProfessorCol.setCellValueFactory(new PropertyValueFactory<>("professor"));
 
         enrolledCoursesTableView.setEditable(true);
         enrolledCoursesTableView.setItems(enrolledCourses);
@@ -347,4 +354,15 @@ public class EnrollStudentController {
         stage.setResizable(false);
         stage.show();
     }
+
+    @FXML
+    private void goBack(javafx.event.ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("StudentPortal.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Student Portal");
+        stage.setResizable(false);
+        stage.show();
+    }
+
 }

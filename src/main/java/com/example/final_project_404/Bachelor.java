@@ -12,6 +12,11 @@ public class Bachelor extends Degree implements Serializable,IsPass,SemesterStat
     public double passingScore = 10;
     public double conditionalScore = 12;
     public List<Course> courses=new ArrayList<>();
+
+    public Bachelor(Status status) {
+        super(status);
+    }
+
     @Override
     public CourseStatus getPassStatus(double score) {
         return score >= 10 ? CourseStatus.Pass : CourseStatus.Fail;

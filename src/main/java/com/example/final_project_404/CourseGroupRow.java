@@ -27,6 +27,7 @@ public class CourseGroupRow {
         return selected;
     }
 
+    // ستون‌های جدول
     public String getCourseCode() {
         return courseGroup.getId();
     }
@@ -39,7 +40,10 @@ public class CourseGroupRow {
         return courseGroup.getCourse().getCredit();
     }
 
-    public String getSchedule() {
-        return "Shanbeh"; // فرض بر این است که این متد وجود دارد
+    public String getProfessor() {
+        if (courseGroup.getProfessor() != null) {
+            return courseGroup.getProfessor();
+        }
+        return "N/A";
     }
 }

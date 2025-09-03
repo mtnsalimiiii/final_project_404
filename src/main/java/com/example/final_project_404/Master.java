@@ -8,6 +8,11 @@ public class Master extends Degree implements Serializable,IsPass,SemesterStatus
     private static final long serialVersionUID = 1L;
 
     public double conditionalScore = 14;
+
+    public Master(Status status) {
+        super(status);
+    }
+
     @Override
     public CourseStatus getPassStatus(double score) {
         return score >= 12 ? CourseStatus.Pass : CourseStatus.Fail;

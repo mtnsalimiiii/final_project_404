@@ -105,7 +105,6 @@ public class ProfessorPortalController {
 
     @FXML
     public void initialize() {
-        // خالی به درخواست کاربر
     }
 
     @FXML

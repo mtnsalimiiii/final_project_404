@@ -84,7 +84,18 @@ public class StudentPortalController {
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.##");
 
     @FXML
-    void enrollmentDashboard(ActionEvent event) {
+    void enrollmentDashboard(ActionEvent event) throws IOException {
+        File file = new File("Enrollment.txt");
+
+        if (file.exists()) {
+            String content = java.nio.file.Files.readString(file.toPath()).trim();
+            if ("Deactive".equalsIgnoreCase(content)) {
+                System.out.println("Enrollment is disabled.");
+                showAlert("Enrollment is disabled.");
+                return;
+            }
+        }
+        loadPage("EnrollStudent.fxml", event, "Enrollment Panel");
 
     }
 
@@ -783,6 +794,7 @@ public class StudentPortalController {
         }
     }
     private Student findStudentInUniversity(Student loginStudent) {
+        University.loadFaculties();
         for (Faculty faculty : University.allFaculties) {
             if (faculty.getFacultyName().equals(loginStudent.getFaculty())) {
                 for (Department department : faculty.departments) {
