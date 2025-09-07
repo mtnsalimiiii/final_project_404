@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="550.0" maxWidth="800.0" minHeight="550.0" minWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.EmployeePortal1">
+<AnchorPane maxHeight="550.0" maxWidth="800.0" minHeight="550.0" minWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.EmployeePortalController">
     <children>
         <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="801.0" styleClass="header" stylesheets="@EmployeePortal.css">
             <children>

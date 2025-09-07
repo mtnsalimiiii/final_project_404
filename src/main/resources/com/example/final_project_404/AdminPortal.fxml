@@ -40,7 +40,7 @@
                   <RowConstraints minHeight="50.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Button alignment="CENTER" minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#addFacultyAdminPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Add Faculty" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#addFacultyAdminPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Add Faculty" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                   <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#updateFacultyAdminPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Update Faculty" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
                   <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#addDepartmentAdminPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Add Department" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                   <Button minHeight="40.0" minWidth="280.0" mnemonicParsing="false" onAction="#updateDepartmentAdminPortal" styleClass="button-dashboard" stylesheets="@DashboardButton.css" text="Update Department" textAlignment="CENTER" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
