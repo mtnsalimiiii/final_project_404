@@ -17,11 +17,13 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import javax.swing.*;
+import javax.swing.text.SimpleAttributeSet;
 import java.io.*;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Period;
+import java.util.Formattable;
 import java.util.ResourceBundle;
 
 public class AdminPortal1 {
@@ -30,8 +32,10 @@ public class AdminPortal1 {
 
     @FXML
     private Button deactiveEmergencyDropButton;
+
     @FXML
     private Button activeEmergencyDropButton;
+
     @FXML
     private AnchorPane emergencyDropAnchorPane;
 
@@ -700,6 +704,344 @@ public class AdminPortal1 {
 
     @FXML
     private Label successLabelEmergencyDrop;
+
+    private void deactiveAllInFaculty(String faculty) {
+        University.loadFaculties();
+        for (Faculty faculty1 : University.allFaculties) {
+            if (faculty1.getFacultyName().equals(faculty)) {
+                for (Department department : faculty1.departments) {
+                    if (department.getStatus().equals(Status.Active)) {
+                        deactiveAllInDepartment(faculty, department.getName());
+                    }
+                }
+                faculty1.setStatus(Status.Inactive);
+                break;
+            }
+        }
+    }
+
+    private void deactiveAllInDepartment(String faculty, String department) {
+        University.loadFaculties();
+        for (Faculty faculty1 : University.allFaculties) {
+            if (faculty1.getFacultyName().equals(faculty)) {
+                for (Department department1 : faculty1.departments) {
+                    if (department1.getName().equals(department)) {
+                        for (Major major :department1.majors) {
+                            if (major.getStatus().equals(Status.Active)) {
+                                deactiveAllInMajor(faculty, department, major.getName());
+                            }
+                        }
+                        for (Employee employee : department1.employees) {
+                            if (employee.getStatus().equals(Status.Active)) {
+                                deactiveAllInEmployee(faculty, department, employee.getId());
+                            }
+                        }
+                        department1.setStatus(Status.Inactive);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    private void deactiveAllInMajor(String faculty, String department, String major) {
+        University.loadFaculties();
+        for (Faculty faculty1 : University.allFaculties) {
+            if (faculty1.getFacultyName().equals(faculty)) {
+                for (Department department1 : faculty1.departments) {
+                    if (department1.getName().equals(department)) {
+                        for (Major major1 :department1.majors) {
+                            if (major1.getName().equals(major)) {
+                                for (Student student : major1.students) {
+                                    if (student.getStatus().equals(Status.Inactive)) {
+                                        deactiveAllInStudent(faculty, department, major, student.getId());
+                                    }
+                                }
+                                for (Professor professor : major1.professors) {
+                                    if (professor.getStatus().equals(Status.Active)) {
+                                        deactiveAllInProfessor(faculty, department, major, professor.getId());
+                                    }
+                                }
+                                for (Degree degree : major1.degrees) {
+                                    if (degree.getStatus().equals(Status.Active)) {
+                                        deactiveAllInDegree(faculty, department, major, degree.getClass().getSimpleName());
+                                    }
+                                }
+                                major1.setStatus(Status.Inactive);
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    public static void deactiveAllInEmployee(String faculty, String department, String employeeId) {
+        University.loadFaculties();
+        for (Faculty faculty1 : University.allFaculties) {
+            if (faculty1.getFacultyName().equals(faculty)) {
+                for (Department department1 : faculty1.departments) {
+                    if (department1.getName().equals(department)) {
+                        for (Employee employee : department1.employees) {
+                            if (employee.getId().equals(employeeId)) {
+                                employee.setStatus(Status.Inactive);
+                                employee.setDateOfDeactivation(LocalDate.now());
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    public static void deactiveAllInStudent(String faculty, String department, String major, String studentId) {
+        University.loadFaculties();
+        for (Faculty faculty1 : University.allFaculties) {
+            if (faculty1.getFacultyName().equals(faculty)) {
+                for (Department department1 : faculty1.departments) {
+                    if (department1.getName().equals(department)) {
+                        for (Major major1 :department1.majors) {
+                            if (major1.getName().equals(major)) {
+                                for (Student student : major1.students) {
+                                    if (student.getId().equals(studentId)) {
+                                        for (Semester semester : student.getSemesters()) {
+                                            if (semester.getStatus().equals(Status.Active)) {
+                                                deactiveAllInSemester(faculty, department, major, studentId, semester.getName(), student.getDegree());
+                                            }
+                                        }
+                                        student.setStatus(Status.Inactive);
+                                        student.setDateOfDeactivation(LocalDate.now());
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    public static void deactiveAllInSemester(String faculty, String department, String major, String studentId, String semester, String degree) {
+        University.loadFaculties();
+
+        for (Faculty faculty1 : University.allFaculties) {
+            if (faculty1.getFacultyName().equals(faculty)) {
+                for (Department department1 : faculty1.departments) {
+                    if (department1.getName().equals(department)) {
+                        for (Major major1 :department1.majors) {
+                            if (major1.getName().equals(major)) {
+                                for (Student student : major1.students) {
+                                    if (student.getId().equals(studentId)) {
+                                        for (Semester semester1 : student.getSemesters()) {
+                                            if (semester1.getName().equals(semester)) {
+                                                for (CourseGroup courseGroup : semester1.getCourseGroups()) {
+                                                    if (courseGroup.getStatus().equals(Status.Active)) {
+                                                        deactiveAllInCourseGroup(faculty, department, major, degree, courseGroup.getCourseName(), courseGroup.getId());
+                                                    }
+                                                }
+                                                semester1.setStatus(Status.Inactive);
+                                                break;
+                                            }
+                                        }
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    public static void deactiveAllInProfessor(String faculty, String department, String major, String professorId) {
+        University.loadFaculties();
+        for (Faculty faculty1 : University.allFaculties) {
+            if (faculty1.getFacultyName().equals(faculty)) {
+                for (Department department1 : faculty1.departments) {
+                    if (department1.getName().equals(department)) {
+                        for (Major major1 :department1.majors) {
+                            if (major1.getName().equals(major)) {
+                                for (Professor professor : major1.professors) {
+                                    if (professor.getId().equals(professorId)) {
+                                        professor.setStatus(Status.Inactive);
+                                        professor.setDateOfDeactivation(LocalDate.now());
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    public static void deactiveAllInDegree(String faculty, String department, String major, String degree) {
+        University.loadFaculties();
+        for (Faculty faculty1 : University.allFaculties) {
+            if (faculty1.getFacultyName().equals(faculty)) {
+                for (Department department1 : faculty1.departments) {
+                    if (department1.getName().equals(department)) {
+                        for (Major major1 :department1.majors) {
+                            if (major1.getName().equals(major)) {
+                                for (Degree degree1 : major1.degrees) {
+                                    if (degree1.getClass().getSimpleName().equals(degree)) {
+                                        for (Course course : degree1.courses) {
+                                            if (course.getStatus().equals(Status.Active)) {
+                                                deactiveAllInCourse(faculty, department, major, degree, course.getName());
+                                            }
+                                        }
+                                        degree1.setStatus(Status.Inactive);
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    public static void deactiveAllInCourse(String faculty, String department, String major, String degree, String course) {
+        University.loadFaculties();
+        for (Faculty faculty1 : University.allFaculties) {
+            if (faculty1.getFacultyName().equals(faculty)) {
+                for (Department department1 : faculty1.departments) {
+                    if (department1.getName().equals(department)) {
+                        for (Major major1 :department1.majors) {
+                            if (major1.getName().equals(major)) {
+                                for (Degree degree1 : major1.degrees) {
+                                    if (degree1.getClass().getSimpleName().equals(degree)) {
+                                        for (Course course1 : degree1.courses) {
+                                            if (course1.getName().equals(course)) {
+                                                for (CourseGroup courseGroup : course1.courseGroups) {
+                                                    if (courseGroup.getStatus().equals(Status.Active)) {
+                                                        deactiveAllInCourseGroup(faculty, department, major, degree, course, courseGroup.getId());
+                                                    }
+                                                }
+                                                course1.setStatus(Status.Inactive);
+                                                break;
+                                            }
+                                        }
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    public static void deactiveAllInCourseGroup(String faculty, String department, String major, String degree
+            , String course, String courseGroup) {
+        University.loadFaculties();
+        for (Faculty faculty1 : University.allFaculties) {
+            if (faculty1.getFacultyName().equals(faculty)) {
+                for (Department department1 : faculty1.departments) {
+                    if (department1.getName().equals(department)) {
+                        for (Major major1 :department1.majors) {
+                            if (major1.getName().equals(major)) {
+                                for (Degree degree1 : major1.degrees) {
+                                    if (degree1.getClass().getSimpleName().equals(degree)) {
+                                        for (Course course1 : degree1.courses) {
+                                            if (course1.getName().equals(course)) {
+                                                for (CourseGroup courseGroup1 : course1.courseGroups) {
+                                                    if (courseGroup1.getId().equals(courseGroup)) {
+                                                        for (Student enrolledStudent : courseGroup1.getRegisteredStudents()) {
+                                                            if (enrolledStudent.getStatus().equals(Status.Active)) {
+                                                                deactiveAllInEnrolledStudent(faculty, department, major, degree, course, courseGroup, enrolledStudent.getId());
+                                                                break;
+                                                            }
+                                                        }
+                                                        courseGroup1.setStatus(Status.Inactive);
+                                                        break;
+                                                    }
+                                                }
+                                                break;
+                                            }
+                                        }
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+    public static void deactiveAllInEnrolledStudent(String faculty, String department, String major, String degree
+            , String course, String courseGroup, String enrolledStudent) {
+        University.loadFaculties();
+        for (Faculty faculty1 : University.allFaculties) {
+            if (faculty1.getFacultyName().equals(faculty)) {
+                for (Department department1 : faculty1.departments) {
+                    if (department1.getName().equals(department)) {
+                        for (Major major1 :department1.majors) {
+                            if (major1.getName().equals(major)) {
+                                for (Degree degree1 : major1.degrees) {
+                                    if (degree1.getClass().getSimpleName().equals(degree)) {
+                                        for (Course course1 : degree1.courses) {
+                                            if (course1.getName().equals(course)) {
+                                                for (CourseGroup courseGroup1 : course1.courseGroups) {
+                                                    if (courseGroup1.getId().equals(courseGroup)) {
+                                                        for (Student enrolledStudent1 : courseGroup1.getRegisteredStudents()) {
+                                                            if (enrolledStudent1.getId().equals(enrolledStudent)) {
+                                                                enrolledStudent1.setStatus(Status.Inactive);
+                                                                enrolledStudent1.setDateOfDeactivation(LocalDate.now());
+                                                                break;
+                                                            }
+                                                        }
+                                                        break;
+                                                    }
+                                                }
+                                                break;
+                                            }
+                                        }
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
 
     @FXML
     void activeEmergencyDrop(ActionEvent event) {
@@ -1747,6 +2089,12 @@ public class AdminPortal1 {
         tableViewReportCourseGroups.setItems(filteredListReportCourseGroups);
 
         setupStatusContextMenuReportCourseGroups();
+        setupMajorContextMenuReportCourseGroups();
+        setupDegreeContextMenuReportCourseGroups();
+        setupIdContextMenuCourseGroups();
+        setupCourseNameContextMenuCourseGroups();
+        setupProfessorNameContextMenuCourseGroups();
+
     }
 
     @FXML
@@ -1784,6 +2132,9 @@ public class AdminPortal1 {
         tableViewReportCourses.setItems(filteredListReportCourses);
 
         setupStatusContextMenuReportCourses();
+        setupMajorContextMenuReportCourses();
+        setupDegreeContextMenuReportCourses();
+        setupIdContextMenuCourses();
     }
 
     @FXML
@@ -1837,7 +2188,7 @@ public class AdminPortal1 {
     }
 
     @FXML
-    void deactiveDepartment(ActionEvent event) {
+    void deactiveDepartment(ActionEvent event) throws Exception {
         successLabelDeactiveDepartment.setText(null);
         University.loadFaculties();
         boolean confirmation = true;
@@ -1856,8 +2207,38 @@ public class AdminPortal1 {
                 if (faculty.getFacultyName().equals(facultyChooserDeactiveDepartment.getValue())){
                     for (Department department : faculty.departments){
                         if (department.getName().equals(departmentChooserDeactiveDepartment.getValue())){
-                            department.setStatus(Status.Inactive);
+                            deactiveAllInDepartment(faculty.getFacultyName(), department.getName());
                             University.saveFaculties();
+                            Professor.loadAllProfessor();
+                            for (Professor professor : University.allProfessors) {
+                                if (professor.getFaculty().equals(faculty.getFacultyName()) && professor.getDepartment().equals(department.getName()) && professor.getStatus().equals(Status.Active)) {
+                                    professor.setStatus(Status.Inactive);
+                                    professor.setDateOfDeactivation(LocalDate.now());
+                                    break;
+                                }
+                            }
+                            Professor.saveAllProfessor();
+                            Employee.loadAllEmployee();
+                            for (Employee employee : University.allEmployees) {
+                                if (employee.getFaculty().equals(faculty.getFacultyName()) && employee.getDepartment().equals(department.getName())
+                                        && employee.getStatus().equals(Status.Active)) {
+                                    employee.setStatus(Status.Inactive);
+                                    employee.setDateOfDeactivation(LocalDate.now());
+                                    break;
+                                }
+                            }
+                            Employee.saveAllEmployee();
+                            Student.loadAllStudents();
+                            for (Student student : University.allStudents) {
+                                if (student.getFaculty().equals(faculty.getFacultyName()) && student.getDepartment().equals(department.getName())
+                                        && student.getStatus().equals(Status.Active)) {
+                                    student.setStatus(Status.Inactive);
+                                    student.setDateOfDeactivation(LocalDate.now());
+                                    break;
+                                }
+                            }
+                            Student.saveAllStudent();
+
                             errorLabelDeactiveDepartment.setText(null);
                             successLabelDeactiveDepartment.setText("The Selected Department Deactivated Successfully");
 
@@ -1867,7 +2248,7 @@ public class AdminPortal1 {
                                 departmentChooserDeactiveDepartment.getItems().clear();
                                 departmentChooserDeactiveDepartment.getItems().add("Department");
                                 for (Faculty faculty1 : University.allFaculties) {
-                                    if (faculty1.getStatus().equals(Status.Active) && facultyChooserDeactiveDepartment.getValue().equals(faculty1.getFacultyName())) {
+                                    if (faculty1.getStatus().equals(Status.Active) && faculty1.getFacultyName().equals(facultyChooserDeactiveDepartment.getValue())) {
                                         for (Department department1 : faculty1.departments) {
                                             if (department1.getStatus().equals(Status.Active)) {
                                                 departmentChooserDeactiveDepartment.getItems().add(department1.getName());
@@ -1971,17 +2352,16 @@ public class AdminPortal1 {
                         if (department.getName().equals(departmentChooserDeactiveEmployee.getValue())) {
                             for (Employee employee : department.employees){
                                 if (employee.getFullName().equals(employeeChooserDeactiveEmployee.getValue())){
-                                    employee.setDateOfDeactivation(LocalDate.now());
-                                    employee.setStatus(Status.Inactive);
+                                    deactiveAllInEmployee(faculty.getFacultyName(), department.getName(), employee.getId());
+                                    University.saveFaculties();
                                     Employee.loadAllEmployee();
                                     for (Employee employee1 : University.allEmployees){
                                         if (employee1.getId().equals(employeeChooserDeactiveEmployee.getValue())){
-                                            employee1.setDateOfDeactivation(LocalDate.now());
                                             employee1.setStatus(Status.Inactive);
+                                            employee1.setDateOfDeactivation(LocalDate.now());
                                             break;
                                         }
                                     }
-                                    University.saveFaculties();
                                     Employee.saveAllEmployee();
 
                                     errorLabelDeactiveEmployee.setText(null);
@@ -2032,7 +2412,7 @@ public class AdminPortal1 {
     }
 
     @FXML
-    void deactiveFaculty(ActionEvent event) {
+    void deactiveFaculty(ActionEvent event) throws Exception {
         successLabelDeactiveFaculty.setText(null);
         University.loadFaculties();
         boolean confirmation = true;
@@ -2045,15 +2425,44 @@ public class AdminPortal1 {
         if (confirmation) {
             for (Faculty faculty : University.allFaculties){
                 if (faculty.getFacultyName().equals(facultyChooserDeactiveFaculty.getValue())){
-                    faculty.setStatus(Status.Inactive);
+                    deactiveAllInFaculty(faculty.getFacultyName());
                     University.saveFaculties();
+                    Professor.loadAllProfessor();
+                    for (Professor professor : University.allProfessors) {
+                        if (professor.getFaculty().equals(faculty.getFacultyName()) && professor.getStatus().equals(Status.Active)) {
+                            professor.setStatus(Status.Inactive);
+                            professor.setDateOfDeactivation(LocalDate.now());
+                            break;
+                        }
+                    }
+                    Professor.saveAllProfessor();
+                    Employee.loadAllEmployee();
+                    for (Employee employee : University.allEmployees) {
+                        if (employee.getFaculty().equals(faculty.getFacultyName()) && employee.getStatus().equals(Status.Active)) {
+                            employee.setStatus(Status.Inactive);
+                            employee.setDateOfDeactivation(LocalDate.now());
+                            break;
+                        }
+                    }
+                    Employee.saveAllEmployee();
+                    Student.loadAllStudents();
+                    for (Student student : University.allStudents) {
+                        if (student.getFaculty().equals(faculty.getFacultyName()) && student.getStatus().equals(Status.Active)) {
+                            student.setStatus(Status.Inactive);
+                            student.setDateOfDeactivation(LocalDate.now());
+                            break;
+                        }
+                    }
+                    Student.saveAllStudent();
                     errorLabelDeactiveFaculty.setText(null);
                     successLabelDeactiveFaculty.setText("The Selected Faculty Deactivated successfully");
 
                     facultyChooserDeactiveFaculty.getItems().clear();
                     facultyChooserDeactiveFaculty.getItems().add("Faculty");
                     for (Faculty faculty1 : University.allFaculties) {
-                        facultyChooserDeactiveFaculty.getItems().add(faculty1.getFacultyName());
+                        if (faculty1.getStatus().equals(Status.Active)) {
+                            facultyChooserDeactiveFaculty.getItems().add(faculty1.getFacultyName());
+                        }
                     }
                     facultyChooserDeactiveFaculty.setVisibleRowCount(4);
                     facultyChooserDeactiveFaculty.getSelectionModel().selectFirst();
@@ -2065,7 +2474,7 @@ public class AdminPortal1 {
     }
 
     @FXML
-    void deactiveMajor(ActionEvent event) {
+    void deactiveMajor(ActionEvent event) throws Exception {
         successLabelDeactiveMajor.setText(null);
         University.loadFaculties();
         boolean confirmation = true;
@@ -2090,29 +2499,50 @@ public class AdminPortal1 {
                         if (department.getName().equals(departmentChooserDeactiveMajor.getValue())){
                             for (Major major : department.majors){
                                 if (major.getName().equals(majorChooserDeactiveMajor.getValue())){
-                                    major.setStatus(Status.Inactive);
+                                    deactiveAllInMajor(faculty.getFacultyName(), department.getName(), major.getName());
                                     University.saveFaculties();
+                                    Professor.loadAllProfessor();
+                                    for (Professor professor : University.allProfessors) {
+                                        if (professor.getFaculty().equals(faculty.getFacultyName()) && professor.getDepartment().equals(department.getName())
+                                                && professor.getStatus().equals(Status.Active) && professor.getMajor().equals(major.getName())) {
+                                            professor.setStatus(Status.Inactive);
+                                            professor.setDateOfDeactivation(LocalDate.now());
+                                            break;
+                                        }
+                                    }
+                                    Professor.saveAllProfessor();
+                                    Student.loadAllStudents();
+                                    for (Student student : University.allStudents) {
+                                        if (student.getFaculty().equals(faculty.getFacultyName()) && student.getDepartment().equals(department.getName())
+                                                && student.getStatus().equals(Status.Active) && student.getMajor().equals(major.getName())) {
+                                            student.setStatus(Status.Inactive);
+                                            student.setDateOfDeactivation(LocalDate.now());
+                                            break;
+                                        }
+                                    }
+                                    Student.saveAllStudent();
 
                                     errorLabelDeactiveMajor.setText(null);
                                     successLabelDeactiveMajor.setText("The Major Deactivated Successfully");
 
                                     facultyChooserDeactiveMajor.getSelectionModel().selectFirst();
-                                    facultyChooserDeactiveMajor.setOnAction(event1 -> {
-                                        departmentChooserDeactiveMajor.getItems().clear();
-                                        departmentChooserDeactiveMajor.getItems().add("Department");
-                                        for (Faculty faculty1 : University.allFaculties) {
-                                            if (faculty1.getFacultyName().equals(facultyChooserDeactiveMajor.getValue()) && faculty1.getStatus().equals(Status.Active)) {
-                                                for (Department department1 : faculty1.departments) {
-                                                    if (department1.getStatus().equals(Status.Active)) {
-                                                        departmentChooserDeactiveMajor.getItems().add(department1.getName());
-                                                    }
-                                                }
-                                                break;
-                                            }
-                                        }
-                                        departmentChooserDeactiveMajor.setVisibleRowCount(5);
-                                        departmentChooserDeactiveMajor.getSelectionModel().selectFirst();
-                                    });
+                                    departmentChooserDeactiveMajor.getSelectionModel().selectFirst();
+//                                    facultyChooserDeactiveMajor.setOnAction(event1 -> {
+//                                        departmentChooserDeactiveMajor.getItems().clear();
+//                                        departmentChooserDeactiveMajor.getItems().add("Department");
+//                                        for (Faculty faculty1 : University.allFaculties) {
+//                                            if (faculty1.getFacultyName().equals(facultyChooserDeactiveMajor.getValue()) && faculty1.getStatus().equals(Status.Active)) {
+//                                                for (Department department1 : faculty1.departments) {
+//                                                    if (department1.getStatus().equals(Status.Active)) {
+//                                                        departmentChooserDeactiveMajor.getItems().add(department1.getName());
+//                                                    }
+//                                                }
+//                                                break;
+//                                            }
+//                                        }
+//                                        departmentChooserDeactiveMajor.setVisibleRowCount(5);
+//                                        departmentChooserDeactiveMajor.getSelectionModel().selectFirst();
+//                                    });
                                     departmentChooserDeactiveMajor.setOnAction(event1 -> {
                                         majorChooserDeactiveMajor.getItems().clear();
                                         majorChooserDeactiveMajor.getItems().add("Major");
@@ -2173,6 +2603,7 @@ public class AdminPortal1 {
         tableViewReportDepartment.setItems(filteredListReportDepartment);
 
         setupStatusContextMenuReportDepartment();
+        setupFacultyContextMenuReportDepartment();
 
     }
 
@@ -2730,7 +3161,7 @@ public class AdminPortal1 {
         if (file.exists()) {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 String status = reader.readLine();
-                emergencyDropStatusLabel.setText("Emergency Drop Status: " + (status.equals("Active") ? "Active" : "Deactive"));
+                emergencyDropStatusLabel.setText("Emergency Drop Status: " + (status.equals("Active") ? "Active" : "Inactive"));
             } catch (IOException e) {
                 emergencyDropStatusLabel.setText("Emergency Drop Status: Unknown");
             }
@@ -2793,7 +3224,7 @@ public class AdminPortal1 {
             if (file.exists()) {
                 try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                     String status = reader.readLine();
-                    emergencyDropStatusLabel.setText("Emergency Drop Status: " + (status.equals("Active") ? "Active" : "Deactive"));
+                    emergencyDropStatusLabel.setText("Emergency Drop Status: " + (status.equals("Active") ? "Active" : "Inactive"));
                 } catch (IOException e) {
                     emergencyDropStatusLabel.setText("Emergency Drop Status: Unknown");
                 }
@@ -2822,7 +3253,7 @@ public class AdminPortal1 {
         if (file.exists()) {
             try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                 String status = reader.readLine();
-                enrollmentStatusLabel.setText("Enrollment Status: " + (status.equals("Active") ? "Active" : "Deactive"));
+                enrollmentStatusLabel.setText("Enrollment Status: " + (status.equals("Active") ? "Active" : "Inactive"));
             } catch (IOException e) {
                 enrollmentStatusLabel.setText("Enrollment Status: Unknown");
             }
@@ -2879,6 +3310,18 @@ public class AdminPortal1 {
 
             errorLabelEnrollment.setText(null);
             successLabelEnrollment.setText(null);
+
+            File file = new File("Enrollment.txt");
+            if (file.exists()) {
+                try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+                    String status = reader.readLine();
+                    enrollmentStatusLabel.setText("Enrollment Status: " + (status.equals("Active") ? "Active" : "Inactive"));
+                } catch (IOException e) {
+                    enrollmentStatusLabel.setText("Enrollment Status: Unknown");
+                }
+            } else {
+                enrollmentStatusLabel.setText("Enrollment Status: Unknown");
+            }
         }
     }
 
@@ -2937,6 +3380,8 @@ public class AdminPortal1 {
         tableViewReportMajors.setItems(filteredListReportMajor);
 
         setupStatusContextMenuReportMajor();
+        setupFacultyContextMenuReportMajor();
+        setupDepartmentContextMenuReportMajor();
 
     }
 
@@ -2997,11 +3442,16 @@ public class AdminPortal1 {
         setupGenderContextMenuPeople();
         setupStatusContextMenuPeople();
         setupRoleContextMenuPeople();
+        setupFacultyContextMenuPeople();
+        setupDepartmentContextMenuPeople();
+        setupMajorContextMenuPeople();
+        setupDegreeContextMenuPeople();
+        setupIdContextMenuPeople();
     }
 
     @FXML
     void peopleByDateReports(ActionEvent event) {
-        headerTitle.setText(" --> Reports --> People");
+        headerTitle.setText(" --> Reports --> People By Dates");
         peopleByDateReportAnchorPane.setVisible(true);
 
         fieldOfDateChooserPeopleByDate.getItems().clear();
@@ -3061,6 +3511,11 @@ public class AdminPortal1 {
         setupGenderContextMenuPeopleByDate();
         setupStatusContextMenuPeopleByDate();
         setupRoleContextMenuPeopleByDate();
+        setupFacultyContextMenuPeopleByDate();
+        setupDepartmentContextMenuPeopleByDate();
+        setupMajorContextMenuPeopleByDate();
+        setupDegreeContextMenuPeopleByDate();
+        setupIdContextMenuPeopleByDate();
     }
 
     @FXML
@@ -3082,7 +3537,6 @@ public class AdminPortal1 {
 
     @FXML
     void reportsScrollPane(ActionEvent event) {
-        headerTitle.setText(" --> Reports");
 
         if (addFacultyAnchorPane.isVisible()){
             addFacultyAnchorPane.setVisible(false);
@@ -3123,6 +3577,7 @@ public class AdminPortal1 {
         }
 
         if (!reportsAnchorPane.isVisible()) {
+            headerTitle.setText(" --> Reports");
             reportsAnchorPane.setVisible(true);
             reportsScrollPane.getStyleClass().add("pressed");
 
@@ -3155,6 +3610,31 @@ public class AdminPortal1 {
         ObservableList<DepartmentReport> filtered = FXCollections.observableArrayList();
         for (DepartmentReport department : departmentList) {
             if (department.getStatus().equals(status)) {
+                filtered.add(department);
+            }
+        }
+        tableViewReportDepartment.setItems(filtered);
+    }
+
+    private void setupFacultyContextMenuReportDepartment() {
+        ContextMenu facultyMenu = new ContextMenu();
+
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+           MenuItem facultyContext = new MenuItem(faculty.getFacultyName());
+           facultyContext.setOnAction(e -> filterByFacultyDepartment(faculty.getFacultyName()));
+           facultyMenu.getItems().add(facultyContext);
+        }
+        MenuItem allItems = new MenuItem("All");
+        allItems.setOnAction(event -> tableViewReportDepartment.setItems(departmentList));
+        facultyMenu.getItems().add(allItems);
+        colFacultyReportDepartment.setContextMenu(facultyMenu);
+    }
+
+    private void filterByFacultyDepartment(String facultyName) {
+        ObservableList<DepartmentReport> filtered = FXCollections.observableArrayList();
+        for (DepartmentReport department : departmentList) {
+            if (department.getFaculty().equals(facultyName)) {
                 filtered.add(department);
             }
         }
@@ -3255,6 +3735,62 @@ public class AdminPortal1 {
         tableViewReportMajors.setItems(filtered);
     }
 
+    private void setupFacultyContextMenuReportMajor() {
+        ContextMenu facultyMenu = new ContextMenu();
+
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            MenuItem facultyContext = new MenuItem(faculty.getFacultyName());
+            facultyContext.setOnAction(event -> filterByFacultyMajor(faculty.getFacultyName()));
+            facultyMenu.getItems().add(facultyContext);
+        }
+        MenuItem allItem = new MenuItem("All");
+        facultyMenu.getItems().add(allItem);
+        allItem.setOnAction(e -> tableViewReportMajors.setItems(majorList));
+        colFacultyReportMajors.setContextMenu(facultyMenu);
+
+    }
+
+    @FXML
+    private void filterByFacultyMajor(String facultyName) {
+        ObservableList<MajorReport> filtered = FXCollections.observableArrayList();
+        for (MajorReport major : majorList) {
+            if (major.getFaculty().equalsIgnoreCase(facultyName)) {
+                filtered.add(major);
+            }
+        }
+        tableViewReportMajors.setItems(filtered);
+    }
+
+    private void setupDepartmentContextMenuReportMajor() {
+        ContextMenu departmentMenu = new ContextMenu();
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                MenuItem departmentContext = new MenuItem(department.getName());
+                if (!departmentMenu.getItems().contains(departmentContext)) {
+                    departmentContext.setOnAction(e -> filterByDepartmentMajor(department.getName()));
+                    departmentMenu.getItems().add(departmentContext);
+                }
+            }
+        }
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(e -> tableViewReportMajors.setItems(majorList));
+        departmentMenu.getItems().add(allItem);
+        colDepartmentReportMajors.setContextMenu(departmentMenu);
+    }
+
+    @FXML
+    private void filterByDepartmentMajor(String status) {
+        ObservableList<MajorReport> filtered = FXCollections.observableArrayList();
+        for (MajorReport major : majorList) {
+            if (major.getStatus().equalsIgnoreCase(status)) {
+                filtered.add(major);
+            }
+        }
+        tableViewReportMajors.setItems(filtered);
+    }
+
     @FXML
     private void onSearchReportMajor() {
         String keyword = searchFieldReportMajors.getText().toLowerCase().trim();
@@ -3318,6 +3854,162 @@ public class AdminPortal1 {
         ObservableList<People> filtered = FXCollections.observableArrayList();
         for (People people : peopleList) {
             if (people.getStatus().equals(status)) {
+                filtered.add(people);
+            }
+        }
+        tableViewReportPeople.setItems(filtered);
+    }
+
+    private void setupFacultyContextMenuPeople() {
+        ContextMenu facultyMenu = new ContextMenu();
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            MenuItem facultyContext = new MenuItem(faculty.getFacultyName());
+            facultyContext.setOnAction(e -> filterByFacultyPeople(faculty.getFacultyName()));
+            facultyMenu.getItems().add(facultyContext);
+        }
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(e -> tableViewReportPeople.setItems(peopleList));
+        facultyMenu.getItems().add(allItem);
+        colFacultyReportPeople.setContextMenu(facultyMenu);
+    }
+
+    private void filterByFacultyPeople(String facultyName) {
+        ObservableList<People> filtered = FXCollections.observableArrayList();
+        for (People people : peopleList) {
+            if (people.getFaculty().equals(facultyName)) {
+                filtered.add(people);
+            }
+        }
+        tableViewReportPeople.setItems(filtered);
+    }
+
+    private void setupDepartmentContextMenuPeople() {
+        ContextMenu departmentMenu = new ContextMenu();
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                MenuItem departmentContext = new MenuItem(department.getName());
+                if (!departmentMenu.getItems().contains(departmentContext)) {
+                    departmentContext.setOnAction(e -> filterByDepartmentPeople(department.getName()));
+                    departmentMenu.getItems().add(departmentContext);
+                }
+            }
+        }
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(e -> tableViewReportPeople.setItems(peopleList));
+        departmentMenu.getItems().add(allItem);
+        colDepartmentReportPeople.setContextMenu(departmentMenu);
+    }
+
+    private void filterByDepartmentPeople(String departmentName) {
+        ObservableList<People> filtered = FXCollections.observableArrayList();
+        for (People people : peopleList) {
+            if (people.getDepartment().equals(departmentName)) {
+                filtered.add(people);
+            }
+        }
+        tableViewReportPeople.setItems(filtered);
+    }
+
+    private void setupMajorContextMenuPeople() {
+        ContextMenu majorMenu = new ContextMenu();
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Major major : department.majors) {
+                    MenuItem majorContext = new MenuItem(major.getName());
+                    if (!majorMenu.getItems().contains(majorContext)) {
+                        majorContext.setOnAction(event -> filterByMajorPeople(major.getName()));
+                        majorMenu.getItems().add(majorContext);
+                    }
+                }
+            }
+        }
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(event -> tableViewReportPeople.setItems(peopleList));
+        majorMenu.getItems().add(allItem);
+
+        colMajorReportPeople.setContextMenu(majorMenu);
+    }
+
+    private void filterByMajorPeople(String major) {
+        ObservableList<People> filtered = FXCollections.observableArrayList();
+        for (People people : peopleList) {
+            if (people.getMajor().equals(major)) {
+                filtered.add(people);
+            }
+        }
+        tableViewReportPeople.setItems(filtered);
+    }
+
+    private void setupDegreeContextMenuPeople() {
+        ContextMenu degreeMenu = new ContextMenu();
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Major major : department.majors) {
+                    for (Degree degree : major.degrees) {
+                        MenuItem degreeContext = new MenuItem(degree.getClass().getSimpleName());
+                        if (!degreeMenu.getItems().contains(degreeContext)) {
+                            degreeContext.setOnAction(event -> filterByDegreePeople(degree.getClass().getSimpleName()));
+                            degreeMenu.getItems().add(degreeContext);
+                        }
+                    }
+                }
+            }
+        }
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(event -> tableViewReportPeople.setItems(peopleList));
+        degreeMenu.getItems().add(allItem);
+
+        colDegreeReportPeople.setContextMenu(degreeMenu);
+    }
+
+    private void filterByDegreePeople(String degree) {
+        ObservableList<People> filtered = FXCollections.observableArrayList();
+        for (People people : peopleList) {
+            if (people.getDegree().equals(degree)) {
+                filtered.add(people);
+            }
+        }
+        tableViewReportPeople.setItems(filtered);
+    }
+
+    private void setupIdContextMenuPeople() {
+        ContextMenu idMenu = new ContextMenu();
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Employee employee : department.employees) {
+                    MenuItem employeeContext = new MenuItem(employee.getId());
+                    employeeContext.setOnAction(e -> filterByIdPeople(employee.getId()));
+                    idMenu.getItems().add(employeeContext);
+                }
+                for (Major major : department.majors) {
+                    for (Professor professor : major.professors) {
+                        MenuItem professorContext = new MenuItem(professor.getId());
+                        professorContext.setOnAction(event -> filterByIdPeople(professor.getId()));
+                        idMenu.getItems().add(professorContext);
+                    }
+                    for (Student student : major.students) {
+                        MenuItem studentContext = new MenuItem(student.getId());
+                        studentContext.setOnAction(event -> filterByIdPeople(student.getId()));
+                        idMenu.getItems().add(studentContext);
+                    }
+                }
+            }
+        }
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(e -> tableViewReportPeople.setItems(peopleList));
+        idMenu.getItems().add(allItem);
+        colIDReportPeople.setContextMenu(idMenu);
+    }
+
+    private void filterByIdPeople(String id) {
+        ObservableList<People> filtered = FXCollections.observableArrayList();
+        for (People people : peopleList) {
+            if (people.getId().equals(id)) {
                 filtered.add(people);
             }
         }
@@ -3426,6 +4118,162 @@ public class AdminPortal1 {
         tableViewReportPeopleByDate.setItems(filtered);
     }
 
+    private void setupFacultyContextMenuPeopleByDate() {
+        ContextMenu facultyMenu = new ContextMenu();
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            MenuItem facultyContext = new MenuItem(faculty.getFacultyName());
+            facultyContext.setOnAction(e -> filterByFacultyPeopleByDate(faculty.getFacultyName()));
+            facultyMenu.getItems().add(facultyContext);
+        }
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(e -> tableViewReportPeopleByDate.setItems(peopleByDateList));
+        facultyMenu.getItems().add(allItem);
+        colFacultyReportPeopleByDate.setContextMenu(facultyMenu);
+    }
+
+    private void filterByFacultyPeopleByDate(String facultyName) {
+        ObservableList<People> filtered = FXCollections.observableArrayList();
+        for (People people : peopleByDateList) {
+            if (people.getFaculty().equals(facultyName)) {
+                filtered.add(people);
+            }
+        }
+        tableViewReportPeopleByDate.setItems(filtered);
+    }
+
+    private void setupDepartmentContextMenuPeopleByDate() {
+        ContextMenu departmentMenu = new ContextMenu();
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                MenuItem departmentContext = new MenuItem(department.getName());
+                if (!departmentMenu.getItems().contains(departmentContext)) {
+                    departmentContext.setOnAction(e -> filterByDepartmentPeopleByDate(department.getName()));
+                    departmentMenu.getItems().add(departmentContext);
+                }
+            }
+        }
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(e -> tableViewReportPeopleByDate.setItems(peopleByDateList));
+        departmentMenu.getItems().add(allItem);
+        colDepartmentReportPeopleByDate.setContextMenu(departmentMenu);
+    }
+
+    private void filterByDepartmentPeopleByDate(String departmentName) {
+        ObservableList<People> filtered = FXCollections.observableArrayList();
+        for (People people : peopleByDateList) {
+            if (people.getDepartment().equals(departmentName)) {
+                filtered.add(people);
+            }
+        }
+        tableViewReportPeopleByDate.setItems(filtered);
+    }
+
+    private void setupMajorContextMenuPeopleByDate() {
+        ContextMenu majorMenu = new ContextMenu();
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Major major : department.majors) {
+                    MenuItem majorContext = new MenuItem(major.getName());
+                    if (!majorMenu.getItems().contains(majorContext)) {
+                        majorContext.setOnAction(event -> filterByMajorPeopleByDate(major.getName()));
+                        majorMenu.getItems().add(majorContext);
+                    }
+                }
+            }
+        }
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(event -> tableViewReportPeopleByDate.setItems(peopleByDateList));
+        majorMenu.getItems().add(allItem);
+
+        colMajorReportPeopleByDate.setContextMenu(majorMenu);
+    }
+
+    private void filterByMajorPeopleByDate(String major) {
+        ObservableList<People> filtered = FXCollections.observableArrayList();
+        for (People people : peopleByDateList) {
+            if (people.getMajor().equals(major)) {
+                filtered.add(people);
+            }
+        }
+        tableViewReportPeopleByDate.setItems(filtered);
+    }
+
+    private void setupDegreeContextMenuPeopleByDate() {
+        ContextMenu degreeMenu = new ContextMenu();
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Major major : department.majors) {
+                    for (Degree degree : major.degrees) {
+                        MenuItem degreeContext = new MenuItem(degree.getClass().getSimpleName());
+                        if (!degreeMenu.getItems().contains(degreeContext)) {
+                            degreeContext.setOnAction(event -> filterByDegreePeopleByDate(degree.getClass().getSimpleName()));
+                            degreeMenu.getItems().add(degreeContext);
+                        }
+                    }
+                }
+            }
+        }
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(event -> tableViewReportPeopleByDate.setItems(peopleByDateList));
+        degreeMenu.getItems().add(allItem);
+
+        colDegreeReportPeopleByDate.setContextMenu(degreeMenu);
+    }
+
+    private void filterByDegreePeopleByDate(String degree) {
+        ObservableList<People> filtered = FXCollections.observableArrayList();
+        for (People people : peopleByDateList) {
+            if (people.getDegree().equals(degree)) {
+                filtered.add(people);
+            }
+        }
+        tableViewReportPeopleByDate.setItems(filtered);
+    }
+
+    private void setupIdContextMenuPeopleByDate() {
+        ContextMenu idMenu = new ContextMenu();
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Employee employee : department.employees) {
+                    MenuItem employeeContext = new MenuItem(employee.getId());
+                    employeeContext.setOnAction(e -> filterByIdPeopleByDate(employee.getId()));
+                    idMenu.getItems().add(employeeContext);
+                }
+                for (Major major : department.majors) {
+                    for (Professor professor : major.professors) {
+                        MenuItem professorContext = new MenuItem(professor.getId());
+                        professorContext.setOnAction(event -> filterByIdPeopleByDate(professor.getId()));
+                        idMenu.getItems().add(professorContext);
+                    }
+                    for (Student student : major.students) {
+                        MenuItem studentContext = new MenuItem(student.getId());
+                        studentContext.setOnAction(event -> filterByIdPeopleByDate(student.getId()));
+                        idMenu.getItems().add(studentContext);
+                    }
+                }
+            }
+        }
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(e -> tableViewReportPeopleByDate.setItems(peopleByDateList));
+        idMenu.getItems().add(allItem);
+        colIDReportPeopleByDate.setContextMenu(idMenu);
+    }
+
+    private void filterByIdPeopleByDate(String id) {
+        ObservableList<People> filtered = FXCollections.observableArrayList();
+        for (People people : peopleByDateList) {
+            if (people.getId().equals(id)) {
+                filtered.add(people);
+            }
+        }
+        tableViewReportPeopleByDate.setItems(filtered);
+    }
+
     private void setupRoleContextMenuPeopleByDate() {
         ContextMenu roleMenu = new ContextMenu();
 
@@ -3517,6 +4365,112 @@ public class AdminPortal1 {
         tableViewReportCourses.setItems(filtered);
     }
 
+    private void setupMajorContextMenuReportCourses() {
+        University.loadFaculties();
+
+        ContextMenu majorMenu = new ContextMenu();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Major major : department.majors) {
+                    for (Degree degree : major.degrees) {
+                        for (Course course : degree.courses) {
+                            MenuItem majorContext = new MenuItem(major.getName());
+                            if (!majorMenu.getItems().contains(majorContext)) {
+                                majorContext.setOnAction(event -> filterByMajorCourses(major.getName()));
+                                majorMenu.getItems().add(majorContext);
+                            }
+                        }
+                        }
+                }
+            }
+        }
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(e -> tableViewReportCourses.setItems(coursesList));
+        majorMenu.getItems().add(allItem);
+
+        colMajorReportCourses.setContextMenu(majorMenu);
+    }
+
+    private void filterByMajorCourses(String major) {
+        ObservableList<CourseReports> filtered = FXCollections.observableArrayList();
+        for (CourseReports courseReports : coursesList) {
+            if (courseReports.getMajor().equals(major)) {
+                filtered.add(courseReports);
+            }
+        }
+        tableViewReportCourses.setItems(filtered);
+    }
+
+    private void setupDegreeContextMenuReportCourses() {
+        University.loadFaculties();
+
+        ContextMenu degreeMenu = new ContextMenu();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Major major : department.majors) {
+                    for (Degree degree : major.degrees) {
+                        for (Course course : degree.courses) {
+                            MenuItem degreeContext = new MenuItem(degree.getClass().getSimpleName());
+                            if (!degreeMenu.getItems().contains(degreeContext)) {
+                                degreeContext.setOnAction(event -> filterByDegreeCourses(degree.getClass().getSimpleName()));
+                                degreeMenu.getItems().add(degreeContext);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(e -> tableViewReportCourses.setItems(coursesList));
+        degreeMenu.getItems().add(allItem);
+
+        colDegreeReportCourses.setContextMenu(degreeMenu);
+    }
+
+    private void filterByDegreeCourses(String degree) {
+        ObservableList<CourseReports> filtered = FXCollections.observableArrayList();
+        for (CourseReports courseReports : coursesList) {
+            if (courseReports.getDegree().equals(degree)) {
+                filtered.add(courseReports);
+            }
+        }
+        tableViewReportCourses.setItems(filtered);
+    }
+
+    private void setupIdContextMenuCourses() {
+        ContextMenu idMenu = new ContextMenu();
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Major major : department.majors) {
+                    for (Degree degree : major.degrees) {
+                        for (Course course : degree.courses) {
+                            MenuItem courseContext = new MenuItem(course.getId());
+                            if (!idMenu.getItems().contains(courseContext)) {
+                                courseContext.setOnAction(event -> filterByIdCourses(course.getId()));
+                                idMenu.getItems().add(courseContext);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(e -> tableViewReportCourses.setItems(coursesList));
+        idMenu.getItems().add(allItem);
+        colIdReportCourses.setContextMenu(idMenu);
+    }
+
+    private void filterByIdCourses(String id) {
+        ObservableList<CourseReports> filtered = FXCollections.observableArrayList();
+        for (CourseReports course : coursesList) {
+            if (course.getId().equals(id)) {
+                filtered.add(course);
+            }
+        }
+        tableViewReportCourses.setItems(filtered);
+    }
+
     @FXML
     private void onSearchCourses() {
         String keyword = searchFieldCourses.getText().toLowerCase().trim();
@@ -3559,6 +4513,190 @@ public class AdminPortal1 {
         ObservableList<CourseGroupReports> filtered = FXCollections.observableArrayList();
         for (CourseGroupReports courseGroupReports : courseGroupsList) {
             if (courseGroupReports.getStatus().equals(status)) {
+                filtered.add(courseGroupReports);
+            }
+        }
+        tableViewReportCourseGroups.setItems(filtered);
+    }
+
+    private void setupMajorContextMenuReportCourseGroups() {
+        University.loadFaculties();
+
+        ContextMenu majorMenu = new ContextMenu();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Major major : department.majors) {
+                    for (Degree degree : major.degrees) {
+                        for (Course course : degree.courses) {
+                            for (CourseGroup courseGroup : course.courseGroups) {
+                                MenuItem majorContext = new MenuItem(major.getName());
+                                if (!majorMenu.getItems().contains(majorContext)) {
+                                    majorContext.setOnAction(event -> filterByMajorCourseGroups(major.getName()));
+                                    majorMenu.getItems().add(majorContext);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(e -> tableViewReportCourseGroups.setItems(courseGroupsList));
+        majorMenu.getItems().add(allItem);
+
+        colMajorReportCourseGroups.setContextMenu(majorMenu);
+    }
+
+    private void filterByMajorCourseGroups(String major) {
+        ObservableList<CourseGroupReports> filtered = FXCollections.observableArrayList();
+        for (CourseGroupReports courseGroupReports : courseGroupsList) {
+            if (courseGroupReports.getMajor().equals(major)) {
+                filtered.add(courseGroupReports);
+            }
+        }
+        tableViewReportCourseGroups.setItems(filtered);
+    }
+
+    private void setupDegreeContextMenuReportCourseGroups() {
+        University.loadFaculties();
+
+        ContextMenu degreeMenu = new ContextMenu();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Major major : department.majors) {
+                    for (Degree degree : major.degrees) {
+                        for (Course course : degree.courses) {
+                            for (CourseGroup courseGroup : course.courseGroups) {
+                                MenuItem degreeContext = new MenuItem(degree.getClass().getSimpleName());
+                                if (!degreeMenu.getItems().contains(degreeContext)) {
+                                    degreeContext.setOnAction(event -> filterByDegreeCourseGroups(degree.getClass().getSimpleName()));
+                                    degreeMenu.getItems().add(degreeContext);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(e -> tableViewReportCourseGroups.setItems(courseGroupsList));
+        degreeMenu.getItems().add(allItem);
+
+        colDegreeReportCourseGroups.setContextMenu(degreeMenu);
+    }
+
+    private void filterByDegreeCourseGroups(String degree) {
+        ObservableList<CourseGroupReports> filtered = FXCollections.observableArrayList();
+        for (CourseGroupReports courseGroupReports : courseGroupsList) {
+            if (courseGroupReports.getDegree().equals(degree)) {
+                filtered.add(courseGroupReports);
+            }
+        }
+        tableViewReportCourseGroups.setItems(filtered);
+    }
+
+    private void setupIdContextMenuCourseGroups () {
+        ContextMenu idMenu = new ContextMenu();
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Major major : department.majors) {
+                    for (Degree degree : major.degrees) {
+                        for (Course course : degree.courses) {
+                            for (CourseGroup courseGroup : course.courseGroups) {
+                                MenuItem courseGroupContext = new MenuItem(courseGroup.getId());
+                                if (!idMenu.getItems().contains(courseGroupContext)) {
+                                    courseGroupContext.setOnAction(event -> filterByIdCourseGroups(courseGroup.getId()));
+                                    idMenu.getItems().add(courseGroupContext);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(e -> tableViewReportCourseGroups.setItems(courseGroupsList));
+        idMenu.getItems().add(allItem);
+        colIdReportCourseGroups.setContextMenu(idMenu);
+    }
+
+    private void filterByIdCourseGroups(String id) {
+        ObservableList<CourseGroupReports> filtered = FXCollections.observableArrayList();
+        for (CourseGroupReports courseGroupReports : courseGroupsList) {
+            if (courseGroupReports.getId().equals(id)) {
+                filtered.add(courseGroupReports);
+            }
+        }
+        tableViewReportCourseGroups.setItems(filtered);
+    }
+
+    private void setupCourseNameContextMenuCourseGroups () {
+        ContextMenu courseNameMenu = new ContextMenu();
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Major major : department.majors) {
+                    for (Degree degree : major.degrees) {
+                        for (Course course : degree.courses) {
+                            for (CourseGroup courseGroup : course.courseGroups) {
+                                MenuItem courseGroupContext = new MenuItem(courseGroup.getCourseName());
+                                if (!courseNameMenu.getItems().contains(courseGroupContext)){
+                                    courseGroupContext.setOnAction(event -> filterByCourseNameCourseGroups(courseGroup.getCourseName()));
+                                    courseNameMenu.getItems().add(courseGroupContext);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(e -> tableViewReportCourseGroups.setItems(courseGroupsList));
+        courseNameMenu.getItems().add(allItem);
+        colCourseNameReportCourseGroups.setContextMenu(courseNameMenu);
+    }
+
+    private void filterByCourseNameCourseGroups(String courseName) {
+        ObservableList<CourseGroupReports> filtered = FXCollections.observableArrayList();
+        for (CourseGroupReports courseGroupReports : courseGroupsList) {
+            if (courseGroupReports.getCourseName().equals(courseName)) {
+                filtered.add(courseGroupReports);
+            }
+        }
+        tableViewReportCourseGroups.setItems(filtered);
+    }
+
+    private void setupProfessorNameContextMenuCourseGroups () {
+        ContextMenu professorMenu = new ContextMenu();
+        University.loadFaculties();
+        for (Faculty faculty : University.allFaculties) {
+            for (Department department : faculty.departments) {
+                for (Major major : department.majors) {
+                    for (Degree degree : major.degrees) {
+                        for (Course course : degree.courses) {
+                            for (CourseGroup courseGroup : course.courseGroups) {
+                                MenuItem courseGroupContext = new MenuItem(courseGroup.getCourseName());
+                                if (!professorMenu.getItems().contains(courseGroupContext)) {
+                                    courseGroupContext.setOnAction(event -> filterByProfessorCourseGroups(courseGroup.getCourseName()));
+                                    professorMenu.getItems().add(courseGroupContext);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        MenuItem allItem = new MenuItem("All");
+        allItem.setOnAction(e -> tableViewReportCourseGroups.setItems(courseGroupsList));
+        professorMenu.getItems().add(allItem);
+        colProfessorNameReportCourseGroups.setContextMenu(professorMenu);
+    }
+
+    private void filterByProfessorCourseGroups(String professorName) {
+        ObservableList<CourseGroupReports> filtered = FXCollections.observableArrayList();
+        for (CourseGroupReports courseGroupReports : courseGroupsList) {
+            if (courseGroupReports.getProfessorName().equals(professorName)) {
                 filtered.add(courseGroupReports);
             }
         }

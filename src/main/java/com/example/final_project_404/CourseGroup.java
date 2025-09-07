@@ -19,10 +19,8 @@ public class CourseGroup implements Serializable {
     private int capacity;
     private String id;
     private Map<String, Double> grades = new HashMap<>();
-
-
-
     private List<Student> enrolledStudents = new ArrayList<>();
+
     public CourseGroup(String professorName,String semesterCode,int capacity,String id,Status status, Course course) {
         this.professorName = professorName;
         this.semesterCode=semesterCode;

@@ -1113,7 +1113,7 @@
                                     <TableColumn fx:id="colSemesterCodeReportCourseGroups" prefWidth="100" text="Semester" />
                                     <TableColumn fx:id="colMajorReportCourseGroups" prefWidth="150" text="Major" />
                                     <TableColumn fx:id="colDegreeReportCourseGroups" prefWidth="100" text="Degree" />
-                                    <TableColumn fx:id="colCapacityReportCourseGroups" prefWidth="50" text="Capacity" />
+                                    <TableColumn fx:id="colCapacityReportCourseGroups" prefWidth="100" text="Capacity" />
                                     <TableColumn fx:id="colStatusReportCourseGroups" prefWidth="100" text="Status" />
                                 </columns>
                                 <padding>
