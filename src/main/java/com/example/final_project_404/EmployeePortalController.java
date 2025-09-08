@@ -1879,12 +1879,12 @@ public class EmployeePortalController {
                         String nationalId = "";
                         for (int counter=0 ; counter<10 ; counter++) {
                             int number = RANDOM.nextInt(10);
-                            nationalId.concat(String.valueOf(number));
+                            nationalId=nationalId.concat(String.valueOf(number));
                         }
                         String phoneNumber ="09";
                         for (int counter=0 ; counter<9 ; counter++) {
                             int number = RANDOM.nextInt(10);
-                            phoneNumber.concat(String.valueOf(number));
+                            phoneNumber=phoneNumber.concat(String.valueOf(number));
                         }
                         Employee employee = LoginPanelController.employeePerson;
                         for (Faculty faculty : University.allFaculties) {
@@ -1924,7 +1924,7 @@ public class EmployeePortalController {
                                                     }
                                                 }
                                             }
-                                            errorLabelAddRandomStudents.setText("There Is No Active Major In The Department");
+                                            //errorLabelAddRandomStudents.setText("There Is No Active Major In The Department");
 
                                         } else {
                                             errorLabelAddRandomStudents.setText("There Is No Major In The Department");

@@ -2409,58 +2409,67 @@ public class AdminPortalController {
         successLabelDeactiveFaculty.setText(null);
         University.loadFaculties();
         boolean confirmation = true;
-        if (facultyChooserDeactiveFaculty.getValue().isEmpty() || facultyChooserDeactiveFaculty.getValue().equals("Faculty")) {
+
+        if (facultyChooserDeactiveFaculty.getValue().isEmpty()
+                || facultyChooserDeactiveFaculty.getValue().equals("Faculty")) {
             errorLabelFacultyChooserDeactiveFaculty.setText("Choose Faculty");
             confirmation = false;
         } else {
             errorLabelFacultyChooserDeactiveFaculty.setText(null);
         }
-        if (confirmation) {
-            for (Faculty faculty : University.allFaculties){
-                if (faculty.getFacultyName().equals(facultyChooserDeactiveFaculty.getValue())){
-                    deactiveAllInFaculty(faculty.getFacultyName());
-                    University.saveFaculties();
-                    Professor.loadAllProfessor();
-                    for (Professor professor : University.allProfessors) {
-                        if (professor.getFaculty().equals(faculty.getFacultyName()) && professor.getStatus().equals(Status.Active)) {
-                            professor.setStatus(Status.Inactive);
-                            professor.setDateOfDeactivation(LocalDate.now());
-                            break;
-                        }
-                    }
-                    Professor.saveAllProfessor();
-                    Employee.loadAllEmployee();
-                    for (Employee employee : University.allEmployees) {
-                        if (employee.getFaculty().equals(faculty.getFacultyName()) && employee.getStatus().equals(Status.Active)) {
-                            employee.setStatus(Status.Inactive);
-                            employee.setDateOfDeactivation(LocalDate.now());
-                            break;
-                        }
-                    }
-                    Employee.saveAllEmployee();
-                    Student.loadAllStudents();
-                    for (Student student : University.allStudents) {
-                        if (student.getFaculty().equals(faculty.getFacultyName()) && student.getStatus().equals(Status.Active)) {
-                            student.setStatus(Status.Inactive);
-                            student.setDateOfDeactivation(LocalDate.now());
-                            break;
-                        }
-                    }
-                    Student.saveAllStudent();
-                    errorLabelDeactiveFaculty.setText(null);
-                    successLabelDeactiveFaculty.setText("The Selected Faculty Deactivated successfully");
 
-                    facultyChooserDeactiveFaculty.getItems().clear();
-                    facultyChooserDeactiveFaculty.getItems().add("Faculty");
-                    for (Faculty faculty1 : University.allFaculties) {
-                        if (faculty1.getStatus().equals(Status.Active)) {
-                            facultyChooserDeactiveFaculty.getItems().add(faculty1.getFacultyName());
-                        }
-                    }
-                    facultyChooserDeactiveFaculty.setVisibleRowCount(4);
-                    facultyChooserDeactiveFaculty.getSelectionModel().selectFirst();
+        if (confirmation) {
+            Faculty target = null;
+            for (Faculty faculty : University.allFaculties) {
+                if (faculty.getFacultyName().equals(facultyChooserDeactiveFaculty.getValue())) {
+                    target = faculty;
+                    break;
                 }
             }
+
+            if (target != null) {
+                deactiveAllInFaculty(target.getFacultyName());
+                University.saveFaculties();
+                Professor.loadAllProfessor();
+                for (Professor professor : University.allProfessors) {
+                    if (professor.getFaculty().equals(target.getFacultyName())
+                            && professor.getStatus().equals(Status.Active)) {
+                        professor.setStatus(Status.Inactive);
+                        professor.setDateOfDeactivation(LocalDate.now());
+                    }
+                }
+                Professor.saveAllProfessor();
+                Employee.loadAllEmployee();
+                for (Employee employee : University.allEmployees) {
+                    if (employee.getFaculty().equals(target.getFacultyName())
+                            && employee.getStatus().equals(Status.Active)) {
+                        employee.setStatus(Status.Inactive);
+                        employee.setDateOfDeactivation(LocalDate.now());
+                    }
+                }
+                Employee.saveAllEmployee();
+                Student.loadAllStudents();
+                for (Student student : University.allStudents) {
+                    if (student.getFaculty().equals(target.getFacultyName())
+                            && student.getStatus().equals(Status.Active)) {
+                        student.setStatus(Status.Inactive);
+                        student.setDateOfDeactivation(LocalDate.now());
+                    }
+                }
+                Student.saveAllStudent();
+                errorLabelDeactiveFaculty.setText(null);
+                successLabelDeactiveFaculty.setText("The Selected Faculty Deactivated successfully");
+                facultyChooserDeactiveFaculty.getItems().clear();
+                facultyChooserDeactiveFaculty.getItems().add("Faculty");
+                for (Faculty faculty1 : University.allFaculties) {
+                    if (faculty1.getStatus().equals(Status.Active)) {
+                        facultyChooserDeactiveFaculty.getItems().add(faculty1.getFacultyName());
+                    }
+                }
+                facultyChooserDeactiveFaculty.setVisibleRowCount(4);
+                facultyChooserDeactiveFaculty.getSelectionModel().selectFirst();
+            }
+
         } else {
             errorLabelDeactiveFaculty.setText("Fill In All Fields");
         }
@@ -3029,7 +3038,7 @@ public class AdminPortalController {
                             for (Major major : department.majors){
                                 if (major.getName().equals(majorChooserEditMajor.getValue())){
                                     boolean edited = false;
-                                    if (newMajorNameEditMajor.getText().equals(major.getName())){
+                                    if (!newMajorNameEditMajor.getText().equals(major.getName())){
                                         if (University.allFaculties.stream().noneMatch(faculty1 -> faculty1.getFacultyName().equals(newFacultyNameEditFaculty.getText()))) {
                                             if (!newMajorNameEditMajor.getText().isBlank()){
                                                 edited = true;
