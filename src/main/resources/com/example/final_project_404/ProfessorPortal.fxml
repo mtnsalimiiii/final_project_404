@@ -23,7 +23,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxWidth="800.0" minHeight="550.0" minWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.ProfessorPortalController">
+<AnchorPane maxWidth="800.0" minHeight="550.0" minWidth="800.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.final_project_404.ProfessorPortalController">
     <children>
         <!-- ======= Header ======= -->
         <HBox fx:id="headerHBox" prefHeight="80.0" prefWidth="800.0" styleClass="header" stylesheets="@EmployeePortal.css">
@@ -344,8 +344,8 @@
                         <Group>
                             <children>
                                 <Button mnemonicParsing="false" onAction="#changeProfile" text="Submit" />
-                                <Label fx:id="errorLabelProfile" alignment="CENTER_RIGHT" prefWidth="495.0" styleClass="error-label" />
-                                <Label fx:id="successLabelProfile" alignment="TOP_CENTER" prefWidth="495.0" styleClass="success-label" />
+                                <Label fx:id="errorLabelProfile" alignment="CENTER_RIGHT" layoutX="95.0" prefWidth="495.0" styleClass="error-label" />
+                                <Label fx:id="successLabelProfile" alignment="TOP_CENTER" layoutX="95.0" prefWidth="495.0" styleClass="success-label" />
                             </children>
                             <VBox.margin>
                                 <Insets top="40.0" />

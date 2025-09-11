@@ -216,6 +216,7 @@ public class StudentPortalController {
 
     @FXML
     void reportCardDashboard(ActionEvent event) {
+        gradesTableOverallReportCard.getItems().clear();
         dashboardAnchorPane.setVisible(false);
         reportCardAnchorPane.setVisible(true);
         loadSemestersForStudent();
@@ -435,9 +436,6 @@ public class StudentPortalController {
         //clearOverallStudentInfoLabels();
         messageLabelOverallReportCard.setText(null);
 
-        gradeShowOverallReportCard.getItems().clear();
-        gradeShowOverallReportCard.getItems().addAll("Table View", "Bar Chart");
-        gradeShowOverallReportCard.getSelectionModel().select("Table View");
 
         if (gradesTableOverallReportCard != null) {
             setupOverallReportTable();
